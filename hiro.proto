@@ -383,7 +383,7 @@ message InventoryItem {
   // The properties with string values.
   map<string, string> string_properties = 11;
   // The properties with numeric values.
-  map<string, int32> numeric_properties = 12;
+  map<string, double> numeric_properties = 12;
   // A UNIX timestamp when the user acquired this item.
   int64 owned_time_sec = 13;
   // A UNIX timestamp when the item was updated.
@@ -413,7 +413,7 @@ message InventoryUpdateItemProperties {
   // The properties with string values.
   map<string, string> string_properties = 1;
   // The properties with numeric values.
-  map<string, int32> numeric_properties = 2;
+  map<string, double> numeric_properties = 2;
 }
 
 // Response from granting or purchasing items. This contains updated inventory data, if changed.
