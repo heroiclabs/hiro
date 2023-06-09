@@ -25,16 +25,16 @@ type InventoryConfig struct {
 }
 
 type InventoryConfigItem struct {
-	Name                string               `json:"name"`
-	Description         string               `json:"description"`
-	Category            string               `json:"category"`
-	ItemSets            []string             `json:"item_sets"`
-	MaxCount            int64                `json:"max_count"`
-	Stackable           bool                 `json:"stackable"`
-	Consumable          bool                 `json:"consumable"`
-	ConsumeRewardConfig *EconomyConfigReward `json:"consume_reward"`
-	StringProperties    map[string]string    `json:"string_properties"`
-	NumericProperties   map[string]float64   `json:"numeric_properties"`
+	Name              string               `json:"name"`
+	Description       string               `json:"description"`
+	Category          string               `json:"category"`
+	ItemSets          []string             `json:"item_sets"`
+	MaxCount          int64                `json:"max_count"`
+	Stackable         bool                 `json:"stackable"`
+	Consumable        bool                 `json:"consumable"`
+	ConsumeReward     *EconomyConfigReward `json:"consume_reward"`
+	StringProperties  map[string]string    `json:"string_properties"`
+	NumericProperties map[string]float64   `json:"numeric_properties"`
 }
 
 // The InventorySystem provides a gameplay system which can manage a player's inventory.

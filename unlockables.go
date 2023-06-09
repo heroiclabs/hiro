@@ -41,7 +41,7 @@ type UnlockablesConfigUnlockable struct {
 	Description          string                                `json:"description"`
 	Name                 string                                `json:"name"`
 	StartCost            *UnlockablesConfigUnlockableStartCost `json:"start_cost"`
-	RewardConfig         *EconomyConfigReward                  `json:"reward_config"`
+	Reward               *EconomyConfigReward                  `json:"reward"`
 	WaitTimeSec          int                                   `json:"wait_time_sec"`
 	AdditionalProperties map[string]string                     `json:"additional_properties"`
 }

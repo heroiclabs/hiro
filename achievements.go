@@ -36,8 +36,8 @@ type AchievementsConfigAchievement struct {
 	MaxCount             int64                                        `json:"max_count"`
 	Name                 string                                       `json:"name"`
 	PreconditionIDs      []string                                     `json:"precondition_ids"`
-	RewardConfig         *EconomyConfigReward                         `json:"reward_config"`
-	TotalRewardConfig    *EconomyConfigReward                         `json:"total_reward_config"`
+	Reward               *EconomyConfigReward                         `json:"reward"`
+	TotalReward          *EconomyConfigReward                         `json:"total_reward"`
 	SubAchievements      map[string]*AchievementsConfigSubAchievement `json:"sub_achievements"`
 	AdditionalProperties map[string]string                            `json:"additional_properties"`
 }

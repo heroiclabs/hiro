@@ -30,7 +30,7 @@ type EnergyConfigEnergy struct {
 	RefillCount          int32                `json:"refill_count"`
 	RefillTimeSec        int64                `json:"refill_time_sec"`
 	Implicit             bool                 `json:"implicit"`
-	RewardConfig         *EconomyConfigReward `json:"reward_config"`
+	Reward               *EconomyConfigReward `json:"reward"`
 	AdditionalProperties map[string]string    `json:"additional_properties"`
 }
 

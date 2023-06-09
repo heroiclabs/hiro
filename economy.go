@@ -34,8 +34,8 @@ type EconomyConfigDonation struct {
 	DurationSec              int64                      `json:"duration_sec"`
 	MaxCount                 int64                      `json:"max_count"`
 	Name                     string                     `json:"name"`
-	RecipientRewardConfig    *EconomyConfigReward       `json:"recipient_reward_config"`
-	ContributorRewardConfig  *EconomyConfigReward       `json:"contributor_reward_config"`
+	RecipientReward          *EconomyConfigReward       `json:"recipient_reward"`
+	ContributorReward        *EconomyConfigReward       `json:"contributor_reward"`
 	UserContributionMaxCount int64                      `json:"user_contribution_max_count"`
 	AdditionalProperties     map[string]string          `json:"additional_properties"`
 }
@@ -51,7 +51,7 @@ type EconomyConfigInitializeUser struct {
 }
 
 type EconomyConfigPlacement struct {
-	RewardConfig         *EconomyConfigReward `json:"reward_config"`
+	Reward               *EconomyConfigReward `json:"reward"`
 	AdditionalProperties map[string]string    `json:"additional_properties"`
 }
 
@@ -123,7 +123,7 @@ type EconomyConfigStoreItem struct {
 	Cost                 *EconomyConfigStoreItemCost `json:"cost"`
 	Description          string                      `json:"description"`
 	Name                 string                      `json:"name"`
-	RewardConfig         *EconomyConfigReward        `json:"reward_config"`
+	Reward               *EconomyConfigReward        `json:"reward"`
 	AdditionalProperties map[string]string           `json:"additional_properties"`
 }
 
