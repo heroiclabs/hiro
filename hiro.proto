@@ -64,6 +64,8 @@ enum RpcId {
   RPC_ID_BASE_RATE_APP = 33;
   RPC_ID_BASE_SET_DEVICE_PREFS = 34;
 
+  RPC_ID_LEADERBOARDS_CONFIG_GET = 35;
+
   // Server to server RPCs
   RPC_ID_ECONOMY_PLACEMENT_SUCCESS = 1001;
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
@@ -719,6 +721,28 @@ message EnergySpendResponse {
   EnergyList energies = 1;
   // The cumulative reward of spending the energies.
   Reward reward = 2;
+}
+
+// A list of leaderboard configurations.
+message LeaderboardConfigList {
+  // The list of leaderboard configurations.
+  repeated LeaderboardConfig leaderboard_configs = 1;
+}
+
+// A leaderboard configuration.
+message LeaderboardConfig {
+  // The leaderboard id.
+  string id = 1;
+  // The leaderboard sort order.
+  string sort_order = 2;
+  // The leaderboard operator.
+  string operator = 3;
+  // The leaderboard reset schedule.
+  string reset_schedule = 4;
+  // Whether the leaderboard is authoritative or not.
+  bool authoritative = 5;
+  // List of regional leaderboards of the leaderboard, if any.
+  repeated string regions = 6;
 }
 
 // The full tutorial statuses for a given user.
