@@ -38,13 +38,13 @@ type TutorialsSystem interface {
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*Tutorial, error)
 
 	// Accept marks a tutorial as accepted by the user.
-	Accept(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*Tutorial, error)
+	Accept(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (*Tutorial, error)
 
 	// Decline marks a tutorial as declined by the user.
-	Decline(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*Tutorial, error)
+	Decline(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (*Tutorial, error)
 
 	// Abandon marks the tutorial as abandoned by the user.
-	Abandon(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*Tutorial, error)
+	Abandon(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (*Tutorial, error)
 
 	// Update modifies a tutorial by its ID to step through it for the user by ID.
 	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, tutorialID string, step int) (map[string]*Tutorial, error)
