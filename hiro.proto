@@ -750,16 +750,18 @@ message LeaderboardConfig {
 
 // The states of a Tutorial.
 enum TutorialState {
+  // The Tutorial has not been accepted/declined by the user yet.
+  TUTORIAL_STATE_NONE = 0;
   // The Tutorial was accepted.
-  TUTORIAL_STATE_ACCEPTED = 0;
+  TUTORIAL_STATE_ACCEPTED = 1;
   // The Tutorial was declined.
-  TUTORIAL_STATE_DECLINED = 1;
+  TUTORIAL_STATE_DECLINED = 2;
   // The Tutorial is in progress.
-  TUTORIAL_STATE_IN_PROGRESS = 2;
+  TUTORIAL_STATE_IN_PROGRESS = 3;
   // The Tutorial has been completed.
-  TUTORIAL_STATE_COMPLETED = 3;
+  TUTORIAL_STATE_COMPLETED = 4;
   // The Tutorial has been abandoned.
-  TUTORIAL_STATE_ABANDONED = 4;
+  TUTORIAL_STATE_ABANDONED = 5;
 }
 
 // The full tutorial statuses for a given user.
