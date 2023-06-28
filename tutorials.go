@@ -37,6 +37,15 @@ type TutorialsSystem interface {
 	// Get returns all tutorials defined and progress made by the user towards them.
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*Tutorial, error)
 
+	// Accept marks a tutorial as accepted by the user.
+	Accept(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) error
+
+	// Decline marks a tutorial as declined by the user.
+	Decline(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) error
+
+	// Abandon marks the tutorial as abandoned by the user.
+	Abandon(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) error
+
 	// Update modifies a tutorial by its ID to step through it for the user by ID.
 	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, tutorialID string, step int) (map[string]*Tutorial, error)
 }

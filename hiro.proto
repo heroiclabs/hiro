@@ -46,25 +46,28 @@ enum RpcId {
   RPC_ID_ENERGY_SPEND = 20;
 
   RPC_ID_TUTORIALS_GET = 21;
-  RPC_ID_TUTORIALS_UPDATE = 22;
+  RPC_ID_TUTORIALS_ACCEPT = 22;
+  RPC_ID_TUTORIALS_DECLINE = 23;
+  RPC_ID_TUTORIALS_ABANDON = 24;
+  RPC_ID_TUTORIALS_UPDATE = 25;
 
-  RPC_ID_TEAMS_CREATE = 23;
-  RPC_ID_TEAMS_LIST = 24;
-  RPC_ID_TEAMS_SEARCH = 25;
-  RPC_ID_TEAMS_WRITE_CHAT_MESSAGE = 26;
+  RPC_ID_TEAMS_CREATE = 26;
+  RPC_ID_TEAMS_LIST = 27;
+  RPC_ID_TEAMS_SEARCH = 28;
+  RPC_ID_TEAMS_WRITE_CHAT_MESSAGE = 29;
 
-  RPC_ID_UNLOCKABLES_CREATE = 27;
-  RPC_ID_UNLOCKABLES_GET = 28;
-  RPC_ID_UNLOCKABLES_UNLOCK_START = 29;
-  RPC_ID_UNLOCKABLES_PURCHASE_UNLOCK = 30;
-  RPC_ID_UNLOCKABLES_PURCHASE_SLOT = 31;
-  RPC_ID_UNLOCKABLES_CLAIM = 32;
+  RPC_ID_UNLOCKABLES_CREATE = 30;
+  RPC_ID_UNLOCKABLES_GET = 31;
+  RPC_ID_UNLOCKABLES_UNLOCK_START = 32;
+  RPC_ID_UNLOCKABLES_PURCHASE_UNLOCK = 33;
+  RPC_ID_UNLOCKABLES_PURCHASE_SLOT = 34;
+  RPC_ID_UNLOCKABLES_CLAIM = 35;
 
   // Note: Base Delete Account removed as now supported in Nakama.
-  RPC_ID_BASE_RATE_APP = 33;
-  RPC_ID_BASE_SET_DEVICE_PREFS = 34;
+  RPC_ID_BASE_RATE_APP = 36;
+  RPC_ID_BASE_SET_DEVICE_PREFS = 37;
 
-  RPC_ID_LEADERBOARDS_CONFIG_GET = 35;
+  RPC_ID_LEADERBOARDS_CONFIG_GET = 38;
 
   // Server to server RPCs
   RPC_ID_ECONOMY_PLACEMENT_SUCCESS = 1001;
@@ -745,6 +748,20 @@ message LeaderboardConfig {
   repeated string regions = 6;
 }
 
+// The states of a Tutorial.
+enum TutorialState {
+  // The Tutorial was accepted.
+  TUTORIAL_STATE_ACCEPTED = 0;
+  // The Tutorial was declined.
+  TUTORIAL_STATE_DECLINED = 1;
+  // The Tutorial is in progress.
+  TUTORIAL_STATE_IN_PROGRESS = 2;
+  // The Tutorial has been completed.
+  TUTORIAL_STATE_COMPLETED = 3;
+  // The Tutorial has been abandoned.
+  TUTORIAL_STATE_ABANDONED = 4;
+}
+
 // The full tutorial statuses for a given user.
 message TutorialList {
   // All available tutorials.
@@ -759,10 +776,30 @@ message Tutorial {
   int32 current = 2;
   // The maximum step in the tutorial based on configuration.
   int32 max = 3;
+  // The accepted state of the tutorial.
+  TutorialState state = 4;
   // The UNIX timestamp when the tutorial was completed, if it is completed.
-  int64 complete_time_sec = 4;
+  int64 complete_time_sec = 5;
   // Additional metadata properties.
-  map<string, string> additional_properties = 5;
+  map<string, string> additional_properties = 6;
+}
+
+// A request to accept a tutorial.
+message TutorialAcceptRequest {
+  // The tutorial to accept.
+  string id = 1;
+}
+
+// A request to decline a tutorial.
+message TutorialDeclineRequest {
+  // The tutorial to decline.
+  string id = 1;
+}
+
+// A request to abandon a tutorial.
+message TutorialAbandonRequest {
+  // The tutorial to abandon.
+  string id = 1;
 }
 
 // A request to update a tutorial.
