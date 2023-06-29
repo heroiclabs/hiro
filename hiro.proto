@@ -309,6 +309,12 @@ message EconomyDonationRequest {
   string donation_id = 1;
 }
 
+// A map of active donations keyed by user ID.
+message EconomyDonationsByUserList {
+  // The active donations grouped by user ID.
+  map<string, EconomyDonationsList> user_donations = 1;
+}
+
 // A list of active donations returned for some set of users.
 message EconomyDonationsList {
   // The active donations for a set of users.
