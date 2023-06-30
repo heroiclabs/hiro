@@ -786,10 +786,12 @@ message Tutorial {
   int32 max = 3;
   // The accepted state of the tutorial.
   TutorialState state = 4;
+  // The UNIX timestamp when the tutorial was last updated.
+  int64 update_time_sec = 5;
   // The UNIX timestamp when the tutorial was completed, if it is completed.
-  int64 complete_time_sec = 5;
+  int64 complete_time_sec = 6;
   // Additional metadata properties.
-  map<string, string> additional_properties = 6;
+  map<string, string> additional_properties = 7;
 }
 
 // A request to accept a tutorial.
