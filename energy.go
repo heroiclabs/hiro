@@ -42,10 +42,10 @@ type EnergySystem interface {
 	System
 
 	// Get returns all energies defined and the values a user currently owns by ID.
-	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*Energy, int64, error)
+	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*Energy, error)
 
 	// Spend will deduct the amounts from each energy for a user by ID.
-	Spend(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32) (map[string]*Energy, int64, *Reward, error)
+	Spend(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32) (map[string]*Energy, *Reward, error)
 
 	// Grant will add the amounts to each energy (while applying any energy modifiers) for a user by ID.
 	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32, modifiers []*RewardEnergyModifier) (*runtime.StorageWrite, error)
