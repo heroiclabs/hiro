@@ -696,14 +696,14 @@ message Energy {
   AvailableRewards available_rewards = 10;
   // Additional metadata properties.
   map<string, string> additional_properties = 11;
+  // The current UNIX timestamp in seconds.
+  int64 current_time_sec = 12;
 }
 
 // One or more energy values for a user.
 message EnergyList {
   // Energy types keyed on the energy identifier.
   map<string, Energy> energies = 1;
-  // The current UNIX timestamp in seconds.
-  int64 current_time_sec = 2;
 }
 
 // A modifier that may change energy behaviour.
