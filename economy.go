@@ -139,8 +139,41 @@ type EconomyConfigStoreItemCost struct {
 type EconomySystem interface {
 	System
 
+	// DonationClaim will claim donation rewards for a user and the given donation IDs.
+	DonationClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, donationIDs []string) (*EconomyDonationsList, error)
+
+	// DonationGet will get all donations for the given list of user IDs.
+	DonationGet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userIDs []string) (*EconomyDonationsByUserList, error)
+
+	// DonationGive will contribute to a particular donation for a user ID.
+	DonationGive(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, donationID, fromUserID string) (map[string]int64, *Inventory, *Reward, error)
+
+	// DonationRequest will create a donation request for a given donation ID and user ID.
+	DonationRequest(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, donationID string) (*EconomyDonation, bool, error)
+
+	// List will get the defined store items and placements within the economy system.
+	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*EconomyConfigStoreItem, map[string]*EconomyConfigPlacement, error)
+
 	// Grant will add currencies, and reward modifiers to a user's economy by ID.
 	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, currencies map[string]int64, modifiers []*RewardModifier) (map[string]int64, error)
+
+	// PurchaseIntent will create a purchase intent for a particular store item for a user ID.
+	PurchaseIntent(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, sku string) error
+
+	// PurchaseItem will validate a purchase and give the user ID the appropriate rewards.
+	PurchaseItem(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, receipt string) (map[string]int64, *Inventory, *Reward, bool, error)
+
+	// PlacementStatus will get the status of a specified placement.
+	PlacementStatus(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string, retryCount int) (*EconomyPlacementStatus, error)
+
+	// PlacementStart will indicate that a user ID has begun viewing an ad placement.
+	PlacementStart(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, placementID string) (*EconomyPlacementStatus, error)
+
+	// PlacementSuccess will indicate that the user ID has successfully viewed an ad placement and provide the appropriate reward.
+	PlacementSuccess(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string) (*Reward, error)
+
+	// PlacementFail will indicate that the user ID has failed to successfully view the ad placement.
+	PlacementFail(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string) error
 
 	// SetOnDonationClaimReward sets a custom reward function which will run after a donation's reward is rolled.
 	SetOnDonationClaimReward(fn OnReward[*EconomyConfigDonation])

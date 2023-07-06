@@ -660,7 +660,7 @@ message EconomyPlacementStatus {
   Reward reward = 6;
 }
 
-// Response from granting or purchasing currencies and/or items.
+// Response from granting currencies and/or items.
 // Contains updated wallet and inventory data, if changed.
 // Contains reward granted, if any.
 message EconomyUpdateAck {
@@ -670,6 +670,21 @@ message EconomyUpdateAck {
   Inventory inventory = 2;
   // Reward, if any.
   Reward reward = 3;
+}
+
+// Response from purchasing currencies and/or items.
+// Contains updated wallet and inventory data, if changed.
+// Contains reward granted, if any.
+// Contains indication of whether or not the purchase was a sandbox purchase.
+message EconomyPurchaseAck {
+  // Updated wallet data, if changed.
+  map<string, int64> wallet = 1;
+  // Update inventory data, if changed.
+  Inventory inventory = 2;
+  // Reward, if any.
+  Reward reward = 3;
+  // Was the purchase a sandbox purchase?
+  bool is_sandbox_purchase = 4;
 }
 
 // Information about a single energy type.
