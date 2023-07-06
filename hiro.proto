@@ -218,7 +218,7 @@ message InventoryConsumeRequest {
 }
 
 // Updated inventory and rewards granted from consumption.
-message InventoryConsumeResponse {
+message InventoryConsumeRewards {
   // Updated inventory data, if changed.
   Inventory inventory = 1;
   // Consume rewards by item ID, if any.
@@ -282,7 +282,7 @@ message EconomyDonationClaimRequest {
 }
 
 // Response to claiming one or more donations.
-message EconomyDonationClaimResponse {
+message EconomyDonationClaimRewards {
   // All active donations for the user.
   EconomyDonationsList donations = 1;
   // The rewards from this particular claim.
@@ -725,7 +725,7 @@ message EnergySpendRequest {
 }
 
 // Request to spend one or more energy amounts.
-message EnergySpendResponse {
+message EnergySpendReward {
   // The updated list of energy.
   EnergyList energies = 1;
   // The cumulative reward of spending the energies.
