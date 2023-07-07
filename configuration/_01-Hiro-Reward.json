@@ -1,0 +1,100 @@
+{
+  "items": {
+    "item1": {
+      "min": 2,
+      "max": 2,
+      "multiple": 1
+    },
+    "item2": {
+      "min": 10,
+      "max": 100,
+      "multiple": 5
+    }
+  },
+  "item_sets": [
+    {
+      "min": 1,
+      "max": 10,
+      "multiple": 1,
+      "max_repeats": 0,
+      "set": [ "set1", "set2" ]
+    }
+  ],
+  "currencies": {
+    "currency1": {
+      "min": 1,
+      "max": 10,
+      "multiple": 1
+    },
+    "currency2": {
+      "min": 10,
+      "max": 100,
+      "multiple": 5
+    }
+  },
+  "energies": {
+    "energy1": {
+      "min": 1,
+      "max": 10,
+      "multiple": 1
+    },
+    "energy2": {
+      "min": 10,
+      "max": 100,
+      "multiple": 5
+    }
+  },
+  "energy_modifiers": [
+    {
+      "id": "id1",
+      "operator": "infinite",
+      "duration_sec": {
+        "min": 30,
+        "max": 60,
+        "multiple": 5
+      }
+    },
+    {
+      "id": "id2",
+      "operator": "infinite",
+      "duration_sec": {
+        "min": 1,
+        "max": 10,
+        "multiple": 1
+      }
+    }
+  ],
+  "reward_modifiers": [
+    {
+      "id": "id1",
+      "type": "currency",
+      "operator": "multiplier",
+      "value": {
+        "min": 1,
+        "max": 3,
+        "multiple": 1
+      },
+      "duration_sec": {
+        "min": 30,
+        "max": 60,
+        "multiple": 5
+      }
+    },
+    {
+      "id": "id2",
+      "type": "item",
+      "operator": "addition",
+      "value": {
+        "min": 10,
+        "max": 50,
+        "multiple": 10
+      },
+      "duration_sec": {
+        "min": 30,
+        "max": 60,
+        "multiple": 5
+      }
+    }
+  ],
+  "weight": 1
+}

@@ -1,0 +1,36 @@
+{
+    "items": {
+      "item1": {
+        "name": "name1",
+        "description": "description1",
+        "category": "category1",
+        "item_sets": [ "set1", "set2" ],
+        "max_count": 0,
+        "stackable": true,
+        "consumable": true,
+        "consume_reward": {},
+        "string_properties": {
+          "prop1": "value1"
+        },
+        "numeric_properties": {
+          "prop2": 123
+        }
+      },
+      "item2": {
+        "name": "name2",
+        "description": "description2",
+        "category": "category1",
+        "item_sets": [ "set1", "set3" ],
+        "max_count": 0,
+        "stackable": true,
+        "consumable": true,
+        "consume_reward": {},
+        "string_properties": {
+          "prop1": "value2"
+        },
+        "numeric_properties": {
+          "prop2": 456
+        }
+      }
+    }
+}
