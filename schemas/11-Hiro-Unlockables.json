@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "active_slots": {
+      "minimum": 0,
+      "title": "active_slots",
+      "type": "number"
+    },
+    "max_active_slots": {
+      "minimum": 0,
+      "title": "max_active_slots",
+      "type": "number"
+    },
+    "slots": {
+      "minimum": 0,
+      "title": "slots",
+      "type": "number"
+    },
+    "slot_cost": {
+      "title": "slot_cost",
+      "type": "object",
+      "properties": {
+        "items": {
+          "title": "items",
+          "type": "object",
+          "patternProperties": {
+            ".{1,}": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "currencies": {
+          "title": "currencies",
+          "type": "object",
+          "patternProperties": {
+            ".{1,}": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "unlockables": {
+      "title": "unlockables",
+      "type": "object",
+      "patternProperties": {
+        ".{1,}": {
+          "type": "object",
+          "properties": {
+            "probability": {
+              "type": "number",
+              "title": "probability",
+              "minimum": 0
+            },
+            "category": {
+              "type": "string",
+              "title": "category",
+              "pattern": ".{1,}"
+            },
+            "cost": {
+              "title": "cost",
+              "type": "object",
+              "properties": {
+                "items": {
+                  "title": "items",
+                  "type": "object",
+                  "patternProperties": {
+                    ".{1,}": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  }
+                },
+                "currencies": {
+                  "title": "currencies",
+                  "type": "object",
+                  "patternProperties": {
+                    ".{1,}": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  }
+                }
+              }
+            },
+            "cost_unit_time_sec": {
+              "type": "number",
+              "title": "cost_unit_time_sec",
+              "minimum": 0
+            },
+            "description": {
+              "type": "string",
+              "title": "description",
+              "pattern": ".{1,}"
+            },
+            "name": {
+              "type": "string",
+              "title": "name",
+              "pattern": ".{1,}"
+            },
+            "start_cost": {
+              "title": "start_cost",
+              "type": "object",
+              "properties": {
+                "items": {
+                  "title": "items",
+                  "type": "object",
+                  "patternProperties": {
+                    ".{1,}": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  }
+                },
+                "currencies": {
+                  "title": "currencies",
+                  "type": "object",
+                  "patternProperties": {
+                    ".{1,}": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  }
+                }
+              }
+            },
+            "reward": {
+              "$ref": "Hiro-Rewards"
+            },
+            "wait_time_sec": {
+              "type": "number",
+              "title": "wait_time_sec",
+              "minimum": 0
+            },
+            "additional_properties": {
+              "patternProperties": {
+                ".{1,}": {
+                  "title": "key",
+                  "type": "string"
+                }
+              },
+              "title": "additional_properties",
+              "type": "object"
+            }
+          },
+          "required": [ "probability", "category", "name" ]
+        }
+      }
+    }
+  },
+  "required": [
+    "active_slots", "max_active_slots", "slots", "unlockables"
+  ],
+  "type": "object"
+}
