@@ -1,0 +1,21 @@
+{
+    "leaderboards": [
+        {
+            "id": "leaderboard1",
+            "sort_order": "asc",
+            "operator": "best",
+            "reset_schedule": "0 0 * * *",
+            "authoritative": false,
+            "regions": [
+                "EU",
+                "US"
+            ]
+        },
+        {
+            "id": "leaderboard2",
+            "sort_order": "desc",
+            "operator": "incr",
+            "authoritative": true
+        }
+    ]
+}

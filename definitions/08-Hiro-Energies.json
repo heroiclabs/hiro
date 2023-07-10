@@ -1,0 +1,36 @@
+{
+    "energies": {
+      "energy1": {
+        "start_count": 10,
+        "max_count": 10,
+        "refill_count": 1,
+        "refill_time_sec": 60,
+        "implicit": true,
+        "reward": {},
+        "additional_properties": {
+          "key1": "value1"
+        }
+      },
+      "energy2": {
+        "start_count": 0,
+        "max_count": 10,
+        "refill_count": 2,
+        "refill_time_sec": 60,
+        "implicit": false,
+        "reward": {
+          "guaranteed": {
+            "currencies": {
+              "currency1": {
+                "min": 10,
+                "max": 10
+              }
+            }
+          }
+        },
+        "additional_properties": {
+          "key2": "value2",
+          "key3": "value3"
+        }
+      }
+    }
+}

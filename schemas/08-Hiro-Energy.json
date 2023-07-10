@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "energies": {
+      "patternProperties": {
+        ".{1,}": {
+          "properties": {
+            "additional_properties": {
+              "patternProperties": {
+                ".{1,}": {
+                  "title": "key",
+                  "type": "string"
+                }
+              },
+              "title": "additional_properties",
+              "type": "object"
+            },
+            "implicit": {
+              "title": "implicit",
+              "type": "boolean"
+            },
+            "max_count": {
+              "minimum": 0,
+              "title": "max_count",
+              "type": "number"
+            },
+            "refill_count": {
+              "minimum": 0,
+              "title": "refill_count",
+              "type": "number"
+            },
+            "refill_time_sec": {
+              "minimum": 0,
+              "title": "refill_time_sec",
+              "type": "number"
+            },
+            "reward": {
+              "$ref": "Hiro-Rewards"
+            },
+            "start_count": {
+              "minimum": 0,
+              "title": "start_count",
+              "type": "number"
+            }
+          },
+          "required": [
+            "max_count",
+            "refill_count",
+            "refill_time_sec"
+          ],
+          "title": "id",
+          "type": "object"
+        }
+      },
+      "title": "energies",
+      "type": "object"
+    }
+  },
+  "required": [
+    "energies"
+  ],
+  "type": "object"
+}

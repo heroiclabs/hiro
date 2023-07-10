@@ -1,0 +1,63 @@
+{
+    "initialize_user": {
+      "currencies": {
+        "currency1": 100,
+        "currency2": 200
+      },
+      "items": {
+        "item1": 5,
+        "item2": 10
+      }
+    },
+    "donations": {
+      "donation1": {
+        "cost": {
+          "currencies": {
+            "currency1": 100,
+            "currency2": 200
+          },
+          "items": {
+            "item1": 5,
+            "item2": 10
+          }
+        },
+        "count": 0,
+        "description": "description1",
+        "duration_sec": 3600,
+        "max_count": 10,
+        "name": "name1",
+        "recipient_reward": {},
+        "contributor_reward": {},
+        "user_contribution_max_count": 2,
+        "additional_properties": {
+          "key1": "value1"
+        }
+      }
+    },
+    "store_items": {
+      "store_item1": {
+        "category": "category1",
+        "cost": {
+          "currencies": {
+            "currency1": 50,
+            "currency2": 75
+          },
+          "sku": "some_sku_here"
+        },
+        "description": "description1",
+        "name": "name1",
+        "reward": {},
+        "additional_properties": {
+          "key1": "value1"
+        }
+      }
+    },
+    "placements": {
+      "placement1": {
+        "reward": {},
+        "additional_properties": {
+          "key1": "value1"
+        }
+      }
+    }
+}

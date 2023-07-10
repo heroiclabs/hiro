@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "leaderboards": {
+      "items": {
+        "properties": {
+          "authoritative": {
+            "title": "authoritative",
+            "type": "boolean"
+          },
+          "id": {
+            "pattern": ".{1,}",
+            "title": "id",
+            "type": "string"
+          },
+          "operator": {
+            "enum": [
+              "best",
+              "set",
+              "incr",
+              "decr",
+              "increment",
+              "decrement"
+            ],
+            "title": "operator",
+            "type": "string"
+          },
+          "regions": {
+            "items": {
+              "pattern": ".{1,}",
+              "type": "string"
+            },
+            "title": "regions",
+            "type": "array"
+          },
+          "reset_schedule": {
+            "title": "reset_schedule",
+            "type": "string"
+          },
+          "sort_order": {
+            "enum": [
+              "asc",
+              "desc",
+              "ascending",
+              "descending"
+            ],
+            "title": "sort_order",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "sort_order",
+          "operator",
+          "authoritative"
+        ],
+        "type": "object"
+      },
+      "title": "leaderboards",
+      "type": "array"
+    }
+  },
+  "required": [
+    "leaderboards"
+  ],
+  "type": "object"
+}

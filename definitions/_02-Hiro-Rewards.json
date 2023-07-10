@@ -1,0 +1,29 @@
+{
+  "guaranteed": {
+    "items": {
+      "item1": {
+        "min": 2,
+        "max": 2,
+        "multiple": 1
+      },
+      "item2": {
+        "min": 10,
+        "max": 100,
+        "multiple": 5
+      }
+    }
+  },
+  "weighted": [
+    {
+      "currencies": {
+        "currency1": {
+          "min": 100,
+          "max": 200
+        }
+      },
+      "weight": 5
+    }
+  ],
+  "max_rolls": 2,
+  "total_weight": 5
+}

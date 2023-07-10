@@ -1,0 +1,68 @@
+{
+    "achievements": {
+      "id1": {
+        "auto_claim": false,
+        "auto_claim_total": true,
+        "auto_reset": true,
+        "category": "category1",
+        "count": 0,
+        "max_count": 10,
+        "description": "description1",
+        "reset_cronexpr": "0 0 * * *",
+        "duration_sec": 86400,
+        "name": "name1",
+        "precondition_ids": [ "preid1", "preid2" ],
+        "reward": {},
+        "total_reward": {},
+        "additional_properties": {
+          "key1": "value1"
+        },
+        "sub_achievements": {
+          "sub1": {
+          	"auto_claim": false,
+          	"auto_reset": false,
+          	"category": "caregory2",
+          	"count": 0,
+          	"description": "description2",
+          	"max_count": 5,
+          	"name": "name2",
+          	"precondition_ids": [],
+          	"reward_config": {},
+          	"additional_properties": {
+          	  "key2": "value2",
+          	  "key3": "value3"
+          	}
+          },
+          "sub2": {
+          	"auto_claim": false,
+          	"auto_reset": false,
+          	"category": "caregory2",
+          	"count": 0,
+          	"description": "description2",
+          	"max_count": 5,
+          	"name": "name2",
+          	"precondition_ids": [],
+          	"reward_config": {},
+          	"additional_properties": {
+          	  "key2": "value2",
+          	  "key3": "value3"
+          	}
+          }
+        }
+      },
+      "id2": {
+        "auto_claim": false,
+        "auto_claim_total": true,
+        "auto_reset": true,
+        "category": "category1",
+        "count": 0,
+        "max_count": 10,
+        "description": "description1",
+        "reset_cronexpr": "0 0 * * *",
+        "duration_sec": 86400,
+        "name": "name1",
+        "reward": {},
+        "total_reward": {}
+      }
+    }
+}

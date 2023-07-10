@@ -1,0 +1,58 @@
+{
+    "active_slots": 1,
+    "max_active_slots": 3,
+    "slots": 5,
+    "slot_cost": {
+      "items": {
+        "item1": 5,
+        "item2": 10
+      },
+      "currencies": {
+        "currency1": 100,
+        "currency2": 200
+      }
+    },
+    "unlockables": {
+      "id1": {
+        "probability": 50,
+        "category": "category1",
+        "cost": {
+          "items": {
+            "item1": 5,
+            "item2": 10
+          },
+          "currencies": {
+            "currency1": 100,
+            "currency2": 200
+          }
+        },
+        "cost_unit_time_sec": 1,
+        "description": "description1",
+        "name": "name1",
+        "start_cost": {
+          "items": {
+            "item1": 5,
+            "item2": 10
+          },
+          "currencies": {
+            "currency1": 100,
+            "currency2": 200
+          }
+        },
+        "reward": {
+          "guaranteed": {
+            "energies": {
+              "energy1": {
+                "min": 10,
+                "max": 10
+              }
+            }
+          }
+        },
+        "wait_time_sec": 60,
+        "additional_properties": {
+          "key1": "value1"
+        }
+      }
+    }
+}
