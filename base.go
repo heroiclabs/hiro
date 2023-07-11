@@ -82,9 +82,16 @@ const (
 )
 
 // Init initializes a Hiro type with the configurations provided.
-func Init(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, initializer runtime.Initializer, configs ...SystemConfig) (Hiro, error) {
+func Init(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, initializer runtime.Initializer, binPath string, configs ...SystemConfig) (Hiro, error) {
 	// Open the plugin.
-	p, err := plugin.Open("hiro.bin")
+	binFile, err := nk.ReadFile(binPath)
+	if err != nil {
+		return nil, err
+	}
+	//goland:noinspection GoUnhandledErrorResult
+	defer binFile.Close()
+
+	p, err := plugin.Open(binFile.Name())
 	if err != nil {
 		return nil, err
 	}
