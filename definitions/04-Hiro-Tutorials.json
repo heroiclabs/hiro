@@ -1,23 +1,37 @@
 {
-    "tutorials": {
-        "id1": {
-            "start_step": 0,
-            "max_step": 10,
-            "additional_properties": {
-                "key1": "value1"
+    "tutorials": [
+        {
+            "key": "id1",
+            "value": {
+                "start_step": 0,
+                "max_step": 10,
+                "additional_properties": [
+                    {
+                        "key": "key1",
+                        "value": "value1"
+                    }
+                ]
             }
         },
-        "id2": {
-            "start_step": 0,
-            "max_step": 15,
-            "additional_properties": {
-                "key2": "value2",
-                "key3": "value3"
+        {
+            "key": "id2",
+            "value": {
+                "start_step": 0,
+                "max_step": 15,
+                "additional_properties": [
+                    {
+                        "key": "key2",
+                        "value": "value2"
+                    }
+                ]
             }
         },
-        "id3": {
-            "start_step": 0,
-            "max_step": 15
+        {
+            "key": "id3",
+            "value": {
+                "start_step": 0,
+                "max_step": 15
+            }
         }
-    }
+    ]
 }

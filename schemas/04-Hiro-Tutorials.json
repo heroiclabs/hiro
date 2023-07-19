@@ -1,41 +1,51 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
   "properties": {
     "tutorials": {
-      "patternProperties": {
-        ".{1,}": {
-          "properties": {
-            "additional_properties": {
-              "patternProperties": {
-                ".{1,}": {
-                  "title": "key",
-                  "type": "string"
-                }
-              },
-              "title": "additional_properties",
-              "type": "object"
-            },
-            "max_step": {
-              "minimum": 0,
-              "title": "max_step",
-              "type": "number"
-            },
-            "start_step": {
-              "minimum": 0,
-              "title": "start_step",
-              "type": "number"
-            }
-          },
-          "title": "id",
-          "type": "object"
-        }
-      },
+      "type": "array",
       "title": "tutorials",
-      "type": "object"
+      "items": {
+        "title": "id",
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": ".{1,}"
+          },
+          "value": {
+            "type": "object",
+            "properties": {
+              "max_step": {
+                "title": "max_step",
+                "type": "number",
+                "minimum": 0
+              },
+              "start_step": {
+                "title": "start_step",
+                "type": "number",
+                "minimum": 0
+              },
+              "additional_properties": {
+                "type": "array",
+                "title": "additional_properties",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "pattern": ".{1,}"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
-  },
-  "required": [
-    "tutorials"
-  ],
-  "type": "object"
+  }
 }
