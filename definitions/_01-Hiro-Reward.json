@@ -1,69 +1,4 @@
 {
-  "items": {
-    "item1": {
-      "min": 2,
-      "max": 2,
-      "multiple": 1
-    },
-    "item2": {
-      "min": 10,
-      "max": 100,
-      "multiple": 5
-    }
-  },
-  "item_sets": [
-    {
-      "min": 1,
-      "max": 10,
-      "multiple": 1,
-      "max_repeats": 0,
-      "set": [ "set1", "set2" ]
-    }
-  ],
-  "currencies": {
-    "currency1": {
-      "min": 1,
-      "max": 10,
-      "multiple": 1
-    },
-    "currency2": {
-      "min": 10,
-      "max": 100,
-      "multiple": 5
-    }
-  },
-  "energies": {
-    "energy1": {
-      "min": 1,
-      "max": 10,
-      "multiple": 1
-    },
-    "energy2": {
-      "min": 10,
-      "max": 100,
-      "multiple": 5
-    }
-  },
-  "energy_modifiers": [
-    {
-      "id": "id1",
-      "operator": "infinite",
-      "duration_sec": {
-        "min": 30,
-        "max": 60,
-        "multiple": 5
-      }
-    },
-    {
-      "id": "id2",
-      "operator": "infinite",
-      "duration_sec": {
-        "min": 1,
-        "max": 10,
-        "multiple": 1
-      }
-    }
-  ],
   "reward_modifiers": [
     {
       "id": "id1",
@@ -79,20 +14,91 @@
         "max": 60,
         "multiple": 5
       }
+    }
+  ],
+  "items": [
+    {
+      "key": "item1",
+      "value": {
+        "max": 2,
+        "min": 2,
+        "multiple": 1
+      }
+    },
+    {
+      "key": "item2",
+      "value": {
+        "max": 100,
+        "min": 10,
+        "multiple": 5
+      }
+    }
+  ],
+  "item_sets": [
+    {
+      "min": 1,
+      "max": 10,
+      "multiple": 1,
+      "max_repeats": 0,
+      "set": [
+        "set1",
+        "set2"
+      ]
+    }
+  ],
+  "currencies": [
+    {
+      "key": "currency1",
+      "value": {
+        "max": 10,
+        "min": 1,
+        "multiple": 1
+      }
+    },
+    {
+      "key": "currency2",
+      "value": {
+        "max": 100,
+        "min": 10,
+        "multiple": 5
+      }
+    }
+  ],
+  "energies": [
+    {
+      "key": "energy1",
+      "value": {
+        "max": 10,
+        "min": 1,
+        "multiple": 1
+      }
+    },
+    {
+      "key": "energy2",
+      "value": {
+        "max": 100,
+        "min": 10,
+        "multiple": 5
+      }
+    }
+  ],
+  "energy_modifiers": [
+    {
+      "id": "id1",
+      "operator": "infinite",
+      "duration_sec": {
+        "max": 60,
+        "min": 30,
+        "multiple": 5
+      }
     },
     {
       "id": "id2",
-      "type": "item",
-      "operator": "addition",
-      "value": {
-        "min": 10,
-        "max": 50,
-        "multiple": 10
-      },
+      "operator": "infinite",
       "duration_sec": {
-        "min": 30,
-        "max": 60,
-        "multiple": 5
+        "min": 1,
+        "max": 10,
+        "multiple": 1
       }
     }
   ],

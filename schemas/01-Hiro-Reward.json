@@ -2,66 +2,88 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "properties": {
     "currencies": {
-      "patternProperties": {
-        ".{1,}": {
-          "properties": {
-            "max": {
-              "minimum": 0,
-              "title": "max",
-              "type": "number"
-            },
-            "min": {
-              "minimum": 0,
-              "title": "min",
-              "type": "number"
-            },
-            "multiple": {
-              "minimum": 0,
-              "title": "multiple",
-              "type": "number"
-            }
+      "items": {
+        "properties": {
+          "key": {
+            "pattern": ".{1,}",
+            "type": "string"
           },
-          "required": [
-            "min",
-            "max"
-          ],
-          "title": "id",
-          "type": "object"
-        }
+          "value": {
+            "properties": {
+              "max": {
+                "minimum": 0,
+                "title": "max",
+                "type": "number"
+              },
+              "min": {
+                "minimum": 0,
+                "title": "min",
+                "type": "number"
+              },
+              "multiple": {
+                "minimum": 0,
+                "title": "multiple",
+                "type": "number"
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "key",
+          "value"
+        ],
+        "title": "id",
+        "type": "object"
       },
       "title": "currencies",
-      "type": "object"
+      "type": "array"
     },
     "energies": {
-      "patternProperties": {
-        ".{1,}": {
-          "properties": {
-            "max": {
-              "minimum": 0,
-              "title": "max",
-              "type": "number"
-            },
-            "min": {
-              "minimum": 0,
-              "title": "min",
-              "type": "number"
-            },
-            "multiple": {
-              "minimum": 0,
-              "title": "multiple",
-              "type": "number"
-            }
+      "items": {
+        "properties": {
+          "key": {
+            "pattern": ".{1,}",
+            "type": "string"
           },
-          "required": [
-            "min",
-            "max"
-          ],
-          "title": "id",
-          "type": "object"
-        }
+          "value": {
+            "properties": {
+              "max": {
+                "minimum": 0,
+                "title": "max",
+                "type": "number"
+              },
+              "min": {
+                "minimum": 0,
+                "title": "min",
+                "type": "number"
+              },
+              "multiple": {
+                "minimum": 0,
+                "title": "multiple",
+                "type": "number"
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "key",
+          "value"
+        ],
+        "title": "id",
+        "type": "object"
       },
       "title": "energies",
-      "type": "object"
+      "type": "array"
     },
     "energy_modifiers": {
       "items": {
@@ -156,35 +178,46 @@
       "type": "array"
     },
     "items": {
-      "patternProperties": {
-        ".{1,}": {
-          "properties": {
-            "max": {
-              "minimum": 0,
-              "title": "max",
-              "type": "number"
-            },
-            "min": {
-              "minimum": 0,
-              "title": "min",
-              "type": "number"
-            },
-            "multiple": {
-              "minimum": 0,
-              "title": "multiple",
-              "type": "number"
-            }
+      "items": {
+        "properties": {
+          "key": {
+            "pattern": ".{1,}",
+            "type": "string"
           },
-          "required": [
-            "min",
-            "max"
-          ],
-          "title": "id",
-          "type": "object"
-        }
+          "value": {
+            "properties": {
+              "max": {
+                "minimum": 0,
+                "title": "max",
+                "type": "number"
+              },
+              "min": {
+                "minimum": 0,
+                "title": "min",
+                "type": "number"
+              },
+              "multiple": {
+                "minimum": 0,
+                "title": "multiple",
+                "type": "number"
+              }
+            },
+            "required": [
+              "min",
+              "max"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "key",
+          "value"
+        ],
+        "title": "id",
+        "type": "object"
       },
       "title": "items",
-      "type": "object"
+      "type": "array"
     },
     "reward_modifiers": {
       "items": {

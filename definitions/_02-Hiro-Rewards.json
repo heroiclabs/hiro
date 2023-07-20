@@ -1,26 +1,35 @@
 {
   "guaranteed": {
-    "items": {
-      "item1": {
-        "min": 2,
-        "max": 2,
-        "multiple": 1
+    "items": [
+      {
+        "key": "item1",
+        "value": {
+          "max": 2,
+          "min": 2,
+          "multiple": 1
+        }
       },
-      "item2": {
-        "min": 10,
-        "max": 100,
-        "multiple": 5
+      {
+        "key": "item2",
+        "value": {
+          "max": 100,
+          "min": 10,
+          "multiple": 5
+        }
       }
-    }
+    ]
   },
   "weighted": [
     {
-      "currencies": {
-        "currency1": {
-          "min": 100,
-          "max": 200
+      "currencies": [
+        {
+          "key": "currency1",
+          "value": {
+            "max": 200,
+            "min": 100
+          }
         }
-      },
+      ],
       "weight": 5
     }
   ],
