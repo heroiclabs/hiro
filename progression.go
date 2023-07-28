@@ -51,7 +51,7 @@ type ProgressionSystem interface {
 	GetProgression(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*Progression, error)
 
 	// UpdateProgression updates the count of a progression, spending any associated cost, and optionally claiming any reward if possible.
-	UpdateProgression(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionIDs []string, amount int64, autoClaim bool) (map[string]*Progression, error)
+	UpdateProgression(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, progressionIDs []string, amount int64, autoClaim bool) (map[string]*Progression, error)
 
 	// ClaimProgression claims one or more progressions which have met the conditions to be claimed and have their rewards granted.
 	ClaimProgression(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, progressionIDs []string) (map[string]*Progression, error)
