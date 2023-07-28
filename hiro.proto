@@ -69,9 +69,71 @@ enum RpcId {
 
   RPC_ID_LEADERBOARDS_CONFIG_GET = 38;
 
+  RPC_ID_PROGRESSION_GET = 39;
+  RPC_ID_PROGRESSION_UPDATE = 40;
+  RPC_ID_PROGRESSION_CLAIM = 41;
+
   // Server to server RPCs
   RPC_ID_ECONOMY_PLACEMENT_SUCCESS = 1001;
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
+}
+
+// A progression element which can be unlocked to access further progressions.
+message Progression {
+  // The ID of the progression.
+  string id = 1;
+  // The name of the progression. May be an i18n code.
+  string name = 2;
+  // A description of the progression. May be an i18n code.
+  string description = 3;
+  // The category to group the progression together with others.
+  string category = 4;
+  // The IDs which are a precondition on the progress to be made on this progression.
+  repeated string precondition_ids = 5;
+  // The count of the progression.
+  int64 count = 6;
+  // The maximum count of the progression.
+  int64 max_count = 7;
+  // The cost per count, if any.
+  ProgressionCost cost = 8;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 9;
+  // Claim time, if any.
+  int64 claim_time_sec = 10;
+  // The outcome (rolled) reward for the progression.
+  Reward reward = 11;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 12;
+}
+
+// The cost(s) associated with a progression.
+message ProgressionCost {
+  // The items which will be deducted.
+  map<string, int64> items = 1;
+  // The currencies which will be deducted.
+  map<string, int64> currencies = 2;
+}
+
+// The progressions returned by the server.
+message ProgressionList {
+  // The progressions visible to the user, including those not yet visible.
+  map<string, Progression> progressions = 1;
+}
+
+// Request to update a progression.
+message ProgressionUpdateRequest {
+  // Progression ID(s) to update.
+  repeated string ids = 1;
+  // Amount to update by.
+  int64 amount = 2;
+  // Whether or not to also claim this progression, if possible.
+  bool claim = 3;
+}
+
+// Request to claim one or more progressions.
+message ProgressionClaimRequest {
+  // Progression ID(s) to claim.
+  repeated string ids = 1;
 }
 
 // An achievement which is a numeric task which can be unlocked and has an optional reward.
