@@ -69,9 +69,95 @@ enum RpcId {
 
   RPC_ID_LEADERBOARDS_CONFIG_GET = 38;
 
+  RPC_ID_EVENT_LEADERBOARD_GET = 42;
+  RPC_ID_EVENT_LEADERBOARD_UPDATE = 43;
+  RPC_ID_EVENT_LEADERBOARD_CLAIM = 44;
+
   // Server to server RPCs
   RPC_ID_ECONOMY_PLACEMENT_SUCCESS = 1001;
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
+}
+
+// Details about a specific event leaderboard.
+message EventLeaderboard {
+  // Event leaderboard ID.
+  string id = 1;
+  // The name of the progression. May be an i18n code.
+  string name = 2;
+  // A description of the progression. May be an i18n code.
+  string description = 3;
+  // The category to group the progression together with others.
+  string category = 4;
+  // Score ordering.
+  bool ascending = 5;
+  // Score submission operator.
+  string operator = 6;
+  // Time when the event starts.
+  int64 start_time_sec = 7;
+  // Time when the event ends.
+  int64 end_time_sec = 8;
+  // Time when the event expires.
+  int64 expiry_time_sec = 9;
+  // Whether or not the event will automatically grant rewards, or the user must claim them once available.
+  bool auto_claim = 10;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 11;
+  // Claim time, if any.
+  int64 claim_time_sec = 12;
+  // The outcome (rolled) reward for the progression.
+  Reward reward = 13;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 14;
+  // Current participant count.
+  int64 count = 15;
+  // Maximum participant count.
+  int64 max_count = 16;
+  // Maximum number of score submissions per participant.
+  int64 max_num_score = 17;
+  // Participants and their scores.
+  repeated EventLeaderboardScore scores = 18;
+}
+
+// A single participant entry to an event leaderboard.
+message EventLeaderboardScore {
+  // User ID.
+  string id = 1;
+  // Username.
+  string username = 2;
+  // Time when the user joined the event leaderboard.
+  int64 create_time_sec = 3;
+  // Time when the user last submitted a score.
+  int64 update_time_sec = 4;
+  // Rank within the event leaderboard.
+  int64 rank = 5;
+  // Score.
+  int64 score = 6;
+  // Subscore.
+  int64 subscore = 7;
+  // Number of score submissions.
+  int64 num_scores = 8;
+}
+
+// Find and retrieve an event leaderboard by ID, automatically joining the event if necessary.
+message EventLeaderboardGet {
+  // Event leaderboard ID to get, and join if necessary/possible.
+  string id = 1;
+}
+
+// Submit a score to an event leaderboard.
+message EventLeaderboardUpdate {
+  // Event leaderboard ID.
+  string id = 1;
+  // Score.
+  int64 score = 2;
+  // Subscore.
+  int64 subscore = 3;
+}
+
+// Claim the available reward for an event leaderboard by ID.
+message EventLeaderboardClaim {
+  // Event leaderboard ID to claim.
+  string id = 1;
 }
 
 // An achievement which is a numeric task which can be unlocked and has an optional reward.
