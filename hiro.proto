@@ -116,8 +116,18 @@ message EventLeaderboard {
   int64 max_num_score = 17;
   // Participants and their scores.
   repeated EventLeaderboardScore scores = 18;
-  // The various rewards for event leaderboard progression as defined by tier.
-  map<int32, AvailableRewards> tiered_rewards = 20;
+  // The various rewards for event leaderboard progression as defined by tier and rank range.
+  map<int32, EventLeaderboardTieredRewardRange> tiered_rewards = 20;
+}
+
+// A reward range within a specific tier based on ranks.
+message EventLeaderboardTieredRewardRange {
+  // The start rank (inclusive).
+  int32 rank_start = 1;
+  // The end rank (exclusive).
+  int32 rank_end = 2;
+  // The available rewards for this range.
+  AvailableRewards available_rewards = 3;
 }
 
 // A single participant entry to an event leaderboard.
