@@ -124,7 +124,7 @@ message EventLeaderboard {
 message EventLeaderboardTieredRewardRange {
   // The start rank (inclusive).
   int32 rank_start = 1;
-  // The end rank (exclusive).
+  // The end rank (inclusive).
   int32 rank_end = 2;
   // The available rewards for this range.
   AvailableRewards available_rewards = 3;

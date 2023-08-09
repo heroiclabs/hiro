@@ -547,7 +547,7 @@ type EventLeaderboardTieredRewardRange struct {
 
 	// The start rank (inclusive).
 	RankStart int32 `protobuf:"varint,1,opt,name=rank_start,json=rankStart,proto3" json:"rank_start,omitempty"`
-	// The end rank (exclusive).
+	// The end rank (inclusive).
 	RankEnd int32 `protobuf:"varint,2,opt,name=rank_end,json=rankEnd,proto3" json:"rank_end,omitempty"`
 	// The available rewards for this range.
 	AvailableRewards *AvailableRewards `protobuf:"bytes,3,opt,name=available_rewards,json=availableRewards,proto3" json:"available_rewards,omitempty"`
