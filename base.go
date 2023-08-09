@@ -221,9 +221,11 @@ func WithInventorySystem(configFile string, register bool) SystemConfig {
 }
 
 // WithLeaderboardsSystem configures a LeaderboardsSystem type.
-func WithLeaderboardsSystem(validateWriteScore ...ValidateWriteScoreFn) SystemConfig {
+func WithLeaderboardsSystem(configFile string, register bool, validateWriteScore ...ValidateWriteScoreFn) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeLeaderboards,
+		configFile: configFile,
+		register:   register,
 
 		extra: validateWriteScore,
 	}
