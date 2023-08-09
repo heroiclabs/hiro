@@ -82,11 +82,11 @@ enum RpcId {
 message EventLeaderboard {
   // Event leaderboard ID.
   string id = 1;
-  // The name of the progression. May be an i18n code.
+  // The name of the event leaderboard. May be an i18n code.
   string name = 2;
-  // A description of the progression. May be an i18n code.
+  // A description of the event leaderboard. May be an i18n code.
   string description = 3;
-  // The category to group the progression together with others.
+  // The category to group the event leaderboard together with others.
   string category = 4;
   // Score ordering.
   bool ascending = 5;
@@ -104,7 +104,7 @@ message EventLeaderboard {
   AvailableRewards available_rewards = 11;
   // Claim time, if any.
   int64 claim_time_sec = 12;
-  // The outcome (rolled) reward for the progression.
+  // The outcome (rolled) reward for the event leaderboard.
   Reward reward = 13;
   // Additional metadata properties.
   map<string, string> additional_properties = 14;
@@ -116,6 +116,8 @@ message EventLeaderboard {
   int64 max_num_score = 17;
   // Participants and their scores.
   repeated EventLeaderboardScore scores = 18;
+  // The various rewards for event leaderboard progression as defined by tier.
+  map<int32, AvailableRewards> tiered_rewards = 20;
 }
 
 // A single participant entry to an event leaderboard.
@@ -136,6 +138,26 @@ message EventLeaderboardScore {
   int64 subscore = 7;
   // Number of score submissions.
   int64 num_scores = 8;
+  // The user's tier in the event leaderboard.
+  int32 tier = 9;
+}
+
+// A view of a single event leaderboard segment.
+message EventLeaderboardSegment {
+  // The ID of the segment.
+  string id = 1;
+  // The ID of the event leaderboard this segment belongs to.
+  string event_leaderboard_id = 2;
+  // The tier of the segment.
+  int32 tier = 3;
+  // The available rewards for the segment.
+  AvailableRewards available_rewards = 4;
+  // The amount of promotion zone slots at the top of the segment.
+  int32 promotion_zone_count = 5;
+  // The amount of demotion zone slots at the bottom of the segment.
+  int32 demotion_zone_count = 6;
+  // Participants and their scores.
+  repeated EventLeaderboardScore scores = 7;
 }
 
 // Find and retrieve an event leaderboard by ID, automatically joining the event if necessary.
