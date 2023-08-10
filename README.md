@@ -36,7 +36,7 @@ The game framework initializes and returns the configured gameplay systems with 
 
 ```go
 func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
-	systems, err := hiro.Init(ctx, logger, nk, initializer, "hiro.bin", 
+	systems, err := hiro.Init(ctx, logger, nk, initializer, "hiro.bin", "LicenseKey"
 		hiro.WithEconomySystem("economy.json", true),
 		hiro.WithEnergySystem("energy.json", true),
 		hiro.WithInventorySystem("inventory.json", true))
