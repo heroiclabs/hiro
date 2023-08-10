@@ -5,6 +5,9 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [Unreleased]
+
+
 ## [1.0.3] - 2023-08-10
 ### Added
 - Add enum value options to proto definition as code generation hints for Unreal Engine.
