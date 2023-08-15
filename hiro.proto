@@ -503,28 +503,6 @@ message EconomyGrantRequest {
   repeated RewardModifier reward_modifiers = 2;
 }
 
-// Rewards granted to the player.
-message Reward {
-  // The items granted.
-  map<string, int64> items = 1;
-  // The currencies granted.
-  map<string, int64> currencies = 2;
-  // The energy granted.
-  map<string, int32> energies = 3;
-  // The energy modifier granted.
-  repeated RewardEnergyModifier energy_modifiers = 4;
-  // The reward modifiers granted.
-  repeated RewardModifier reward_modifiers = 5;
-  // When the reward was granted, in UNIX time.
-  int64 grant_time_sec = 6;
-}
-
-// A list of rewards granted to the player.
-message RewardList {
-  // The rewards granted.
-  repeated Reward rewards = 1;
-}
-
 // Energy modifier granted.
 message RewardEnergyModifier {
   // The ID of they modifier granted.
@@ -551,6 +529,28 @@ message RewardModifier {
   int64 value = 4;
   // The duration of the item modifier in seconds.
   uint64 duration_sec = 5;
+}
+
+// Rewards granted to the player.
+message Reward {
+  // The items granted.
+  map<string, int64> items = 1;
+  // The currencies granted.
+  map<string, int64> currencies = 2;
+  // The energy granted.
+  map<string, int32> energies = 3;
+  // The energy modifier granted.
+  repeated RewardEnergyModifier energy_modifiers = 4;
+  // The reward modifiers granted.
+  repeated RewardModifier reward_modifiers = 5;
+  // When the reward was granted, in UNIX time.
+  int64 grant_time_sec = 6;
+}
+
+// A list of rewards granted to the player.
+message RewardList {
+  // The rewards granted.
+  repeated Reward rewards = 1;
 }
 
 // A range of possible values.
@@ -627,19 +627,6 @@ message AvailableRewardsRewardModifier {
   RewardRangeInt64 duration_sec = 5;
 }
 
-// The available rewards and their probabilistic weights.
-message AvailableRewards {
-  // The guaranteed contents to grant.
-  AvailableRewardsContents guaranteed = 1;
-  // The weighted contents to grant.
-  repeated AvailableRewardsContents weighted = 2;
-  // The number of weighted reward contents to select from among the possibilities.
-  int64 max_rolls = 3;
-  /* The total weight that all weighted reward contents are calculated against. Auto calculated if set to 0 but can be
-     set to a higher value to introduce a chance of a "none" reward. */
-  int64 total_weight = 4;
-}
-
 // The reward contents for available rewards.
 message AvailableRewardsContents {
   // All possible items from this particular reward.
@@ -656,6 +643,19 @@ message AvailableRewardsContents {
   repeated AvailableRewardsRewardModifier reward_modifiers = 6;
   // The weight of the reward contents.
   int64 weight = 7;
+}
+
+// The available rewards and their probabilistic weights.
+message AvailableRewards {
+  // The guaranteed contents to grant.
+  AvailableRewardsContents guaranteed = 1;
+  // The weighted contents to grant.
+  repeated AvailableRewardsContents weighted = 2;
+  // The number of weighted reward contents to select from among the possibilities.
+  int64 max_rolls = 3;
+  /* The total weight that all weighted reward contents are calculated against. Auto calculated if set to 0 but can be
+     set to a higher value to introduce a chance of a "none" reward. */
+  int64 total_weight = 4;
 }
 
 // Request to create a store item purchase intent.
