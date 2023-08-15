@@ -463,18 +463,18 @@ message InventoryGrantRequest {
   map<string, int64> items = 1;
 }
 
-// Represents a request to update properties of instanced items.
-message InventoryUpdateItemsRequest {
-  // The item updates to action, keyed by item instance ID.
-  map<string, InventoryUpdateItemProperties> item_updates = 1;
-}
-
 // The typed properties to update in an instanced inventory item.
 message InventoryUpdateItemProperties {
   // The properties with string values.
   map<string, string> string_properties = 1;
   // The properties with numeric values.
   map<string, double> numeric_properties = 2;
+}
+
+// Represents a request to update properties of instanced items.
+message InventoryUpdateItemsRequest {
+  // The item updates to action, keyed by item instance ID.
+  map<string, InventoryUpdateItemProperties> item_updates = 1;
 }
 
 // Response from granting or purchasing items. This contains updated inventory data, if changed.
