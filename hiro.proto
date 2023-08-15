@@ -370,7 +370,6 @@ message InventoryConsumeRewards {
   map<string, RewardList> rewards = 2;
 }
 
-
 // Response from granting or purchasing items. This contains updated inventory data, if changed.
 message InventoryUpdateAck {
   // Update inventory data, if changed.
@@ -909,6 +908,14 @@ message Unlockable {
   map<string, string> additional_properties = 15;
 }
 
+// The cost to purchase an additional unlockable active slot.
+message UnlockableSlotCost {
+  // The items which will be deducted.
+  map<string, int64> items = 1;
+  // The currencies which will be deducted.
+  map<string, int64> currencies = 2;
+}
+
 // A list of unlockables currently owned by a user.
 message UnlockablesList {
   // The list of unlockables owned by a user.
@@ -925,14 +932,6 @@ message UnlockablesList {
   UnlockableSlotCost slot_cost = 6;
   // The newly granted unlockable, if any.
   string instance_id = 7;
-}
-
-// The cost to purchase an additional unlockable active slot.
-message UnlockableSlotCost {
-  // The items which will be deducted.
-  map<string, int64> items = 1;
-  // The currencies which will be deducted.
-  map<string, int64> currencies = 2;
 }
 
 // A reward that was granted upon unlock, and a new state of all unlockables.
