@@ -146,6 +146,56 @@ enum EconomyStoreType {
   ECONOMY_STORE_TYPE_GOOGLE_PLAY = 2;
 }
 
+// Energy modifier granted.
+message RewardEnergyModifier {
+  // The ID of they modifier granted.
+  string id = 1;
+  // The energy modifier operator.
+  string operator = 2;
+  // The value to apply. Its behavior depends on the operator.
+  int64 value = 3;
+  // The duration of the energy modifier in seconds.
+  uint64 duration_sec = 4;
+  // The weight of the energy modifier, if weighted. Otherwise, -1.
+  int64 weight = 5;
+}
+
+// A reward modifier temporally adjusts the way all rewards are handled in the economy.
+message RewardModifier {
+  // The ID of the reward content to modify.
+  string id = 1;
+  // The type of reward content to modify.
+  string type = 2;
+  // The operator to apply.
+  string operator = 3;
+  // The value to apply. Its behavior depends on the operator.
+  int64 value = 4;
+  // The duration of the item modifier in seconds.
+  uint64 duration_sec = 5;
+}
+
+// Rewards granted to the player.
+message Reward {
+  // The items granted.
+  map<string, int64> items = 1;
+  // The currencies granted.
+  map<string, int64> currencies = 2;
+  // The energy granted.
+  map<string, int32> energies = 3;
+  // The energy modifier granted.
+  repeated RewardEnergyModifier energy_modifiers = 4;
+  // The reward modifiers granted.
+  repeated RewardModifier reward_modifiers = 5;
+  // When the reward was granted, in UNIX time.
+  int64 grant_time_sec = 6;
+}
+
+// A list of rewards granted to the player.
+message RewardList {
+  // The rewards granted.
+  repeated Reward rewards = 1;
+}
+
 // A range of possible values.
 message RewardRangeInt32 {
   // The minimum bound of the range.
@@ -251,6 +301,14 @@ message AvailableRewards {
   int64 total_weight = 4;
 }
 
+// A contributor to this donation.
+message EconomyDonationContributor {
+  // The user ID that contributed.
+  string user_id = 1;
+  // The amount they've donated.
+  int64 count = 2;
+}
+
 // A donation for a user.
 message EconomyDonation {
   // The user that owns this donation.
@@ -285,20 +343,18 @@ message EconomyDonation {
   map<string, string> additional_properties = 15;
 }
 
-// A contributor to this donation.
-message EconomyDonationContributor {
-  // The user ID that contributed.
-  string user_id = 1;
-  // The amount they've donated.
-  int64 count = 2;
-}
-
 // An acknowledgement of the idempotent creation of a donation for a user.
 message EconomyDonationAck {
   // True if the donation is newly created.
   bool created = 1;
   // The donation requested which may already be active or newly created.
   EconomyDonation donation = 2;
+}
+
+// A list of active donations returned for some set of users.
+message EconomyDonationsList {
+  // The active donations for a set of users.
+  repeated EconomyDonation donations = 1;
 }
 
 // Request to claim one or more donations.
@@ -341,20 +397,12 @@ message EconomyDonationsByUserList {
   map<string, EconomyDonationsList> user_donations = 1;
 }
 
-// A list of active donations returned for some set of users.
-message EconomyDonationsList {
-  // The active donations for a set of users.
-  repeated EconomyDonation donations = 1;
-}
-
-// The response data with the available store items.
-message EconomyList {
-  // The list of store items.
-  repeated EconomyListStoreItem store_items = 1;
-  // The list of placements.
-  repeated EconomyListPlacement placements = 2;
-  // The set of active donations for the current user.
-  map<string, EconomyDonation> donations = 3;
+// The cost(s) associated with a store item.
+message EconomyListStoreItemCost {
+  // The virtual currencies, if any.
+  map<string, int64> currencies = 1;
+  // The required purchase SKU, if any.
+  string sku = 2;
 }
 
 // Represents an individual available store items.
@@ -375,14 +423,6 @@ message EconomyListStoreItem {
   map<string, string> additional_properties = 7;
 }
 
-// The cost(s) associated with a store item.
-message EconomyListStoreItemCost {
-  // The virtual currencies, if any.
-  map<string, int64> currencies = 1;
-  // The required purchase SKU, if any.
-  string sku = 2;
-}
-
 // Represents an available ad placement.
 message EconomyListPlacement {
   // The ID of the placement.
@@ -393,6 +433,16 @@ message EconomyListPlacement {
   AvailableRewards available_rewards = 3;
   // Additional metadata properties.
   map<string, string> additional_properties = 4;
+}
+
+// The response data with the available store items.
+message EconomyList {
+  // The list of store items.
+  repeated EconomyListStoreItem store_items = 1;
+  // The list of placements.
+  repeated EconomyListPlacement placements = 2;
+  // The set of active donations for the current user.
+  map<string, EconomyDonation> donations = 3;
 }
 
 // A item owned by the current user.
@@ -499,56 +549,6 @@ message EconomyGrantRequest {
   map<string, int64> currencies = 1;
   // The reward modifiers to grant.
   repeated RewardModifier reward_modifiers = 2;
-}
-
-// Energy modifier granted.
-message RewardEnergyModifier {
-  // The ID of they modifier granted.
-  string id = 1;
-  // The energy modifier operator.
-  string operator = 2;
-  // The value to apply. Its behavior depends on the operator.
-  int64 value = 3;
-  // The duration of the energy modifier in seconds.
-  uint64 duration_sec = 4;
-  // The weight of the energy modifier, if weighted. Otherwise, -1.
-  int64 weight = 5;
-}
-
-// A reward modifier temporally adjusts the way all rewards are handled in the economy.
-message RewardModifier {
-  // The ID of the reward content to modify.
-  string id = 1;
-  // The type of reward content to modify.
-  string type = 2;
-  // The operator to apply.
-  string operator = 3;
-  // The value to apply. Its behavior depends on the operator.
-  int64 value = 4;
-  // The duration of the item modifier in seconds.
-  uint64 duration_sec = 5;
-}
-
-// Rewards granted to the player.
-message Reward {
-  // The items granted.
-  map<string, int64> items = 1;
-  // The currencies granted.
-  map<string, int64> currencies = 2;
-  // The energy granted.
-  map<string, int32> energies = 3;
-  // The energy modifier granted.
-  repeated RewardEnergyModifier energy_modifiers = 4;
-  // The reward modifiers granted.
-  repeated RewardModifier reward_modifiers = 5;
-  // When the reward was granted, in UNIX time.
-  int64 grant_time_sec = 6;
-}
-
-// A list of rewards granted to the player.
-message RewardList {
-  // The rewards granted.
-  repeated Reward rewards = 1;
 }
 
 // Request to create a store item purchase intent.
