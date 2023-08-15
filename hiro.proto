@@ -973,6 +973,13 @@ message TeamWriteChatMessageRequest {
   string content = 2;
 }
 
+// The unlockable cost, may relate to starting an unlock, or fully completing it.
+message UnlockableCost {
+  // The items which will be deducted.
+  map<string, int64> items = 1;
+  // The currencies which will be deducted.
+  map<string, int64> currencies = 2;
+}
 
 // A single unlockable object.
 message Unlockable {
@@ -1024,14 +1031,6 @@ message UnlockablesList {
   UnlockableSlotCost slot_cost = 6;
   // The newly granted unlockable, if any.
   string instance_id = 7;
-}
-
-// The unlockable cost, may relate to starting an unlock, or fully completing it.
-message UnlockableCost {
-  // The items which will be deducted.
-  map<string, int64> items = 1;
-  // The currencies which will be deducted.
-  map<string, int64> currencies = 2;
 }
 
 // The cost to purchase an additional unlockable active slot.
