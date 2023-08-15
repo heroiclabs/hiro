@@ -146,6 +146,111 @@ enum EconomyStoreType {
   ECONOMY_STORE_TYPE_GOOGLE_PLAY = 2;
 }
 
+// A range of possible values.
+message RewardRangeInt32 {
+  // The minimum bound of the range.
+  int32 min = 1;
+  // The maximum bound of the range.
+  int32 max = 2;
+  // A number that the result must be a multiple of.
+  int32 multiple = 3;
+}
+
+// A range of possible values.
+message RewardRangeInt64 {
+  // The minimum bound of the range.
+  int64 min = 1;
+  // The maximum bound of the range.
+  int64 max = 2;
+  // A number that the result must be a multiple of.
+  int64 multiple = 3;
+}
+
+// A possible item reward.
+message AvailableRewardsItem {
+  // The possible count of the reward.
+  RewardRangeInt64 count = 1;
+}
+
+// A possible item reward.
+message AvailableRewardsItemSet {
+  // The number of items to draw from the set.
+  RewardRangeInt64 count = 1;
+  // The number of repeat items that may be drawn from the set. Also includes the user's inventory.
+  int64 max_repeats = 2;
+  // Drawn items must exist in the intersection of these sets.
+  repeated string set = 3;
+}
+
+// A possible currency reward.
+message AvailableRewardsCurrency {
+  // The possible count of the currency.
+  RewardRangeInt64 count = 1;
+}
+
+// A possible energy reward.
+message AvailableRewardsEnergy {
+  // The possible count of the energy.
+  RewardRangeInt32 count = 1;
+}
+
+// A possible energy reward.
+message AvailableRewardsEnergyModifier {
+  // The ID of the energy to modify.
+  string id = 1;
+  // The operator of the energy modifier.
+  string operator = 2;
+  // The value of the energy modifier.
+  RewardRangeInt64 value = 3;
+  // The possible duration of the modifier.
+  RewardRangeInt64 duration_sec = 4;
+}
+
+// A possible modifier reward.
+message AvailableRewardsRewardModifier {
+  // The ID of the reward item, currency, energy, or energy modifier to modify.
+  string id = 1;
+  // The type of reward content to modify.
+  string type = 2;
+  // The operator of the modifier.
+  string operator = 3;
+  // The value of the modifier.
+  RewardRangeInt64 value = 4;
+  // The possible duration of the modifier.
+  RewardRangeInt64 duration_sec = 5;
+}
+
+// The reward contents for available rewards.
+message AvailableRewardsContents {
+  // All possible items from this particular reward.
+  map<string, AvailableRewardsItem> items = 1;
+  // All possible item sets from this particular reward.
+  repeated AvailableRewardsItemSet item_sets = 2;
+  // All possible currencies from this particular reward.
+  map<string, AvailableRewardsCurrency> currencies = 3;
+  // All possible energies from this particular reward.
+  map<string, AvailableRewardsEnergy> energies = 4;
+  // All possible energy reward modifiers from this particular reward.
+  repeated AvailableRewardsEnergyModifier energy_modifiers = 5;
+  // All reward modifiers from this particular reward.
+  repeated AvailableRewardsRewardModifier reward_modifiers = 6;
+  // The weight of the reward contents.
+  int64 weight = 7;
+}
+
+// The available rewards and their probabilistic weights.
+message AvailableRewards {
+  // The guaranteed contents to grant.
+  AvailableRewardsContents guaranteed = 1;
+  // The weighted contents to grant.
+  repeated AvailableRewardsContents weighted = 2;
+  // The number of weighted reward contents to select from among the possibilities.
+  int64 max_rolls = 3;
+  /* The total weight that all weighted reward contents are calculated against. Auto calculated if set to 0 but can be
+     set to a higher value to introduce a chance of a "none" reward. */
+  int64 total_weight = 4;
+}
+
 // A donation for a user.
 message EconomyDonation {
   // The user that owns this donation.
@@ -444,111 +549,6 @@ message Reward {
 message RewardList {
   // The rewards granted.
   repeated Reward rewards = 1;
-}
-
-// A range of possible values.
-message RewardRangeInt32 {
-  // The minimum bound of the range.
-  int32 min = 1;
-  // The maximum bound of the range.
-  int32 max = 2;
-  // A number that the result must be a multiple of.
-  int32 multiple = 3;
-}
-
-// A range of possible values.
-message RewardRangeInt64 {
-  // The minimum bound of the range.
-  int64 min = 1;
-  // The maximum bound of the range.
-  int64 max = 2;
-  // A number that the result must be a multiple of.
-  int64 multiple = 3;
-}
-
-// A possible item reward.
-message AvailableRewardsItem {
-  // The possible count of the reward.
-  RewardRangeInt64 count = 1;
-}
-
-// A possible item reward.
-message AvailableRewardsItemSet {
-  // The number of items to draw from the set.
-  RewardRangeInt64 count = 1;
-  // The number of repeat items that may be drawn from the set. Also includes the user's inventory.
-  int64 max_repeats = 2;
-  // Drawn items must exist in the intersection of these sets.
-  repeated string set = 3;
-}
-
-// A possible currency reward.
-message AvailableRewardsCurrency {
-  // The possible count of the currency.
-  RewardRangeInt64 count = 1;
-}
-
-// A possible energy reward.
-message AvailableRewardsEnergy {
-  // The possible count of the energy.
-  RewardRangeInt32 count = 1;
-}
-
-// A possible energy reward.
-message AvailableRewardsEnergyModifier {
-  // The ID of the energy to modify.
-  string id = 1;
-  // The operator of the energy modifier.
-  string operator = 2;
-  // The value of the energy modifier.
-  RewardRangeInt64 value = 3;
-  // The possible duration of the modifier.
-  RewardRangeInt64 duration_sec = 4;
-}
-
-// A possible modifier reward.
-message AvailableRewardsRewardModifier {
-  // The ID of the reward item, currency, energy, or energy modifier to modify.
-  string id = 1;
-  // The type of reward content to modify.
-  string type = 2;
-  // The operator of the modifier.
-  string operator = 3;
-  // The value of the modifier.
-  RewardRangeInt64 value = 4;
-  // The possible duration of the modifier.
-  RewardRangeInt64 duration_sec = 5;
-}
-
-// The reward contents for available rewards.
-message AvailableRewardsContents {
-  // All possible items from this particular reward.
-  map<string, AvailableRewardsItem> items = 1;
-  // All possible item sets from this particular reward.
-  repeated AvailableRewardsItemSet item_sets = 2;
-  // All possible currencies from this particular reward.
-  map<string, AvailableRewardsCurrency> currencies = 3;
-  // All possible energies from this particular reward.
-  map<string, AvailableRewardsEnergy> energies = 4;
-  // All possible energy reward modifiers from this particular reward.
-  repeated AvailableRewardsEnergyModifier energy_modifiers = 5;
-  // All reward modifiers from this particular reward.
-  repeated AvailableRewardsRewardModifier reward_modifiers = 6;
-  // The weight of the reward contents.
-  int64 weight = 7;
-}
-
-// The available rewards and their probabilistic weights.
-message AvailableRewards {
-  // The guaranteed contents to grant.
-  AvailableRewardsContents guaranteed = 1;
-  // The weighted contents to grant.
-  repeated AvailableRewardsContents weighted = 2;
-  // The number of weighted reward contents to select from among the possibilities.
-  int64 max_rolls = 3;
-  /* The total weight that all weighted reward contents are calculated against. Auto calculated if set to 0 but can be
-     set to a higher value to introduce a chance of a "none" reward. */
-  int64 total_weight = 4;
 }
 
 // Request to create a store item purchase intent.
