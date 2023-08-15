@@ -124,6 +124,38 @@ enum RpcId {
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
 }
 
+// A sub-achievement is an achievement which belongs as part of a parent achievement.
+message SubAchievement {
+  // The category to group the sub-achievement together with others.
+  string category = 1;
+  // The UNIX timestamp for when the sub-achievement reward was claimed, or zero if unclaimed.
+  int64 claim_time_sec = 2;
+  // The count of the sub-achievement.
+  int64 count = 3;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 4;
+  // A description of the sub-achievement. May be an i18n code.
+  string description = 5;
+  // The UNIX timestamp when this sub-achievement will expire. This may be before its next reset. A zero means it does not expire.
+  int64 expire_time_sec = 6;
+  // The ID of the sub-achievement.
+  string id = 7;
+  // The maximum count of the sub-achievement.
+  int64 max_count = 8;
+  // The name of the sub-achievement. May be an i18n code.
+  string name = 9;
+  // The IDs which are a precondition on the progress to be made on this sub-achievement.
+  repeated string precondition_ids = 10;
+  // The UNIX timestamp when this sub-achievement will reset.
+  int64 reset_time_sec = 11;
+  // The outcome (rolled) reward for the achievement, if any.
+  Reward reward = 12;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 13;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 14;
+}
+
 // An achievement which is a numeric task which can be unlocked and has an optional reward.
 message Achievement {
   // The category to group the achievement together with others.
@@ -162,38 +194,6 @@ message Achievement {
   map<string, SubAchievement> sub_achievements = 17;
   // Additional metadata properties.
   map<string, string> additional_properties = 18;
-}
-
-// A sub-achievement is an achievement which belongs as part of a parent achievement.
-message SubAchievement {
-  // The category to group the sub-achievement together with others.
-  string category = 1;
-  // The UNIX timestamp for when the sub-achievement reward was claimed, or zero if unclaimed.
-  int64 claim_time_sec = 2;
-  // The count of the sub-achievement.
-  int64 count = 3;
-  // The UNIX timestamp for the current server time.
-  int64 current_time_sec = 4;
-  // A description of the sub-achievement. May be an i18n code.
-  string description = 5;
-  // The UNIX timestamp when this sub-achievement will expire. This may be before its next reset. A zero means it does not expire.
-  int64 expire_time_sec = 6;
-  // The ID of the sub-achievement.
-  string id = 7;
-  // The maximum count of the sub-achievement.
-  int64 max_count = 8;
-  // The name of the sub-achievement. May be an i18n code.
-  string name = 9;
-  // The IDs which are a precondition on the progress to be made on this sub-achievement.
-  repeated string precondition_ids = 10;
-  // The UNIX timestamp when this sub-achievement will reset.
-  int64 reset_time_sec = 11;
-  // The outcome (rolled) reward for the achievement, if any.
-  Reward reward = 12;
-  // The available reward and its probabilities.
-  AvailableRewards available_rewards = 13;
-  // Additional metadata properties.
-  map<string, string> additional_properties = 14;
 }
 
 // The achievements returned by the server.
