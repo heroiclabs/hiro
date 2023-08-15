@@ -146,28 +146,6 @@ enum EconomyStoreType {
   ECONOMY_STORE_TYPE_GOOGLE_PLAY = 2;
 }
 
-// The inventory in the economy or owned by user.
-message Inventory {
-  // The items in the player's inventory.
-  map<string, InventoryItem> items = 1;
-}
-
-// Request to consume some amount of items.
-message InventoryConsumeRequest {
-  // Item amounts to consume, if any.
-  map<string, int64> items = 1;
-  // Whether or not to allow overconsumption.
-  bool overconsume = 2;
-}
-
-// Updated inventory and rewards granted from consumption.
-message InventoryConsumeRewards {
-  // Updated inventory data, if changed.
-  Inventory inventory = 1;
-  // Consume rewards by item ID, if any.
-  map<string, RewardList> rewards = 2;
-}
-
 // A donation for a user.
 message EconomyDonation {
   // The user that owns this donation.
@@ -369,6 +347,29 @@ message InventoryUpdateItemsRequest {
   // The item updates to action, keyed by item instance ID.
   map<string, InventoryUpdateItemProperties> item_updates = 1;
 }
+
+// The inventory in the economy or owned by user.
+message Inventory {
+  // The items in the player's inventory.
+  map<string, InventoryItem> items = 1;
+}
+
+// Request to consume some amount of items.
+message InventoryConsumeRequest {
+  // Item amounts to consume, if any.
+  map<string, int64> items = 1;
+  // Whether or not to allow overconsumption.
+  bool overconsume = 2;
+}
+
+// Updated inventory and rewards granted from consumption.
+message InventoryConsumeRewards {
+  // Updated inventory data, if changed.
+  Inventory inventory = 1;
+  // Consume rewards by item ID, if any.
+  map<string, RewardList> rewards = 2;
+}
+
 
 // Response from granting or purchasing items. This contains updated inventory data, if changed.
 message InventoryUpdateAck {
