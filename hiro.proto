@@ -737,6 +737,18 @@ message EconomyPurchaseAck {
   bool is_sandbox_purchase = 4;
 }
 
+// A modifier that may change energy behaviour.
+message EnergyModifier {
+  // The modifier operator.
+  string operator = 1;
+  // The modifier value, if applicable.
+  int32 value = 2;
+  // The UNIX timestamp when the modifier became active.
+  int64 start_time_sec = 3;
+  // The UNIX timestamp when the modifier ends.
+  int64 end_time_sec = 4;
+}
+
 // Information about a single energy type.
 message Energy {
   // The unique energy identifier.
@@ -769,18 +781,6 @@ message Energy {
 message EnergyList {
   // Energy types keyed on the energy identifier.
   map<string, Energy> energies = 1;
-}
-
-// A modifier that may change energy behaviour.
-message EnergyModifier {
-  // The modifier operator.
-  string operator = 1;
-  // The modifier value, if applicable.
-  int32 value = 2;
-  // The UNIX timestamp when the modifier became active.
-  int64 start_time_sec = 3;
-  // The UNIX timestamp when the modifier ends.
-  int64 end_time_sec = 4;
 }
 
 // Request to spend one or more energy amounts.
