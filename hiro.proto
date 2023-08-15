@@ -797,12 +797,6 @@ message EnergySpendReward {
   Reward reward = 2;
 }
 
-// A list of leaderboard configurations.
-message LeaderboardConfigList {
-  // The list of leaderboard configurations.
-  repeated LeaderboardConfig leaderboard_configs = 1;
-}
-
 // A leaderboard configuration.
 message LeaderboardConfig {
   // The leaderboard id.
@@ -817,6 +811,12 @@ message LeaderboardConfig {
   bool authoritative = 5;
   // List of regional leaderboards of the leaderboard, if any.
   repeated string regions = 6;
+}
+
+// A list of leaderboard configurations.
+message LeaderboardConfigList {
+  // The list of leaderboard configurations.
+  repeated LeaderboardConfig leaderboard_configs = 1;
 }
 
 // The states of a Tutorial.
@@ -835,12 +835,6 @@ enum TutorialState {
   TUTORIAL_STATE_ABANDONED = 5;
 }
 
-// The full tutorial statuses for a given user.
-message TutorialList {
-  // All available tutorials.
-  map<string, Tutorial> tutorials = 1;
-}
-
 // An individual set of tutorial steps.
 message Tutorial {
   // The unique tutorial identifier.
@@ -857,6 +851,12 @@ message Tutorial {
   int64 complete_time_sec = 6;
   // Additional metadata properties.
   map<string, string> additional_properties = 7;
+}
+
+// The full tutorial statuses for a given user.
+message TutorialList {
+  // All available tutorials.
+  map<string, Tutorial> tutorials = 1;
 }
 
 // A request to accept a tutorial.
