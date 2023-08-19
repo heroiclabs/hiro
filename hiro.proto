@@ -135,40 +135,56 @@ enum RpcId {
 message EventLeaderboard {
   // Event leaderboard ID.
   string id = 1;
-  // The name of the progression. May be an i18n code.
+  // The name of the event leaderboard. May be an i18n code.
   string name = 2;
-  // A description of the progression. May be an i18n code.
+  // A description of the event leaderboard. May be an i18n code.
   string description = 3;
-  // The category to group the progression together with others.
+  // The category to group the event leaderboard together with others.
   string category = 4;
   // Score ordering.
   bool ascending = 5;
   // Score submission operator.
   string operator = 6;
+  // The tier of this instance of the event leaderboard.
+  int32 tier = 7;
   // Time when the event starts.
-  int64 start_time_sec = 7;
+  int64 start_time_sec = 8;
   // Time when the event ends.
-  int64 end_time_sec = 8;
+  int64 end_time_sec = 9;
   // Time when the event expires.
-  int64 expiry_time_sec = 9;
+  int64 expiry_time_sec = 10;
   // Whether or not the event will automatically grant rewards, or the user must claim them once available.
-  bool auto_claim = 10;
+  bool auto_claim = 11;
   // The available reward and its probabilities.
-  AvailableRewards available_rewards = 11;
+  AvailableRewards available_rewards = 12;
+  // The possible reward tiers for this instance of the event leaderboard.
+  repeated EventLeaderboardRewardTier reward_tiers = 13;
   // Claim time, if any.
-  int64 claim_time_sec = 12;
-  // The outcome (rolled) reward for the progression.
-  Reward reward = 13;
+  int64 claim_time_sec = 14;
+  // The outcome (rolled) reward for the event leaderboard.
+  Reward reward = 15;
   // Additional metadata properties.
-  map<string, string> additional_properties = 14;
+  map<string, string> additional_properties = 16;
   // Current participant count.
-  int64 count = 15;
+  int64 count = 17;
   // Maximum participant count.
-  int64 max_count = 16;
+  int64 max_count = 18;
   // Maximum number of score submissions per participant.
-  int64 max_num_score = 17;
+  int64 max_num_score = 19;
   // Participants and their scores.
-  repeated EventLeaderboardScore scores = 18;
+  repeated EventLeaderboardScore scores = 20;
+}
+
+// A reward range within a specific tier based on ranks.
+message EventLeaderboardRewardTier {
+  // The maximum rank (inclusive).
+  int32 rank_max = 1;
+  // The minimum rank (inclusive).
+  int32 rank_min = 2;
+  // The available rewards for this range.
+  AvailableRewards available_rewards = 3;
+  // Change in tier for this rank range.
+  int32 tier_change = 4;
 }
 
 // A single participant entry to an event leaderboard.
