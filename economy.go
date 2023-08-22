@@ -139,6 +139,15 @@ type EconomyConfigStoreItemCost struct {
 type EconomySystem interface {
 	System
 
+	// RewardCreate prepares a new reward configuration to be filled in and used later.
+	RewardCreate() *EconomyConfigReward
+
+	// RewardRoll takes a reward configuration and rolls an actual reward from it, applying all appropriate rules.
+	RewardRoll(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, rewardConfig *EconomyConfigReward) (*Reward, error)
+
+	// RewardGrant updates a user's economy, inventory, and/or energy models with the contents of a rolled reward.
+	RewardGrant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, reward *Reward, metadata map[string]interface{}) error
+
 	// DonationClaim will claim donation rewards for a user and the given donation IDs.
 	DonationClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, donationIDs []string) (*EconomyDonationsList, error)
 
