@@ -153,26 +153,24 @@ message EventLeaderboard {
   int64 end_time_sec = 9;
   // Time when the event expires.
   int64 expiry_time_sec = 10;
-  // Whether or not the event will automatically grant rewards, or the user must claim them once available.
-  bool auto_claim = 11;
   // The available reward and its probabilities.
-  AvailableRewards available_rewards = 12;
+  AvailableRewards available_rewards = 11;
   // The possible reward tiers for this instance of the event leaderboard.
-  repeated EventLeaderboardRewardTier reward_tiers = 13;
+  repeated EventLeaderboardRewardTier reward_tiers = 12;
   // Claim time, if any.
-  int64 claim_time_sec = 14;
+  int64 claim_time_sec = 13;
   // The outcome (rolled) reward for the event leaderboard.
-  Reward reward = 15;
+  Reward reward = 14;
   // Additional metadata properties.
-  map<string, string> additional_properties = 16;
+  map<string, string> additional_properties = 15;
   // Current participant count.
-  int64 count = 17;
+  int64 count = 16;
   // Maximum participant count.
-  int64 max_count = 18;
+  int64 max_count = 17;
   // Maximum number of score submissions per participant.
-  int64 max_num_score = 19;
+  int64 max_num_score = 18;
   // Participants and their scores.
-  repeated EventLeaderboardScore scores = 20;
+  repeated EventLeaderboardScore scores = 19;
 }
 
 // A reward range within a specific tier based on ranks.

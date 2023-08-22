@@ -32,7 +32,6 @@ type EventLeaderboardsConfigLeaderboard struct {
 	Operator             string                                          `json:"operator"`
 	ResetSchedule        string                                          `json:"reset_schedule"`
 	CohortSize           int                                             `json:"cohort_size"`
-	AutoClaim            bool                                            `json:"auto_claim"`
 	AdditionalProperties map[string]string                               `json:"additional_properties"`
 	MaxNumScore          int                                             `json:"max_num_score"`
 	RewardTiers          []*EventLeaderboardsConfigLeaderboardRewardTier `json:"reward_tiers"`
