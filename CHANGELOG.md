@@ -5,8 +5,9 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
-
+## [1.1.0] - 2023-08-23
+### Added
+- Add server interface for Event Leaderboards gameplay system.
 
 ## [1.0.4] - 2023-08-22
 ### Changed
