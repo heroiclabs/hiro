@@ -171,6 +171,10 @@ message EventLeaderboard {
   int64 max_num_score = 18;
   // Participants and their scores.
   repeated EventLeaderboardScore scores = 19;
+  // Indicates if the event is still active, and scores can be submitted.
+  bool is_active = 20;
+  // Indicates if the event is over and its reward can be claimed.
+  bool can_claim = 21;
 }
 
 // A reward range within a specific tier based on ranks.
