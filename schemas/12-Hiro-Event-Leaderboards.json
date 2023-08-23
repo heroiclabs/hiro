@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "event_leaderboards": {
+      "type": "object",
+      "title": "event_leaderboards",
+      "patternProperties": {
+        ".{1,}": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "name",
+              "pattern": ".{1,}"
+            },
+            "description": {
+              "type": "string",
+              "title": "description",
+              "pattern": ".{1,}"
+            },
+            "category": {
+              "type": "string",
+              "title": "category",
+              "pattern": ".{1,}"
+            },
+            "ascending": {
+              "type": "boolean",
+              "title": "ascending"
+            },
+            "operator": {
+              "type": "string",
+              "title": "operator",
+              "enum": [
+                "best",
+                "set",
+                "incr",
+                "decr",
+                "increment",
+                "decrement"
+              ]
+            },
+            "reset_schedule": {
+              "type": "string",
+              "title": "reset_schedule"
+            },
+            "cohort_size": {
+              "type": "number",
+              "title": "cohort_size",
+              "minimum": 1
+            },
+            "additional_properties": {
+              "type": "object",
+              "title": "additional_properties",
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "string"
+                }
+              }
+            },
+            "max_num_score": {
+              "type": "number",
+              "title": "max_num_score",
+              "minimum": 0
+            },
+            "tiers": {
+              "type": "number",
+              "title": "tiers",
+              "minimum": 1
+            },
+            "max_idle_tier_drop": {
+              "type": "number",
+              "title": "max_idle_tier_drop",
+              "minimum": 0
+            },
+            "start_time_sec": {
+              "type": "number",
+              "title": "start_time_sec",
+              "minimum": 0
+            },
+            "end_time_sec": {
+              "type": "number",
+              "title": "end_time_sec",
+              "minimum": 0
+            },
+            "duration": {
+              "type": "number",
+              "title": "duration",
+              "minimum": 0
+            },
+            "reward_tiers": {
+              "type": "array",
+              "title": "reward_tiers",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "rank_min": {
+                    "type": "number",
+                    "title": "rank_min",
+                    "minimum": 0
+                  },
+                  "rank_max": {
+                    "type": "number",
+                    "title": "rank_max",
+                    "minimum": 0
+                  },
+                  "tier_change": {
+                    "type": "number",
+                    "title": "tier_change",
+                    "minimum": 0
+                  },
+                  "reward": {
+                    "title": "reward",
+                    "$ref": "Hiro-Rewards"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["event_leaderboards"],
+  "type": "object"
+}
