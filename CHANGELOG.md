@@ -5,9 +5,16 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.2.0] - 2023-08-29
+### Added
+- Add server interface for Stats gameplay system.
+
 ### Changed
 - Pin dependencies to compatible versions of Nakama common at v1.28.1.
+- Return all Reward Tiers when an Event Leaderboard is fetched for the current user.
+
+### Fixed
+- Fix weighted reward error when definition is empty (instead of nil).
 
 ## [1.1.0] - 2023-08-23
 ### Added
