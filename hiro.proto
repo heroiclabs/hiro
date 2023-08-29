@@ -123,12 +123,81 @@ enum RpcId {
   // Claim an event leaderboard reward for a user.
   RPC_ID_EVENT_LEADERBOARD_CLAIM = 44 [(input) = "EventLeaderboardClaim", (output) = "EventLeaderboard"];
 
+  // Get all stats.
+  RPC_ID_STATS_GET = 45 [(input) = "", (output) = "StatList"];
+  // Update private stats.
+  RPC_ID_STATS_UPDATE = 46 [(input) = "StatUpdateRequest", (output) = "StatList"];
+
   //--- Server to server RPCs ---//
 
   // Webhook RPC to handle Rewarded Video Ad placement success callbacks.
   RPC_ID_ECONOMY_PLACEMENT_SUCCESS = 1001;
   // Webhook RPC to handle Rewarded Video Ad placement failure callbacks.
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
+}
+
+// Indicate how a stats update should be handled.
+enum StatUpdateOperator {
+  // Unspecified. Defaults to Set.
+  STAT_UPDATE_OPERATOR_UNSPECIFIED = 0;
+  // Set the given value, overwriting any previous one.
+  STAT_UPDATE_OPERATOR_SET = 1;
+  // Increment or decrement the existing value by the given amount. Equivalent to Set if no previous value existed.
+  STAT_UPDATE_OPERATOR_DELTA = 2;
+  // Use the new value if it's lower than the existing one. Equivalent to Set if no previous value existed.
+  STAT_UPDATE_OPERATOR_MIN = 3;
+  // Use the new value if it's higher than the existing one. Equivalent to Set if no previous value existed.
+  STAT_UPDATE_OPERATOR_MAX = 4;
+}
+
+// Describes a single stat update.
+message StatUpdate {
+  // Name.
+  string name = 1;
+  // Value.
+  int64 value = 2;
+  // Operator.
+  StatUpdateOperator operator = 3;
+}
+
+// Request an optionally batched stats update.
+message StatUpdateRequest {
+  // Public stat updates.
+  repeated StatUpdate public = 1;
+  // Private stat updates.
+  repeated StatUpdate private = 2;
+}
+
+// A list of stats all belonging to one user.
+message StatList {
+  // Public stat names and their associated data.
+  map<string, Stat> public = 1;
+  // Private stat names and their associated data.
+  map<string, Stat> private = 2;
+}
+
+// A single stat with associated information.
+message Stat {
+  // Name.
+  string name = 1;
+  // Indicator if this belongs to public or private stats.
+  bool public = 2;
+  // Update time in UTC seconds.
+  int64 update_time_sec = 3;
+  // Current value.
+  int64 value = 4;
+  // Number of values submitted.
+  int64 count = 5;
+  // Total of all submitted values.
+  int64 total = 6;
+  // Smallest value submitted.
+  int64 min = 7;
+  // Largest value submitted.
+  int64 max = 8;
+  // First value submitted.
+  int64 first = 9;
+  // Latest value submitted.
+  int64 last = 10;
 }
 
 // Details about a specific event leaderboard.
@@ -155,8 +224,8 @@ message EventLeaderboard {
   int64 expiry_time_sec = 10;
   // The available reward and its probabilities.
   AvailableRewards available_rewards = 11;
-  // The possible reward tiers for this instance of the event leaderboard.
-  repeated EventLeaderboardRewardTier reward_tiers = 12;
+  // The possible reward tiers for this instance of the event leaderboard, based on its current tier.
+  map<int32, EventLeaderboardRewardTiers> reward_tiers = 12;
   // Claim time, if any.
   int64 claim_time_sec = 13;
   // The outcome (rolled) reward for the event leaderboard.
@@ -175,6 +244,12 @@ message EventLeaderboard {
   bool is_active = 20;
   // Indicates if the event is over and its reward can be claimed.
   bool can_claim = 21;
+}
+
+// A event leaderboard's tier-specific set of rewards.
+message EventLeaderboardRewardTiers {
+  // Possible reward tiers.
+  repeated EventLeaderboardRewardTier reward_tiers = 1;
 }
 
 // A reward range within a specific tier based on ranks.

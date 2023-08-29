@@ -5,23 +5,23 @@
       "type": "object",
       "title": "event_leaderboards",
       "patternProperties": {
-        ".{1,}": {
+        ".+": {
           "type": "object",
           "properties": {
             "name": {
               "type": "string",
               "title": "name",
-              "pattern": ".{1,}"
+              "pattern": ".+"
             },
             "description": {
               "type": "string",
               "title": "description",
-              "pattern": ".{1,}"
+              "pattern": ".+"
             },
             "category": {
               "type": "string",
               "title": "category",
-              "pattern": ".{1,}"
+              "pattern": ".+"
             },
             "ascending": {
               "type": "boolean",
@@ -52,7 +52,7 @@
               "type": "object",
               "title": "additional_properties",
               "patternProperties": {
-                ".{1,}": {
+                ".+": {
                   "type": "string"
                 }
               }
@@ -88,29 +88,34 @@
               "minimum": 0
             },
             "reward_tiers": {
-              "type": "array",
+              "type": "object",
               "title": "reward_tiers",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "rank_min": {
-                    "type": "number",
-                    "title": "rank_min",
-                    "minimum": 0
-                  },
-                  "rank_max": {
-                    "type": "number",
-                    "title": "rank_max",
-                    "minimum": 0
-                  },
-                  "tier_change": {
-                    "type": "number",
-                    "title": "tier_change",
-                    "minimum": 0
-                  },
-                  "reward": {
-                    "title": "reward",
-                    "$ref": "Hiro-Rewards"
+              "patternProperties": {
+                "[0-9]+": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "rank_min": {
+                        "type": "number",
+                        "title": "rank_min",
+                        "minimum": 0
+                      },
+                      "rank_max": {
+                        "type": "number",
+                        "title": "rank_max",
+                        "minimum": 0
+                      },
+                      "tier_change": {
+                        "type": "number",
+                        "title": "tier_change",
+                        "minimum": 0
+                      },
+                      "reward": {
+                        "title": "reward",
+                        "$ref": "Hiro-Rewards"
+                      }
+                    }
                   }
                 }
               }

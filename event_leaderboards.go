@@ -25,21 +25,21 @@ type EventLeaderboardsConfig struct {
 }
 
 type EventLeaderboardsConfigLeaderboard struct {
-	Name                 string                                          `json:"name"`
-	Description          string                                          `json:"description"`
-	Category             string                                          `json:"category"`
-	Ascending            bool                                            `json:"ascending"`
-	Operator             string                                          `json:"operator"`
-	ResetSchedule        string                                          `json:"reset_schedule"`
-	CohortSize           int                                             `json:"cohort_size"`
-	AdditionalProperties map[string]string                               `json:"additional_properties"`
-	MaxNumScore          int                                             `json:"max_num_score"`
-	RewardTiers          []*EventLeaderboardsConfigLeaderboardRewardTier `json:"reward_tiers"`
-	Tiers                int                                             `json:"tiers"`
-	MaxIdleTierDrop      int                                             `json:"max_idle_tier_drop"`
-	StartTimeSec         int64                                           `json:"start_time_sec"`
-	EndTimeSec           int64                                           `json:"end_time_sec"`
-	Duration             int64                                           `json:"duration"`
+	Name                 string                                                     `json:"name"`
+	Description          string                                                     `json:"description"`
+	Category             string                                                     `json:"category"`
+	Ascending            bool                                                       `json:"ascending"`
+	Operator             string                                                     `json:"operator"`
+	ResetSchedule        string                                                     `json:"reset_schedule"`
+	CohortSize           int                                                        `json:"cohort_size"`
+	AdditionalProperties map[string]string                                          `json:"additional_properties"`
+	MaxNumScore          int                                                        `json:"max_num_score"`
+	RewardTiers          map[string][]*EventLeaderboardsConfigLeaderboardRewardTier `json:"reward_tiers"`
+	Tiers                int                                                        `json:"tiers"`
+	MaxIdleTierDrop      int                                                        `json:"max_idle_tier_drop"`
+	StartTimeSec         int64                                                      `json:"start_time_sec"`
+	EndTimeSec           int64                                                      `json:"end_time_sec"`
+	Duration             int64                                                      `json:"duration"`
 }
 
 type EventLeaderboardsConfigLeaderboardRewardTier struct {

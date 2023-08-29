@@ -17,26 +17,28 @@
       "start_time_sec": 0,
       "end_time_sec": 0,
       "duration": 86400,
-      "reward_tiers": [
-        {
-          "rank_min": 1,
-          "rank_max": 10,
-          "tier_change": 1,
-          "reward": {}
-        },
-        {
-          "rank_min": 11,
-          "rank_max": 90,
-          "tier_change": 0,
-          "reward": {}
-        },
-        {
-          "rank_min": 91,
-          "rank_max": 100,
-          "tier_change": -1,
-          "reward": {}
-        }
-      ]
+      "reward_tiers": {
+        "0": [
+          {
+            "rank_min": 1,
+            "rank_max": 10,
+            "tier_change": 1,
+            "reward": {}
+          },
+          {
+            "rank_min": 11,
+            "rank_max": 90,
+            "tier_change": 0,
+            "reward": {}
+          },
+          {
+            "rank_min": 91,
+            "rank_max": 100,
+            "tier_change": -1,
+            "reward": {}
+          }
+        ]
+      }
     }
   }
 }

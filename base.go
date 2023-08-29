@@ -234,9 +234,10 @@ func WithLeaderboardsSystem(configFile string, register bool, validateWriteScore
 }
 
 // WithStatsSystem configures a StatsSystem type and optionally registers its RPCs with the game server.
-func WithStatsSystem(register bool) SystemConfig {
+func WithStatsSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeStats,
+		configFile: configFile,
 		register:   register,
 	}
 }
