@@ -168,14 +168,6 @@ message StatUpdateRequest {
   repeated StatUpdate private = 2;
 }
 
-// A list of stats all belonging to one user.
-message StatList {
-  // Public stat names and their associated data.
-  map<string, Stat> public = 1;
-  // Private stat names and their associated data.
-  map<string, Stat> private = 2;
-}
-
 // A single stat with associated information.
 message Stat {
   // Name.
@@ -200,217 +192,12 @@ message Stat {
   int64 last = 10;
 }
 
-// Details about a specific event leaderboard.
-message EventLeaderboard {
-  // Event leaderboard ID.
-  string id = 1;
-  // The name of the event leaderboard. May be an i18n code.
-  string name = 2;
-  // A description of the event leaderboard. May be an i18n code.
-  string description = 3;
-  // The category to group the event leaderboard together with others.
-  string category = 4;
-  // Score ordering.
-  bool ascending = 5;
-  // Score submission operator.
-  string operator = 6;
-  // The tier of this instance of the event leaderboard.
-  int32 tier = 7;
-  // Time when the event starts.
-  int64 start_time_sec = 8;
-  // Time when the event ends.
-  int64 end_time_sec = 9;
-  // Time when the event expires.
-  int64 expiry_time_sec = 10;
-  // The available reward and its probabilities.
-  AvailableRewards available_rewards = 11;
-  // The possible reward tiers for this instance of the event leaderboard, based on its current tier.
-  map<int32, EventLeaderboardRewardTiers> reward_tiers = 12;
-  // Claim time, if any.
-  int64 claim_time_sec = 13;
-  // The outcome (rolled) reward for the event leaderboard.
-  Reward reward = 14;
-  // Additional metadata properties.
-  map<string, string> additional_properties = 15;
-  // Current participant count.
-  int64 count = 16;
-  // Maximum participant count.
-  int64 max_count = 17;
-  // Maximum number of score submissions per participant.
-  int64 max_num_score = 18;
-  // Participants and their scores.
-  repeated EventLeaderboardScore scores = 19;
-  // Indicates if the event is still active, and scores can be submitted.
-  bool is_active = 20;
-  // Indicates if the event is over and its reward can be claimed.
-  bool can_claim = 21;
-}
-
-// A event leaderboard's tier-specific set of rewards.
-message EventLeaderboardRewardTiers {
-  // Possible reward tiers.
-  repeated EventLeaderboardRewardTier reward_tiers = 1;
-}
-
-// A reward range within a specific tier based on ranks.
-message EventLeaderboardRewardTier {
-  // The maximum rank (inclusive).
-  int32 rank_max = 1;
-  // The minimum rank (inclusive).
-  int32 rank_min = 2;
-  // The available rewards for this range.
-  AvailableRewards available_rewards = 3;
-  // Change in tier for this rank range.
-  int32 tier_change = 4;
-}
-
-// A single participant entry to an event leaderboard.
-message EventLeaderboardScore {
-  // User ID.
-  string id = 1;
-  // Username.
-  string username = 2;
-  // Time when the user joined the event leaderboard.
-  int64 create_time_sec = 3;
-  // Time when the user last submitted a score.
-  int64 update_time_sec = 4;
-  // Rank within the event leaderboard.
-  int64 rank = 5;
-  // Score.
-  int64 score = 6;
-  // Subscore.
-  int64 subscore = 7;
-  // Number of score submissions.
-  int64 num_scores = 8;
-}
-
-// Find and retrieve an event leaderboard by ID, automatically joining the event if necessary.
-message EventLeaderboardGet {
-  // Event leaderboard ID to get, and join if necessary/possible.
-  string id = 1;
-}
-
-// Submit a score to an event leaderboard.
-message EventLeaderboardUpdate {
-  // Event leaderboard ID.
-  string id = 1;
-  // Score.
-  int64 score = 2;
-  // Subscore.
-  int64 subscore = 3;
-}
-
-// Claim the available reward for an event leaderboard by ID.
-message EventLeaderboardClaim {
-  // Event leaderboard ID to claim.
-  string id = 1;
-}
-
-// An achievement which is a numeric task which can be unlocked and has an optional reward.
-message Achievement {
-  // The category to group the achievement together with others.
-  string category = 1;
-  // The UNIX timestamp for when the achievement reward was claimed, or zero if unclaimed.
-  int64 claim_time_sec = 2;
-  // The UNIX timestamp for when the achievement total reward was claimed, or zero if unclaimed.
-  int64 total_claim_time_sec = 3;
-  // The count of the achievement.
-  int64 count = 4;
-  // The UNIX timestamp for the current server time.
-  int64 current_time_sec = 5;
-  // A description of the achievement. May be an i18n code.
-  string description = 6;
-  // The UNIX timestamp when this achievement will expire. This may be before its next reset. A zero means it does not expire.
-  int64 expire_time_sec = 7;
-  // The ID of the achievement.
-  string id = 8;
-  // The maximum count of the achievement.
-  int64 max_count = 9;
-  // The name of the achievement. May be an i18n code.
-  string name = 10;
-  // The IDs which are a precondition on the progress to be made on this achievement.
-  repeated string precondition_ids = 11;
-  // The UNIX timestamp when this achievement will reset.
-  int64 reset_time_sec = 12;
-  // The available reward and its probabilities.
-  AvailableRewards available_rewards = 13;
-  // The outcome (rolled) reward for the achievement.
-  Reward reward = 14;
-  // The available reward and its probabilities for the total completion of the achievement, if any.
-  AvailableRewards available_total_reward = 15;
-  // The outcome (rolled) reward for the total completion of the achievement, if any.
-  Reward total_reward = 16;
-  // The sub-achievements for this achievement, if any.
-  map<string, SubAchievement> sub_achievements = 17;
-  // Additional metadata properties.
-  map<string, string> additional_properties = 18;
-}
-
-// A sub-achievement is an achievement which belongs as part of a parent achievement.
-message SubAchievement {
-  // The category to group the sub-achievement together with others.
-  string category = 1;
-  // The UNIX timestamp for when the sub-achievement reward was claimed, or zero if unclaimed.
-  int64 claim_time_sec = 2;
-  // The count of the sub-achievement.
-  int64 count = 3;
-  // The UNIX timestamp for the current server time.
-  int64 current_time_sec = 4;
-  // A description of the sub-achievement. May be an i18n code.
-  string description = 5;
-  // The UNIX timestamp when this sub-achievement will expire. This may be before its next reset. A zero means it does not expire.
-  int64 expire_time_sec = 6;
-  // The ID of the sub-achievement.
-  string id = 7;
-  // The maximum count of the sub-achievement.
-  int64 max_count = 8;
-  // The name of the sub-achievement. May be an i18n code.
-  string name = 9;
-  // The IDs which are a precondition on the progress to be made on this sub-achievement.
-  repeated string precondition_ids = 10;
-  // The UNIX timestamp when this sub-achievement will reset.
-  int64 reset_time_sec = 11;
-  // The outcome (rolled) reward for the achievement, if any.
-  Reward reward = 12;
-  // The available reward and its probabilities.
-  AvailableRewards available_rewards = 13;
-  // Additional metadata properties.
-  map<string, string> additional_properties = 14;
-}
-
-// The achievements returned by the server.
-message AchievementList {
-  // The one off achievements which can be progressed or are unlocked by the user alongside all on the server.
-  map<string, Achievement> achievements = 1;
-  // The repeat achievements which can be progressed or are unlocked by the user alongside all on the server.
-  map<string, Achievement> repeat_achievements = 2;
-}
-
-// Claim rewards with one or more achievement on the server.
-message AchievementsClaimRequest {
-  // The set of achievement IDs to claim.
-  repeated string ids = 1;
-  // Whether or not to claim the total reward as well, if available.
-  bool claim_total_reward = 2;
-}
-
-// Get all achievements for the user alongside all on the server.
-message AchievementsGetRequest {}
-
-// A response when an achievements update is acknowledged by the server.
-message AchievementsUpdateAck {
-  // The one off achievements which can be progressed or are unlocked by the user.
-  map<string, Achievement> achievements = 1;
-  // The repeat achievements which can be progressed or are unlocked by the user.
-  map<string, Achievement> repeat_achievements = 2;
-}
-
-// Update progress on one or more achievements on the server.
-message AchievementsUpdateRequest {
-  // The set of achievement IDs to progress.
-  repeated string ids = 1;
-  // The amount of progress to increment on the achievements.
-  int64 amount = 2;
+// A list of stats all belonging to one user.
+message StatList {
+  // Public stat names and their associated data.
+  map<string, Stat> public = 1;
+  // Private stat names and their associated data.
+  map<string, Stat> private = 2;
 }
 
 // A receipt reply from a channel message send operation.
@@ -461,278 +248,6 @@ enum EconomyStoreType {
   ECONOMY_STORE_TYPE_GOOGLE_PLAY = 2;
 }
 
-// The inventory in the economy or owned by user.
-message Inventory {
-  // The items in the player's inventory.
-  map<string, InventoryItem> items = 1;
-}
-
-// Request to consume some amount of items.
-message InventoryConsumeRequest {
-  // Item amounts to consume, if any.
-  map<string, int64> items = 1;
-  // Whether or not to allow overconsumption.
-  bool overconsume = 2;
-}
-
-// Updated inventory and rewards granted from consumption.
-message InventoryConsumeRewards {
-  // Updated inventory data, if changed.
-  Inventory inventory = 1;
-  // Consume rewards by item ID, if any.
-  map<string, RewardList> rewards = 2;
-}
-
-// A donation for a user.
-message EconomyDonation {
-  // The user that owns this donation.
-  string user_id = 1;
-  // The count of how much of the donation has already been claimed.
-  int64 claim_count = 2;
-  // The count of how much has been contributed by users.
-  int64 count = 3;
-  // The UNIX timestamp for the current time.
-  int64 current_time_sec = 4;
-  // The description for the donation, if any. May be an i18n code.
-  string description = 5;
-  // The UNIX timestamp when the donation expires.
-  int64 expire_time_sec = 6;
-  // The ID of the donation.
-  string id = 7;
-  // The maximum "units" which can be collected.
-  int64 max_count = 8;
-  // The name for the donation, if any. May be an i18n code.
-  string name = 9;
-  // The configuration for rewards granted to the recipient of the donation.
-  AvailableRewards recipient_available_rewards = 10;
-  // The maximum number of donations per contributor.
-  int64 user_contribution_max_count = 11;
-  // The contributors to this donation, if any.
-  repeated EconomyDonationContributor contributors = 12;
-  // The configuration for rewards granted to the contributor of the donation.
-  AvailableRewards contributor_available_rewards = 13;
-  // All rewards claimed by the recipient of this donation.
-  repeated Reward recipient_rewards = 14;
-  // Additional metadata properties.
-  map<string, string> additional_properties = 15;
-}
-
-// A contributor to this donation.
-message EconomyDonationContributor {
-  // The user ID that contributed.
-  string user_id = 1;
-  // The amount they've donated.
-  int64 count = 2;
-}
-
-// An acknowledgement of the idempotent creation of a donation for a user.
-message EconomyDonationAck {
-  // True if the donation is newly created.
-  bool created = 1;
-  // The donation requested which may already be active or newly created.
-  EconomyDonation donation = 2;
-}
-
-// Request to claim one or more donations.
-message EconomyDonationClaimRequest {
-  // The donation IDs to claim.
-  repeated string donation_ids = 1;
-}
-
-// Response to claiming one or more donations.
-message EconomyDonationClaimRewards {
-  // All active donations for the user.
-  EconomyDonationsList donations = 1;
-  // The rewards from this particular claim.
-  map<string, RewardList> claimed_rewards = 2;
-}
-
-// Request to give a donation to a user.
-message EconomyDonationGiveRequest {
-  // The user ID who receives the donation.
-  string user_id = 1;
-  // The donation ID to give into.
-  string donation_id = 2;
-}
-
-// Request to get donations for one or more users.
-message EconomyDonationGetRequest {
-  // The user IDs to get donations for.
-  repeated string ids = 1;
-}
-
-// Request a new donation.
-message EconomyDonationRequest {
-  // The donation ID to request, defined on the server.
-  string donation_id = 1;
-}
-
-// A map of active donations keyed by user ID.
-message EconomyDonationsByUserList {
-  // The active donations grouped by user ID.
-  map<string, EconomyDonationsList> user_donations = 1;
-}
-
-// A list of active donations returned for some set of users.
-message EconomyDonationsList {
-  // The active donations for a set of users.
-  repeated EconomyDonation donations = 1;
-}
-
-// The response data with the available store items.
-message EconomyList {
-  // The list of store items.
-  repeated EconomyListStoreItem store_items = 1;
-  // The list of placements.
-  repeated EconomyListPlacement placements = 2;
-  // The set of active donations for the current user.
-  map<string, EconomyDonation> donations = 3;
-}
-
-// Represents an individual available store items.
-message EconomyListStoreItem {
-  // The category to group the item together with others.
-  string category = 1;
-  // The cost of the item.
-  EconomyListStoreItemCost cost = 2;
-  // A description of the item. May be an i18n code.
-  string description = 3;
-  // The ID of the item.
-  string id = 4;
-  // The name of the item. May be an i18n code.
-  string name = 5;
-  // The available rewards in this store item.
-  AvailableRewards available_rewards = 6;
-  // Additional metadata properties.
-  map<string, string> additional_properties = 7;
-}
-
-// The cost(s) associated with a store item.
-message EconomyListStoreItemCost {
-  // The virtual currencies, if any.
-  map<string, int64> currencies = 1;
-  // The required purchase SKU, if any.
-  string sku = 2;
-}
-
-// Represents an available ad placement.
-message EconomyListPlacement {
-  // The ID of the placement.
-  string id = 1;
-  // The reward obtained from this placement.
-  Reward reward = 2;
-  // The available rewards obtained from this placement.
-  AvailableRewards available_rewards = 3;
-  // Additional metadata properties.
-  map<string, string> additional_properties = 4;
-}
-
-// A item owned by the current user.
-message InventoryItem {
-  // The ID of the item.
-  string id = 1;
-  // The name of the item. May be an i18n code.
-  string name = 2;
-  // A description of the item. May be an i18n code.
-  string description = 3;
-  // The category to group the item together with others.
-  string category = 4;
-  // The sets the item is grouped into.
-  repeated string item_sets = 5;
-  // The current count of the item.
-  int64 count = 6;
-  // The maximum count which can be owned for this item.
-  int64 max_count = 7;
-  // Whether or not the item is stackable.
-  bool stackable = 8;
-  // Whether or not the item is consumable.
-  bool consumable = 9;
-  // The configuration for the reward to grant for consumption.
-  AvailableRewards consume_available_rewards = 10;
-  // The properties with string values.
-  map<string, string> string_properties = 11;
-  // The properties with numeric values.
-  map<string, double> numeric_properties = 12;
-  // A UNIX timestamp when the user acquired this item.
-  int64 owned_time_sec = 13;
-  // A UNIX timestamp when the item was updated.
-  int64 update_time_sec = 14;
-}
-
-// Request all inventory items in the economy.
-message InventoryListRequest {
-  // The category for the items to filter for, or empty for all.
-  string item_category = 1;
-}
-
-// Represents a request to grant items to the user.
-message InventoryGrantRequest {
-  // The items to grant.
-  map<string, int64> items = 1;
-}
-
-// Represents a request to update properties of instanced items.
-message InventoryUpdateItemsRequest {
-  // The item updates to action, keyed by item instance ID.
-  map<string, InventoryUpdateItemProperties> item_updates = 1;
-}
-
-// The typed properties to update in an instanced inventory item.
-message InventoryUpdateItemProperties {
-  // The properties with string values.
-  map<string, string> string_properties = 1;
-  // The properties with numeric values.
-  map<string, double> numeric_properties = 2;
-}
-
-// Response from granting or purchasing items. This contains updated inventory data, if changed.
-message InventoryUpdateAck {
-  // Update inventory data, if changed.
-  Inventory inventory = 1;
-}
-
-// Response for retrieving Inventory system data definitions.
-message InventoryList {
-  // The inventory items from definitions and the user.
-  map<string, InventoryItem> items = 1;
-}
-
-// Represents a request to retrieve available store items.
-message EconomyListRequest {
-  // The game client's store type.
-  EconomyStoreType store_type = 1;
-}
-
-// Represents a request to grant rewards to the user.
-message EconomyGrantRequest {
-  // The currencies to grant.
-  map<string, int64> currencies = 1;
-  // The reward modifiers to grant.
-  repeated RewardModifier reward_modifiers = 2;
-}
-
-// Rewards granted to the player.
-message Reward {
-  // The items granted.
-  map<string, int64> items = 1;
-  // The currencies granted.
-  map<string, int64> currencies = 2;
-  // The energy granted.
-  map<string, int32> energies = 3;
-  // The energy modifier granted.
-  repeated RewardEnergyModifier energy_modifiers = 4;
-  // The reward modifiers granted.
-  repeated RewardModifier reward_modifiers = 5;
-  // When the reward was granted, in UNIX time.
-  int64 grant_time_sec = 6;
-}
-
-// A list of rewards granted to the player.
-message RewardList {
-  // The rewards granted.
-  repeated Reward rewards = 1;
-}
-
 // Energy modifier granted.
 message RewardEnergyModifier {
   // The ID of they modifier granted.
@@ -761,35 +276,46 @@ message RewardModifier {
   uint64 duration_sec = 5;
 }
 
-// The available rewards and their probabilistic weights.
-message AvailableRewards {
-  // The guaranteed contents to grant.
-  AvailableRewardsContents guaranteed = 1;
-  // The weighted contents to grant.
-  repeated AvailableRewardsContents weighted = 2;
-  // The number of weighted reward contents to select from among the possibilities.
-  int64 max_rolls = 3;
-  /* The total weight that all weighted reward contents are calculated against. Auto calculated if set to 0 but can be
-     set to a higher value to introduce a chance of a "none" reward. */
-  int64 total_weight = 4;
+// Rewards granted to the player.
+message Reward {
+  // The items granted.
+  map<string, int64> items = 1;
+  // The currencies granted.
+  map<string, int64> currencies = 2;
+  // The energy granted.
+  map<string, int32> energies = 3;
+  // The energy modifier granted.
+  repeated RewardEnergyModifier energy_modifiers = 4;
+  // The reward modifiers granted.
+  repeated RewardModifier reward_modifiers = 5;
+  // When the reward was granted, in UNIX time.
+  int64 grant_time_sec = 6;
 }
 
-// The reward contents for available rewards.
-message AvailableRewardsContents {
-  // All possible items from this particular reward.
-  map<string, AvailableRewardsItem> items = 1;
-  // All possible item sets from this particular reward.
-  repeated AvailableRewardsItemSet item_sets = 2;
-  // All possible currencies from this particular reward.
-  map<string, AvailableRewardsCurrency> currencies = 3;
-  // All possible energies from this particular reward.
-  map<string, AvailableRewardsEnergy> energies = 4;
-  // All possible energy reward modifiers from this particular reward.
-  repeated AvailableRewardsEnergyModifier energy_modifiers = 5;
-  // All reward modifiers from this particular reward.
-  repeated AvailableRewardsRewardModifier reward_modifiers = 6;
-  // The weight of the reward contents.
-  int64 weight = 7;
+// A list of rewards granted to the player.
+message RewardList {
+  // The rewards granted.
+  repeated Reward rewards = 1;
+}
+
+// A range of possible values.
+message RewardRangeInt32 {
+  // The minimum bound of the range.
+  int32 min = 1;
+  // The maximum bound of the range.
+  int32 max = 2;
+  // A number that the result must be a multiple of.
+  int32 multiple = 3;
+}
+
+// A range of possible values.
+message RewardRangeInt64 {
+  // The minimum bound of the range.
+  int64 min = 1;
+  // The maximum bound of the range.
+  int64 max = 2;
+  // A number that the result must be a multiple of.
+  int64 multiple = 3;
 }
 
 // A possible item reward.
@@ -846,24 +372,392 @@ message AvailableRewardsRewardModifier {
   RewardRangeInt64 duration_sec = 5;
 }
 
-// A range of possible values.
-message RewardRangeInt32 {
-  // The minimum bound of the range.
-  int32 min = 1;
-  // The maximum bound of the range.
-  int32 max = 2;
-  // A number that the result must be a multiple of.
-  int32 multiple = 3;
+// The reward contents for available rewards.
+message AvailableRewardsContents {
+  // All possible items from this particular reward.
+  map<string, AvailableRewardsItem> items = 1;
+  // All possible item sets from this particular reward.
+  repeated AvailableRewardsItemSet item_sets = 2;
+  // All possible currencies from this particular reward.
+  map<string, AvailableRewardsCurrency> currencies = 3;
+  // All possible energies from this particular reward.
+  map<string, AvailableRewardsEnergy> energies = 4;
+  // All possible energy reward modifiers from this particular reward.
+  repeated AvailableRewardsEnergyModifier energy_modifiers = 5;
+  // All reward modifiers from this particular reward.
+  repeated AvailableRewardsRewardModifier reward_modifiers = 6;
+  // The weight of the reward contents.
+  int64 weight = 7;
 }
 
-// A range of possible values.
-message RewardRangeInt64 {
-  // The minimum bound of the range.
-  int64 min = 1;
-  // The maximum bound of the range.
-  int64 max = 2;
-  // A number that the result must be a multiple of.
-  int64 multiple = 3;
+// The available rewards and their probabilistic weights.
+message AvailableRewards {
+  // The guaranteed contents to grant.
+  AvailableRewardsContents guaranteed = 1;
+  // The weighted contents to grant.
+  repeated AvailableRewardsContents weighted = 2;
+  // The number of weighted reward contents to select from among the possibilities.
+  int64 max_rolls = 3;
+  /* The total weight that all weighted reward contents are calculated against. Auto calculated if set to 0 but can be
+     set to a higher value to introduce a chance of a "none" reward. */
+  int64 total_weight = 4;
+}
+
+
+// Find and retrieve an event leaderboard by ID, automatically joining the event if necessary.
+message EventLeaderboardGet {
+  // Event leaderboard ID to get, and join if necessary/possible.
+  string id = 1;
+}
+
+// Submit a score to an event leaderboard.
+message EventLeaderboardUpdate {
+  // Event leaderboard ID.
+  string id = 1;
+  // Score.
+  int64 score = 2;
+  // Subscore.
+  int64 subscore = 3;
+}
+
+// Claim the available reward for an event leaderboard by ID.
+message EventLeaderboardClaim {
+  // Event leaderboard ID to claim.
+  string id = 1;
+}
+
+// A single participant entry to an event leaderboard.
+message EventLeaderboardScore {
+  // User ID.
+  string id = 1;
+  // Username.
+  string username = 2;
+  // Time when the user joined the event leaderboard.
+  int64 create_time_sec = 3;
+  // Time when the user last submitted a score.
+  int64 update_time_sec = 4;
+  // Rank within the event leaderboard.
+  int64 rank = 5;
+  // Score.
+  int64 score = 6;
+  // Subscore.
+  int64 subscore = 7;
+  // Number of score submissions.
+  int64 num_scores = 8;
+}
+
+// A reward range within a specific tier based on ranks.
+message EventLeaderboardRewardTier {
+  // The maximum rank (inclusive).
+  int32 rank_max = 1;
+  // The minimum rank (inclusive).
+  int32 rank_min = 2;
+  // The available rewards for this range.
+  AvailableRewards available_rewards = 3;
+  // Change in tier for this rank range.
+  int32 tier_change = 4;
+}
+
+// A event leaderboard's tier-specific set of rewards.
+message EventLeaderboardRewardTiers {
+  // Possible reward tiers.
+  repeated EventLeaderboardRewardTier reward_tiers = 1;
+}
+
+// Details about a specific event leaderboard.
+message EventLeaderboard {
+  // Event leaderboard ID.
+  string id = 1;
+  // The name of the event leaderboard. May be an i18n code.
+  string name = 2;
+  // A description of the event leaderboard. May be an i18n code.
+  string description = 3;
+  // The category to group the event leaderboard together with others.
+  string category = 4;
+  // Score ordering.
+  bool ascending = 5;
+  // Score submission operator.
+  string operator = 6;
+  // The tier of this instance of the event leaderboard.
+  int32 tier = 7;
+  // Time when the event starts.
+  int64 start_time_sec = 8;
+  // Time when the event ends.
+  int64 end_time_sec = 9;
+  // Time when the event expires.
+  int64 expiry_time_sec = 10;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 11;
+  // The possible reward tiers for this instance of the event leaderboard, based on its current tier.
+  map<int32, EventLeaderboardRewardTiers> reward_tiers = 12;
+  // Claim time, if any.
+  int64 claim_time_sec = 13;
+  // The outcome (rolled) reward for the event leaderboard.
+  Reward reward = 14;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 15;
+  // Current participant count.
+  int64 count = 16;
+  // Maximum participant count.
+  int64 max_count = 17;
+  // Maximum number of score submissions per participant.
+  int64 max_num_score = 18;
+  // Participants and their scores.
+  repeated EventLeaderboardScore scores = 19;
+  // Indicates if the event is still active, and scores can be submitted.
+  bool is_active = 20;
+  // Indicates if the event is over and its reward can be claimed.
+  bool can_claim = 21;
+}
+
+// A contributor to this donation.
+message EconomyDonationContributor {
+  // The user ID that contributed.
+  string user_id = 1;
+  // The amount they've donated.
+  int64 count = 2;
+}
+
+// A donation for a user.
+message EconomyDonation {
+  // The user that owns this donation.
+  string user_id = 1;
+  // The count of how much of the donation has already been claimed.
+  int64 claim_count = 2;
+  // The count of how much has been contributed by users.
+  int64 count = 3;
+  // The UNIX timestamp for the current time.
+  int64 current_time_sec = 4;
+  // The description for the donation, if any. May be an i18n code.
+  string description = 5;
+  // The UNIX timestamp when the donation expires.
+  int64 expire_time_sec = 6;
+  // The ID of the donation.
+  string id = 7;
+  // The maximum "units" which can be collected.
+  int64 max_count = 8;
+  // The name for the donation, if any. May be an i18n code.
+  string name = 9;
+  // The configuration for rewards granted to the recipient of the donation.
+  AvailableRewards recipient_available_rewards = 10;
+  // The maximum number of donations per contributor.
+  int64 user_contribution_max_count = 11;
+  // The contributors to this donation, if any.
+  repeated EconomyDonationContributor contributors = 12;
+  // The configuration for rewards granted to the contributor of the donation.
+  AvailableRewards contributor_available_rewards = 13;
+  // All rewards claimed by the recipient of this donation.
+  repeated Reward recipient_rewards = 14;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 15;
+}
+
+// An acknowledgement of the idempotent creation of a donation for a user.
+message EconomyDonationAck {
+  // True if the donation is newly created.
+  bool created = 1;
+  // The donation requested which may already be active or newly created.
+  EconomyDonation donation = 2;
+}
+
+// A list of active donations returned for some set of users.
+message EconomyDonationsList {
+  // The active donations for a set of users.
+  repeated EconomyDonation donations = 1;
+}
+
+// Request to claim one or more donations.
+message EconomyDonationClaimRequest {
+  // The donation IDs to claim.
+  repeated string donation_ids = 1;
+}
+
+// Response to claiming one or more donations.
+message EconomyDonationClaimRewards {
+  // All active donations for the user.
+  EconomyDonationsList donations = 1;
+  // The rewards from this particular claim.
+  map<string, RewardList> claimed_rewards = 2;
+}
+
+// Request to give a donation to a user.
+message EconomyDonationGiveRequest {
+  // The user ID who receives the donation.
+  string user_id = 1;
+  // The donation ID to give into.
+  string donation_id = 2;
+}
+
+// Request to get donations for one or more users.
+message EconomyDonationGetRequest {
+  // The user IDs to get donations for.
+  repeated string ids = 1;
+}
+
+// Request a new donation.
+message EconomyDonationRequest {
+  // The donation ID to request, defined on the server.
+  string donation_id = 1;
+}
+
+// A map of active donations keyed by user ID.
+message EconomyDonationsByUserList {
+  // The active donations grouped by user ID.
+  map<string, EconomyDonationsList> user_donations = 1;
+}
+
+// The cost(s) associated with a store item.
+message EconomyListStoreItemCost {
+  // The virtual currencies, if any.
+  map<string, int64> currencies = 1;
+  // The required purchase SKU, if any.
+  string sku = 2;
+}
+
+// Represents an individual available store items.
+message EconomyListStoreItem {
+  // The category to group the item together with others.
+  string category = 1;
+  // The cost of the item.
+  EconomyListStoreItemCost cost = 2;
+  // A description of the item. May be an i18n code.
+  string description = 3;
+  // The ID of the item.
+  string id = 4;
+  // The name of the item. May be an i18n code.
+  string name = 5;
+  // The available rewards in this store item.
+  AvailableRewards available_rewards = 6;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 7;
+}
+
+// Represents an available ad placement.
+message EconomyListPlacement {
+  // The ID of the placement.
+  string id = 1;
+  // The reward obtained from this placement.
+  Reward reward = 2;
+  // The available rewards obtained from this placement.
+  AvailableRewards available_rewards = 3;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 4;
+}
+
+// The response data with the available store items.
+message EconomyList {
+  // The list of store items.
+  repeated EconomyListStoreItem store_items = 1;
+  // The list of placements.
+  repeated EconomyListPlacement placements = 2;
+  // The set of active donations for the current user.
+  map<string, EconomyDonation> donations = 3;
+}
+
+// A item owned by the current user.
+message InventoryItem {
+  // The ID of the item.
+  string id = 1;
+  // The name of the item. May be an i18n code.
+  string name = 2;
+  // A description of the item. May be an i18n code.
+  string description = 3;
+  // The category to group the item together with others.
+  string category = 4;
+  // The sets the item is grouped into.
+  repeated string item_sets = 5;
+  // The current count of the item.
+  int64 count = 6;
+  // The maximum count which can be owned for this item.
+  int64 max_count = 7;
+  // Whether or not the item is stackable.
+  bool stackable = 8;
+  // Whether or not the item is consumable.
+  bool consumable = 9;
+  // The configuration for the reward to grant for consumption.
+  AvailableRewards consume_available_rewards = 10;
+  // The properties with string values.
+  map<string, string> string_properties = 11;
+  // The properties with numeric values.
+  map<string, double> numeric_properties = 12;
+  // A UNIX timestamp when the user acquired this item.
+  int64 owned_time_sec = 13;
+  // A UNIX timestamp when the item was updated.
+  int64 update_time_sec = 14;
+}
+
+// Request all inventory items in the economy.
+message InventoryListRequest {
+  // The category for the items to filter for, or empty for all.
+  string item_category = 1;
+}
+
+// Represents a request to grant items to the user.
+message InventoryGrantRequest {
+  // The items to grant.
+  map<string, int64> items = 1;
+}
+
+// The typed properties to update in an instanced inventory item.
+message InventoryUpdateItemProperties {
+  // The properties with string values.
+  map<string, string> string_properties = 1;
+  // The properties with numeric values.
+  map<string, double> numeric_properties = 2;
+}
+
+// Represents a request to update properties of instanced items.
+message InventoryUpdateItemsRequest {
+  // The item updates to action, keyed by item instance ID.
+  map<string, InventoryUpdateItemProperties> item_updates = 1;
+}
+
+// The inventory in the economy or owned by user.
+message Inventory {
+  // The items in the player's inventory.
+  map<string, InventoryItem> items = 1;
+}
+
+// Request to consume some amount of items.
+message InventoryConsumeRequest {
+  // Item amounts to consume, if any.
+  map<string, int64> items = 1;
+  // Whether or not to allow overconsumption.
+  bool overconsume = 2;
+}
+
+// Updated inventory and rewards granted from consumption.
+message InventoryConsumeRewards {
+  // Updated inventory data, if changed.
+  Inventory inventory = 1;
+  // Consume rewards by item ID, if any.
+  map<string, RewardList> rewards = 2;
+}
+
+// Response from granting or purchasing items. This contains updated inventory data, if changed.
+message InventoryUpdateAck {
+  // Update inventory data, if changed.
+  Inventory inventory = 1;
+}
+
+// Response for retrieving Inventory system data definitions.
+message InventoryList {
+  // The inventory items from definitions and the user.
+  map<string, InventoryItem> items = 1;
+}
+
+// Represents a request to retrieve available store items.
+message EconomyListRequest {
+  // The game client's store type.
+  EconomyStoreType store_type = 1;
+}
+
+// Represents a request to grant rewards to the user.
+message EconomyGrantRequest {
+  // The currencies to grant.
+  map<string, int64> currencies = 1;
+  // The reward modifiers to grant.
+  repeated RewardModifier reward_modifiers = 2;
 }
 
 // Request to create a store item purchase intent.
@@ -945,6 +839,18 @@ message EconomyPurchaseAck {
   bool is_sandbox_purchase = 4;
 }
 
+// A modifier that may change energy behaviour.
+message EnergyModifier {
+  // The modifier operator.
+  string operator = 1;
+  // The modifier value, if applicable.
+  int32 value = 2;
+  // The UNIX timestamp when the modifier became active.
+  int64 start_time_sec = 3;
+  // The UNIX timestamp when the modifier ends.
+  int64 end_time_sec = 4;
+}
+
 // Information about a single energy type.
 message Energy {
   // The unique energy identifier.
@@ -979,18 +885,6 @@ message EnergyList {
   map<string, Energy> energies = 1;
 }
 
-// A modifier that may change energy behaviour.
-message EnergyModifier {
-  // The modifier operator.
-  string operator = 1;
-  // The modifier value, if applicable.
-  int32 value = 2;
-  // The UNIX timestamp when the modifier became active.
-  int64 start_time_sec = 3;
-  // The UNIX timestamp when the modifier ends.
-  int64 end_time_sec = 4;
-}
-
 // Request to spend one or more energy amounts.
 message EnergySpendRequest {
   // Energy amounts to spend.
@@ -1003,12 +897,6 @@ message EnergySpendReward {
   EnergyList energies = 1;
   // The cumulative reward of spending the energies.
   Reward reward = 2;
-}
-
-// A list of leaderboard configurations.
-message LeaderboardConfigList {
-  // The list of leaderboard configurations.
-  repeated LeaderboardConfig leaderboard_configs = 1;
 }
 
 // A leaderboard configuration.
@@ -1027,6 +915,12 @@ message LeaderboardConfig {
   repeated string regions = 6;
 }
 
+// A list of leaderboard configurations.
+message LeaderboardConfigList {
+  // The list of leaderboard configurations.
+  repeated LeaderboardConfig leaderboard_configs = 1;
+}
+
 // The states of a Tutorial.
 enum TutorialState {
   // The Tutorial has not been accepted/declined by the user yet.
@@ -1041,12 +935,6 @@ enum TutorialState {
   TUTORIAL_STATE_COMPLETED = 4;
   // The Tutorial has been abandoned.
   TUTORIAL_STATE_ABANDONED = 5;
-}
-
-// The full tutorial statuses for a given user.
-message TutorialList {
-  // All available tutorials.
-  map<string, Tutorial> tutorials = 1;
 }
 
 // An individual set of tutorial steps.
@@ -1065,6 +953,12 @@ message Tutorial {
   int64 complete_time_sec = 6;
   // Additional metadata properties.
   map<string, string> additional_properties = 7;
+}
+
+// The full tutorial statuses for a given user.
+message TutorialList {
+  // All available tutorials.
+  map<string, Tutorial> tutorials = 1;
 }
 
 // A request to accept a tutorial.
@@ -1181,6 +1075,13 @@ message TeamWriteChatMessageRequest {
   string content = 2;
 }
 
+// The unlockable cost, may relate to starting an unlock, or fully completing it.
+message UnlockableCost {
+  // The items which will be deducted.
+  map<string, int64> items = 1;
+  // The currencies which will be deducted.
+  map<string, int64> currencies = 2;
+}
 
 // A single unlockable object.
 message Unlockable {
@@ -1216,6 +1117,14 @@ message Unlockable {
   map<string, string> additional_properties = 15;
 }
 
+// The cost to purchase an additional unlockable active slot.
+message UnlockableSlotCost {
+  // The items which will be deducted.
+  map<string, int64> items = 1;
+  // The currencies which will be deducted.
+  map<string, int64> currencies = 2;
+}
+
 // A list of unlockables currently owned by a user.
 message UnlockablesList {
   // The list of unlockables owned by a user.
@@ -1234,22 +1143,6 @@ message UnlockablesList {
   string instance_id = 7;
 }
 
-// The unlockable cost, may relate to starting an unlock, or fully completing it.
-message UnlockableCost {
-  // The items which will be deducted.
-  map<string, int64> items = 1;
-  // The currencies which will be deducted.
-  map<string, int64> currencies = 2;
-}
-
-// The cost to purchase an additional unlockable active slot.
-message UnlockableSlotCost {
-  // The items which will be deducted.
-  map<string, int64> items = 1;
-  // The currencies which will be deducted.
-  map<string, int64> currencies = 2;
-}
-
 // A reward that was granted upon unlock, and a new state of all unlockables.
 message UnlockablesReward {
   // The updated state of remaining unlockables.
@@ -1264,4 +1157,111 @@ message UnlockablesReward {
 message UnlockablesRequest {
   // The unlockable instance ID.
   string instance_id = 1;
+}
+
+// A sub-achievement is an achievement which belongs as part of a parent achievement.
+message SubAchievement {
+  // The category to group the sub-achievement together with others.
+  string category = 1;
+  // The UNIX timestamp for when the sub-achievement reward was claimed, or zero if unclaimed.
+  int64 claim_time_sec = 2;
+  // The count of the sub-achievement.
+  int64 count = 3;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 4;
+  // A description of the sub-achievement. May be an i18n code.
+  string description = 5;
+  // The UNIX timestamp when this sub-achievement will expire. This may be before its next reset. A zero means it does not expire.
+  int64 expire_time_sec = 6;
+  // The ID of the sub-achievement.
+  string id = 7;
+  // The maximum count of the sub-achievement.
+  int64 max_count = 8;
+  // The name of the sub-achievement. May be an i18n code.
+  string name = 9;
+  // The IDs which are a precondition on the progress to be made on this sub-achievement.
+  repeated string precondition_ids = 10;
+  // The UNIX timestamp when this sub-achievement will reset.
+  int64 reset_time_sec = 11;
+  // The outcome (rolled) reward for the achievement, if any.
+  Reward reward = 12;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 13;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 14;
+}
+
+// An achievement which is a numeric task which can be unlocked and has an optional reward.
+message Achievement {
+  // The category to group the achievement together with others.
+  string category = 1;
+  // The UNIX timestamp for when the achievement reward was claimed, or zero if unclaimed.
+  int64 claim_time_sec = 2;
+  // The UNIX timestamp for when the achievement total reward was claimed, or zero if unclaimed.
+  int64 total_claim_time_sec = 3;
+  // The count of the achievement.
+  int64 count = 4;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 5;
+  // A description of the achievement. May be an i18n code.
+  string description = 6;
+  // The UNIX timestamp when this achievement will expire. This may be before its next reset. A zero means it does not expire.
+  int64 expire_time_sec = 7;
+  // The ID of the achievement.
+  string id = 8;
+  // The maximum count of the achievement.
+  int64 max_count = 9;
+  // The name of the achievement. May be an i18n code.
+  string name = 10;
+  // The IDs which are a precondition on the progress to be made on this achievement.
+  repeated string precondition_ids = 11;
+  // The UNIX timestamp when this achievement will reset.
+  int64 reset_time_sec = 12;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 13;
+  // The outcome (rolled) reward for the achievement.
+  Reward reward = 14;
+  // The available reward and its probabilities for the total completion of the achievement, if any.
+  AvailableRewards available_total_reward = 15;
+  // The outcome (rolled) reward for the total completion of the achievement, if any.
+  Reward total_reward = 16;
+  // The sub-achievements for this achievement, if any.
+  map<string, SubAchievement> sub_achievements = 17;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 18;
+}
+
+// The achievements returned by the server.
+message AchievementList {
+  // The one off achievements which can be progressed or are unlocked by the user alongside all on the server.
+  map<string, Achievement> achievements = 1;
+  // The repeat achievements which can be progressed or are unlocked by the user alongside all on the server.
+  map<string, Achievement> repeat_achievements = 2;
+}
+
+// Claim rewards with one or more achievement on the server.
+message AchievementsClaimRequest {
+  // The set of achievement IDs to claim.
+  repeated string ids = 1;
+  // Whether or not to claim the total reward as well, if available.
+  bool claim_total_reward = 2;
+}
+
+// Get all achievements for the user alongside all on the server.
+message AchievementsGetRequest {}
+
+// A response when an achievements update is acknowledged by the server.
+message AchievementsUpdateAck {
+  // The one off achievements which can be progressed or are unlocked by the user.
+  map<string, Achievement> achievements = 1;
+  // The repeat achievements which can be progressed or are unlocked by the user.
+  map<string, Achievement> repeat_achievements = 2;
+}
+
+// Update progress on one or more achievements on the server.
+message AchievementsUpdateRequest {
+  // The set of achievement IDs to progress.
+  repeated string ids = 1;
+  // The amount of progress to increment on the achievements.
+  int64 amount = 2;
 }
