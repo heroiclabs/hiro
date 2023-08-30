@@ -14,6 +14,22 @@
 
 package hiro
 
+import (
+	"context"
+	"github.com/heroiclabs/nakama-common/runtime"
+)
+
+// StatsConfig is the data definition for a StatsSystem type.
+type StatsConfig struct {
+	Whitelist []string `json:"whitelist"`
+}
+
 type StatsSystem interface {
 	System
+
+	// List all private stats for one or more users.
+	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userIDs []string) (map[string]*StatList, error)
+
+	// Update private stats for a particular user.
+	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, publicStats []*StatUpdate, privateStats []*StatUpdate) (*StatList, error)
 }

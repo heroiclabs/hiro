@@ -1,0 +1,44 @@
+{
+  "event_leaderboards": {
+    "event1": {
+      "name": "event name",
+      "description": "event description",
+      "category": "some category",
+      "ascending": false,
+      "operator": "best",
+      "reset_schedule": "0 0 * * *",
+      "cohort_size": 100,
+      "additional_properties": {
+        "key": "value"
+      },
+      "max_num_score": 0,
+      "tiers": 5,
+      "max_idle_tier_drop": 1,
+      "start_time_sec": 0,
+      "end_time_sec": 0,
+      "duration": 86400,
+      "reward_tiers": {
+        "0": [
+          {
+            "rank_min": 1,
+            "rank_max": 10,
+            "tier_change": 1,
+            "reward": {}
+          },
+          {
+            "rank_min": 11,
+            "rank_max": 90,
+            "tier_change": 0,
+            "reward": {}
+          },
+          {
+            "rank_min": 91,
+            "rank_max": 100,
+            "tier_change": -1,
+            "reward": {}
+          }
+        ]
+      }
+    }
+  }
+}

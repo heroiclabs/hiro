@@ -17,7 +17,6 @@ package hiro
 import (
 	"context"
 	"database/sql"
-	"github.com/heroiclabs/nakama-common/rtapi"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -40,7 +39,7 @@ type TeamsSystem interface {
 	Search(ctx context.Context, db *sql.DB, logger runtime.Logger, nk runtime.NakamaModule, req *TeamSearchRequest) (*TeamList, error)
 
 	// WriteChatMessage sends a message to the user's team even when they're not connected on a realtime socket.
-	WriteChatMessage(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamWriteChatMessageRequest) (*rtapi.ChannelMessageAck, error)
+	WriteChatMessage(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamWriteChatMessageRequest) (*ChannelMessageAck, error)
 }
 
 // ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is

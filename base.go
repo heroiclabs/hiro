@@ -62,6 +62,7 @@ type Hiro interface {
 	GetTeamsSystem() TeamsSystem
 	GetTutorialsSystem() TutorialsSystem
 	GetUnlockablesSystem() UnlockablesSystem
+	GetEventLeaderboardsSystem() EventLeaderboardsSystem
 }
 
 // The SystemType identifies each of the gameplay systems.
@@ -79,6 +80,7 @@ const (
 	SystemTypeInventory
 	SystemTypeAchievements
 	SystemTypeEconomy
+	SystemTypeEventLeaderboards
 )
 
 // Init initializes a Hiro type with the configurations provided.
@@ -171,7 +173,7 @@ type System interface {
 // UsernameOverrideFn can be used to provide a different username generation strategy from the default in Nakama server.
 type UsernameOverrideFn func() string
 
-// WithAchievementsSystem configures an AchievementsSystem type and optionally registers it's RPCs with the game server.
+// WithAchievementsSystem configures an AchievementsSystem type and optionally registers its RPCs with the game server.
 func WithAchievementsSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeAchievements,
@@ -180,7 +182,7 @@ func WithAchievementsSystem(configFile string, register bool) SystemConfig {
 	}
 }
 
-// WithBaseSystem configures a BaseSystem type and optionally registers it's RPCs with the game server.
+// WithBaseSystem configures a BaseSystem type and optionally registers its RPCs with the game server.
 func WithBaseSystem(configFile string, register bool, usernameOverride ...UsernameOverrideFn) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeBase,
@@ -191,7 +193,7 @@ func WithBaseSystem(configFile string, register bool, usernameOverride ...Userna
 	}
 }
 
-// WithEconomySystem configures an EconomySystem type and optionally registers it's RPCs with the game server.
+// WithEconomySystem configures an EconomySystem type and optionally registers its RPCs with the game server.
 func WithEconomySystem(configFile string, register bool, ironSrcPrivKey ...string) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeEconomy,
@@ -202,7 +204,7 @@ func WithEconomySystem(configFile string, register bool, ironSrcPrivKey ...strin
 	}
 }
 
-// WithEnergySystem configures an EnergySystem type and optionally registers it's RPCs with the game server.
+// WithEnergySystem configures an EnergySystem type and optionally registers its RPCs with the game server.
 func WithEnergySystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeEnergy,
@@ -211,7 +213,7 @@ func WithEnergySystem(configFile string, register bool) SystemConfig {
 	}
 }
 
-// WithInventorySystem configures an InventorySystem type and optionally registers it's RPCs with the game server.
+// WithInventorySystem configures an InventorySystem type and optionally registers its RPCs with the game server.
 func WithInventorySystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeInventory,
@@ -231,15 +233,16 @@ func WithLeaderboardsSystem(configFile string, register bool, validateWriteScore
 	}
 }
 
-// WithStatsSystem configures a StatsSystem type and optionally registers it's RPCs with the game server.
-func WithStatsSystem(register bool) SystemConfig {
+// WithStatsSystem configures a StatsSystem type and optionally registers its RPCs with the game server.
+func WithStatsSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeStats,
+		configFile: configFile,
 		register:   register,
 	}
 }
 
-// WithTeamsSystem configures a TeamsSystem type and optionally registers it's RPCs with the game server.
+// WithTeamsSystem configures a TeamsSystem type and optionally registers its RPCs with the game server.
 func WithTeamsSystem(configFile string, register bool, validateCreateTeam ...ValidateCreateTeamFn) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeTeams,
@@ -250,7 +253,7 @@ func WithTeamsSystem(configFile string, register bool, validateCreateTeam ...Val
 	}
 }
 
-// WithTutorialsSystem configures a TutorialsSystem type and optionally registers it's RPCs with the game server.
+// WithTutorialsSystem configures a TutorialsSystem type and optionally registers its RPCs with the game server.
 func WithTutorialsSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeTutorials,
@@ -259,10 +262,19 @@ func WithTutorialsSystem(configFile string, register bool) SystemConfig {
 	}
 }
 
-// WithUnlockablesSystem configures an UnlockablesSystem type and optionally registers it's RPCs with the game server.
+// WithUnlockablesSystem configures an UnlockablesSystem type and optionally registers its RPCs with the game server.
 func WithUnlockablesSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeUnlockables,
+		configFile: configFile,
+		register:   register,
+	}
+}
+
+// WithEventLeaderboardsSystem configures an EventLeaderboardsSystem type and optionally registers its RPCs with the game server.
+func WithEventLeaderboardsSystem(configFile string, register bool) SystemConfig {
+	return &systemConfig{
+		systemType: SystemTypeEventLeaderboards,
 		configFile: configFile,
 		register:   register,
 	}

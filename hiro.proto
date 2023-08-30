@@ -116,12 +116,114 @@ enum RpcId {
   // Get the leaderboards defined for the game.
   RPC_ID_LEADERBOARDS_CONFIG_GET = 38 [(input) = "", (output) = "LeaderboardConfigList"];
 
+  // Get a specified event leaderboard defined for the game.
+  RPC_ID_EVENT_LEADERBOARD_GET = 42 [(input) = "EventLeaderboardGet", (output) = "EventLeaderboard"];
+  // Update an event leaderboard record for a user.
+  RPC_ID_EVENT_LEADERBOARD_UPDATE = 43 [(input) = "EventLeaderboardUpdate", (output) = "EventLeaderboard"];
+  // Claim an event leaderboard reward for a user.
+  RPC_ID_EVENT_LEADERBOARD_CLAIM = 44 [(input) = "EventLeaderboardClaim", (output) = "EventLeaderboard"];
+
+  // Get all stats.
+  RPC_ID_STATS_GET = 45 [(input) = "", (output) = "StatList"];
+  // Update private stats.
+  RPC_ID_STATS_UPDATE = 46 [(input) = "StatUpdateRequest", (output) = "StatList"];
+
   //--- Server to server RPCs ---//
 
   // Webhook RPC to handle Rewarded Video Ad placement success callbacks.
   RPC_ID_ECONOMY_PLACEMENT_SUCCESS = 1001;
   // Webhook RPC to handle Rewarded Video Ad placement failure callbacks.
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
+}
+
+// Indicate how a stats update should be handled.
+enum StatUpdateOperator {
+  // Unspecified. Defaults to Set.
+  STAT_UPDATE_OPERATOR_UNSPECIFIED = 0;
+  // Set the given value, overwriting any previous one.
+  STAT_UPDATE_OPERATOR_SET = 1;
+  // Increment or decrement the existing value by the given amount. Equivalent to Set if no previous value existed.
+  STAT_UPDATE_OPERATOR_DELTA = 2;
+  // Use the new value if it's lower than the existing one. Equivalent to Set if no previous value existed.
+  STAT_UPDATE_OPERATOR_MIN = 3;
+  // Use the new value if it's higher than the existing one. Equivalent to Set if no previous value existed.
+  STAT_UPDATE_OPERATOR_MAX = 4;
+}
+
+// Describes a single stat update.
+message StatUpdate {
+  // Name.
+  string name = 1;
+  // Value.
+  int64 value = 2;
+  // Operator.
+  StatUpdateOperator operator = 3;
+}
+
+// Request an optionally batched stats update.
+message StatUpdateRequest {
+  // Public stat updates.
+  repeated StatUpdate public = 1;
+  // Private stat updates.
+  repeated StatUpdate private = 2;
+}
+
+// A single stat with associated information.
+message Stat {
+  // Name.
+  string name = 1;
+  // Indicator if this belongs to public or private stats.
+  bool public = 2;
+  // Update time in UTC seconds.
+  int64 update_time_sec = 3;
+  // Current value.
+  int64 value = 4;
+  // Number of values submitted.
+  int64 count = 5;
+  // Total of all submitted values.
+  int64 total = 6;
+  // Smallest value submitted.
+  int64 min = 7;
+  // Largest value submitted.
+  int64 max = 8;
+  // First value submitted.
+  int64 first = 9;
+  // Latest value submitted.
+  int64 last = 10;
+}
+
+// A list of stats all belonging to one user.
+message StatList {
+  // Public stat names and their associated data.
+  map<string, Stat> public = 1;
+  // Private stat names and their associated data.
+  map<string, Stat> private = 2;
+}
+
+// A receipt reply from a channel message send operation.
+message ChannelMessageAck {
+  // The channel the message was sent to.
+  string channel_id = 1;
+  // The unique ID assigned to the message.
+  string message_id = 2;
+  // The code representing a message type or category.
+  int32 code = 3;
+  // Username of the message sender.
+  string username = 4;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the message was created.
+  int64 create_time = 5;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the message was last updated.
+  int64 update_time = 6;
+  // True if the message was persisted to the channel's history, false otherwise.
+  bool persistent = 7;
+  // The name of the chat room, or an empty string if this message was not sent through a chat room.
+  string room_name = 8;
+  // The ID of the group, or an empty string if this message was not sent through a group channel.
+  string group_id = 9;
+  // The ID of the first DM user, or an empty string if this message was not sent through a DM chat.
+  string user_id_one = 10;
+  // The ID of the second DM user, or an empty string if this message was not sent through a DM chat.
+  string user_id_two = 11;
 }
 
 // Update or create the mobile push device tokens and preferences.
@@ -299,6 +401,113 @@ message AvailableRewards {
   /* The total weight that all weighted reward contents are calculated against. Auto calculated if set to 0 but can be
      set to a higher value to introduce a chance of a "none" reward. */
   int64 total_weight = 4;
+}
+
+
+// Find and retrieve an event leaderboard by ID, automatically joining the event if necessary.
+message EventLeaderboardGet {
+  // Event leaderboard ID to get, and join if necessary/possible.
+  string id = 1;
+}
+
+// Submit a score to an event leaderboard.
+message EventLeaderboardUpdate {
+  // Event leaderboard ID.
+  string id = 1;
+  // Score.
+  int64 score = 2;
+  // Subscore.
+  int64 subscore = 3;
+}
+
+// Claim the available reward for an event leaderboard by ID.
+message EventLeaderboardClaim {
+  // Event leaderboard ID to claim.
+  string id = 1;
+}
+
+// A single participant entry to an event leaderboard.
+message EventLeaderboardScore {
+  // User ID.
+  string id = 1;
+  // Username.
+  string username = 2;
+  // Time when the user joined the event leaderboard.
+  int64 create_time_sec = 3;
+  // Time when the user last submitted a score.
+  int64 update_time_sec = 4;
+  // Rank within the event leaderboard.
+  int64 rank = 5;
+  // Score.
+  int64 score = 6;
+  // Subscore.
+  int64 subscore = 7;
+  // Number of score submissions.
+  int64 num_scores = 8;
+}
+
+// A reward range within a specific tier based on ranks.
+message EventLeaderboardRewardTier {
+  // The maximum rank (inclusive).
+  int32 rank_max = 1;
+  // The minimum rank (inclusive).
+  int32 rank_min = 2;
+  // The available rewards for this range.
+  AvailableRewards available_rewards = 3;
+  // Change in tier for this rank range.
+  int32 tier_change = 4;
+}
+
+// A event leaderboard's tier-specific set of rewards.
+message EventLeaderboardRewardTiers {
+  // Possible reward tiers.
+  repeated EventLeaderboardRewardTier reward_tiers = 1;
+}
+
+// Details about a specific event leaderboard.
+message EventLeaderboard {
+  // Event leaderboard ID.
+  string id = 1;
+  // The name of the event leaderboard. May be an i18n code.
+  string name = 2;
+  // A description of the event leaderboard. May be an i18n code.
+  string description = 3;
+  // The category to group the event leaderboard together with others.
+  string category = 4;
+  // Score ordering.
+  bool ascending = 5;
+  // Score submission operator.
+  string operator = 6;
+  // The tier of this instance of the event leaderboard.
+  int32 tier = 7;
+  // Time when the event starts.
+  int64 start_time_sec = 8;
+  // Time when the event ends.
+  int64 end_time_sec = 9;
+  // Time when the event expires.
+  int64 expiry_time_sec = 10;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 11;
+  // The possible reward tiers for this instance of the event leaderboard, based on its current tier.
+  map<int32, EventLeaderboardRewardTiers> reward_tiers = 12;
+  // Claim time, if any.
+  int64 claim_time_sec = 13;
+  // The outcome (rolled) reward for the event leaderboard.
+  Reward reward = 14;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 15;
+  // Current participant count.
+  int64 count = 16;
+  // Maximum participant count.
+  int64 max_count = 17;
+  // Maximum number of score submissions per participant.
+  int64 max_num_score = 18;
+  // Participants and their scores.
+  repeated EventLeaderboardScore scores = 19;
+  // Indicates if the event is still active, and scores can be submitted.
+  bool is_active = 20;
+  // Indicates if the event is over and its reward can be claimed.
+  bool can_claim = 21;
 }
 
 // A contributor to this donation.
