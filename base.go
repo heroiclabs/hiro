@@ -18,6 +18,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 	"google.golang.org/protobuf/encoding/protojson"
 	"plugin"
@@ -48,9 +49,13 @@ type BaseSystemConfig struct {
 	RateAppTemplate string `json:"rate_app_template"` // HTML email template
 }
 
+type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, session *api.Session) error
+
 // Hiro provides a type which combines all gameplay systems.
 type Hiro interface {
 	SetPersonalizer(Personalizer)
+
+	SetAfterAuthenticate(fn AfterAuthenticateFn)
 
 	GetAchievementsSystem() AchievementsSystem
 	GetBaseSystem() BaseSystem
