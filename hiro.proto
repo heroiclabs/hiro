@@ -758,6 +758,8 @@ message EconomyGrantRequest {
   map<string, int64> currencies = 1;
   // The reward modifiers to grant.
   repeated RewardModifier reward_modifiers = 2;
+  // Any items to grant.
+  map<string, int64> items = 3;
 }
 
 // Request to create a store item purchase intent.
