@@ -164,7 +164,7 @@ type EconomySystem interface {
 	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*EconomyConfigStoreItem, map[string]*EconomyConfigPlacement, error)
 
 	// Grant will add currencies, and reward modifiers to a user's economy by ID.
-	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, currencies map[string]int64, modifiers []*RewardModifier) (map[string]int64, error)
+	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, currencies map[string]int64, items map[string]int64, modifiers []*RewardModifier) (map[string]int64, error)
 
 	// PurchaseIntent will create a purchase intent for a particular store item for a user ID.
 	PurchaseIntent(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, sku string) error
