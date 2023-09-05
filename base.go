@@ -24,6 +24,21 @@ import (
 	"plugin"
 )
 
+var (
+	ErrInternal           = runtime.NewError("internal error occurred", 13) // INTERNAL
+	ErrBadInput           = runtime.NewError("bad input", 3)                // INVALID_ARGUMENT
+	ErrFileNotFound       = runtime.NewError("file not found", 3)
+	ErrNoSessionUser      = runtime.NewError("no user ID in session", 3)       // INVALID_ARGUMENT
+	ErrNoSessionUsername  = runtime.NewError("no username in session", 3)      // INVALID_ARGUMENT
+	ErrPayloadDecode      = runtime.NewError("cannot decode json", 13)         // INTERNAL
+	ErrPayloadEmpty       = runtime.NewError("payload should not be empty", 3) // INVALID_ARGUMENT
+	ErrPayloadEncode      = runtime.NewError("cannot encode json", 13)         // INTERNAL
+	ErrPayloadInvalid     = runtime.NewError("payload is invalid", 3)          // INVALID_ARGUMENT
+	ErrSessionUser        = runtime.NewError("user ID in session", 3)          // INVALID_ARGUMENT
+	ErrSystemNotAvailable = runtime.NewError("system not available", 13)       // INTERNAL
+	ErrSystemNotFound     = runtime.NewError("system not found", 13)           // INTERNAL
+)
+
 // The BaseSystem provides various small features which aren't large enough to be in their own gameplay systems.
 type BaseSystem interface {
 	System
