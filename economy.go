@@ -32,6 +32,10 @@ var (
 	ErrEconomyNoDonation        = runtime.NewError("donation not found", 3)                    // INVALID_ARGUMENT
 	ErrEconomyMaxDonation       = runtime.NewError("donation maximum contribution reached", 3) // INVALID_ARGUMENT
 	ErrEconomyClaimedDonation   = runtime.NewError("donation already claimed", 3)              // INVALID_ARGUMENT
+
+	ErrInventoryNotInitialized = runtime.NewError("inventory not initialized for batch", 13)
+	ErrItemsInsufficient       = runtime.NewError("insufficient items", 13)
+	ErrCurrencyInsufficient    = runtime.NewError("insufficient currency", 13)
 )
 
 // EconomyConfig is the data definition for the EconomySystem type.
