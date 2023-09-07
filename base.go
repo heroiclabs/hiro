@@ -83,6 +83,7 @@ type Hiro interface {
 	GetTutorialsSystem() TutorialsSystem
 	GetUnlockablesSystem() UnlockablesSystem
 	GetEventLeaderboardsSystem() EventLeaderboardsSystem
+	GetProgressionSystem() ProgressionSystem
 }
 
 // The SystemType identifies each of the gameplay systems.
@@ -101,6 +102,7 @@ const (
 	SystemTypeAchievements
 	SystemTypeEconomy
 	SystemTypeEventLeaderboards
+	SystemTypeProgression
 )
 
 // Init initializes a Hiro type with the configurations provided.
@@ -295,6 +297,15 @@ func WithUnlockablesSystem(configFile string, register bool) SystemConfig {
 func WithEventLeaderboardsSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeEventLeaderboards,
+		configFile: configFile,
+		register:   register,
+	}
+}
+
+// WithProgressionSystem configures a ProgressionSystem type and optionally registers its RPCs with the game server.
+func WithProgressionSystem(configFile string, register bool) SystemConfig {
+	return &systemConfig{
+		systemType: SystemTypeProgression,
 		configFile: configFile,
 		register:   register,
 	}

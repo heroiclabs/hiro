@@ -87,6 +87,31 @@
               "title": "duration",
               "minimum": 0
             },
+            "change_zones": {
+              "type": "object",
+              "title": "change_zones",
+              "patternProperties": {
+                "[0-9]+": {
+                  "type": "object",
+                  "properties": {
+                    "promotion": {
+                      "type": "number",
+                      "title": "promotion",
+                      "minimum": 0
+                    },
+                    "demotion": {
+                      "type": "number",
+                      "title": "demotion",
+                      "minimum": 0
+                    },
+                    "demote_idle": {
+                      "type": "boolean",
+                      "title": "demote_idle"
+                    }
+                  }
+                }
+              }
+            },
             "reward_tiers": {
               "type": "object",
               "title": "reward_tiers",

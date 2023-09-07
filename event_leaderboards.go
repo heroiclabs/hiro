@@ -35,6 +35,7 @@ type EventLeaderboardsConfigLeaderboard struct {
 	AdditionalProperties map[string]string                                          `json:"additional_properties"`
 	MaxNumScore          int                                                        `json:"max_num_score"`
 	RewardTiers          map[string][]*EventLeaderboardsConfigLeaderboardRewardTier `json:"reward_tiers"`
+	ChangeZones          map[string]*EventLeaderboardsConfigChangeZone              `json:"change_zones"`
 	Tiers                int                                                        `json:"tiers"`
 	MaxIdleTierDrop      int                                                        `json:"max_idle_tier_drop"`
 	StartTimeSec         int64                                                      `json:"start_time_sec"`
@@ -47,6 +48,12 @@ type EventLeaderboardsConfigLeaderboardRewardTier struct {
 	RankMin    int                  `json:"rank_min"`
 	Reward     *EconomyConfigReward `json:"reward"`
 	TierChange int                  `json:"tier_change"`
+}
+
+type EventLeaderboardsConfigChangeZone struct {
+	Promotion  float32 `json:"promotion"`
+	Demotion   float32 `json:"demotion"`
+	DemoteIdle bool    `json:"demote_idle"`
 }
 
 // An EventLeaderboardsSystem is a gameplay system which represents cohort-segmented, tier-based event leaderboards.

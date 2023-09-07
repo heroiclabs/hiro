@@ -17,6 +17,13 @@
       "start_time_sec": 0,
       "end_time_sec": 0,
       "duration": 86400,
+      "change_zones": {
+        "0": {
+          "promotion": 0.3,
+          "demotion": 0.2,
+          "demote_idle": true
+        }
+      },
       "reward_tiers": {
         "0": [
           {

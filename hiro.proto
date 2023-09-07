@@ -128,12 +128,106 @@ enum RpcId {
   // Update private stats.
   RPC_ID_STATS_UPDATE = 46 [(input) = "StatUpdateRequest", (output) = "StatList"];
 
+  // Get progressions.
+  RPC_ID_PROGRESSIONS_GET = 47 [(input) = "", (output) = "ProgressionList"];
+  // Purchase a progression for permanent unlock, if supported.
+  RPC_ID_PROGRESSIONS_PURCHASE = 48 [(input) = "ProgressionPurchaseRequest", (output) = "ProgressionList"];
+
   //--- Server to server RPCs ---//
 
   // Webhook RPC to handle Rewarded Video Ad placement success callbacks.
   RPC_ID_ECONOMY_PLACEMENT_SUCCESS = 1001;
   // Webhook RPC to handle Rewarded Video Ad placement failure callbacks.
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
+}
+
+// The cost(s) associated with permanently unlocking a progression.
+message ProgressionCost {
+  // The items which will be deducted.
+  map<string, int64> items = 1;
+  // The currencies which will be deducted.
+  map<string, int64> currencies = 2;
+}
+
+// Preconditions associated with a progression.
+message ProgressionPreconditions {
+  // Purchase cost paid.
+  ProgressionCost cost = 1;
+  // Other progressions.
+  repeated string progressions = 2;
+  // Achievements.
+  repeated string achievements = 3;
+  // Items with associated minimum counts.
+  map<string, int64> items_min = 4;
+  // Items with associated maximum counts.
+  map<string, int64> items_max = 5;
+  // Stats with associated minimum values.
+  map<string, int64> stats_min = 6;
+  // Stats with associated maximum values.
+  map<string, int64> stats_max = 7;
+  // Energies with associated minimum counts.
+  map<string, int64> energy_min = 8;
+  // Energies with associated maximum counts.
+  map<string, int64> energy_max = 9;
+  // Currencies with associated minimum counts.
+  map<string, int64> currency_min = 10;
+  // Currencies with associated maximum counts.
+  map<string, int64> currency_max = 11;
+}
+
+enum ProgressionPreconditionsOperator {
+  // Unspecified. Defaults to AND.
+  PROGRESSION_PRECONDITIONS_OPERATOR_UNSPECIFIED = 0;
+  // Both the direct preconditions and the nested block must be true.
+  PROGRESSION_PRECONDITIONS_OPERATOR_AND = 1;
+  // Either the direct preconditions or the nested block must be true.
+  PROGRESSION_PRECONDITIONS_OPERATOR_OR = 2;
+  // Either the direct preconditions or the nested block must be true, but not both.
+  PROGRESSION_PRECONDITIONS_OPERATOR_XOR = 3;
+  // The direct preconditions must be true, but the nested block must not be.
+  PROGRESSION_PRECONDITIONS_OPERATOR_NOT = 4;
+}
+
+// A complex set of progression preconditions.
+message ProgressionPreconditionsBlock {
+  // Direct preconditions.
+  ProgressionPreconditions direct = 1;
+  // Operator for any nested block.
+  ProgressionPreconditionsOperator operator = 2;
+  // Nested block of preconditions, if any.
+  ProgressionPreconditionsBlock nested = 3;
+}
+
+// A progression element which can be unlocked to access further progressions.
+message Progression {
+  // The ID of the progression.
+  string id = 1;
+  // The name of the progression. May be an i18n code.
+  string name = 2;
+  // A description of the progression. May be an i18n code.
+  string description = 3;
+  // The category to group the progression together with others.
+  string category = 4;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 5;
+  // Flag indicating unlock status.
+  bool unlocked = 6;
+  // All preconditions.
+  ProgressionPreconditionsBlock preconditions = 7;
+  // Unmet preconditions.
+  ProgressionPreconditionsBlock unmet_preconditions = 8;
+}
+
+// All or a filtered list of progressions for a user.
+message ProgressionList {
+  // Progressions keyed by progression ID.
+  map<string, Progression> progressions = 1;
+}
+
+// Request to permanently unlock a progression, if supported by that specific progression.
+message ProgressionPurchaseRequest {
+  // ID of the progression to permanently unlock.
+  string id = 1;
 }
 
 // Indicate how a stats update should be handled.
@@ -458,10 +552,20 @@ message EventLeaderboardRewardTier {
   int32 tier_change = 4;
 }
 
-// A event leaderboard's tier-specific set of rewards.
+// An event leaderboard's tier-specific set of rewards.
 message EventLeaderboardRewardTiers {
   // Possible reward tiers.
   repeated EventLeaderboardRewardTier reward_tiers = 1;
+}
+
+// An event leaderboard's tier-specific promotion/demotion zones.
+message EventLeaderboardChangeZone {
+  // Percentage of cohort to promote, expressed in the range of 0.0 to 1.0.
+  float promotion = 1;
+  // Percentage of cohort to demote, expressed in the range of 0.0 to 1.0.
+  float demotion = 2;
+  // Whether or not to always demote players that failed to submit a score at all.
+  bool demote_idle = 3;
 }
 
 // Details about a specific event leaderboard.
@@ -490,24 +594,26 @@ message EventLeaderboard {
   AvailableRewards available_rewards = 11;
   // The possible reward tiers for this instance of the event leaderboard, based on its current tier.
   map<int32, EventLeaderboardRewardTiers> reward_tiers = 12;
+  // Per-tier promotion/demotion change zones, if configured.
+  map<int32, EventLeaderboardChangeZone> change_zones = 13;
   // Claim time, if any.
-  int64 claim_time_sec = 13;
+  int64 claim_time_sec = 14;
   // The outcome (rolled) reward for the event leaderboard.
-  Reward reward = 14;
+  Reward reward = 15;
   // Additional metadata properties.
-  map<string, string> additional_properties = 15;
+  map<string, string> additional_properties = 16;
   // Current participant count.
-  int64 count = 16;
+  int64 count = 17;
   // Maximum participant count.
-  int64 max_count = 17;
+  int64 max_count = 18;
   // Maximum number of score submissions per participant.
-  int64 max_num_score = 18;
+  int64 max_num_score = 19;
   // Participants and their scores.
-  repeated EventLeaderboardScore scores = 19;
+  repeated EventLeaderboardScore scores = 20;
   // Indicates if the event is still active, and scores can be submitted.
-  bool is_active = 20;
+  bool is_active = 21;
   // Indicates if the event is over and its reward can be claimed.
-  bool can_claim = 21;
+  bool can_claim = 22;
 }
 
 // A contributor to this donation.
