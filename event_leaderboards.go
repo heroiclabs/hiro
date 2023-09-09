@@ -60,8 +60,11 @@ type EventLeaderboardsConfigChangeZone struct {
 type EventLeaderboardsSystem interface {
 	System
 
-	// GetEventLeaderboard returns a specified event leaderboard's cohort for the user, placing them into a new cohort if necessary.
+	// GetEventLeaderboard returns a specified event leaderboard's cohort for the user.
 	GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, username, eventLeaderboardID string) (*EventLeaderboard, error)
+
+	// RollEventLeaderboard places the user into a new cohort for the specified event leaderboard if possible.
+	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, username, eventLeaderboardID string) (*EventLeaderboard, error)
 
 	// UpdateEventLeaderboard updates the user's score in the specified event leaderboard, and returns the user's updated cohort information.
 	UpdateEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, username, eventLeaderboardID string, score, subscore int64) (*EventLeaderboard, error)

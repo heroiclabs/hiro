@@ -122,16 +122,18 @@ enum RpcId {
   RPC_ID_EVENT_LEADERBOARD_UPDATE = 43 [(input) = "EventLeaderboardUpdate", (output) = "EventLeaderboard"];
   // Claim an event leaderboard reward for a user.
   RPC_ID_EVENT_LEADERBOARD_CLAIM = 44 [(input) = "EventLeaderboardClaim", (output) = "EventLeaderboard"];
+  // Roll a new cohort for the specified event leaderboard.
+  RPC_ID_EVENT_LEADERBOARD_ROLL = 45 [(input) = "EventLeaderboardRoll", (output) = "EventLeaderboard"];
 
   // Get all stats.
-  RPC_ID_STATS_GET = 45 [(input) = "", (output) = "StatList"];
+  RPC_ID_STATS_GET = 46 [(input) = "", (output) = "StatList"];
   // Update private stats.
-  RPC_ID_STATS_UPDATE = 46 [(input) = "StatUpdateRequest", (output) = "StatList"];
+  RPC_ID_STATS_UPDATE = 47 [(input) = "StatUpdateRequest", (output) = "StatList"];
 
   // Get progressions.
-  RPC_ID_PROGRESSIONS_GET = 47 [(input) = "", (output) = "ProgressionList"];
+  RPC_ID_PROGRESSIONS_GET = 48 [(input) = "", (output) = "ProgressionList"];
   // Purchase a progression for permanent unlock, if supported.
-  RPC_ID_PROGRESSIONS_PURCHASE = 48 [(input) = "ProgressionPurchaseRequest", (output) = "ProgressionList"];
+  RPC_ID_PROGRESSIONS_PURCHASE = 49 [(input) = "ProgressionPurchaseRequest", (output) = "ProgressionList"];
 
   //--- Server to server RPCs ---//
 
@@ -517,6 +519,12 @@ message EventLeaderboardUpdate {
 // Claim the available reward for an event leaderboard by ID.
 message EventLeaderboardClaim {
   // Event leaderboard ID to claim.
+  string id = 1;
+}
+
+// Roll a new cohort for the specified event leaderboard.
+message EventLeaderboardRoll {
+  // Event leaderboard ID to roll.
   string id = 1;
 }
 
