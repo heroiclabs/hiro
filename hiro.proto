@@ -102,7 +102,7 @@ enum RpcId {
   // Start the unlock timer for an unlockable in the specified slot.
   RPC_ID_UNLOCKABLES_UNLOCK_START = 32 [(input) = "UnlockablesRequest", (output) = "UnlockablesList"];
   // Purchase an unlockable with soft currency based on the remainder cost calculated by the offset left to wait.
-  RPC_ID_UNLOCKABLES_PURCHASE_UNLOCK = 33 [(input) = "", (output) = "UnlockablesList"];
+  RPC_ID_UNLOCKABLES_PURCHASE_UNLOCK = 33 [(input) = "UnlockablesRequest", (output) = "UnlockablesList"];
   // Purchase a new slot to be used to store unlockables.
   RPC_ID_UNLOCKABLES_PURCHASE_SLOT = 34 [(input) = "", (output) = "UnlockablesList"];
   // Claim an unlockable whose start timer has completed or completion was fast tracked with a purchase.
