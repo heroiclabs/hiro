@@ -51,8 +51,8 @@ type EventLeaderboardsConfigLeaderboardRewardTier struct {
 }
 
 type EventLeaderboardsConfigChangeZone struct {
-	Promotion  float32 `json:"promotion"`
-	Demotion   float32 `json:"demotion"`
+	Promotion  float64 `json:"promotion"`
+	Demotion   float64 `json:"demotion"`
 	DemoteIdle bool    `json:"demote_idle"`
 }
 
