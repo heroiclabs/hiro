@@ -569,9 +569,9 @@ message EventLeaderboardRewardTiers {
 // An event leaderboard's tier-specific promotion/demotion zones.
 message EventLeaderboardChangeZone {
   // Percentage of cohort to promote, expressed in the range of 0.0 to 1.0.
-  float promotion = 1;
+  double promotion = 1;
   // Percentage of cohort to demote, expressed in the range of 0.0 to 1.0.
-  float demotion = 2;
+  double demotion = 2;
   // Whether or not to always demote players that failed to submit a score at all.
   bool demote_idle = 3;
 }
