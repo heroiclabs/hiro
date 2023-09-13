@@ -21,10 +21,12 @@ import (
 )
 
 var (
-	ErrProgressionNotFound        = runtime.NewError("progression not found", 3)                 // INVALID_ARGUMENT
-	ErrProgressionNotAvailable    = runtime.NewError("progression not available to purchase", 3) // INVALID_ARGUMENT
-	ErrProgressionNoCost          = runtime.NewError("progression no cost associated", 3)        // INVALID_ARGUMENT
-	ErrProgressionAlreadyUnlocked = runtime.NewError("progression already unlocked", 3)          // INVALID_ARGUMENT
+	ErrProgressionNotFound             = runtime.NewError("progression not found", 3)                 // INVALID_ARGUMENT
+	ErrProgressionNotAvailablePurchase = runtime.NewError("progression not available to purchase", 3) // INVALID_ARGUMENT
+	ErrProgressionNotAvailableUpdate   = runtime.NewError("progression not available to update", 3)   // INVALID_ARGUMENT
+	ErrProgressionNoCost               = runtime.NewError("progression no cost associated", 3)        // INVALID_ARGUMENT
+	ErrProgressionNoCount              = runtime.NewError("progression no count associated", 3)       // INVALID_ARGUMENT
+	ErrProgressionAlreadyUnlocked      = runtime.NewError("progression already unlocked", 3)          // INVALID_ARGUMENT
 )
 
 // ProgressionConfig is the data definition for a ProgressionSystem type.
@@ -49,4 +51,7 @@ type ProgressionSystem interface {
 
 	// Purchase permanently unlocks a specified progression, if that progression supports this operation.
 	Purchase(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionID string) (map[string]*Progression, error)
+
+	// Update a specified progression, if that progression supports this operation.
+	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionID string, count int64) (map[string]*Progression, error)
 }

@@ -134,6 +134,8 @@ enum RpcId {
   RPC_ID_PROGRESSIONS_GET = 48 [(input) = "", (output) = "ProgressionList"];
   // Purchase a progression for permanent unlock, if supported.
   RPC_ID_PROGRESSIONS_PURCHASE = 49 [(input) = "ProgressionPurchaseRequest", (output) = "ProgressionList"];
+  // Update a progression to change its count, if supported.
+  RPC_ID_PROGRESSIONS_UPDATE = 50 [(input) = "ProgressionUpdateRequest", (output) = "ProgressionList"];
 
   //--- Server to server RPCs ---//
 
@@ -153,28 +155,30 @@ message ProgressionCost {
 
 // Preconditions associated with a progression.
 message ProgressionPreconditions {
+  // Count required.
+  int64 count = 1;
   // Purchase cost paid.
-  ProgressionCost cost = 1;
+  ProgressionCost cost = 2;
   // Other progressions.
-  repeated string progressions = 2;
+  repeated string progressions = 3;
   // Achievements.
-  repeated string achievements = 3;
+  repeated string achievements = 4;
   // Items with associated minimum counts.
-  map<string, int64> items_min = 4;
+  map<string, int64> items_min = 5;
   // Items with associated maximum counts.
-  map<string, int64> items_max = 5;
+  map<string, int64> items_max = 6;
   // Stats with associated minimum values.
-  map<string, int64> stats_min = 6;
+  map<string, int64> stats_min = 7;
   // Stats with associated maximum values.
-  map<string, int64> stats_max = 7;
+  map<string, int64> stats_max = 8;
   // Energies with associated minimum counts.
-  map<string, int64> energy_min = 8;
+  map<string, int64> energy_min = 9;
   // Energies with associated maximum counts.
-  map<string, int64> energy_max = 9;
+  map<string, int64> energy_max = 10;
   // Currencies with associated minimum counts.
-  map<string, int64> currency_min = 10;
+  map<string, int64> currency_min = 11;
   // Currencies with associated maximum counts.
-  map<string, int64> currency_max = 11;
+  map<string, int64> currency_max = 12;
 }
 
 enum ProgressionPreconditionsOperator {
@@ -210,14 +214,18 @@ message Progression {
   string description = 3;
   // The category to group the progression together with others.
   string category = 4;
+  // Current count, if any.
+  int64 count = 5;
+  // Max count, if any.
+  int64 max_count = 6;
   // Additional metadata properties.
-  map<string, string> additional_properties = 5;
+  map<string, string> additional_properties = 7;
   // Flag indicating unlock status.
-  bool unlocked = 6;
+  bool unlocked = 8;
   // All preconditions.
-  ProgressionPreconditionsBlock preconditions = 7;
+  ProgressionPreconditionsBlock preconditions = 9;
   // Unmet preconditions.
-  ProgressionPreconditionsBlock unmet_preconditions = 8;
+  ProgressionPreconditionsBlock unmet_preconditions = 10;
 }
 
 // All or a filtered list of progressions for a user.
@@ -230,6 +238,14 @@ message ProgressionList {
 message ProgressionPurchaseRequest {
   // ID of the progression to permanently unlock.
   string id = 1;
+}
+
+// Request to update a progression, if supported by that specific progression.
+message ProgressionUpdateRequest {
+  // ID of the progression to update.
+  string id = 1;
+  // Count to add to the progression.
+  int64 count = 2;
 }
 
 // Indicate how a stats update should be handled.
