@@ -155,8 +155,8 @@ message ProgressionCost {
 
 // Preconditions associated with a progression.
 message ProgressionPreconditions {
-  // Count required.
-  int64 count = 1;
+  // Counts required.
+  map<string, int64> counts = 1;
   // Purchase cost paid.
   ProgressionCost cost = 2;
   // Other progressions.
@@ -215,17 +215,15 @@ message Progression {
   // The category to group the progression together with others.
   string category = 4;
   // Current count, if any.
-  int64 count = 5;
-  // Max count, if any.
-  int64 max_count = 6;
+  map<string, int64> counts = 5;
   // Additional metadata properties.
-  map<string, string> additional_properties = 7;
+  map<string, string> additional_properties = 6;
   // Flag indicating unlock status.
-  bool unlocked = 8;
+  bool unlocked = 7;
   // All preconditions.
-  ProgressionPreconditionsBlock preconditions = 9;
+  ProgressionPreconditionsBlock preconditions = 8;
   // Unmet preconditions.
-  ProgressionPreconditionsBlock unmet_preconditions = 10;
+  ProgressionPreconditionsBlock unmet_preconditions = 9;
 }
 
 // All or a filtered list of progressions for a user.
@@ -244,8 +242,8 @@ message ProgressionPurchaseRequest {
 message ProgressionUpdateRequest {
   // ID of the progression to update.
   string id = 1;
-  // Count to add to the progression.
-  int64 count = 2;
+  // One or more counts to add to the progression.
+  map<string, int64> counts = 2;
 }
 
 // Indicate how a stats update should be handled.

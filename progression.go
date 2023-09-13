@@ -53,5 +53,5 @@ type ProgressionSystem interface {
 	Purchase(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionID string) (map[string]*Progression, error)
 
 	// Update a specified progression, if that progression supports this operation.
-	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionID string, count int64) (map[string]*Progression, error)
+	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionID string, counts map[string]int64) (map[string]*Progression, error)
 }
