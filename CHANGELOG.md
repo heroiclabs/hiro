@@ -8,6 +8,7 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 ## [Unreleased]
 ### Added
 - New function to "Roll" a new cohort with an Event Leaderboard in an active phase.
+- Each Progression Node can now contain multiple counts for local progress to be expressed.
 
 ### Fixed
 - Update Event Leaderboard cohort search for Nakama 3.17.1 release.
