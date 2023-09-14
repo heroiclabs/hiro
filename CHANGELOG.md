@@ -5,7 +5,7 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.4.0] - 2023-09-14
 ### Added
 - New function to "Roll" a new cohort with an Event Leaderboard in an active phase.
 - Each Progression Node can now contain multiple counts for local progress to be expressed.
