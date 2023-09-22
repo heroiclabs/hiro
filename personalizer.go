@@ -60,6 +60,8 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		flagName = "Hiro-Event-Leaderboards"
 	case SystemTypeProgression:
 		flagName = "Hiro-Progression"
+	case SystemTypeIncentives:
+		flagName = "Hiro-Incentives"
 	default:
 		return nil, runtime.NewError("hiro system type unknown", 3)
 	}

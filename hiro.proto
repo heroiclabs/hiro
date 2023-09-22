@@ -137,12 +137,141 @@ enum RpcId {
   // Update a progression to change its count, if supported.
   RPC_ID_PROGRESSIONS_UPDATE = 50 [(input) = "ProgressionUpdateRequest", (output) = "ProgressionList"];
 
+  // List incentives set up by the user.
+  RPC_ID_INCENTIVES_SENDER_LIST = 51 [(input) = "", (output) = "IncentiveList"];
+  // Create a new incentive set up by the user.
+  RPC_ID_INCENTIVES_SENDER_CREATE = 52 [(input) = "IncentiveSenderCreateRequest", (output) = "IncentiveList"];
+  // Delete an existing incentive set up by the user.
+  RPC_ID_INCENTIVES_SENDER_DELETE = 53 [(input) = "IncentiveSenderDeleteRequest", (output) = "IncentiveList"];
+  // Claim rewards for an existing incentive after it has been used by some recipient(s).
+  RPC_ID_INCENTIVES_SENDER_CLAIM = 54 [(input) = "IncentiveSenderClaimRequest", (output) = "IncentiveList"];
+  // Get information about an existing incentive from a recipient's perspective.
+  RPC_ID_INCENTIVES_RECIPIENT_GET = 55 [(input) = "IncentiveRecipientGetRequest", (output) = "IncentiveInfo"];
+  // Claim an existing incentive and receive associated rewards.
+  RPC_ID_INCENTIVES_RECIPIENT_CLAIM = 56 [(input) = "IncentiveRecipientClaimRequest", (output) = "IncentiveInfo"];
+
   //--- Server to server RPCs ---//
 
   // Webhook RPC to handle Rewarded Video Ad placement success callbacks.
   RPC_ID_ECONOMY_PLACEMENT_SUCCESS = 1001;
   // Webhook RPC to handle Rewarded Video Ad placement failure callbacks.
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
+}
+
+// Types of incentives.
+enum IncentiveType {
+  // Unspecified. Defaults to INVITE.
+  INCENTIVE_TYPE_UNSPECIFIED = 0;
+  // An invite with an associated incentive reward.
+  INCENTIVE_TYPE_INVITE = 1;
+}
+
+// The result of claiming an incentive.
+message IncentiveClaim {
+  // Reward granted.
+  Reward reward = 1;
+  // Claim time in UTC seconds.
+  int64 claim_time_sec = 2;
+}
+
+// An incentive set up by a user.
+message Incentive {
+  // The ID of the incentive.
+  string id = 1;
+  // Name.
+  string name = 2;
+  // Description.
+  string description = 3;
+  // Shareable incentive code.
+  string code = 4;
+  // The type of the incentive.
+  IncentiveType type = 5;
+  // Create time in UTC seconds.
+  int64 create_time_sec = 6;
+  // Update time in UTC seconds.
+  int64 update_time_sec = 7;
+  // Expiry time in UTC seconds.
+  int64 expiry_time_sec = 8;
+  // Available reward.
+  AvailableRewards recipient_rewards = 9;
+  // Sender reward.
+  AvailableRewards sender_rewards = 10;
+  // Recipient user IDs for which the owner of the incentive has not yet claimed their sender reward.
+  repeated string unclaimed_recipients = 11;
+  // Sender rewards so far collected for this incentive.
+  repeated Reward rewards = 12;
+  // Max claims.
+  int64 max_claims = 13;
+  // Current user IDs that have claimed, and their outcomes.
+  map<string, IncentiveClaim> claims = 14;
+}
+
+// A list of incentives set up by a user.
+message IncentiveList {
+  // Incentives set up by a single user.
+  repeated Incentive incentives = 1;
+}
+
+// An incentive claimant's view of a single incentive.
+message IncentiveInfo {
+  // The ID of the incentive.
+  string id = 1;
+  // Name.
+  string name = 2;
+  // Description.
+  string description = 3;
+  // Unique shareable incentive code.
+  string code = 4;
+  // The type of the incentive.
+  IncentiveType type = 5;
+  // Incentive sender user ID.
+  string sender = 6;
+  // Available rewards that the caller can claim.
+  AvailableRewards available_rewards = 7;
+  // Indicator if the caller can claim rewards.
+  bool can_claim = 8;
+  // Reward that was granted.
+  Reward reward = 9;
+  // Create time in UTC seconds.
+  int64 create_time_sec = 10;
+  // Update time in UTC seconds.
+  int64 update_time_sec = 11;
+  // Expiry time in UTC seconds.
+  int64 expiry_time_sec = 12;
+  // Claim time in UTC seconds.
+  int64 claim_time_sec = 13;
+}
+
+// Request by a user to set up a new incentive.
+message IncentiveSenderCreateRequest {
+  // The incentive configuration ID.
+  string id = 1;
+}
+
+// Request by a user to delete an incentive they had set up.
+message IncentiveSenderDeleteRequest {
+  // The unique incentive code.
+  string code = 1;
+}
+
+// Request by a user to claim rewards from an incentive they had set up.
+message IncentiveSenderClaimRequest {
+  // The unique incentive code.
+  string code = 1;
+  // The recipient ID(s) to claim for, or empty for all.
+  repeated string recipient_ids = 2;
+}
+
+// Request by a potential incentive claimant to view incentive information.
+message IncentiveRecipientGetRequest {
+  // The unique incentive code.
+  string code = 1;
+}
+
+// Request by a potential incentive claimant to claim an incentive.
+message IncentiveRecipientClaimRequest {
+  // The unique incentive code.
+  string code = 1;
 }
 
 // The cost(s) associated with permanently unlocking a progression.
@@ -356,6 +485,8 @@ enum EconomyStoreType {
   ECONOMY_STORE_TYPE_APPLE_APPSTORE = 1;
   // Google Play.
   ECONOMY_STORE_TYPE_GOOGLE_PLAY = 2;
+  // Facebook Instant games.
+  ECONOMY_STORE_TYPE_FBINSTANT = 3;
 }
 
 // Energy modifier granted.

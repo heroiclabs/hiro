@@ -84,6 +84,7 @@ type Hiro interface {
 	GetUnlockablesSystem() UnlockablesSystem
 	GetEventLeaderboardsSystem() EventLeaderboardsSystem
 	GetProgressionSystem() ProgressionSystem
+	GetIncentivesSystem() IncentivesSystem
 }
 
 // The SystemType identifies each of the gameplay systems.
@@ -103,6 +104,7 @@ const (
 	SystemTypeEconomy
 	SystemTypeEventLeaderboards
 	SystemTypeProgression
+	SystemTypeIncentives
 )
 
 // Init initializes a Hiro type with the configurations provided.
@@ -306,6 +308,15 @@ func WithEventLeaderboardsSystem(configFile string, register bool) SystemConfig 
 func WithProgressionSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeProgression,
+		configFile: configFile,
+		register:   register,
+	}
+}
+
+// WithIncentivesSystem configures a IncentivesSystem type and optionally registers its RPCs with the game server.
+func WithIncentivesSystem(configFile string, register bool) SystemConfig {
+	return &systemConfig{
+		systemType: SystemTypeIncentives,
 		configFile: configFile,
 		register:   register,
 	}
