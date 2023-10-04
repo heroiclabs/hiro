@@ -74,4 +74,9 @@ type EventLeaderboardsSystem interface {
 
 	// SetOnEventLeaderboardsReward sets a custom reward function which will run after an event leaderboard's reward is rolled.
 	SetOnEventLeaderboardsReward(fn OnReward[*EventLeaderboardsConfigLeaderboard])
+
+	// SetOnEventLeaderboardCohortSelection sets a custom function that can replace the cohort or opponent selection feature of event leaderboards.
+	SetOnEventLeaderboardCohortSelection(fn OnEventLeaderboardCohortSelection)
 }
+
+type OnEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, eventID string, config *EventLeaderboardsConfigLeaderboard, userID string, tier int) (cohortID string, cohortUserIDs []string, err error)
