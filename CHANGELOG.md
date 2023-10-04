@@ -5,8 +5,13 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.5.0] - 2023-10-04
+### Added
+- Add server interface for the Incentives gameplay system.
+- Cohort selection in Event Leaderboards can now be overridden with a custom function.
 
+### Changed
+- "Get" in the Progression gameplay system now returns a delta of Progression Nodes who's state has changed if a previous graph is passed to it.
 
 ## [1.4.0] - 2023-09-14
 ### Added
