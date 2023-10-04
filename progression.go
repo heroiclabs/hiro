@@ -47,7 +47,7 @@ type ProgressionSystem interface {
 	System
 
 	// Get returns all or an optionally-filtered set of progressions for the given user.
-	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*Progression, error)
+	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, lastKnownProgressions map[string]*Progression) (map[string]*Progression, map[string]*ProgressionDelta, error)
 
 	// Purchase permanently unlocks a specified progression, if that progression supports this operation.
 	Purchase(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionID string) (map[string]*Progression, error)

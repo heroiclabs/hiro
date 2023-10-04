@@ -131,7 +131,7 @@ enum RpcId {
   RPC_ID_STATS_UPDATE = 47 [(input) = "StatUpdateRequest", (output) = "StatList"];
 
   // Get progressions.
-  RPC_ID_PROGRESSIONS_GET = 48 [(input) = "", (output) = "ProgressionList"];
+  RPC_ID_PROGRESSIONS_GET = 48 [(input) = "ProgressionGetRequest", (output) = "ProgressionList"];
   // Purchase a progression for permanent unlock, if supported.
   RPC_ID_PROGRESSIONS_PURCHASE = 49 [(input) = "ProgressionPurchaseRequest", (output) = "ProgressionList"];
   // Update a progression to change its count, if supported.
@@ -355,9 +355,40 @@ message Progression {
   ProgressionPreconditionsBlock unmet_preconditions = 9;
 }
 
+enum ProgressionDeltaState {
+  // Unspecified. Defaults to UNCHANGED.
+  PROGRESSION_DELTA_STATE_UNSPECIFIED = 0;
+  // Progression unlock state has not changed.
+  PROGRESSION_DELTA_STATE_UNCHANGED = 1;
+  // Progression was locked, it is now unlocked.
+  PROGRESSION_DELTA_STATE_UNLOCKED = 2;
+  // Progression was unlocked, it is now locked.
+  PROGRESSION_DELTA_STATE_LOCKED = 3;
+}
+
+// A change in a given progression, compared to a previously known state.
+message ProgressionDelta {
+  // The ID of the progression.
+  string id = 1;
+  // Potential state change.
+  ProgressionDeltaState state = 2;
+  // Changes to counts, if any.
+  map<string, int64> counts = 3;
+  // Changes to preconditions, if any.
+  ProgressionPreconditionsBlock preconditions = 4;
+}
+
 // All or a filtered list of progressions for a user.
 message ProgressionList {
   // Progressions keyed by progression ID.
+  map<string, Progression> progressions = 1;
+  // Progression deltas keyed by progression ID.
+  map<string, ProgressionDelta> deltas = 2;
+}
+
+// Request progressions for a user, optionally including previously seen state for delta calculations.
+message ProgressionGetRequest {
+  // Optional last known progressions state, keyed by progression ID.
   map<string, Progression> progressions = 1;
 }
 
