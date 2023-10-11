@@ -798,6 +798,8 @@ message EventLeaderboard {
   bool is_active = 21;
   // Indicates if the event is over and its reward can be claimed.
   bool can_claim = 22;
+  // Indicates if the event can be rolled to get a new set of opponents.
+  bool can_roll = 23;
 }
 
 // A contributor to this donation.
