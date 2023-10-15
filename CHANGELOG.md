@@ -5,8 +5,21 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.6.0] - 2023-10-15
+### Added
+- Add fields for 'is_active', 'can_claim', and 'can_roll' for simpler client code with Event Leaderboards.
+- Add 'IncentivesSystem' in C#.
 
+### Changed
+- Allow both 'IEconomyListStoreItem' and 'IEconomyLocalizedStoreItem' to be used in purchase flows in C#.
+
+### Fixed
+- Use Inventory after the Progression purchase has been applied to calculate the latest Progression deltas.
+- Energy counts granted as an Economy Reward are kept as overflow.
+- Fix panic in progression precondition comparison.
+- Batch economy changes which resolve to items removed are now marked correctly.
+- Serialize the input for Inventory update items request correctly to JSON in C#.
+- Fix to progression deltas computations.
 
 ## [1.5.0] - 2023-10-04
 ### Added
