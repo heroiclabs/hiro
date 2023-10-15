@@ -710,30 +710,36 @@ message EventLeaderboardScore {
   string id = 1;
   // Username.
   string username = 2;
+  // Display name.
+  string display_name = 3;
+  // Avatar URL.
+  string avatar_url = 4;
   // Time when the user joined the event leaderboard.
-  int64 create_time_sec = 3;
+  int64 create_time_sec = 5;
   // Time when the user last submitted a score.
-  int64 update_time_sec = 4;
+  int64 update_time_sec = 6;
   // Rank within the event leaderboard.
-  int64 rank = 5;
+  int64 rank = 7;
   // Score.
-  int64 score = 6;
+  int64 score = 8;
   // Subscore.
-  int64 subscore = 7;
+  int64 subscore = 9;
   // Number of score submissions.
-  int64 num_scores = 8;
+  int64 num_scores = 10;
 }
 
 // A reward range within a specific tier based on ranks.
 message EventLeaderboardRewardTier {
+  // Name for this tier.
+  string name = 1;
   // The maximum rank (inclusive).
-  int32 rank_max = 1;
+  int32 rank_max = 2;
   // The minimum rank (inclusive).
-  int32 rank_min = 2;
+  int32 rank_min = 3;
   // The available rewards for this range.
-  AvailableRewards available_rewards = 3;
+  AvailableRewards available_rewards = 4;
   // Change in tier for this rank range.
-  int32 tier_change = 4;
+  int32 tier_change = 5;
 }
 
 // An event leaderboard's tier-specific set of rewards.

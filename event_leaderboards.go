@@ -44,6 +44,7 @@ type EventLeaderboardsConfigLeaderboard struct {
 }
 
 type EventLeaderboardsConfigLeaderboardRewardTier struct {
+	Name       string               `json:"name"`
 	RankMax    int                  `json:"rank_max"`
 	RankMin    int                  `json:"rank_min"`
 	Reward     *EconomyConfigReward `json:"reward"`
@@ -61,10 +62,10 @@ type EventLeaderboardsSystem interface {
 	System
 
 	// GetEventLeaderboard returns a specified event leaderboard's cohort for the user.
-	GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, username, eventLeaderboardID string) (*EventLeaderboard, error)
+	GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) (*EventLeaderboard, error)
 
 	// RollEventLeaderboard places the user into a new cohort for the specified event leaderboard if possible.
-	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, username, eventLeaderboardID string) (*EventLeaderboard, error)
+	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) (*EventLeaderboard, error)
 
 	// UpdateEventLeaderboard updates the user's score in the specified event leaderboard, and returns the user's updated cohort information.
 	UpdateEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, username, eventLeaderboardID string, score, subscore int64) (*EventLeaderboard, error)
