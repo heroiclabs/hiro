@@ -5,10 +5,14 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [Unreleased]
+
+
 ## [1.6.0] - 2023-10-15
 ### Added
 - Add fields for 'is_active', 'can_claim', and 'can_roll' for simpler client code with Event Leaderboards.
 - Add 'IncentivesSystem' in C#.
+- New 'MaxOverflow' field to the data definition for Energies.
 
 ### Changed
 - Allow both 'IEconomyListStoreItem' and 'IEconomyLocalizedStoreItem' to be used in purchase flows in C#.
