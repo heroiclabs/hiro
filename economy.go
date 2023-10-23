@@ -34,6 +34,7 @@ var (
 	ErrEconomyClaimedDonation   = runtime.NewError("donation already claimed", 3)              // INVALID_ARGUMENT
 
 	ErrInventoryNotInitialized = runtime.NewError("inventory not initialized for batch", 13)
+	ErrItemsNotConsumable      = runtime.NewError("items not consumable", 13)
 	ErrItemsInsufficient       = runtime.NewError("insufficient items", 13)
 	ErrCurrencyInsufficient    = runtime.NewError("insufficient currency", 13)
 )
