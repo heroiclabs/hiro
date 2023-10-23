@@ -49,7 +49,7 @@ type EnergySystem interface {
 	Spend(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32) (map[string]*Energy, *Reward, error)
 
 	// Grant will add the amounts to each energy (while applying any energy modifiers) for a user by ID.
-	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32, modifiers []*RewardEnergyModifier) (*runtime.StorageWrite, error)
+	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32, modifiers []*RewardEnergyModifier) (map[string]*Energy, error)
 
 	// SetOnSpendReward sets a custom reward function which will run after an energy reward's value has been rolled.
 	SetOnSpendReward(fn OnReward[*EnergyConfigEnergy])
