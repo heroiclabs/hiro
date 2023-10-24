@@ -5,24 +5,37 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.7.0] - 2023-10-24
+### Added
+- New error type "ErrItemsNotConsumable" for Inventory items which are not consumable.
 
+### Changed
+- Energies "Grant" now returns a player's updated energies.
+- "Get" will return an empty state for an Event Leaderboard when a player has never had a previous cohort.
+- Add "locked" field to the storage engine index used with Event Leaderboard cohort generation.
+- (Unity) Improve "InventorySystem" to use observer pattern.
+
+### Fixed
+- (Unity) Use "PurchaseFailureDescription.reason" with Unity IAP package for error messages.
+- Sender claim uses the newer internal operation in Incentives system.
+- Do not shadow parent Reward when it is created to be granted in Achievements system.
+- (Unity) Use an async pattern in "IStoreListener.ProcessPurchase" with Unity IAP package.
 
 ## [1.6.0] - 2023-10-15
 ### Added
-- Add fields for 'is_active', 'can_claim', and 'can_roll' for simpler client code with Event Leaderboards.
-- Add 'IncentivesSystem' in C#.
-- New 'MaxOverflow' field to the data definition for Energies.
+- Add fields for "is_active", "can_claim", and "can_roll" for simpler client code with Event Leaderboards.
+- (Unity) Add "IncentivesSystem".
+- New "max_overflow" field to the data definition for Energies.
 
 ### Changed
-- Allow both 'IEconomyListStoreItem' and 'IEconomyLocalizedStoreItem' to be used in purchase flows in C#.
+- (Unity) Allow both "IEconomyListStoreItem" and "IEconomyLocalizedStoreItem" to be used in purchase flows.
 
 ### Fixed
 - Use Inventory after the Progression purchase has been applied to calculate the latest Progression deltas.
 - Energy counts granted as an Economy Reward are kept as overflow.
 - Fix panic in progression precondition comparison.
 - Batch economy changes which resolve to items removed are now marked correctly.
-- Serialize the input for Inventory update items request correctly to JSON in C#.
+- (Unity) Serialize the input for Inventory update items request correctly to JSON.
 - Fix to progression deltas computations.
 
 ## [1.5.0] - 2023-10-04
