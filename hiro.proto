@@ -982,6 +982,8 @@ message InventoryItem {
   int64 owned_time_sec = 13;
   // A UNIX timestamp when the item was updated.
   int64 update_time_sec = 14;
+  // The instance ID of the item, if any.
+  string instance_id = 15;
 }
 
 // Request all inventory items in the economy.
