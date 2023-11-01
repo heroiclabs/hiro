@@ -16,6 +16,8 @@ package hiro
 
 import (
 	"context"
+	"database/sql"
+
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -190,7 +192,7 @@ type EconomySystem interface {
 	PurchaseIntent(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, sku string) error
 
 	// PurchaseItem will validate a purchase and give the user ID the appropriate rewards.
-	PurchaseItem(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, receipt string) (map[string]int64, *Inventory, *Reward, bool, error)
+	PurchaseItem(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, receipt string) (map[string]int64, *Inventory, *Reward, bool, error)
 
 	// PlacementStatus will get the status of a specified placement.
 	PlacementStatus(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string, retryCount int) (*EconomyPlacementStatus, error)
