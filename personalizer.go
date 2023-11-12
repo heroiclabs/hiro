@@ -31,6 +31,8 @@ type Personalizer interface {
 var _ Personalizer = &SatoriPersonalizer{}
 
 type SatoriPersonalizer struct {
+	publishAuthenticateEvent bool
+	publishCoreEvents        bool
 }
 
 func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string) (any, error) {
@@ -84,4 +86,19 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 	}
 
 	return config, nil
+}
+
+func (p *SatoriPersonalizer) IsPublishAuthenticateEvent() bool {
+	return p.publishAuthenticateEvent
+}
+
+func (p *SatoriPersonalizer) IsPublishCoreEvents() bool {
+	return p.publishCoreEvents
+}
+
+func NewSatoriPersonalizer(publishAuthenticateEvent, publishCoreEvents bool) *SatoriPersonalizer {
+	return &SatoriPersonalizer{
+		publishAuthenticateEvent: publishAuthenticateEvent,
+		publishCoreEvents:        publishCoreEvents,
+	}
 }
