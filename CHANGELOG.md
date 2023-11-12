@@ -6,7 +6,8 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
 ## [Unreleased]
-
+### Changed
+- Update nakama-common to v1.30.0 release.
 
 ## [1.7.0] - 2023-10-24
 ### Added
