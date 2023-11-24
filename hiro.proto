@@ -1020,10 +1020,12 @@ message Inventory {
 
 // Request to consume some amount of items.
 message InventoryConsumeRequest {
-  // Item amounts to consume, if any.
+  // Item ID amounts to consume, if any.
   map<string, int64> items = 1;
   // Whether or not to allow overconsumption.
   bool overconsume = 2;
+  // Instance ID amounts to consume, if any.
+  map<string, int64> instances = 3;
 }
 
 // Updated inventory and rewards granted from consumption.
@@ -1032,6 +1034,8 @@ message InventoryConsumeRewards {
   Inventory inventory = 1;
   // Consume rewards by item ID, if any.
   map<string, RewardList> rewards = 2;
+  // Consume rewards by instance ID, if any.
+  map<string, RewardList> instance_rewards = 3;
 }
 
 // Response from granting or purchasing items. This contains updated inventory data, if changed.

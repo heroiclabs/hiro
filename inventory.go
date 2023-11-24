@@ -49,17 +49,15 @@ type InventorySystem interface {
 	// ListInventoryItems will return the items which are part of a user's inventory by ID.
 	ListInventoryItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, category string) (*Inventory, error)
 
-	// ConsumeItems will deduct the item(s) from the user's inventory and run the consume reward for each one, if
-	// defined.
-	ConsumeItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, items map[string]int64, overConsume bool) (*Inventory, map[string][]*Reward, error)
+	// ConsumeItems will deduct the item(s) from the user's inventory and run the consume reward for each one, if defined.
+	ConsumeItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs, instanceIDs map[string]int64, overConsume bool) (*Inventory, map[string][]*Reward, map[string][]*Reward, error)
 
 	// GrantItems will add the item(s) to a user's inventory by ID.
-	GrantItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, items map[string]int64) (*Inventory, error)
+	GrantItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs map[string]int64) (*Inventory, error)
 
-	// UpdateItems will update the properties which are stored on each item by ID for a user.
-	UpdateItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemUpdates map[string]*InventoryUpdateItemProperties) (*Inventory, error)
+	// UpdateItems will update the properties which are stored on each item by instance ID for a user.
+	UpdateItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs map[string]*InventoryUpdateItemProperties) (*Inventory, error)
 
-	// SetOnConsumeReward sets a custom reward function which will run after an inventory items' consume reward is
-	// rolled.
+	// SetOnConsumeReward sets a custom reward function which will run after an inventory items' consume reward is rolled.
 	SetOnConsumeReward(fn OnReward[*InventoryConfigItem])
 }
