@@ -24,7 +24,8 @@ import (
 // The Personalizer describes an intermediate server or service which can be used to personalize the base data
 // definitions defined for the gameplay systems.
 type Personalizer interface {
-	// GetValue returns a config which has been modified for a gameplay system.
+	// GetValue returns a config which has been modified for a gameplay system,
+	// or nil if the config is not being adjusted by this personalizer.
 	GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, identity string, inConfig any) (any, error)
 }
 
@@ -74,9 +75,9 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		return nil, err
 	}
 
-	// If this caller doesn't have the given flag, return the current configuration state.
+	// If this caller doesn't have the given flag, return the nil to indicate no change to the config.
 	if len(flagList.Flags) < 1 {
-		return inConfig, nil
+		return nil, nil
 	}
 
 	if err := json.Unmarshal([]byte(flagList.Flags[0].Value), inConfig); err != nil {

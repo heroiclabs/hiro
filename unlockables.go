@@ -26,6 +26,8 @@ type UnlockablesConfig struct {
 	Slots          int                                     `json:"slots"`
 	SlotCost       *UnlockablesConfigSlotCost              `json:"slot_cost"`
 	Unlockables    map[string]*UnlockablesConfigUnlockable `json:"unlockables"`
+
+	UnlockableProbabilities []string `json:"-"`
 }
 
 type UnlockablesConfigSlotCost struct {
