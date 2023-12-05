@@ -26,7 +26,7 @@ import (
 type Personalizer interface {
 	// GetValue returns a config which has been modified for a gameplay system,
 	// or nil if the config is not being adjusted by this personalizer.
-	GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, identity string, inConfig any) (any, error)
+	GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, identity string) (any, error)
 }
 
 var _ Personalizer = &SatoriPersonalizer{}
@@ -36,7 +36,7 @@ type SatoriPersonalizer struct {
 	publishCoreEvents          bool
 }
 
-func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string, inConfig any) (any, error) {
+func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string) (any, error) {
 	var flagName string
 	switch system.GetType() {
 	case SystemTypeAchievements:
@@ -80,12 +80,14 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		return nil, nil
 	}
 
-	if err := json.Unmarshal([]byte(flagList.Flags[0].Value), inConfig); err != nil {
+	config := system.GetConfig()
+
+	if err := json.Unmarshal([]byte(flagList.Flags[0].Value), config); err != nil {
 		logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
 		return nil, err
 	}
 
-	return inConfig, nil
+	return config, nil
 }
 
 func (p *SatoriPersonalizer) IsPublishAuthenticateRequest() bool {
