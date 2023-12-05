@@ -18,10 +18,11 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"plugin"
+
 	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 	"google.golang.org/protobuf/encoding/protojson"
-	"plugin"
 )
 
 var (
@@ -68,7 +69,9 @@ type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sq
 
 // Hiro provides a type which combines all gameplay systems.
 type Hiro interface {
+	// Deprecated in favor of AddPersonalizer function to compose a chain of configuration personalization.
 	SetPersonalizer(Personalizer)
+	AddPersonalizer(personalizer Personalizer)
 
 	SetAfterAuthenticate(fn AfterAuthenticateFn)
 

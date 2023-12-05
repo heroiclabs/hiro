@@ -25,7 +25,7 @@ import (
 // definitions defined for the gameplay systems.
 type Personalizer interface {
 	// GetValue returns a config which has been modified for a gameplay system.
-	GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, identity string) (any, error)
+	GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, identity string, inConfig any) (any, error)
 }
 
 var _ Personalizer = &SatoriPersonalizer{}
@@ -33,7 +33,7 @@ var _ Personalizer = &SatoriPersonalizer{}
 type SatoriPersonalizer struct {
 }
 
-func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string) (any, error) {
+func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string, inCgf any) (any, error) {
 	var flagName string
 	switch system.GetType() {
 	case SystemTypeAchievements:
@@ -72,16 +72,15 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		return nil, err
 	}
 
-	// If this caller doesn't have the given flag, return no override.
+	// If this caller doesn't have the given flag, return the current configuration state.
 	if len(flagList.Flags) < 1 {
-		return nil, nil
+		return inCgf, nil
 	}
 
-	config := system.GetConfig()
-	if err := json.Unmarshal([]byte(flagList.Flags[0].Value), config); err != nil {
+	if err := json.Unmarshal([]byte(flagList.Flags[0].Value), inCgf); err != nil {
 		logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
 		return nil, err
 	}
 
-	return config, nil
+	return inCgf, nil
 }
