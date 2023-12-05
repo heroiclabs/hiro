@@ -1165,9 +1165,9 @@ message Energy {
   int32 current = 2;
   // The maximum amount.
   int32 max = 3;
-  // Next refill amount, if not at max already.
+  // Amount of energy granted per refill.
   int32 refill = 4;
-  // Number of seconds per refill, if not at max already.
+  // Number of seconds between refills.
   int64 refill_sec = 5;
   // The UNIX timestamp when the count will increase, if it is not at max already.
   int64 next_refill_time_sec = 6;

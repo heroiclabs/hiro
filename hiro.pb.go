@@ -6651,9 +6651,9 @@ type Energy struct {
 	Current int32 `protobuf:"varint,2,opt,name=current,proto3" json:"current,omitempty"`
 	// The maximum amount.
 	Max int32 `protobuf:"varint,3,opt,name=max,proto3" json:"max,omitempty"`
-	// Next refill amount, if not at max already.
+	// Amount of energy granted per refill.
 	Refill int32 `protobuf:"varint,4,opt,name=refill,proto3" json:"refill,omitempty"`
-	// Number of seconds per refill, if not at max already.
+	// Number of seconds between refills.
 	RefillSec int64 `protobuf:"varint,5,opt,name=refill_sec,json=refillSec,proto3" json:"refill_sec,omitempty"`
 	// The UNIX timestamp when the count will increase, if it is not at max already.
 	NextRefillTimeSec int64 `protobuf:"varint,6,opt,name=next_refill_time_sec,json=nextRefillTimeSec,proto3" json:"next_refill_time_sec,omitempty"`
