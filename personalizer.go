@@ -35,7 +35,7 @@ type SatoriPersonalizer struct {
 	publishCoreEvents          bool
 }
 
-func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string, inCgf any) (any, error) {
+func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string, inConfig any) (any, error) {
 	var flagName string
 	switch system.GetType() {
 	case SystemTypeAchievements:
@@ -76,15 +76,15 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 
 	// If this caller doesn't have the given flag, return the current configuration state.
 	if len(flagList.Flags) < 1 {
-		return inCgf, nil
+		return inConfig, nil
 	}
 
-	if err := json.Unmarshal([]byte(flagList.Flags[0].Value), inCgf); err != nil {
+	if err := json.Unmarshal([]byte(flagList.Flags[0].Value), inConfig); err != nil {
 		logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
 		return nil, err
 	}
 
-	return inCgf, nil
+	return inConfig, nil
 }
 
 func (p *SatoriPersonalizer) IsPublishAuthenticateRequest() bool {
