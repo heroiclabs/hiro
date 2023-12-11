@@ -1570,4 +1570,6 @@ message AchievementsUpdateRequest {
   repeated string ids = 1;
   // The amount of progress to increment on the achievements.
   int64 amount = 2;
+  // Achievements with different amounts.
+  map<string, int64> achievements = 3;
 }

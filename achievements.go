@@ -68,7 +68,7 @@ type AchievementsSystem interface {
 	GetAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*Achievement, map[string]*Achievement, error)
 
 	// UpdateAchievements updates progress on one or more achievements by the same amount.
-	UpdateAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, achievementIDs []string, amount int64) (map[string]*Achievement, map[string]*Achievement, error)
+	UpdateAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, achievementUpdates map[string]int64) (map[string]*Achievement, map[string]*Achievement, error)
 
 	// SetOnAchievementReward sets a custom reward function which will run after an achievement's reward is rolled.
 	SetOnAchievementReward(fn OnReward[*AchievementsConfigAchievement])
