@@ -121,6 +121,10 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "name": {
+                        "type": "string",
+                        "title": "name"
+                      },
                       "rank_min": {
                         "type": "number",
                         "title": "rank_min",
