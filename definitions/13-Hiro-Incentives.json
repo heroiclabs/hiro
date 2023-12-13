@@ -1,14 +1,14 @@
 {
-    "incentives": {
-        "incentive1": {
-            "type": 1,
-            "name": "Incentive One",
-            "description": "Description of the first incentive",
-            "max_claims": 100,
-            "max_global_claims": 500,
-            "max_recipient_age_sec": 3600,
-            "max_concurrent": 10,
-            "expiry_duration_sec": 86400
-        }
+  "incentives": {
+    "incentive1": {
+      "type": 1,
+      "name": "Incentive One",
+      "description": "Description of the first incentive",
+      "max_claims": 100,
+      "max_global_claims": 500,
+      "max_recipient_age_sec": 3600,
+      "max_concurrent": 10,
+      "expiry_duration_sec": 86400
     }
+  }
 }
