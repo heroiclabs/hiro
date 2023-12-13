@@ -154,6 +154,8 @@
       }
     }
   },
-  "required": ["event_leaderboards"],
+  "required": [
+    "event_leaderboards"
+  ],
   "type": "object"
 }

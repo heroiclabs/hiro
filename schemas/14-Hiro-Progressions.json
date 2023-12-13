@@ -1,163 +1,163 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "properties": {
-        "progressions": {
-            "type": "object",
-            "patternProperties": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "progressions": {
+      "type": "object",
+      "patternProperties": {
+        ".{1,}": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "additional_properties": {
+              "type": "object",
+              "patternProperties": {
                 ".{1,}": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "type": "string"
-                        },
-                        "description": {
-                            "type": "string"
-                        },
-                        "category": {
-                            "type": "string"
-                        },
-                        "additional_properties": {
-                            "type": "object",
-                            "patternProperties": {
-                                ".{1,}": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "preconditions": {
-                            "$ref": "#/definitions/ProgressionPreconditionsBlock"
-                        }
-                    },
-                    "required": []
+                  "type": "string"
                 }
+              }
+            },
+            "preconditions": {
+              "$ref": "#/definitions/ProgressionPreconditionsBlock"
             }
+          },
+          "required": []
         }
-    },
-    "required": [
-        "progressions"
-    ],
-    "definitions": {
-        "ProgressionPreconditionsBlock": {
-            "type": "object",
-            "properties": {
-                "direct": {
-                    "type": "object",
-                    "properties": {
-                        "counts": {
-                            "type": "object",
-                            "patternProperties": {
-                                ".{1,}": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "cost": {
-                            "type": "object",
-                            "properties": {
-                                "items": {
-                                    "type": "object",
-                                    "patternProperties": {
-                                        ".{1,}": {
-                                            "type": "integer"
-                                        }
-                                    }
-                                },
-                                "currencies": {
-                                    "type": "object",
-                                    "patternProperties": {
-                                        ".{1,}": {
-                                            "type": "integer"
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "progressions": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "achievements": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "items_min": {
-                            "type": "object",
-                            "patternProperties": {
-                                ".{1,}": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "items_max": {
-                            "type": "object",
-                            "patternProperties": {
-                                ".{1,}": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "stats_min": {
-                            "type": "object",
-                            "patternProperties": {
-                                ".{1,}": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "stats_max": {
-                            "type": "object",
-                            "patternProperties": {
-                                ".{1,}": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "energy_min": {
-                            "type": "object",
-                            "patternProperties": {
-                                ".{1,}": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "energy_max": {
-                            "type": "object",
-                            "patternProperties": {
-                                ".{1,}": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "currency_min": {
-                            "type": "object",
-                            "patternProperties": {
-                                ".{1,}": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "currency_max": {
-                            "type": "object",
-                            "patternProperties": {
-                                ".{1,}": {
-                                    "type": "integer"
-                                }
-                            }
-                        }
-                    }
-                },
-                "operator": {
-                    "type": "integer",
-                    "minimum": 0
-                },
-                "nested": {
-                    "$ref": "#/definitions/ProgressionPreconditionsBlock"
-                }
-            }
-        }
+      }
     }
+  },
+  "required": [
+    "progressions"
+  ],
+  "definitions": {
+    "ProgressionPreconditionsBlock": {
+      "type": "object",
+      "properties": {
+        "direct": {
+          "type": "object",
+          "properties": {
+            "counts": {
+              "type": "object",
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "integer"
+                }
+              }
+            },
+            "cost": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "object",
+                  "patternProperties": {
+                    ".{1,}": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "currencies": {
+                  "type": "object",
+                  "patternProperties": {
+                    ".{1,}": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "progressions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "achievements": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "items_min": {
+              "type": "object",
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "integer"
+                }
+              }
+            },
+            "items_max": {
+              "type": "object",
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "integer"
+                }
+              }
+            },
+            "stats_min": {
+              "type": "object",
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "integer"
+                }
+              }
+            },
+            "stats_max": {
+              "type": "object",
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "integer"
+                }
+              }
+            },
+            "energy_min": {
+              "type": "object",
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "integer"
+                }
+              }
+            },
+            "energy_max": {
+              "type": "object",
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "integer"
+                }
+              }
+            },
+            "currency_min": {
+              "type": "object",
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "integer"
+                }
+              }
+            },
+            "currency_max": {
+              "type": "object",
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "operator": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "nested": {
+          "$ref": "#/definitions/ProgressionPreconditionsBlock"
+        }
+      }
+    }
+  }
 }

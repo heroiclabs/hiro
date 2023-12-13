@@ -1,64 +1,77 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "properties": {
-      "incentives": {
-        "type": "object",
-        "patternProperties": {
-          ".{1,}": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "integer",
-                "minimum": 0,
-                "title": "type"
-              },
-              "name": {
-                "type": "string",
-                "title": "name"
-              },
-              "description": {
-                "type": "string",
-                "title": "description"
-              },
-              "max_claims": {
-                "type": "integer",
-                "minimum": 0,
-                "title": "max_claims"
-              },
-              "max_global_claims": {
-                "type": "integer",
-                "minimum": 0,
-                "title": "max_global_claims"
-              },
-              "max_recipient_age_sec": {
-                "type": "integer",
-                "minimum": 0,
-                "title": "max_recipient_age_sec"
-              },
-              "recipient_reward": {
-                "$ref": "Hiro-Rewards",
-                "title": "recipient_reward"
-              },
-              "sender_reward": {
-                "$ref": "Hiro-Rewards",
-                "title": "sender_reward"
-              },
-              "max_concurrent": {
-                "type": "integer",
-                "minimum": 0,
-                "title": "max_concurrent"
-              },
-              "expiry_duration_sec": {
-                "type": "integer",
-                "minimum": 0,
-                "title": "expiry_duration_sec"
-              }
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "incentives": {
+      "type": "object",
+      "patternProperties": {
+        ".{1,}": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "integer",
+              "minimum": 0,
+              "title": "type"
             },
-            "required": ["type", "name", "description", "max_claims", "max_global_claims", "max_recipient_age_sec", "recipient_reward", "sender_reward", "max_concurrent", "expiry_duration_sec"]
-          }
-        },
-        "title": "incentives"
-      }
-    },
-    "required": ["incentives"]
-  }
+            "name": {
+              "type": "string",
+              "title": "name"
+            },
+            "description": {
+              "type": "string",
+              "title": "description"
+            },
+            "max_claims": {
+              "type": "integer",
+              "minimum": 0,
+              "title": "max_claims"
+            },
+            "max_global_claims": {
+              "type": "integer",
+              "minimum": 0,
+              "title": "max_global_claims"
+            },
+            "max_recipient_age_sec": {
+              "type": "integer",
+              "minimum": 0,
+              "title": "max_recipient_age_sec"
+            },
+            "recipient_reward": {
+              "$ref": "Hiro-Rewards",
+              "title": "recipient_reward"
+            },
+            "sender_reward": {
+              "$ref": "Hiro-Rewards",
+              "title": "sender_reward"
+            },
+            "max_concurrent": {
+              "type": "integer",
+              "minimum": 0,
+              "title": "max_concurrent"
+            },
+            "expiry_duration_sec": {
+              "type": "integer",
+              "minimum": 0,
+              "title": "expiry_duration_sec"
+            }
+          },
+          "required": [
+            "type",
+            "name",
+            "description",
+            "max_claims",
+            "max_global_claims",
+            "max_recipient_age_sec",
+            "recipient_reward",
+            "sender_reward",
+            "max_concurrent",
+            "expiry_duration_sec"
+          ]
+        }
+      },
+      "title": "incentives"
+    }
+  },
+  "required": [
+    "incentives"
+  ]
+}
