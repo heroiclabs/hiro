@@ -17,6 +17,7 @@ package hiro
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	"github.com/heroiclabs/nakama-common/runtime"
 )
@@ -75,16 +76,46 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		return nil, err
 	}
 
-	// If this caller doesn't have the given flag, return the nil to indicate no change to the config.
-	if len(flagList.Flags) < 1 {
-		return nil, nil
+	var config any
+	var found bool
+
+	if len(flagList.Flags) >= 1 {
+		config = system.GetConfig()
+		decoder := json.NewDecoder(strings.NewReader(flagList.Flags[0].Value))
+		decoder.DisallowUnknownFields()
+		if err := decoder.Decode(config); err != nil {
+			logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
+			return nil, err
+		}
+		found = true
 	}
 
-	config := system.GetConfig()
+	if system.GetType() == SystemTypeEventLeaderboards {
+		// If looking at event leaderboards, also load live events.
+		liveEventsList, err := nk.GetSatori().LiveEventsList(ctx, userID)
+		if err != nil {
+			logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori live events list")
+			return nil, err
+		}
+		if len(liveEventsList.LiveEvents) > 0 {
+			if config == nil {
+				config = system.GetConfig()
+			}
+			for _, liveEvent := range liveEventsList.LiveEvents {
+				decoder := json.NewDecoder(strings.NewReader(liveEvent.Value))
+				decoder.DisallowUnknownFields()
+				if err := decoder.Decode(config); err != nil {
+					// The live event may be intended for a different purpose, do not log or return an error here.
+					continue
+				}
+				found = true
+			}
+		}
+	}
 
-	if err := json.Unmarshal([]byte(flagList.Flags[0].Value), config); err != nil {
-		logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
-		return nil, err
+	// If this caller doesn't have the given flag (or live events) return the nil to indicate no change to the config.
+	if !found {
+		return nil, nil
 	}
 
 	return config, nil
