@@ -57,13 +57,8 @@
           "required": [
             "type",
             "name",
-            "description",
             "max_claims",
             "max_global_claims",
-            "max_recipient_age_sec",
-            "recipient_reward",
-            "sender_reward",
-            "max_concurrent",
             "expiry_duration_sec"
           ]
         }
