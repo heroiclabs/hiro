@@ -24,6 +24,11 @@
               "title": "max_count",
               "type": "number"
             },
+            "max_overfill": {
+              "minimum": 0,
+              "title": "max_overfill",
+              "type": "number"
+            },
             "refill_count": {
               "minimum": 0,
               "title": "refill_count",

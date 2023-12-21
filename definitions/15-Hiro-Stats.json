@@ -1,0 +1,9 @@
+{
+  "whitelist": [
+    "strength",
+    "constitution",
+    "dexterity",
+    "wisdom",
+    "intellect"
+  ]
+}

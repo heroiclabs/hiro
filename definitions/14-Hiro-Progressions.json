@@ -1,0 +1,60 @@
+{
+  "progressions": {
+    "progression1": {
+      "name": "First Progression",
+      "description": "Description of the first progression",
+      "category": "category1",
+      "additional_properties": {
+        "propKey1": "propValue1",
+        "propKey2": "propValue2"
+      },
+      "preconditions": {
+        "direct": {
+          "counts": {
+            "countKey1": 5,
+            "countKey2": 10
+          },
+          "cost": {
+            "items": {
+              "item1": 2,
+              "item2": 3
+            },
+            "currencies": {
+              "currency1": 100,
+              "currency2": 200
+            }
+          },
+          "achievements": [
+            "achievement1",
+            "achievement2"
+          ],
+          "items_min": {
+            "item1": 1,
+            "item2": 2
+          }
+        },
+        "operator": 1
+      }
+    },
+    "progression2": {
+      "name": "Second Progression",
+      "description": "Description of the second progression",
+      "category": "category2",
+      "additional_properties": {
+        "propKey3": "propValue3"
+      }
+    },
+    "progression3": {
+      "name": "Third Progression",
+      "description": "Description of the third progression",
+      "category": "category3",
+      "preconditions": {
+        "direct": {
+          "progressions": [
+            "progression2"
+          ]
+        }
+      }
+    }
+  }
+}
