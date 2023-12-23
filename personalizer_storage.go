@@ -25,6 +25,8 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+const StoragePersonalizerCollectionDefault = "hiro_datadefinitions"
+
 var _ Personalizer = (*StoragePersonalizer)(nil)
 
 type StoragePersonalizerCachedStorageObject struct {
@@ -46,7 +48,7 @@ func NewStoragePersonalizerDefault() *StoragePersonalizer {
 	return &StoragePersonalizer{
 		cache:        make(map[SystemType]*StoragePersonalizerCachedStorageObject, 20),
 		cacheExpiry:  10 * time.Minute,
-		collection:   "hiro_datadefinitions",
+		collection:   StoragePersonalizerCollectionDefault,
 		personalizer: nil,
 	}
 }
