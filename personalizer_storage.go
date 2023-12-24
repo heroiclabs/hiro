@@ -37,29 +37,26 @@ type StoragePersonalizerCachedStorageObject struct {
 
 type StoragePersonalizer struct {
 	sync.RWMutex
-	cache        map[SystemType]*StoragePersonalizerCachedStorageObject
-	cacheExpiry  time.Duration
-	collection   string
-	logger       runtime.Logger
-	personalizer Personalizer
+	cache       map[SystemType]*StoragePersonalizerCachedStorageObject
+	cacheExpiry time.Duration
+	collection  string
+	logger      runtime.Logger
 }
 
 func NewStoragePersonalizerDefault() *StoragePersonalizer {
 	return &StoragePersonalizer{
-		cache:        make(map[SystemType]*StoragePersonalizerCachedStorageObject, 20),
-		cacheExpiry:  10 * time.Minute,
-		collection:   StoragePersonalizerCollectionDefault,
-		personalizer: nil,
+		cache:       make(map[SystemType]*StoragePersonalizerCachedStorageObject, 20),
+		cacheExpiry: 10 * time.Minute,
+		collection:  StoragePersonalizerCollectionDefault,
 	}
 }
 
-func NewStoragePersonalizer(logger runtime.Logger, cacheExpirySec int, personalizer Personalizer, collection string) *StoragePersonalizer {
+func NewStoragePersonalizer(logger runtime.Logger, cacheExpirySec int, collection string) *StoragePersonalizer {
 	return &StoragePersonalizer{
-		cache:        make(map[SystemType]*StoragePersonalizerCachedStorageObject, 20),
-		cacheExpiry:  time.Duration(cacheExpirySec) * time.Second,
-		collection:   collection,
-		logger:       logger,
-		personalizer: personalizer,
+		cache:       make(map[SystemType]*StoragePersonalizerCachedStorageObject, 20),
+		cacheExpiry: time.Duration(cacheExpirySec) * time.Second,
+		collection:  collection,
+		logger:      logger,
 	}
 }
 
