@@ -5,12 +5,43 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.8.0] - 2023-12-27
 ### Added
-- Add switches for core and authenticate events to be sent by the SatoriPersonalizer.
+- Add switches for core and authenticate events to be sent by the "SatoriPersonalizer".
+- Add "instance_id" field to response in Inventory Item type.
+- Allow the "Personalizer" type to be added as a chain of transforms to each gameplay's data definition.
+- Achievement updates can now be sent as a batch to change different counts on multiple achievements at the same time.
+- Progressions can now define a reset schedule similar to Achievements.
+- New "StoragePersonalizer" type which can use Nakama's storage engine to manage gameplay data definitions.
+- Progression "Reset" can be used to manually reset progress on a progression node (i.e. to reset a quest).
+- (Unity) VContainer DI example is now packaged with the Unity package.
+- (Unity) Add "IsClaimed" computed field to Achievement type.
+- (Unity) Wrap "Satori.IClient" methods in "SatoriSystem" type for simpler code.
+- Stats can update multiple different stats in a single request.
+- (Unity) Progression IDs can optionally be sent to receive deltas for a portion of the progression graph.
 
 ### Changed
-- Update nakama-common to v1.30.0 release.
+- Update nakama-common to v1.30.1 release.
+- (Unreal) Update "HiroClient" with newest features.
+- (TypeScript) Update "HiroClient" with newest features.
+- Return instanced item rewards in response type when consumed.
+- The "refill" and "refill_sec" fields are always populated in an Energy type (even if at max value).
+- The builtin "SatoriPersonalizer" now (optionally) uses Satori Live Events to configure Event Leaderboards.
+- Economy "Grant" now takes an optional wallet metadata input to record a reason in the Nakama ledger.
+- A user who has not submitted any score to an Event Leaderboard is not eligible for rewards or promotions.
+- Use Nakama's builtin Facebook Instant purchase validation function in the Economy system.
+- If Satori is configured and enabled always authenticate server-side (rather than just new players).
+
+### Fixed
+- Some outdated or missing definitions and schemas have been updated.
+- Don't throw an error when the sender claim has no reward defined.
+- (Unity) Add the Preserve attribute to some types at the class level to avoid code stripping issues in Unity IL2CPP.
+- (Unity) Notify observers should not be called twice in the Progression system.
+- Energies granted in rewards should be returned immediately rather than the previous stale value.
+- (Unity) Don't throw an error if Achievement category is unset or empty.
+- (Unity) Use platform specific preprocessor statements with Unity Mobile Notifications system.
+- Fix variable shadow error with how data definition of sub-achievements are populated in responses.
+- Economy weighted table rewards should escape early if a valid reward row has already been granted.
 
 ## [1.7.0] - 2023-10-24
 ### Added
