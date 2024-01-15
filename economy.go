@@ -16,6 +16,7 @@ package hiro
 
 import (
 	"context"
+	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -185,6 +186,9 @@ type EconomySystem interface {
 
 	// Grant will add currencies, and reward modifiers to a user's economy by ID.
 	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, currencies map[string]int64, items map[string]int64, modifiers []*RewardModifier, walletMetadata map[string]interface{}) (map[string]int64, error)
+
+	// UnmarshalWallet unmarshals and returns the account's wallet as a map[string]int64.
+	UnmarshalWallet(account *api.Account) (map[string]int64, error)
 
 	// PurchaseIntent will create a purchase intent for a particular store item for a user ID.
 	PurchaseIntent(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, sku string) error
