@@ -71,6 +71,10 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 
 	flagList, err := nk.GetSatori().FlagsList(ctx, userID, flagName)
 	if err != nil {
+		if strings.Contains(err.Error(), "404 status code") {
+			logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori flag list, user not found")
+			return nil, nil
+		}
 		logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori flag list")
 		return nil, err
 	}
@@ -93,6 +97,10 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		// If looking at event leaderboards, also load live events.
 		liveEventsList, err := nk.GetSatori().LiveEventsList(ctx, userID)
 		if err != nil {
+			if strings.Contains(err.Error(), "404 status code") {
+				logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori live events list, user not found")
+				return nil, nil
+			}
 			logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori live events list")
 			return nil, err
 		}
