@@ -5,8 +5,17 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.8.1] - 2024-01-20
+### Added
+- New "UnmarshalWallet" function to get a Hiro wallet from a Nakama "\*api.Account" type.
 
+### Changed
+- Use clearer error messages in Personalizer middleware.
+- Apply Satori identity authorization before Economy initialize user is processed.
+
+### Fixed
+- Use stable order when inter-dependent achievement progress updates are counted.
+- Don't throw an error on reward grants if Energies system is uninitialized.
 
 ## [1.8.0] - 2023-12-27
 ### Added
