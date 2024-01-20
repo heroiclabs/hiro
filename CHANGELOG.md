@@ -5,6 +5,9 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [Unreleased]
+
+
 ## [1.8.1] - 2024-01-20
 ### Added
 - New "UnmarshalWallet" function to get a Hiro wallet from a Nakama "\*api.Account" type.
