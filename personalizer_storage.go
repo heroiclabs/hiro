@@ -16,16 +16,30 @@ package hiro
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/heroiclabs/hiro"
 	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
 const StoragePersonalizerCollectionDefault = "hiro_datadefinitions"
+const storagePersonalizerKeyAchievements = "achievements"
+const storagePersonalizerKeyEconomy = "economy"
+const storagePersonalizerKeyEnergy = "energy"
+const storagePersonalizerKeyEventLeaderboards = "event_leaderboards"
+const storagePersonalizerKeyIncentives = "incentives"
+const storagePersonalizerKeyLeaderboards = "leaderboards"
+const storagePersonalizerKeyProgression = "progression"
+const storagePersonalizerKeyStats = "stats"
+const storagePersonalizerKeyTeams = "teams"
+const storagePersonalizerKeyTutorials = "tutorials"
+const storagePersonalizerKeyUnlockables = "unlockables"
+const storagePersonalizerKeyBase = "base"
 
 var _ Personalizer = (*StoragePersonalizer)(nil)
 
@@ -43,7 +57,22 @@ type StoragePersonalizer struct {
 	logger      runtime.Logger
 }
 
-func NewStoragePersonalizerDefault() *StoragePersonalizer {
+type storagePersonalizerUploadRequest struct {
+	Achievements     *AchievementsConfig      `json:"achievements"`
+	Economy          *EconomyConfig           `json:"economy"`
+	Energy           *EnergyConfig            `json:"energy"`
+	EventLeaderboard *EventLeaderboardsConfig `json:"event_leaderboard"`
+	Incentives       *IncentivesConfig        `json:"incentives"`
+	Leaderboards     *LeaderboardConfig       `json:"leaderboards"`
+	Progression      *ProgressionConfig       `json:"progression"`
+	Stats            *StatsConfig             `json:"stats"`
+	Teams            *TeamsConfig             `json:"teams"`
+	Tutorials        *TutorialsConfig         `json:"tutorials"`
+	Unlockables      *UnlockablesConfig       `json:"unlockables"`
+	Base             *BaseSystemConfig        `json:"base"`
+}
+
+func NewStoragePersonalizerDefault(initializer *runtime.Initializer) *StoragePersonalizer {
 	return &StoragePersonalizer{
 		cache:       make(map[SystemType]*StoragePersonalizerCachedStorageObject, 20),
 		cacheExpiry: 10 * time.Minute,
@@ -51,12 +80,160 @@ func NewStoragePersonalizerDefault() *StoragePersonalizer {
 	}
 }
 
-func NewStoragePersonalizer(logger runtime.Logger, cacheExpirySec int, collection string) *StoragePersonalizer {
-	return &StoragePersonalizer{
+func NewStoragePersonalizer(logger runtime.Logger, cacheExpirySec int, collection string, initializer runtime.Initializer, register bool) *StoragePersonalizer {
+	personalizer := &StoragePersonalizer{
 		cache:       make(map[SystemType]*StoragePersonalizerCachedStorageObject, 20),
 		cacheExpiry: time.Duration(cacheExpirySec) * time.Second,
 		collection:  collection,
 		logger:      logger,
+	}
+
+	if register {
+		err := initializer.RegisterRpc(hiro.RpcId_RPC_ID_STORAGE_PERSONALIZER_UPLOAD.String(), rpcStoragePersonalizerUpload(initializer, personalizer))
+		if err != nil {
+			logger.WithField("error", err.Error()).Error("Error registering storage personalizer upload RPC.")
+		}
+	}
+
+	return personalizer
+}
+
+func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePersonalizer) func(context.Context, runtime.Logger, *sql.DB, runtime.NakamaModule, string) (string, error) {
+	return func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+		_, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+		if ok {
+			return "", ErrSessionUser
+		}
+
+		req := &storagePersonalizerUploadRequest{}
+		err := json.Unmarshal([]byte(payload), req)
+		if err != nil {
+			return "", ErrPayloadDecode
+		}
+
+		writes := []*runtime.StorageWrite{}
+
+		if req.Achievements != nil {
+			write, err := p.storageWrite(req.Achievements, storagePersonalizerKeyAchievements)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing achievements configuration to storage.")
+				return "", ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Economy != nil {
+			write, err := p.storageWrite(req.Economy, storagePersonalizerKeyEconomy)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing economy configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Energy != nil {
+			write, err := p.storageWrite(req.Energy, storagePersonalizerKeyEnergy)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing energy configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.EventLeaderboard != nil {
+			write, err := p.storageWrite(req.EventLeaderboard, storagePersonalizerKeyEventLeaderboards)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing event leaderboard configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Incentives != nil {
+			write, err := p.storageWrite(req.Incentives, storagePersonalizerKeyIncentives)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing incentives configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Leaderboards != nil {
+			write, err := p.storageWrite(req.Leaderboards, storagePersonalizerKeyLeaderboards)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing leaderboards configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Progression != nil {
+			write, err := p.storageWrite(req.Progression, storagePersonalizerKeyProgression)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing progression configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Stats != nil {
+			write, err := p.storageWrite(req.Stats, storagePersonalizerKeyStats)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing stats configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Teams != nil {
+			write, err := p.storageWrite(req.Teams, storagePersonalizerKeyTeams)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing teams configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Tutorials != nil {
+			write, err := p.storageWrite(req.Tutorials, storagePersonalizerKeyTutorials)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing tutorials configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Unlockables != nil {
+			write, err := p.storageWrite(req.Unlockables, storagePersonalizerKeyUnlockables)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing unlockables configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Base != nil {
+			write, err := p.storageWrite(req.Base, storagePersonalizerKeyBase)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error writing base configuration to storage.")
+				return "", hiro.ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		return "{}", nil
 	}
 }
 
@@ -72,29 +249,29 @@ func (p *StoragePersonalizer) GetValue(ctx context.Context, logger runtime.Logge
 		var readOp *runtime.StorageRead
 		switch systemType {
 		case SystemTypeAchievements:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "achievements"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyAchievements}
 		case SystemTypeEconomy:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "economy"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyEconomy}
 		case SystemTypeEnergy:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "energy"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyEnergy}
 		case SystemTypeEventLeaderboards:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "event_leaderboards"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyEventLeaderboards}
 		case SystemTypeIncentives:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "incentives"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyIncentives}
 		case SystemTypeLeaderboards:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "leaderboards"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyLeaderboards}
 		case SystemTypeProgression:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "progression"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyProgression}
 		case SystemTypeStats:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "stats"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyStats}
 		case SystemTypeTeams:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "teams"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyTeams}
 		case SystemTypeTutorials:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "tutorials"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyTutorials}
 		case SystemTypeUnlockables:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "unlockables"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyUnlockables}
 		case SystemTypeBase:
-			readOp = &runtime.StorageRead{Collection: p.collection, Key: "base"}
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyBase}
 		default:
 			return nil, runtime.NewError("hiro system type unknown", 3)
 		}
@@ -131,4 +308,19 @@ func (p *StoragePersonalizer) GetValue(ctx context.Context, logger runtime.Logge
 	}
 
 	return config, nil
+}
+
+func (p *StoragePersonalizer) storageWrite(config any, storageKey string) (*runtime.StorageWrite, error) {
+	json, err := json.Marshal(config)
+	if err != nil {
+		return nil, err
+	}
+
+	return &runtime.StorageWrite{
+		Collection:      p.collection,
+		Key:             storagePersonalizerKeyAchievements,
+		Value:           string(json),
+		PermissionRead:  0,
+		PermissionWrite: 0,
+	}, nil
 }
