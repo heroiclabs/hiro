@@ -113,9 +113,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		writes := []*runtime.StorageWrite{}
 
 		if req.Achievements != nil {
-			write, err := p.storageWrite(req.Achievements, storagePersonalizerKeyAchievements)
+			write, err := p.newStorageWrite(req.Achievements, storagePersonalizerKeyAchievements)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing achievements configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating achievements storage object.")
 				return "", ErrInternal
 			}
 
@@ -123,9 +123,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.Economy != nil {
-			write, err := p.storageWrite(req.Economy, storagePersonalizerKeyEconomy)
+			write, err := p.newStorageWrite(req.Economy, storagePersonalizerKeyEconomy)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing economy configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating economy storage object.")
 				return "", ErrInternal
 			}
 
@@ -133,9 +133,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.Energy != nil {
-			write, err := p.storageWrite(req.Energy, storagePersonalizerKeyEnergy)
+			write, err := p.newStorageWrite(req.Energy, storagePersonalizerKeyEnergy)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing energy configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating energy storage object.")
 				return "", ErrInternal
 			}
 
@@ -143,9 +143,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.EventLeaderboard != nil {
-			write, err := p.storageWrite(req.EventLeaderboard, storagePersonalizerKeyEventLeaderboards)
+			write, err := p.newStorageWrite(req.EventLeaderboard, storagePersonalizerKeyEventLeaderboards)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing event leaderboard configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating event leaderboard storage object.")
 				return "", ErrInternal
 			}
 
@@ -153,9 +153,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.Incentives != nil {
-			write, err := p.storageWrite(req.Incentives, storagePersonalizerKeyIncentives)
+			write, err := p.newStorageWrite(req.Incentives, storagePersonalizerKeyIncentives)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing incentives configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating incentives storage object.")
 				return "", ErrInternal
 			}
 
@@ -163,9 +163,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.Leaderboards != nil {
-			write, err := p.storageWrite(req.Leaderboards, storagePersonalizerKeyLeaderboards)
+			write, err := p.newStorageWrite(req.Leaderboards, storagePersonalizerKeyLeaderboards)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing leaderboards configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating leaderboards storage object.")
 				return "", ErrInternal
 			}
 
@@ -173,9 +173,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.Progression != nil {
-			write, err := p.storageWrite(req.Progression, storagePersonalizerKeyProgression)
+			write, err := p.newStorageWrite(req.Progression, storagePersonalizerKeyProgression)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing progression configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating progression storage object.")
 				return "", ErrInternal
 			}
 
@@ -183,9 +183,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.Stats != nil {
-			write, err := p.storageWrite(req.Stats, storagePersonalizerKeyStats)
+			write, err := p.newStorageWrite(req.Stats, storagePersonalizerKeyStats)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing stats configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating stats storage object.")
 				return "", ErrInternal
 			}
 
@@ -193,9 +193,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.Teams != nil {
-			write, err := p.storageWrite(req.Teams, storagePersonalizerKeyTeams)
+			write, err := p.newStorageWrite(req.Teams, storagePersonalizerKeyTeams)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing teams configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating teams storage object.")
 				return "", ErrInternal
 			}
 
@@ -203,9 +203,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.Tutorials != nil {
-			write, err := p.storageWrite(req.Tutorials, storagePersonalizerKeyTutorials)
+			write, err := p.newStorageWrite(req.Tutorials, storagePersonalizerKeyTutorials)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing tutorials configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating tutorials storage object.")
 				return "", ErrInternal
 			}
 
@@ -213,9 +213,9 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.Unlockables != nil {
-			write, err := p.storageWrite(req.Unlockables, storagePersonalizerKeyUnlockables)
+			write, err := p.newStorageWrite(req.Unlockables, storagePersonalizerKeyUnlockables)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing unlockables configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating unlockables storage object.")
 				return "", ErrInternal
 			}
 
@@ -223,13 +223,18 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 		}
 
 		if req.Base != nil {
-			write, err := p.storageWrite(req.Base, storagePersonalizerKeyBase)
+			write, err := p.newStorageWrite(req.Base, storagePersonalizerKeyBase)
 			if err != nil {
-				logger.WithField("error", err.Error()).Error("Error writing base configuration to storage.")
+				logger.WithField("error", err.Error()).Error("Error creating base storage object.")
 				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
+		}
+
+		_, err = nk.StorageWrite(ctx, writes)
+		if err != nil {
+			return "", err
 		}
 
 		return "{}", nil
@@ -309,7 +314,7 @@ func (p *StoragePersonalizer) GetValue(ctx context.Context, logger runtime.Logge
 	return config, nil
 }
 
-func (p *StoragePersonalizer) storageWrite(config any, storageKey string) (*runtime.StorageWrite, error) {
+func (p *StoragePersonalizer) newStorageWrite(config any, storageKey string) (*runtime.StorageWrite, error) {
 	json, err := json.Marshal(config)
 	if err != nil {
 		return nil, err
@@ -317,7 +322,7 @@ func (p *StoragePersonalizer) storageWrite(config any, storageKey string) (*runt
 
 	return &runtime.StorageWrite{
 		Collection:      p.collection,
-		Key:             storagePersonalizerKeyAchievements,
+		Key:             storageKey,
 		Value:           string(json),
 		PermissionRead:  0,
 		PermissionWrite: 0,
