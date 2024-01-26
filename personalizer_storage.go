@@ -22,7 +22,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/heroiclabs/hiro"
 	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
@@ -89,7 +88,7 @@ func NewStoragePersonalizer(logger runtime.Logger, cacheExpirySec int, collectio
 	}
 
 	if register {
-		err := initializer.RegisterRpc(hiro.RpcId_RPC_ID_STORAGE_PERSONALIZER_UPLOAD.String(), rpcStoragePersonalizerUpload(initializer, personalizer))
+		err := initializer.RegisterRpc(RpcId_RPC_ID_STORAGE_PERSONALIZER_UPLOAD.String(), rpcStoragePersonalizerUpload(initializer, personalizer))
 		if err != nil {
 			logger.WithField("error", err.Error()).Error("Error registering storage personalizer upload RPC.")
 		}
@@ -127,7 +126,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.Economy, storagePersonalizerKeyEconomy)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing economy configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
@@ -137,7 +136,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.Energy, storagePersonalizerKeyEnergy)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing energy configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
@@ -147,7 +146,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.EventLeaderboard, storagePersonalizerKeyEventLeaderboards)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing event leaderboard configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
@@ -157,7 +156,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.Incentives, storagePersonalizerKeyIncentives)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing incentives configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
@@ -167,7 +166,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.Leaderboards, storagePersonalizerKeyLeaderboards)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing leaderboards configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
@@ -177,7 +176,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.Progression, storagePersonalizerKeyProgression)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing progression configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
@@ -187,7 +186,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.Stats, storagePersonalizerKeyStats)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing stats configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
@@ -197,7 +196,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.Teams, storagePersonalizerKeyTeams)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing teams configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
@@ -207,7 +206,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.Tutorials, storagePersonalizerKeyTutorials)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing tutorials configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
@@ -217,7 +216,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.Unlockables, storagePersonalizerKeyUnlockables)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing unlockables configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
@@ -227,7 +226,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.storageWrite(req.Base, storagePersonalizerKeyBase)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error writing base configuration to storage.")
-				return "", hiro.ErrInternal
+				return "", ErrInternal
 			}
 
 			writes = append(writes, write)
