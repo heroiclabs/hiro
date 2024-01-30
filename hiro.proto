@@ -156,6 +156,8 @@ enum RpcId {
   RPC_ID_ECONOMY_PLACEMENT_SUCCESS = 1001;
   // Webhook RPC to handle Rewarded Video Ad placement failure callbacks.
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
+  // RPC to upload Hiro system configurations for the storage personalizer.
+  RPC_ID_STORAGE_PERSONALIZER_UPLOAD = 1003;
 }
 
 // The cost(s) associated with permanently unlocking a progression.
