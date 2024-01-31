@@ -17,6 +17,11 @@
       "title": "max_rolls",
       "minimum": 0
     },
+    "max_repeat_rolls": {
+      "type": "number",
+      "title": "max_repeat_rolls",
+      "minimum": 0
+    },
     "total_weight": {
       "type": "number",
       "title": "total_weight",
