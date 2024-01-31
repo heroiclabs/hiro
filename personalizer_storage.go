@@ -26,19 +26,22 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
-const StoragePersonalizerCollectionDefault = "hiro_datadefinitions"
-const storagePersonalizerKeyAchievements = "achievements"
-const storagePersonalizerKeyEconomy = "economy"
-const storagePersonalizerKeyEnergy = "energy"
-const storagePersonalizerKeyEventLeaderboards = "event_leaderboards"
-const storagePersonalizerKeyIncentives = "incentives"
-const storagePersonalizerKeyLeaderboards = "leaderboards"
-const storagePersonalizerKeyProgression = "progression"
-const storagePersonalizerKeyStats = "stats"
-const storagePersonalizerKeyTeams = "teams"
-const storagePersonalizerKeyTutorials = "tutorials"
-const storagePersonalizerKeyUnlockables = "unlockables"
-const storagePersonalizerKeyBase = "base"
+const (
+	StoragePersonalizerCollectionDefault = "hiro_datadefinitions"
+
+	storagePersonalizerKeyBase              = "base"
+	storagePersonalizerKeyAchievements      = "achievements"
+	storagePersonalizerKeyEconomy           = "economy"
+	storagePersonalizerKeyEnergy            = "energy"
+	storagePersonalizerKeyEventLeaderboards = "event_leaderboards"
+	storagePersonalizerKeyIncentives        = "incentives"
+	storagePersonalizerKeyLeaderboards      = "leaderboards"
+	storagePersonalizerKeyProgression       = "progression"
+	storagePersonalizerKeyStats             = "stats"
+	storagePersonalizerKeyTeams             = "teams"
+	storagePersonalizerKeyTutorials         = "tutorials"
+	storagePersonalizerKeyUnlockables       = "unlockables"
+)
 
 var _ Personalizer = (*StoragePersonalizer)(nil)
 
@@ -60,7 +63,7 @@ type storagePersonalizerUploadRequest struct {
 	Achievements     *AchievementsConfig      `json:"achievements"`
 	Economy          *EconomyConfig           `json:"economy"`
 	Energy           *EnergyConfig            `json:"energy"`
-	EventLeaderboard *EventLeaderboardsConfig `json:"event_leaderboard"`
+	EventLeaderboard *EventLeaderboardsConfig `json:"event_leaderboards"`
 	Incentives       *IncentivesConfig        `json:"incentives"`
 	Leaderboards     *LeaderboardConfig       `json:"leaderboards"`
 	Progression      *ProgressionConfig       `json:"progression"`
@@ -71,12 +74,8 @@ type storagePersonalizerUploadRequest struct {
 	Base             *BaseSystemConfig        `json:"base"`
 }
 
-func NewStoragePersonalizerDefault(initializer *runtime.Initializer) *StoragePersonalizer {
-	return &StoragePersonalizer{
-		cache:       make(map[SystemType]*StoragePersonalizerCachedStorageObject, 20),
-		cacheExpiry: 10 * time.Minute,
-		collection:  StoragePersonalizerCollectionDefault,
-	}
+func NewStoragePersonalizerDefault(logger runtime.Logger, initializer runtime.Initializer, register bool) *StoragePersonalizer {
+	return NewStoragePersonalizer(logger, 600, StoragePersonalizerCollectionDefault, initializer, register)
 }
 
 func NewStoragePersonalizer(logger runtime.Logger, cacheExpirySec int, collection string, initializer runtime.Initializer, register bool) *StoragePersonalizer {
