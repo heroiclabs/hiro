@@ -77,10 +77,11 @@ type EconomyConfigPlacement struct {
 }
 
 type EconomyConfigReward struct {
-	Guaranteed  *EconomyConfigRewardContents   `json:"guaranteed"`
-	Weighted    []*EconomyConfigRewardContents `json:"weighted"`
-	MaxRolls    int64                          `json:"max_rolls"`
-	TotalWeight int64                          `json:"total_weight"`
+	Guaranteed     *EconomyConfigRewardContents   `json:"guaranteed"`
+	Weighted       []*EconomyConfigRewardContents `json:"weighted"`
+	MaxRolls       int64                          `json:"max_rolls"`
+	MaxRepeatRolls int64                          `json:"max_repeat_rolls"`
+	TotalWeight    int64                          `json:"total_weight"`
 }
 
 type EconomyConfigRewardContents struct {
