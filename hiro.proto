@@ -150,6 +150,9 @@ enum RpcId {
   // Claim an existing incentive and receive associated rewards.
   RPC_ID_INCENTIVES_RECIPIENT_CLAIM = 56 [(input) = "IncentiveRecipientClaimRequest", (output) = "IncentiveInfo"];
 
+  // Reset progression progress.
+  RPC_ID_PROGRESSIONS_RESET = 57 [(input) = "ProgressionResetRequest", (output) = "ProgressionList"];
+
   //--- Server to server RPCs ---//
 
   // Webhook RPC to handle Rewarded Video Ad placement success callbacks.
@@ -290,6 +293,12 @@ message ProgressionUpdateRequest {
   string id = 1;
   // One or more counts to add to the progression.
   map<string, int64> counts = 2;
+}
+
+// Request to reset progression progress.
+message ProgressionResetRequest {
+  // The progression IDs to reset.
+  repeated string ids = 1;
 }
 
 // Indicate how a stats update should be handled.
