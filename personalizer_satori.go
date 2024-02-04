@@ -24,16 +24,154 @@ import (
 
 var _ Personalizer = (*SatoriPersonalizer)(nil)
 
-type SatoriPersonalizer struct {
-	publishAuthenticateRequest bool
-	publishCoreEvents          bool
+type SatoriPersonalizerOption interface {
+	apply(*SatoriPersonalizer)
 }
 
-func NewSatoriPersonalizer(publishAuthenticateEvent, publishCoreEvents bool) *SatoriPersonalizer {
-	return &SatoriPersonalizer{
-		publishAuthenticateRequest: publishAuthenticateEvent,
-		publishCoreEvents:          publishCoreEvents,
+type satoriPersonalizerOptionFunc struct {
+	f func(*SatoriPersonalizer)
+}
+
+func (s *satoriPersonalizerOptionFunc) apply(personalizer *SatoriPersonalizer) {
+	s.f(personalizer)
+}
+
+func SatoriPersonalizerPublishAuthenticateEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishAuthenticateRequest = true
+		},
 	}
+}
+
+func SatoriPersonalizerPublishAchievementsEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishAchievementsEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishBaseEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishBaseEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishEconomyEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishEconomyEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishEnergyEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishEnergyEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishEventLeaderboardsEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishEventLeaderboardsEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishIncentivesEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishIncentivesEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishInventoryEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishInventoryEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishLeaderboardsEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishLeaderboardsEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishProgressionEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishProgressionEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishStatsEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishStatsEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishTeamsEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishTeamsEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishTutorialsEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishTutorialsEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishUnlockablesEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishUnlockablesEvents = true
+		},
+	}
+}
+
+type SatoriPersonalizer struct {
+	publishAuthenticateRequest bool
+
+	publishAchievementsEvents      bool
+	publishBaseEvents              bool
+	publishEconomyEvents           bool
+	publishEnergyEvents            bool
+	publishEventLeaderboardsEvents bool
+	publishIncentivesEvents        bool
+	publishInventoryEvents         bool
+	publishLeaderboardsEvents      bool
+	publishProgressionEvents       bool
+	publishStatsEvents             bool
+	publishTeamsEvents             bool
+	publishTutorialsEvents         bool
+	publishUnlockablesEvents       bool
+}
+
+func NewSatoriPersonalizer(opts ...SatoriPersonalizerOption) *SatoriPersonalizer {
+	s := &SatoriPersonalizer{}
+	for _, opt := range opts {
+		opt.apply(s)
+	}
+	return s
 }
 
 func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string) (any, error) {
@@ -93,7 +231,7 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		found = true
 	}
 
-	if system.GetType() == SystemTypeEventLeaderboards {
+	if s := system.GetType(); s == SystemTypeEventLeaderboards || s == SystemTypeAchievements {
 		// If looking at event leaderboards, also load live events.
 		liveEventsList, err := nk.GetSatori().LiveEventsList(ctx, userID)
 		if err != nil {
@@ -132,6 +270,54 @@ func (p *SatoriPersonalizer) IsPublishAuthenticateRequest() bool {
 	return p.publishAuthenticateRequest
 }
 
-func (p *SatoriPersonalizer) IsPublishCoreEvents() bool {
-	return p.publishCoreEvents
+func (p *SatoriPersonalizer) IsPublishAchievementsEvents() bool {
+	return p.publishAchievementsEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishBaseEvents() bool {
+	return p.publishBaseEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishEconomyEvents() bool {
+	return p.publishEconomyEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishEnergyEvents() bool {
+	return p.publishEnergyEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishEventLeaderboardsEvents() bool {
+	return p.publishEventLeaderboardsEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishIncentivesEvents() bool {
+	return p.publishIncentivesEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishInventoryEvents() bool {
+	return p.publishInventoryEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishLeaderboardsEvents() bool {
+	return p.publishLeaderboardsEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishProgressionEvents() bool {
+	return p.publishProgressionEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishStatsEvents() bool {
+	return p.publishStatsEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishTeamsEvents() bool {
+	return p.publishTeamsEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishTutorialsEvents() bool {
+	return p.publishTutorialsEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishUnlockablesEvents() bool {
+	return p.publishUnlockablesEvents
 }
