@@ -21,13 +21,13 @@ import (
 
 // TutorialsConfig is the data definition for the TutorialsSystem type.
 type TutorialsConfig struct {
-	Tutorials map[string]*TutorialsConfigTutorial `json:"tutorials"`
+	Tutorials map[string]*TutorialsConfigTutorial `json:"tutorials,omitempty"`
 }
 
 type TutorialsConfigTutorial struct {
-	StartStep            int               `json:"start_step"`
-	MaxStep              int               `json:"max_step"`
-	AdditionalProperties map[string]string `json:"additional_properties"`
+	StartStep            int               `json:"start_step,omitempty"`
+	MaxStep              int               `json:"max_step,omitempty"`
+	AdditionalProperties map[string]string `json:"additional_properties,omitempty"`
 }
 
 // The TutorialsSystem is a gameplay system which records progress made through tutorials.

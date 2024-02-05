@@ -20,20 +20,20 @@ import (
 )
 
 type IncentivesConfig struct {
-	Incentives map[string]*IncentivesConfigIncentive `json:"incentives"`
+	Incentives map[string]*IncentivesConfigIncentive `json:"incentives,omitempty"`
 }
 
 type IncentivesConfigIncentive struct {
-	Type               IncentiveType        `json:"type"`
-	Name               string               `json:"name"`
-	Description        string               `json:"description"`
-	MaxClaims          int                  `json:"max_claims"`
-	MaxGlobalClaims    int                  `json:"max_global_claims"`
-	MaxRecipientAgeSec int64                `json:"max_recipient_age_sec"`
-	RecipientReward    *EconomyConfigReward `json:"recipient_reward"`
-	SenderReward       *EconomyConfigReward `json:"sender_reward"`
-	MaxConcurrent      int                  `json:"max_concurrent"`
-	ExpiryDurationSec  int64                `json:"expiry_duration_sec"`
+	Type               IncentiveType        `json:"type,omitempty"`
+	Name               string               `json:"name,omitempty"`
+	Description        string               `json:"description,omitempty"`
+	MaxClaims          int                  `json:"max_claims,omitempty"`
+	MaxGlobalClaims    int                  `json:"max_global_claims,omitempty"`
+	MaxRecipientAgeSec int64                `json:"max_recipient_age_sec,omitempty"`
+	RecipientReward    *EconomyConfigReward `json:"recipient_reward,omitempty"`
+	SenderReward       *EconomyConfigReward `json:"sender_reward,omitempty"`
+	MaxConcurrent      int                  `json:"max_concurrent,omitempty"`
+	ExpiryDurationSec  int64                `json:"expiry_duration_sec,omitempty"`
 }
 
 // The IncentivesSystem provides a gameplay system which can create and claim incentives and their associated rewards.

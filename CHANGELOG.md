@@ -5,6 +5,10 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [Unreleased]
+### Changed
+- Use "omitempty" in marshaler settings with data definition structs.
+
 ## [1.9.0] - 2024-02-04
 ### Added
 - New option "max_repeat_rolls" to set how many duplicate rows of rolled rewards can occur.

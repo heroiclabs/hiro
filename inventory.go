@@ -20,21 +20,21 @@ import (
 )
 
 type InventoryConfig struct {
-	Items    map[string]*InventoryConfigItem `json:"items"`
+	Items    map[string]*InventoryConfigItem `json:"items,omitempty"`
 	ItemSets map[string]map[string]bool      `json:"-"` // Auto-computed when the config is read or personalized.
 }
 
 type InventoryConfigItem struct {
-	Name              string               `json:"name"`
-	Description       string               `json:"description"`
-	Category          string               `json:"category"`
-	ItemSets          []string             `json:"item_sets"`
-	MaxCount          int64                `json:"max_count"`
-	Stackable         bool                 `json:"stackable"`
-	Consumable        bool                 `json:"consumable"`
-	ConsumeReward     *EconomyConfigReward `json:"consume_reward"`
-	StringProperties  map[string]string    `json:"string_properties"`
-	NumericProperties map[string]float64   `json:"numeric_properties"`
+	Name              string               `json:"name,omitempty"`
+	Description       string               `json:"description,omitempty"`
+	Category          string               `json:"category,omitempty"`
+	ItemSets          []string             `json:"item_sets,omitempty"`
+	MaxCount          int64                `json:"max_count,omitempty"`
+	Stackable         bool                 `json:"stackable,omitempty"`
+	Consumable        bool                 `json:"consumable,omitempty"`
+	ConsumeReward     *EconomyConfigReward `json:"consume_reward,omitempty"`
+	StringProperties  map[string]string    `json:"string_properties,omitempty"`
+	NumericProperties map[string]float64   `json:"numeric_properties,omitempty"`
 }
 
 // The InventorySystem provides a gameplay system which can manage a player's inventory.
