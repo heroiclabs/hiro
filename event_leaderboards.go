@@ -21,40 +21,40 @@ import (
 
 // EventLeaderboardsConfig is the data definition for the EventLeaderboardsSystem type.
 type EventLeaderboardsConfig struct {
-	EventLeaderboards map[string]*EventLeaderboardsConfigLeaderboard `json:"event_leaderboards"`
+	EventLeaderboards map[string]*EventLeaderboardsConfigLeaderboard `json:"event_leaderboards,omitempty"`
 }
 
 type EventLeaderboardsConfigLeaderboard struct {
-	Name                 string                                                     `json:"name"`
-	Description          string                                                     `json:"description"`
-	Category             string                                                     `json:"category"`
-	Ascending            bool                                                       `json:"ascending"`
-	Operator             string                                                     `json:"operator"`
-	ResetSchedule        string                                                     `json:"reset_schedule"`
-	CohortSize           int                                                        `json:"cohort_size"`
-	AdditionalProperties map[string]string                                          `json:"additional_properties"`
-	MaxNumScore          int                                                        `json:"max_num_score"`
-	RewardTiers          map[string][]*EventLeaderboardsConfigLeaderboardRewardTier `json:"reward_tiers"`
-	ChangeZones          map[string]*EventLeaderboardsConfigChangeZone              `json:"change_zones"`
-	Tiers                int                                                        `json:"tiers"`
-	MaxIdleTierDrop      int                                                        `json:"max_idle_tier_drop"`
-	StartTimeSec         int64                                                      `json:"start_time_sec"`
-	EndTimeSec           int64                                                      `json:"end_time_sec"`
-	Duration             int64                                                      `json:"duration"`
+	Name                 string                                                     `json:"name,omitempty"`
+	Description          string                                                     `json:"description,omitempty"`
+	Category             string                                                     `json:"category,omitempty"`
+	Ascending            bool                                                       `json:"ascending,omitempty"`
+	Operator             string                                                     `json:"operator,omitempty"`
+	ResetSchedule        string                                                     `json:"reset_schedule,omitempty"`
+	CohortSize           int                                                        `json:"cohort_size,omitempty"`
+	AdditionalProperties map[string]string                                          `json:"additional_properties,omitempty"`
+	MaxNumScore          int                                                        `json:"max_num_score,omitempty"`
+	RewardTiers          map[string][]*EventLeaderboardsConfigLeaderboardRewardTier `json:"reward_tiers,omitempty"`
+	ChangeZones          map[string]*EventLeaderboardsConfigChangeZone              `json:"change_zones,omitempty"`
+	Tiers                int                                                        `json:"tiers,omitempty"`
+	MaxIdleTierDrop      int                                                        `json:"max_idle_tier_drop,omitempty"`
+	StartTimeSec         int64                                                      `json:"start_time_sec,omitempty"`
+	EndTimeSec           int64                                                      `json:"end_time_sec,omitempty"`
+	Duration             int64                                                      `json:"duration,omitempty"`
 }
 
 type EventLeaderboardsConfigLeaderboardRewardTier struct {
-	Name       string               `json:"name"`
-	RankMax    int                  `json:"rank_max"`
-	RankMin    int                  `json:"rank_min"`
-	Reward     *EconomyConfigReward `json:"reward"`
-	TierChange int                  `json:"tier_change"`
+	Name       string               `json:"name,omitempty"`
+	RankMax    int                  `json:"rank_max,omitempty"`
+	RankMin    int                  `json:"rank_min,omitempty"`
+	Reward     *EconomyConfigReward `json:"reward,omitempty"`
+	TierChange int                  `json:"tier_change,omitempty"`
 }
 
 type EventLeaderboardsConfigChangeZone struct {
-	Promotion  float64 `json:"promotion"`
-	Demotion   float64 `json:"demotion"`
-	DemoteIdle bool    `json:"demote_idle"`
+	Promotion  float64 `json:"promotion,omitempty"`
+	Demotion   float64 `json:"demotion,omitempty"`
+	DemoteIdle bool    `json:"demote_idle,omitempty"`
 }
 
 // An EventLeaderboardsSystem is a gameplay system which represents cohort-segmented, tier-based event leaderboards.
