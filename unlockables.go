@@ -21,41 +21,41 @@ import (
 
 // UnlockablesConfig is the data definition for a UnlockablesSystem type.
 type UnlockablesConfig struct {
-	ActiveSlots    int                                     `json:"active_slots"`
-	MaxActiveSlots int                                     `json:"max_active_slots"`
-	Slots          int                                     `json:"slots"`
-	SlotCost       *UnlockablesConfigSlotCost              `json:"slot_cost"`
-	Unlockables    map[string]*UnlockablesConfigUnlockable `json:"unlockables"`
+	ActiveSlots    int                                     `json:"active_slots,omitempty"`
+	MaxActiveSlots int                                     `json:"max_active_slots,omitempty"`
+	Slots          int                                     `json:"slots,omitempty"`
+	SlotCost       *UnlockablesConfigSlotCost              `json:"slot_cost,omitempty"`
+	Unlockables    map[string]*UnlockablesConfigUnlockable `json:"unlockables,omitempty"`
 
 	UnlockableProbabilities []string `json:"-"`
 }
 
 type UnlockablesConfigSlotCost struct {
-	Items      map[string]int64 `json:"items"`
-	Currencies map[string]int64 `json:"currencies"`
+	Items      map[string]int64 `json:"items,omitempty"`
+	Currencies map[string]int64 `json:"currencies,omitempty"`
 }
 
 type UnlockablesConfigUnlockable struct {
-	Probability          int                                   `json:"probability"`
-	Category             string                                `json:"category"`
-	Cost                 *UnlockablesConfigUnlockableCost      `json:"cost"`
-	CostUnitTimeSec      int                                   `json:"cost_unit_time_sec"`
-	Description          string                                `json:"description"`
-	Name                 string                                `json:"name"`
-	StartCost            *UnlockablesConfigUnlockableStartCost `json:"start_cost"`
-	Reward               *EconomyConfigReward                  `json:"reward"`
-	WaitTimeSec          int                                   `json:"wait_time_sec"`
-	AdditionalProperties map[string]string                     `json:"additional_properties"`
+	Probability          int                                   `json:"probability,omitempty"`
+	Category             string                                `json:"category,omitempty"`
+	Cost                 *UnlockablesConfigUnlockableCost      `json:"cost,omitempty"`
+	CostUnitTimeSec      int                                   `json:"cost_unit_time_sec,omitempty"`
+	Description          string                                `json:"description,omitempty"`
+	Name                 string                                `json:"name,omitempty"`
+	StartCost            *UnlockablesConfigUnlockableStartCost `json:"start_cost,omitempty"`
+	Reward               *EconomyConfigReward                  `json:"reward,omitempty"`
+	WaitTimeSec          int                                   `json:"wait_time_sec,omitempty"`
+	AdditionalProperties map[string]string                     `json:"additional_properties,omitempty"`
 }
 
 type UnlockablesConfigUnlockableCost struct {
-	Items      map[string]int64 `json:"items"`
-	Currencies map[string]int64 `json:"currencies"`
+	Items      map[string]int64 `json:"items,omitempty"`
+	Currencies map[string]int64 `json:"currencies,omitempty"`
 }
 
 type UnlockablesConfigUnlockableStartCost struct {
-	Items      map[string]int64 `json:"items"`
-	Currencies map[string]int64 `json:"currencies"`
+	Items      map[string]int64 `json:"items,omitempty"`
+	Currencies map[string]int64 `json:"currencies,omitempty"`
 }
 
 // The UnlockablesSystem is a gameplay system which provides slots to store rewards which can be unlocked over time.

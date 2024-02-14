@@ -31,16 +31,16 @@ var (
 
 // ProgressionConfig is the data definition for a ProgressionSystem type.
 type ProgressionConfig struct {
-	Progressions map[string]*ProgressionConfigProgression `json:"progressions"`
+	Progressions map[string]*ProgressionConfigProgression `json:"progressions,omitempty"`
 }
 
 type ProgressionConfigProgression struct {
-	Name                 string                         `json:"name"`
-	Description          string                         `json:"description"`
-	Category             string                         `json:"category"`
-	AdditionalProperties map[string]string              `json:"additional_properties"`
-	Preconditions        *ProgressionPreconditionsBlock `json:"preconditions"`
-	ResetSchedule        string                         `json:"reset_schedule"`
+	Name                 string                         `json:"name,omitempty"`
+	Description          string                         `json:"description,omitempty"`
+	Category             string                         `json:"category,omitempty"`
+	AdditionalProperties map[string]string              `json:"additional_properties,omitempty"`
+	Preconditions        *ProgressionPreconditionsBlock `json:"preconditions,omitempty"`
+	ResetSchedule        string                         `json:"reset_schedule,omitempty"`
 }
 
 // A ProgressionSystem is a gameplay system which represents a sequence of progression steps.

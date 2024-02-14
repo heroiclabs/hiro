@@ -6,9 +6,26 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
 ## [Unreleased]
+### Changed
+- Use "omitempty" in marshaler settings with data definition structs.
 
 ### Fixed
 - Fixed unrecognized Inventory system type in storage personalizer.
+
+## [1.9.0] - 2024-02-04
+### Added
+- New option "max_repeat_rolls" to set how many duplicate rows of rolled rewards can occur.
+- The "StoragePersonalizer" can now update data definitions with a S2S RPC function.
+- Progressions can now be programmatically reset.
+
+### Changed
+- The "SatoriPersonalizer" can optionally send analytics events for each gameplay system.
+
+### Fixed
+- (Unity) Fix visibility modifier with "StatUpdate" class.
+- Set energy modifiers into server response with Energies spend function.
+- Fix item properties not set when items are granted as part of user initialization.
+- Fix unlockable slots populated in the wrong order when overflow slots are enabled.
 
 ## [1.8.1] - 2024-01-20
 ### Added

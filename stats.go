@@ -21,7 +21,7 @@ import (
 
 // StatsConfig is the data definition for a StatsSystem type.
 type StatsConfig struct {
-	Whitelist []string `json:"whitelist"`
+	Whitelist []string `json:"whitelist,omitempty"`
 }
 
 type StatsSystem interface {

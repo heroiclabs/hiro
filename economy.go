@@ -42,56 +42,56 @@ var (
 
 // EconomyConfig is the data definition for the EconomySystem type.
 type EconomyConfig struct {
-	InitializeUser *EconomyConfigInitializeUser       `json:"initialize_user"`
-	Donations      map[string]*EconomyConfigDonation  `json:"donations"`
-	StoreItems     map[string]*EconomyConfigStoreItem `json:"store_items"`
-	Placements     map[string]*EconomyConfigPlacement `json:"placements"`
+	InitializeUser *EconomyConfigInitializeUser       `json:"initialize_user,omitempty"`
+	Donations      map[string]*EconomyConfigDonation  `json:"donations,omitempty"`
+	StoreItems     map[string]*EconomyConfigStoreItem `json:"store_items,omitempty"`
+	Placements     map[string]*EconomyConfigPlacement `json:"placements,omitempty"`
 }
 
 type EconomyConfigDonation struct {
-	Cost                     *EconomyConfigDonationCost `json:"cost"`
-	Count                    int64                      `json:"count"`
-	Description              string                     `json:"description"`
-	DurationSec              int64                      `json:"duration_sec"`
-	MaxCount                 int64                      `json:"max_count"`
-	Name                     string                     `json:"name"`
-	RecipientReward          *EconomyConfigReward       `json:"recipient_reward"`
-	ContributorReward        *EconomyConfigReward       `json:"contributor_reward"`
-	UserContributionMaxCount int64                      `json:"user_contribution_max_count"`
-	AdditionalProperties     map[string]string          `json:"additional_properties"`
+	Cost                     *EconomyConfigDonationCost `json:"cost,omitempty"`
+	Count                    int64                      `json:"count,omitempty"`
+	Description              string                     `json:"description,omitempty"`
+	DurationSec              int64                      `json:"duration_sec,omitempty"`
+	MaxCount                 int64                      `json:"max_count,omitempty"`
+	Name                     string                     `json:"name,omitempty"`
+	RecipientReward          *EconomyConfigReward       `json:"recipient_reward,omitempty"`
+	ContributorReward        *EconomyConfigReward       `json:"contributor_reward,omitempty"`
+	UserContributionMaxCount int64                      `json:"user_contribution_max_count,omitempty"`
+	AdditionalProperties     map[string]string          `json:"additional_properties,omitempty"`
 }
 
 type EconomyConfigDonationCost struct {
-	Currencies map[string]int64 `json:"currencies"`
-	Items      map[string]int64 `json:"items"`
+	Currencies map[string]int64 `json:"currencies,omitempty"`
+	Items      map[string]int64 `json:"items,omitempty"`
 }
 
 type EconomyConfigInitializeUser struct {
-	Currencies map[string]int64 `json:"currencies"`
-	Items      map[string]int64 `json:"items"`
+	Currencies map[string]int64 `json:"currencies,omitempty"`
+	Items      map[string]int64 `json:"items,omitempty"`
 }
 
 type EconomyConfigPlacement struct {
-	Reward               *EconomyConfigReward `json:"reward"`
-	AdditionalProperties map[string]string    `json:"additional_properties"`
+	Reward               *EconomyConfigReward `json:"reward,omitempty"`
+	AdditionalProperties map[string]string    `json:"additional_properties,omitempty"`
 }
 
 type EconomyConfigReward struct {
-	Guaranteed     *EconomyConfigRewardContents   `json:"guaranteed"`
-	Weighted       []*EconomyConfigRewardContents `json:"weighted"`
-	MaxRolls       int64                          `json:"max_rolls"`
-	MaxRepeatRolls int64                          `json:"max_repeat_rolls"`
-	TotalWeight    int64                          `json:"total_weight"`
+	Guaranteed     *EconomyConfigRewardContents   `json:"guaranteed,omitempty"`
+	Weighted       []*EconomyConfigRewardContents `json:"weighted,omitempty"`
+	MaxRolls       int64                          `json:"max_rolls,omitempty"`
+	MaxRepeatRolls int64                          `json:"max_repeat_rolls,omitempty"`
+	TotalWeight    int64                          `json:"total_weight,omitempty"`
 }
 
 type EconomyConfigRewardContents struct {
-	Items           map[string]*EconomyConfigRewardItem     `json:"items"`
-	ItemSets        []*EconomyConfigRewardItemSet           `json:"item_sets"`
-	Currencies      map[string]*EconomyConfigRewardCurrency `json:"currencies"`
-	Energies        map[string]*EconomyConfigRewardEnergy   `json:"energies"`
-	EnergyModifiers []*EconomyConfigRewardEnergyModifier    `json:"energy_modifiers"`
-	RewardModifiers []*EconomyConfigRewardRewardModifier    `json:"reward_modifiers"`
-	Weight          int64                                   `json:"weight"`
+	Items           map[string]*EconomyConfigRewardItem     `json:"items,omitempty"`
+	ItemSets        []*EconomyConfigRewardItemSet           `json:"item_sets,omitempty"`
+	Currencies      map[string]*EconomyConfigRewardCurrency `json:"currencies,omitempty"`
+	Energies        map[string]*EconomyConfigRewardEnergy   `json:"energies,omitempty"`
+	EnergyModifiers []*EconomyConfigRewardEnergyModifier    `json:"energy_modifiers,omitempty"`
+	RewardModifiers []*EconomyConfigRewardRewardModifier    `json:"reward_modifiers,omitempty"`
+	Weight          int64                                   `json:"weight,omitempty"`
 }
 
 type EconomyConfigRewardCurrency struct {
@@ -103,10 +103,10 @@ type EconomyConfigRewardEnergy struct {
 }
 
 type EconomyConfigRewardEnergyModifier struct {
-	Id          string                         `json:"id"`
-	Operator    string                         `json:"operator"`
-	Value       *EconomyConfigRewardRangeInt64 `json:"value"`
-	DurationSec *EconomyConfigRewardRangeInt64 `json:"duration_sec"`
+	Id          string                         `json:"id,omitempty"`
+	Operator    string                         `json:"operator,omitempty"`
+	Value       *EconomyConfigRewardRangeInt64 `json:"value,omitempty"`
+	DurationSec *EconomyConfigRewardRangeInt64 `json:"duration_sec,omitempty"`
 }
 
 type EconomyConfigRewardItem struct {
@@ -116,42 +116,42 @@ type EconomyConfigRewardItem struct {
 type EconomyConfigRewardItemSet struct {
 	EconomyConfigRewardRangeInt64
 
-	MaxRepeats int64    `json:"max_repeats"`
-	Set        []string `json:"set"`
+	MaxRepeats int64    `json:"max_repeats,omitempty"`
+	Set        []string `json:"set,omitempty"`
 }
 
 type EconomyConfigRewardRangeInt32 struct {
-	Min      int32 `json:"min"`
-	Max      int32 `json:"max"`
-	Multiple int32 `json:"multiple"`
+	Min      int32 `json:"min,omitempty"`
+	Max      int32 `json:"max,omitempty"`
+	Multiple int32 `json:"multiple,omitempty"`
 }
 
 type EconomyConfigRewardRangeInt64 struct {
-	Min      int64 `json:"min"`
-	Max      int64 `json:"max"`
-	Multiple int64 `json:"multiple"`
+	Min      int64 `json:"min,omitempty"`
+	Max      int64 `json:"max,omitempty"`
+	Multiple int64 `json:"multiple,omitempty"`
 }
 
 type EconomyConfigRewardRewardModifier struct {
-	Id          string                         `json:"id"`
-	Type        string                         `json:"type"`
-	Operator    string                         `json:"operator"`
-	Value       *EconomyConfigRewardRangeInt64 `json:"value"`
-	DurationSec *EconomyConfigRewardRangeInt64 `json:"duration_sec"`
+	Id          string                         `json:"id,omitempty"`
+	Type        string                         `json:"type,omitempty"`
+	Operator    string                         `json:"operator,omitempty"`
+	Value       *EconomyConfigRewardRangeInt64 `json:"value,omitempty"`
+	DurationSec *EconomyConfigRewardRangeInt64 `json:"duration_sec,omitempty"`
 }
 
 type EconomyConfigStoreItem struct {
-	Category             string                      `json:"category"`
-	Cost                 *EconomyConfigStoreItemCost `json:"cost"`
-	Description          string                      `json:"description"`
-	Name                 string                      `json:"name"`
-	Reward               *EconomyConfigReward        `json:"reward"`
-	AdditionalProperties map[string]string           `json:"additional_properties"`
+	Category             string                      `json:"category,omitempty"`
+	Cost                 *EconomyConfigStoreItemCost `json:"cost,omitempty"`
+	Description          string                      `json:"description,omitempty"`
+	Name                 string                      `json:"name,omitempty"`
+	Reward               *EconomyConfigReward        `json:"reward,omitempty"`
+	AdditionalProperties map[string]string           `json:"additional_properties,omitempty"`
 }
 
 type EconomyConfigStoreItemCost struct {
-	Currencies map[string]int64 `json:"currencies"`
-	Sku        string           `json:"sku"`
+	Currencies map[string]int64 `json:"currencies,omitempty"`
+	Sku        string           `json:"sku,omitempty"`
 }
 
 // The EconomySystem is the foundation of a game's economy.

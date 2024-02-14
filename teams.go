@@ -22,7 +22,7 @@ import (
 
 // TeamsConfig is the data definition for a TeamsSystem type.
 type TeamsConfig struct {
-	MaxTeamSize int `json:"max_team_size"`
+	MaxTeamSize int `json:"max_team_size,omitempty"`
 }
 
 // A TeamsSystem is a gameplay system which wraps the groups system in Nakama server.

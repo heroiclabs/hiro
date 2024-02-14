@@ -53,14 +53,14 @@ type BaseSystem interface {
 
 // BaseSystemConfig is the data definition for the BaseSystem type.
 type BaseSystemConfig struct {
-	RateAppSmtpAddr          string `json:"rate_app_smtp_addr"`            // "smtp.gmail.com"
-	RateAppSmtpUsername      string `json:"rate_app_smtp_username"`        // "email@domain"
-	RateAppSmtpPassword      string `json:"rate_app_smtp_password"`        // "password"
-	RateAppSmtpEmailFrom     string `json:"rate_app_smtp_email_from"`      // "gamename-server@mmygamecompany.com"
-	RateAppSmtpEmailFromName string `json:"rate_app_smtp_email_from_name"` // My Game Company
-	RateAppSmtpEmailSubject  string `json:"rate_app_smtp_email_subject"`   // "RateApp Feedback"
-	RateAppSmtpEmailTo       string `json:"rate_app_smtp_email_to"`        // "gamename-rateapp@mygamecompany.com"
-	RateAppSmtpPort          int    `json:"rate_app_smtp_port"`            // 587
+	RateAppSmtpAddr          string `json:"rate_app_smtp_addr,omitempty"`            // "smtp.gmail.com"
+	RateAppSmtpUsername      string `json:"rate_app_smtp_username,omitempty"`        // "email@domain"
+	RateAppSmtpPassword      string `json:"rate_app_smtp_password,omitempty"`        // "password"
+	RateAppSmtpEmailFrom     string `json:"rate_app_smtp_email_from,omitempty"`      // "gamename-server@mmygamecompany.com"
+	RateAppSmtpEmailFromName string `json:"rate_app_smtp_email_from_name,omitempty"` // My Game Company
+	RateAppSmtpEmailSubject  string `json:"rate_app_smtp_email_subject,omitempty"`   // "RateApp Feedback"
+	RateAppSmtpEmailTo       string `json:"rate_app_smtp_email_to,omitempty"`        // "gamename-rateapp@mygamecompany.com"
+	RateAppSmtpPort          int    `json:"rate_app_smtp_port,omitempty"`            // 587
 
 	RateAppTemplate string `json:"rate_app_template"` // HTML email template
 }
@@ -69,7 +69,7 @@ type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sq
 
 // Hiro provides a type which combines all gameplay systems.
 type Hiro interface {
-	// Deprecated in favor of AddPersonalizer function to compose a chain of configuration personalization.
+	// SetPersonalizer is deprecated in favor of AddPersonalizer function to compose a chain of configuration personalization.
 	SetPersonalizer(Personalizer)
 	AddPersonalizer(personalizer Personalizer)
 

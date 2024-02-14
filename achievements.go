@@ -21,40 +21,40 @@ import (
 
 // AchievementsConfig is the data definition for the TutorialsSystem type.
 type AchievementsConfig struct {
-	Achievements map[string]*AchievementsConfigAchievement `json:"achievements"`
+	Achievements map[string]*AchievementsConfigAchievement `json:"achievements,omitempty"`
 }
 
 type AchievementsConfigAchievement struct {
-	AutoClaim            bool                                         `json:"auto_claim"`
-	AutoClaimTotal       bool                                         `json:"auto_claim_total"`
-	AutoReset            bool                                         `json:"auto_reset"`
-	Category             string                                       `json:"category"`
-	Count                int64                                        `json:"count"`
-	Description          string                                       `json:"description"`
-	ResetCronexpr        string                                       `json:"reset_cronexpr"`
-	DurationSec          int64                                        `json:"duration_sec"`
-	MaxCount             int64                                        `json:"max_count"`
-	Name                 string                                       `json:"name"`
-	PreconditionIDs      []string                                     `json:"precondition_ids"`
-	Reward               *EconomyConfigReward                         `json:"reward"`
-	TotalReward          *EconomyConfigReward                         `json:"total_reward"`
-	SubAchievements      map[string]*AchievementsConfigSubAchievement `json:"sub_achievements"`
-	AdditionalProperties map[string]string                            `json:"additional_properties"`
+	AutoClaim            bool                                         `json:"auto_claim,omitempty"`
+	AutoClaimTotal       bool                                         `json:"auto_claim_total,omitempty"`
+	AutoReset            bool                                         `json:"auto_reset,omitempty"`
+	Category             string                                       `json:"category,omitempty"`
+	Count                int64                                        `json:"count,omitempty"`
+	Description          string                                       `json:"description,omitempty"`
+	ResetCronexpr        string                                       `json:"reset_cronexpr,omitempty"`
+	DurationSec          int64                                        `json:"duration_sec,omitempty"`
+	MaxCount             int64                                        `json:"max_count,omitempty"`
+	Name                 string                                       `json:"name,omitempty"`
+	PreconditionIDs      []string                                     `json:"precondition_ids,omitempty"`
+	Reward               *EconomyConfigReward                         `json:"reward,omitempty"`
+	TotalReward          *EconomyConfigReward                         `json:"total_reward,omitempty"`
+	SubAchievements      map[string]*AchievementsConfigSubAchievement `json:"sub_achievements,omitempty"`
+	AdditionalProperties map[string]string                            `json:"additional_properties,omitempty"`
 }
 
 type AchievementsConfigSubAchievement struct {
-	AutoClaim            bool                 `json:"auto_claim"`
-	AutoReset            bool                 `json:"auto_reset"`
-	Category             string               `json:"category"`
-	Count                int64                `json:"count"`
-	Description          string               `json:"description"`
-	ResetCronexpr        string               `json:"reset_cronexpr"`
-	DurationSec          int64                `json:"duration_sec"`
-	MaxCount             int64                `json:"max_count"`
-	Name                 string               `json:"name"`
-	PreconditionIDs      []string             `json:"precondition_ids"`
-	Reward               *EconomyConfigReward `json:"reward"`
-	AdditionalProperties map[string]string    `json:"additional_properties"`
+	AutoClaim            bool                 `json:"auto_claim,omitempty"`
+	AutoReset            bool                 `json:"auto_reset,omitempty"`
+	Category             string               `json:"category,omitempty"`
+	Count                int64                `json:"count,omitempty"`
+	Description          string               `json:"description,omitempty"`
+	ResetCronexpr        string               `json:"reset_cronexpr,omitempty"`
+	DurationSec          int64                `json:"duration_sec,omitempty"`
+	MaxCount             int64                `json:"max_count,omitempty"`
+	Name                 string               `json:"name,omitempty"`
+	PreconditionIDs      []string             `json:"precondition_ids,omitempty"`
+	Reward               *EconomyConfigReward `json:"reward,omitempty"`
+	AdditionalProperties map[string]string    `json:"additional_properties,omitempty"`
 }
 
 // An AchievementsSystem is a gameplay system which represents one-off, repeat, preconditioned, and sub-achievements.
