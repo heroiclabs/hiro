@@ -7,6 +7,8 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 ## [Unreleased]
 
+### Fixed
+- Fixed unrecognized Inventory system type in storage personalizer.
 
 ## [1.8.1] - 2024-01-20
 ### Added
@@ -135,7 +137,7 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 - Add ChannelMessageAck message to proto definition.
 
 ### Fixed
-- Expose server functions for reward and roll in Hiro. 
+- Expose server functions for reward and roll in Hiro.
 
 ## [1.0.3] - 2023-08-10
 ### Added
