@@ -33,6 +33,7 @@ const (
 	storagePersonalizerKeyAchievements      = "achievements"
 	storagePersonalizerKeyEconomy           = "economy"
 	storagePersonalizerKeyEnergy            = "energy"
+	storagePersonalizerKeyInventory         = "inventory"
 	storagePersonalizerKeyEventLeaderboards = "event_leaderboards"
 	storagePersonalizerKeyIncentives        = "incentives"
 	storagePersonalizerKeyLeaderboards      = "leaderboards"
@@ -63,6 +64,7 @@ type storagePersonalizerUploadRequest struct {
 	Achievements     *AchievementsConfig      `json:"achievements"`
 	Economy          *EconomyConfig           `json:"economy"`
 	Energy           *EnergyConfig            `json:"energy"`
+	Inventory        *InventoryConfig         `json:"inventory"`
 	EventLeaderboard *EventLeaderboardsConfig `json:"event_leaderboards"`
 	Incentives       *IncentivesConfig        `json:"incentives"`
 	Leaderboards     *LeaderboardConfig       `json:"leaderboards"`
@@ -135,6 +137,16 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			write, err := p.newStorageWrite(req.Energy, storagePersonalizerKeyEnergy)
 			if err != nil {
 				logger.WithField("error", err.Error()).Error("Error creating energy storage object.")
+				return "", ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
+		if req.Inventory != nil {
+			write, err := p.newStorageWrite(req.Inventory, storagePersonalizerKeyInventory)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error creating inventory storage object.")
 				return "", ErrInternal
 			}
 
@@ -257,6 +269,8 @@ func (p *StoragePersonalizer) GetValue(ctx context.Context, logger runtime.Logge
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyEconomy}
 		case SystemTypeEnergy:
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyEnergy}
+		case SystemTypeInventory:
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyInventory}
 		case SystemTypeEventLeaderboards:
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyEventLeaderboards}
 		case SystemTypeIncentives:
