@@ -26,6 +26,9 @@
             },
             "preconditions": {
               "$ref": "#/definitions/ProgressionPreconditionsBlock"
+            },
+            "reward": {
+              "$ref": "Hiro-Rewards"
             }
           },
           "required": []

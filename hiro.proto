@@ -242,6 +242,10 @@ message Progression {
   ProgressionPreconditionsBlock preconditions = 8;
   // Unmet preconditions.
   ProgressionPreconditionsBlock unmet_preconditions = 9;
+  // Reward earned from unlocking this progresson, if any.
+  Reward reward = 10;
+  // Available rewards that the user can earn from unlocking this progresson.
+  AvailableRewards available_rewards = 11;
 }
 
 enum ProgressionDeltaState {

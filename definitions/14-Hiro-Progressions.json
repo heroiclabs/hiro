@@ -34,6 +34,16 @@
           }
         },
         "operator": 1
+      },
+      "reward": {
+        "guaranteed": {
+          "currencies": {
+            "currency1": {
+              "min": 10,
+              "max": 10
+            }
+          }
+        }
       }
     },
     "progression2": {
