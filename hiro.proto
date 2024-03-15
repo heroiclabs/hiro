@@ -425,7 +425,7 @@ message RewardInventoryItem {
   map<string, string> string_properties = 3;
   // The properties with numeric values.
   map<string, double> numeric_properties = 4;
-  // The instance ID of the item, if any.
+  // The instance ID of the item.
   string instance_id = 5;
 }
 
