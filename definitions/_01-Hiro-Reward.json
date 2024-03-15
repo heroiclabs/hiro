@@ -3,7 +3,17 @@
     "item1": {
       "min": 2,
       "max": 2,
-      "multiple": 1
+      "multiple": 1,
+      "string_properties": {
+        "key1": "value1"
+      },
+      "numeric_properties": {
+        "key1": {
+          "min": 10,
+          "max": 100,
+          "multiple": 5
+        }
+      }
     },
     "item2": {
       "min": 10,
