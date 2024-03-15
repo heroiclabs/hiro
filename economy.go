@@ -112,8 +112,8 @@ type EconomyConfigRewardEnergyModifier struct {
 
 type EconomyConfigRewardItem struct {
 	EconomyConfigRewardRangeInt64
-	StringProperties  map[string]string                         `json:"string_properties,omitempty"`
-	NumericProperties map[string]*EconomyConfigRewardRangeInt64 `json:"numeric_properties,omitempty"`
+	StringProperties  map[string]string                           `json:"string_properties,omitempty"`
+	NumericProperties map[string]*EconomyConfigRewardRangeFloat64 `json:"numeric_properties,omitempty"`
 }
 
 type EconomyConfigRewardItemSet struct {
@@ -133,6 +133,12 @@ type EconomyConfigRewardRangeInt64 struct {
 	Min      int64 `json:"min,omitempty"`
 	Max      int64 `json:"max,omitempty"`
 	Multiple int64 `json:"multiple,omitempty"`
+}
+
+type EconomyConfigRewardRangeFloat64 struct {
+	Min      float64 `json:"min,omitempty"`
+	Max      float64 `json:"max,omitempty"`
+	Multiple float64 `json:"multiple,omitempty"`
 }
 
 type EconomyConfigRewardRewardModifier struct {
