@@ -489,6 +489,10 @@ message RewardRangeInt64 {
 message AvailableRewardsItem {
   // The possible count of the reward.
   RewardRangeInt64 count = 1;
+  // The possible numeric properties of the reward.
+  map<string, RewardRangeInt64> numeric_properties = 2;
+  // The string properties of the reward.
+  map<string, string> string_properties = 3;
 }
 
 // A possible item reward.
