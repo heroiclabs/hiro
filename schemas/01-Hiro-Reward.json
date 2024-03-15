@@ -173,6 +173,38 @@
               "minimum": 0,
               "title": "multiple",
               "type": "number"
+            },
+            "string_properties": {
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "string"
+                }
+              }
+            },
+            "numeric_properties": {
+              "patternProperties": {
+                ".{1,}": {
+                  "properties": {
+                    "max": {
+                      "title": "max",
+                      "type": "number"
+                    },
+                    "min": {
+                      "title": "min",
+                      "type": "number"
+                    },
+                    "multiple": {
+                      "minimum": 0,
+                      "title": "multiple",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "min",
+                    "max"
+                  ]
+                }
+              }
             }
           },
           "required": [
