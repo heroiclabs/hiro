@@ -568,6 +568,8 @@ message AvailableRewards {
   /* The total weight that all weighted reward contents are calculated against. Auto calculated if set to 0 but can be
      set to a higher value to introduce a chance of a "none" reward. */
   int64 total_weight = 4;
+  // The maximum number of repeats of any given weighted reward.
+  int64 max_repeat_rolls = 5;
 }
 
 // Types of incentives.
