@@ -197,6 +197,9 @@ type EconomySystem interface {
 	// PurchaseItem will validate a purchase and give the user ID the appropriate rewards.
 	PurchaseItem(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, receipt string) (map[string]int64, *Inventory, *Reward, bool, error)
 
+	// PurchaseRestore will process a restore attempt for the given user, based on a set of restore receipts.
+	PurchaseRestore(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, store EconomyStoreType, receipts []string) error
+
 	// PlacementStatus will get the status of a specified placement.
 	PlacementStatus(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string, retryCount int) (*EconomyPlacementStatus, error)
 
