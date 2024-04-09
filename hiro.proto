@@ -489,6 +489,16 @@ message RewardRangeInt64 {
   int64 multiple = 3;
 }
 
+// A range of possible values.
+message RewardRangeUInt64 {
+  // The minimum bound of the range.
+  uint64 min = 1;
+  // The maximum bound of the range.
+  uint64 max = 2;
+  // A number that the result must be a multiple of.
+  uint64 multiple = 3;
+}
+
 // A possible item reward.
 message AvailableRewardsItem {
   // The possible count of the reward.
@@ -526,7 +536,7 @@ message AvailableRewardsEnergyModifier {
   // The value of the energy modifier.
   RewardRangeInt64 value = 3;
   // The possible duration of the modifier.
-  RewardRangeInt64 duration_sec = 4;
+  RewardRangeUInt64 duration_sec = 4;
 }
 
 // A possible modifier reward.
@@ -540,7 +550,7 @@ message AvailableRewardsRewardModifier {
   // The value of the modifier.
   RewardRangeInt64 value = 4;
   // The possible duration of the modifier.
-  RewardRangeInt64 duration_sec = 5;
+  RewardRangeUInt64 duration_sec = 5;
 }
 
 // The reward contents for available rewards.
