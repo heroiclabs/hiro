@@ -49,6 +49,9 @@ type BaseSystem interface {
 
 	// SetDevicePrefs sets push notification tokens on a user's account so push messages can be received.
 	SetDevicePrefs(ctx context.Context, logger runtime.Logger, db *sql.DB, userID, deviceID, pushTokenAndroid, pushTokenIos string, preferences map[string]bool) error
+
+	// Sync processes an operation to update the server with offline state changes.
+	Sync(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *SyncRequest) (*SyncResponse, error)
 }
 
 // BaseSystemConfig is the data definition for the BaseSystem type.

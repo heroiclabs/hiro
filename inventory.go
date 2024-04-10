@@ -53,7 +53,7 @@ type InventorySystem interface {
 	ConsumeItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs, instanceIDs map[string]int64, overConsume bool) (*Inventory, map[string][]*Reward, map[string][]*Reward, error)
 
 	// GrantItems will add the item(s) to a user's inventory by ID.
-	GrantItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs map[string]int64) (*Inventory, error)
+	GrantItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs map[string]int64) (*Inventory, map[string]*InventoryItem, error)
 
 	// UpdateItems will update the properties which are stored on each item by instance ID for a user.
 	UpdateItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs map[string]*InventoryUpdateItemProperties) (*Inventory, error)
