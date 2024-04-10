@@ -525,14 +525,28 @@ message RewardRangeDouble {
   double multiple = 3;
 }
 
+// A possible string property option.
+message AvailableRewardsStringPropertyOption {
+  // The option weight.
+  int64 weight = 1;
+}
+
+// A possible string property.
+message AvailableRewardsStringProperty {
+  // The available string property options.
+  map<string, AvailableRewardsStringPropertyOption> options = 1;
+  // The total weight from which the options are selected.
+  int64 total_weight = 2;
+}
+
 // A possible item reward.
 message AvailableRewardsItem {
   // The possible count of the reward.
   RewardRangeInt64 count = 1;
   // The possible numeric properties of the reward.
   map<string, RewardRangeDouble> numeric_properties = 2;
-  // The string properties of the reward.
-  map<string, string> string_properties = 3;
+  // The possible string properties of the reward.
+  map<string, AvailableRewardsStringProperty> string_properties = 3;
 }
 
 // A possible item reward.

@@ -177,7 +177,26 @@
             "string_properties": {
               "patternProperties": {
                 ".{1,}": {
-                  "type": "string"
+                  "properties": {
+                    "options": {
+                      "patternProperties": {
+                        ".{1,}": {
+                          "properties": {
+                            "weight": {
+                              "minimum": 0,
+                              "title": "weight",
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "total_weight": {
+                      "minimum": 0,
+                      "title": "total_weight",
+                      "type": "number"
+                    }
+                  }
                 }
               }
             },
