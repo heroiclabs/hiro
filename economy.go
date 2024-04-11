@@ -16,6 +16,7 @@ package hiro
 
 import (
 	"context"
+
 	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
@@ -103,14 +104,16 @@ type EconomyConfigRewardEnergy struct {
 }
 
 type EconomyConfigRewardEnergyModifier struct {
-	Id          string                         `json:"id,omitempty"`
-	Operator    string                         `json:"operator,omitempty"`
-	Value       *EconomyConfigRewardRangeInt64 `json:"value,omitempty"`
-	DurationSec *EconomyConfigRewardRangeInt64 `json:"duration_sec,omitempty"`
+	Id          string                          `json:"id,omitempty"`
+	Operator    string                          `json:"operator,omitempty"`
+	Value       *EconomyConfigRewardRangeInt64  `json:"value,omitempty"`
+	DurationSec *EconomyConfigRewardRangeUInt64 `json:"duration_sec,omitempty"`
 }
 
 type EconomyConfigRewardItem struct {
 	EconomyConfigRewardRangeInt64
+	StringProperties  map[string]*EconomyConfigRewardStringProperty `json:"string_properties,omitempty"`
+	NumericProperties map[string]*EconomyConfigRewardRangeFloat64   `json:"numeric_properties,omitempty"`
 }
 
 type EconomyConfigRewardItemSet struct {
@@ -132,12 +135,33 @@ type EconomyConfigRewardRangeInt64 struct {
 	Multiple int64 `json:"multiple,omitempty"`
 }
 
+type EconomyConfigRewardRangeUInt64 struct {
+	Min      uint64 `json:"min,omitempty"`
+	Max      uint64 `json:"max,omitempty"`
+	Multiple uint64 `json:"multiple,omitempty"`
+}
+
+type EconomyConfigRewardRangeFloat64 struct {
+	Min      float64 `json:"min,omitempty"`
+	Max      float64 `json:"max,omitempty"`
+	Multiple float64 `json:"multiple,omitempty"`
+}
+
 type EconomyConfigRewardRewardModifier struct {
-	Id          string                         `json:"id,omitempty"`
-	Type        string                         `json:"type,omitempty"`
-	Operator    string                         `json:"operator,omitempty"`
-	Value       *EconomyConfigRewardRangeInt64 `json:"value,omitempty"`
-	DurationSec *EconomyConfigRewardRangeInt64 `json:"duration_sec,omitempty"`
+	Id          string                          `json:"id,omitempty"`
+	Type        string                          `json:"type,omitempty"`
+	Operator    string                          `json:"operator,omitempty"`
+	Value       *EconomyConfigRewardRangeInt64  `json:"value,omitempty"`
+	DurationSec *EconomyConfigRewardRangeUInt64 `json:"duration_sec,omitempty"`
+}
+
+type EconomyConfigRewardStringProperty struct {
+	TotalWeight int64                                               `json:"total_weight,omitempty"`
+	Options     map[string]*EconomyConfigRewardStringPropertyOption `json:"options,omitempty"`
+}
+
+type EconomyConfigRewardStringPropertyOption struct {
+	Weight int64 `json:"weight,omitempty"`
 }
 
 type EconomyConfigStoreItem struct {

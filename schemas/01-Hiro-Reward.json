@@ -173,6 +173,57 @@
               "minimum": 0,
               "title": "multiple",
               "type": "number"
+            },
+            "string_properties": {
+              "patternProperties": {
+                ".{1,}": {
+                  "properties": {
+                    "options": {
+                      "patternProperties": {
+                        ".{1,}": {
+                          "properties": {
+                            "weight": {
+                              "minimum": 0,
+                              "title": "weight",
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "total_weight": {
+                      "minimum": 0,
+                      "title": "total_weight",
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "numeric_properties": {
+              "patternProperties": {
+                ".{1,}": {
+                  "properties": {
+                    "max": {
+                      "title": "max",
+                      "type": "number"
+                    },
+                    "min": {
+                      "title": "min",
+                      "type": "number"
+                    },
+                    "multiple": {
+                      "minimum": 0,
+                      "title": "multiple",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "min",
+                    "max"
+                  ]
+                }
+              }
             }
           },
           "required": [

@@ -419,6 +419,20 @@ enum EconomyStoreType {
   ECONOMY_STORE_TYPE_FBINSTANT = 3;
 }
 
+// Inventory item granted.
+message RewardInventoryItem {
+  // The ID of the item.
+  string id = 1;
+  // The count granted of the item.
+  int64 count = 2;
+  // The properties with string values.
+  map<string, string> string_properties = 3;
+  // The properties with numeric values.
+  map<string, double> numeric_properties = 4;
+  // The instance ID of the item.
+  string instance_id = 5;
+}
+
 // Energy modifier granted.
 message RewardEnergyModifier {
   // The ID of they modifier granted.
@@ -449,7 +463,7 @@ message RewardModifier {
 
 // Rewards granted to the player.
 message Reward {
-  // The items granted.
+  // The items granted. Indexed by item ID.
   map<string, int64> items = 1;
   // The currencies granted.
   map<string, int64> currencies = 2;
@@ -461,6 +475,8 @@ message Reward {
   repeated RewardModifier reward_modifiers = 5;
   // When the reward was granted, in UNIX time.
   int64 grant_time_sec = 6;
+  // The item instances granted. Indexed by item instance ID.
+  map<string, RewardInventoryItem> item_instances = 7;
 }
 
 // A list of rewards granted to the player.
@@ -499,10 +515,38 @@ message RewardRangeUInt64 {
   uint64 multiple = 3;
 }
 
+// A range of possible values.
+message RewardRangeDouble {
+  // The minimum bound of the range.
+  double min = 1;
+  // The maximum bound of the range.
+  double max = 2;
+  // A number that the result must be a multiple of.
+  double multiple = 3;
+}
+
+// A possible string property option.
+message AvailableRewardsStringPropertyOption {
+  // The option weight.
+  int64 weight = 1;
+}
+
+// A possible string property.
+message AvailableRewardsStringProperty {
+  // The available string property options.
+  map<string, AvailableRewardsStringPropertyOption> options = 1;
+  // The total weight from which the options are selected.
+  int64 total_weight = 2;
+}
+
 // A possible item reward.
 message AvailableRewardsItem {
   // The possible count of the reward.
   RewardRangeInt64 count = 1;
+  // The possible numeric properties of the reward.
+  map<string, RewardRangeDouble> numeric_properties = 2;
+  // The possible string properties of the reward.
+  map<string, AvailableRewardsStringProperty> string_properties = 3;
 }
 
 // A possible item reward.
