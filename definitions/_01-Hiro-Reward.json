@@ -3,7 +3,27 @@
     "item1": {
       "min": 2,
       "max": 2,
-      "multiple": 1
+      "multiple": 1,
+      "string_properties": {
+        "key1": {
+          "options": {
+            "epic": {
+              "weight": 10
+            },
+            "common": {
+              "weight": 10
+            }
+          },
+          "total_weight": 100
+        }
+      },
+      "numeric_properties": {
+        "key1": {
+          "min": 10,
+          "max": 100,
+          "multiple": 5
+        }
+      }
     },
     "item2": {
       "min": 10,
