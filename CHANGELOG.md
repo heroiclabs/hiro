@@ -5,12 +5,27 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.10.0] - 2024-04-12
+### Added
+- (Unity) Add function to write score to regional leaderboards.
+
 ### Changed
 - Use "omitempty" in marshaler settings with data definition structs.
+- Improve error response codes in inventory and economy operations.
+- "max_repeat_rolls" is now returned in the "AvailableRewards" type.
+- Update to nakama-common v1.31.0 to be compatible with newer Nakama releases.
+- Inventory "GrantItems" now returns the modified inventory and also the specific item instances which were granted.
+- Use unsigned integers with the reward range type.
+- Inventory items granted as part of a reward can now have their instance properties rolled at the same time.
+- (Unity) Expose client and session types in the SatoriSystem type.
+- (Unity) Update to latest Nakama and Satori SDK dependencies.
 
 ### Fixed
 - Fixed unrecognized Inventory system type in storage personalizer.
+- Restore behaviour where inventory items inherit their properties from the definition and those property keys are not stored in storage.
+- (Unity) Fixed batch update function with player stats.
+- Satori integration to publish analytics events correctly reads configuration parameters.
+- (Unity) Detect UnityPurchasing 'fake' store and warn prices will have mock values.
 
 ## [1.9.0] - 2024-02-04
 ### Added
