@@ -175,10 +175,14 @@
               "type": "number"
             },
             "string_properties": {
+              "title": "string_properties",
+              "type": "object",
               "patternProperties": {
                 ".{1,}": {
                   "properties": {
                     "options": {
+                      "title": "options",
+                      "type": "object",
                       "patternProperties": {
                         ".{1,}": {
                           "properties": {
@@ -201,6 +205,8 @@
               }
             },
             "numeric_properties": {
+              "title": "numeric_properties",
+              "type": "object",
               "patternProperties": {
                 ".{1,}": {
                   "properties": {
