@@ -178,7 +178,12 @@ type SatoriPersonalizer struct {
 }
 
 func NewSatoriPersonalizer(ctx context.Context, opts ...SatoriPersonalizerOption) *SatoriPersonalizer {
-	s := &SatoriPersonalizer{}
+	s := &SatoriPersonalizer{
+		cacheMutex: sync.RWMutex{},
+		cache:      make(map[context.Context]*SatoriPersonalizerCache),
+	}
+
+	// Apply options, if any supplied.
 	for _, opt := range opts {
 		opt.apply(s)
 	}
