@@ -18,6 +18,9 @@ import (
 	"context"
 	"encoding/json"
 	"strings"
+	"sync"
+	"sync/atomic"
+	"time"
 
 	"github.com/heroiclabs/nakama-common/runtime"
 )
@@ -148,6 +151,11 @@ func SatoriPersonalizerPublishUnlockablesEvents() SatoriPersonalizerOption {
 	}
 }
 
+type SatoriPersonalizerCache struct {
+	flags      *runtime.FlagList
+	liveEvents *atomic.Pointer[runtime.LiveEventList]
+}
+
 type SatoriPersonalizer struct {
 	publishAuthenticateRequest bool
 
@@ -164,15 +172,40 @@ type SatoriPersonalizer struct {
 	publishTeamsEvents             bool
 	publishTutorialsEvents         bool
 	publishUnlockablesEvents       bool
+
+	cacheMutex sync.RWMutex
+	cache      map[context.Context]*SatoriPersonalizerCache
 }
 
-func NewSatoriPersonalizer(opts ...SatoriPersonalizerOption) *SatoriPersonalizer {
+func NewSatoriPersonalizer(ctx context.Context, opts ...SatoriPersonalizerOption) *SatoriPersonalizer {
 	s := &SatoriPersonalizer{}
 	for _, opt := range opts {
 		opt.apply(s)
 	}
+
+	go func() {
+		ticker := time.NewTicker(30 * time.Second)
+		defer ticker.Stop()
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case <-ticker.C:
+				s.cacheMutex.Lock()
+				for cacheCtx := range s.cache {
+					if cacheCtx.Err() != nil {
+						delete(s.cache, cacheCtx)
+					}
+				}
+				s.cacheMutex.Unlock()
+			}
+		}
+	}()
+
 	return s
 }
+
+var allFlagNames = []string{"Hiro-Achievements", "Hiro-Base", "Hiro-Economy", "Hiro-Energy", "Hiro-Inventory", "Hiro-Leaderboards", "Hiro-Teams", "Hiro-Tutorials", "Hiro-Unlockables", "Hiro-Stats", "Hiro-Event-Leaderboards", "Hiro-Progression", "Hiro-Incentives"}
 
 func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string) (any, error) {
 	var flagName string
@@ -207,32 +240,47 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		return nil, runtime.NewError("hiro system type unknown", 3)
 	}
 
-	flagList, err := nk.GetSatori().FlagsList(ctx, userID, flagName)
-	if err != nil {
-		if strings.Contains(err.Error(), "404 status code") {
-			logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori flag list, user not found")
-			return nil, nil
-		}
-		logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori flag list")
-		return nil, err
-	}
+	p.cacheMutex.RLock()
+	cacheEntry, found := p.cache[ctx]
+	p.cacheMutex.RUnlock()
 
-	var config any
-	var found bool
-
-	if len(flagList.Flags) >= 1 {
-		config = system.GetConfig()
-		decoder := json.NewDecoder(strings.NewReader(flagList.Flags[0].Value))
-		decoder.DisallowUnknownFields()
-		if err := decoder.Decode(config); err != nil {
-			logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
+	if !found {
+		flagList, err := nk.GetSatori().FlagsList(ctx, userID, allFlagNames...)
+		if err != nil {
+			if strings.Contains(err.Error(), "404 status code") {
+				logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori flag list, user not found")
+				return nil, nil
+			}
+			logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori flag list")
 			return nil, err
 		}
-		found = true
+
+		var liveEventsList *runtime.LiveEventList
+		if s := system.GetType(); s == SystemTypeEventLeaderboards || s == SystemTypeAchievements {
+			liveEventsList, err = nk.GetSatori().LiveEventsList(ctx, userID)
+			if err != nil {
+				if strings.Contains(err.Error(), "404 status code") {
+					logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori live events list, user not found")
+					return nil, nil
+				}
+				logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori live events list")
+				return nil, err
+			}
+		}
+
+		cacheEntry = &SatoriPersonalizerCache{
+			flags:      flagList,
+			liveEvents: &atomic.Pointer[runtime.LiveEventList]{},
+		}
+		if liveEventsList != nil {
+			cacheEntry.liveEvents.Store(liveEventsList)
+		}
+		p.cacheMutex.Lock()
+		p.cache[ctx] = cacheEntry
+		p.cacheMutex.Unlock()
 	}
 
-	if s := system.GetType(); s == SystemTypeEventLeaderboards || s == SystemTypeAchievements {
-		// If looking at event leaderboards, also load live events.
+	if s := system.GetType(); (s == SystemTypeEventLeaderboards || s == SystemTypeAchievements) && cacheEntry.liveEvents.Load() == nil {
 		liveEventsList, err := nk.GetSatori().LiveEventsList(ctx, userID)
 		if err != nil {
 			if strings.Contains(err.Error(), "404 status code") {
@@ -242,19 +290,39 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 			logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori live events list")
 			return nil, err
 		}
-		if len(liveEventsList.LiveEvents) > 0 {
-			if config == nil {
-				config = system.GetConfig()
+		cacheEntry.liveEvents.Store(liveEventsList)
+	}
+
+	found = false
+	var config any
+
+	for _, flag := range cacheEntry.flags.Flags {
+		if flag.Name != flagName {
+			continue
+		}
+
+		config = system.GetConfig()
+		decoder := json.NewDecoder(strings.NewReader(flag.Value))
+		decoder.DisallowUnknownFields()
+		if err := decoder.Decode(config); err != nil {
+			logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
+			return nil, err
+		}
+		found = true
+	}
+
+	if liveEventsList := cacheEntry.liveEvents.Load(); liveEventsList != nil && len(liveEventsList.LiveEvents) > 0 {
+		if config == nil {
+			config = system.GetConfig()
+		}
+		for _, liveEvent := range liveEventsList.LiveEvents {
+			decoder := json.NewDecoder(strings.NewReader(liveEvent.Value))
+			decoder.DisallowUnknownFields()
+			if err := decoder.Decode(config); err != nil {
+				// The live event may be intended for a different purpose, do not log or return an error here.
+				continue
 			}
-			for _, liveEvent := range liveEventsList.LiveEvents {
-				decoder := json.NewDecoder(strings.NewReader(liveEvent.Value))
-				decoder.DisallowUnknownFields()
-				if err := decoder.Decode(config); err != nil {
-					// The live event may be intended for a different purpose, do not log or return an error here.
-					continue
-				}
-				found = true
-			}
+			found = true
 		}
 	}
 
