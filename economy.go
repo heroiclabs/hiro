@@ -201,16 +201,16 @@ type EconomySystem interface {
 	DonationGet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userIDs []string) (*EconomyDonationsByUserList, error)
 
 	// DonationGive will contribute to a particular donation for a user ID.
-	DonationGive(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, donationID, fromUserID string) (map[string]int64, *Inventory, *Reward, error)
+	DonationGive(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, donationID, fromUserID string) (map[string]int64, *Inventory, []*RewardModifier, *Reward, error)
 
 	// DonationRequest will create a donation request for a given donation ID and user ID.
 	DonationRequest(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, donationID string) (*EconomyDonation, bool, error)
 
 	// List will get the defined store items and placements within the economy system.
-	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*EconomyConfigStoreItem, map[string]*EconomyConfigPlacement, error)
+	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*EconomyConfigStoreItem, map[string]*EconomyConfigPlacement, []*RewardModifier, error)
 
 	// Grant will add currencies, and reward modifiers to a user's economy by ID.
-	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, currencies map[string]int64, items map[string]int64, modifiers []*RewardModifier, walletMetadata map[string]interface{}) (map[string]int64, error)
+	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, currencies map[string]int64, items map[string]int64, modifiers []*RewardModifier, walletMetadata map[string]interface{}) (map[string]int64, []*RewardModifier, error)
 
 	// UnmarshalWallet unmarshals and returns the account's wallet as a map[string]int64.
 	UnmarshalWallet(account *api.Account) (map[string]int64, error)
