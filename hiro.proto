@@ -1384,187 +1384,6 @@ message RateAppRequest {
   string message = 2;
 }
 
-// Sync operation for a single inventory item.
-message SyncInventoryItem {
-  // Item identifier from config mapping.
-  string item_id = 1;
-  // Number of items to add or remove.
-  int64 delta = 2;
-  // Item properties with string values.
-  map<string, string> string_properties = 3;
-  // Item properties with numeric values.
-  map<string, double> numeric_properties = 4;
-}
-
-// Input for an offline state sync operation for the inventory system.
-message SyncInventory {
-  // Map of instance IDs to update operation data.
-  map<string, SyncInventoryItem> items = 1;
-}
-
-// Single economy reward modifier data.
-message SyncEconomyModifier {
-  // The full reward modifier to apply.
-  RewardModifier modifier = 1;
-  // Time when this applied from.
-  int64 create_time_sec = 2;
-}
-
-// Input for an offline state sync operation for the economy system.
-message SyncEconomy {
-  // Currencies deltas.
-  map<string, int64> currencies = 1;
-  // Economy modifiers to add.
-  repeated SyncEconomyModifier modifiers = 2;
-}
-
-// Sync operation for a single achievement.
-message SyncAchievementsUpdate {
-  // Count to add.
-  int64 count = 1;
-  // Time when the achievement first recorded progress.
-  int64 create_time_sec = 2;
-  // Time when the achievement update was generated on the client.
-  int64 update_time_sec = 3;
-  // Claim time, if claimed offline.
-  int64 claim_time_sec = 4;
-  // Total claim time, if claimed offline.
-  int64 total_claim_time_sec = 5;
-}
-
-// Input for an offline state sync operation for the achievements system.
-message SyncAchievements {
-  // Achievement updates and associated metadata.
-  map<string, SyncAchievementsUpdate> achievements = 1;
-}
-
-// Full state (not delta) for an energy.
-message SyncEnergyState {
-  // Current count.
-  int64 count = 1;
-  // Last spend time.
-  int64 last_spend_time_sec = 2;
-}
-
-// Input for an offline state sync operation for the energy system.
-message SyncEnergy {
-  // Energies and associated full sync data.
-  map<string, SyncEnergyState> energies = 1;
-  // Energy modifiers to add.
-  repeated EnergyModifier modifiers = 2;
-}
-
-// Single event leaderboard update.
-message SyncEventLeaderboardUpdate {
-  // Score.
-  int64 score = 1;
-  // Subscore.
-  int64 subscore = 2;
-  // Time when the score was generated on the client.
-  int64 update_time_sec = 3;
-}
-
-// Input for an offline state sync of event leaderboard updates.
-message SyncEventLeaderboards {
-  // Updates for various event leaderboards, keyed by event leaderboard identifier.
-  map<string, SyncEventLeaderboardUpdate> event_leaderboards = 1;
-}
-
-// Single progression update.
-message SyncProgressionUpdate {
-  // The counts to set.
-  map<string, int64> counts = 1;
-  // Time when the progression was first updated on the client, if new.
-  int64 create_time_sec = 2;
-  // Time when the progression update was generated on the client.
-  int64 update_time_sec = 3;
-  // Cost paid to unlock the progression.
-  ProgressionCost cost = 4;
-}
-
-// Input for an offline state sync of progressions updates.
-message SyncProgressions {
-  // Updates for various progressions, keyed by progression identifier.
-  map<string, SyncProgressionUpdate> progressions = 1;
-}
-
-// Input for an offline state sync of tutorials updates.
-message SyncTutorials {
-  // Accept list.
-  repeated string accepts = 1;
-  // Decline list.
-  repeated string declines = 2;
-  // Abandon list.
-  repeated string abandons = 3;
-  // Updates to tutorial steps. Implicitly counts as accepting these tutorials, if not accepted already.
-  map<string, int64> updates = 4;
-}
-
-// Single unlockable update, either grant or unlock start.
-message SyncUnlockableUpdate {
-  // Unlockable identifier from config.
-  string unlockable_id = 1;
-  // Time this unlockabled was granted.
-  int64 create_time_sec = 2;
-  // Unlock start time, if any.
-  int64 start_time_sec = 3;
-  // Unlock completion time, if any.
-  int64 unlock_time_sec = 4;
-}
-
-// Input for an offline state sync of unlockables updates.
-message SyncUnlockables {
-  // Unlockable instance IDs to remove.
-  repeated string removes = 1;
-  // Unlockable updates keyed by instance identifier, such as new grants or unlock starts.
-  map<string, SyncUnlockableUpdate> updates = 2;
-}
-
-// Input for an offline state sync operation.
-message SyncRequest {
-  // Inventory.
-  SyncInventory inventory = 1;
-  // Economy.
-  SyncEconomy economy = 2;
-  // Achievements.
-  SyncAchievements achievements = 3;
-  // Energy.
-  SyncEnergy energy = 4;
-  // Event leaderboards.
-  SyncEventLeaderboards event_leaderboards = 5;
-  // Progressions.
-  SyncProgressions progressions = 6;
-  // Stats. Message reused from standard synchronous stats updates.
-  StatUpdateRequest stats = 7;
-  // Tutorials.
-  SyncTutorials tutorials = 8;
-  // Unlockables.
-  SyncUnlockables unlockables = 9;
-}
-
-// Resulting updates after an offline state sync operation.
-// Fields are only populated if the corresponding updated was requested via the sync.
-message SyncResponse {
-  // Updated wallet data, if any.
-  map<string, int64> wallet = 1;
-  // Inventory.
-  Inventory inventory = 2;
-  // Achievements.
-  AchievementList achievements = 3;
-  // Energies.
-  EnergyList energy = 4;
-  // Event leaderboards.
-  repeated EventLeaderboard event_leaderboards = 5;
-  // Progressions.
-  ProgressionList progressions = 6;
-  // Stats.
-  StatList stats = 7;
-  // Tutorials.
-  TutorialList tutorials = 8;
-  // Unlockables.
-  UnlockablesList unlockables = 9;
-}
-
 // A Team represents a group of users who play together.
 message Team {
   // The ID of a team.
@@ -1836,4 +1655,185 @@ message AchievementsUpdateRequest {
   int64 amount = 2;
   // Achievements with different amounts.
   map<string, int64> achievements = 3;
+}
+
+// Sync operation for a single inventory item.
+message SyncInventoryItem {
+  // Item identifier from config mapping.
+  string item_id = 1;
+  // Number of items to add or remove.
+  int64 delta = 2;
+  // Item properties with string values.
+  map<string, string> string_properties = 3;
+  // Item properties with numeric values.
+  map<string, double> numeric_properties = 4;
+}
+
+// Input for an offline state sync operation for the inventory system.
+message SyncInventory {
+  // Map of instance IDs to update operation data.
+  map<string, SyncInventoryItem> items = 1;
+}
+
+// Single economy reward modifier data.
+message SyncEconomyModifier {
+  // The full reward modifier to apply.
+  RewardModifier modifier = 1;
+  // Time when this applied from.
+  int64 create_time_sec = 2;
+}
+
+// Input for an offline state sync operation for the economy system.
+message SyncEconomy {
+  // Currencies deltas.
+  map<string, int64> currencies = 1;
+  // Economy modifiers to add.
+  repeated SyncEconomyModifier modifiers = 2;
+}
+
+// Sync operation for a single achievement.
+message SyncAchievementsUpdate {
+  // Count to add.
+  int64 count = 1;
+  // Time when the achievement first recorded progress.
+  int64 create_time_sec = 2;
+  // Time when the achievement update was generated on the client.
+  int64 update_time_sec = 3;
+  // Claim time, if claimed offline.
+  int64 claim_time_sec = 4;
+  // Total claim time, if claimed offline.
+  int64 total_claim_time_sec = 5;
+}
+
+// Input for an offline state sync operation for the achievements system.
+message SyncAchievements {
+  // Achievement updates and associated metadata.
+  map<string, SyncAchievementsUpdate> achievements = 1;
+}
+
+// Full state (not delta) for an energy.
+message SyncEnergyState {
+  // Current count.
+  int64 count = 1;
+  // Last spend time.
+  int64 last_spend_time_sec = 2;
+}
+
+// Input for an offline state sync operation for the energy system.
+message SyncEnergy {
+  // Energies and associated full sync data.
+  map<string, SyncEnergyState> energies = 1;
+  // Energy modifiers to add.
+  repeated EnergyModifier modifiers = 2;
+}
+
+// Single event leaderboard update.
+message SyncEventLeaderboardUpdate {
+  // Score.
+  int64 score = 1;
+  // Subscore.
+  int64 subscore = 2;
+  // Time when the score was generated on the client.
+  int64 update_time_sec = 3;
+}
+
+// Input for an offline state sync of event leaderboard updates.
+message SyncEventLeaderboards {
+  // Updates for various event leaderboards, keyed by event leaderboard identifier.
+  map<string, SyncEventLeaderboardUpdate> event_leaderboards = 1;
+}
+
+// Single progression update.
+message SyncProgressionUpdate {
+  // The counts to set.
+  map<string, int64> counts = 1;
+  // Time when the progression was first updated on the client, if new.
+  int64 create_time_sec = 2;
+  // Time when the progression update was generated on the client.
+  int64 update_time_sec = 3;
+  // Cost paid to unlock the progression.
+  ProgressionCost cost = 4;
+}
+
+// Input for an offline state sync of progressions updates.
+message SyncProgressions {
+  // Updates for various progressions, keyed by progression identifier.
+  map<string, SyncProgressionUpdate> progressions = 1;
+}
+
+// Input for an offline state sync of tutorials updates.
+message SyncTutorials {
+  // Accept list.
+  repeated string accepts = 1;
+  // Decline list.
+  repeated string declines = 2;
+  // Abandon list.
+  repeated string abandons = 3;
+  // Updates to tutorial steps. Implicitly counts as accepting these tutorials, if not accepted already.
+  map<string, int64> updates = 4;
+}
+
+// Single unlockable update, either grant or unlock start.
+message SyncUnlockableUpdate {
+  // Unlockable identifier from config.
+  string unlockable_id = 1;
+  // Time this unlockabled was granted.
+  int64 create_time_sec = 2;
+  // Unlock start time, if any.
+  int64 start_time_sec = 3;
+  // Unlock completion time, if any.
+  int64 unlock_time_sec = 4;
+}
+
+// Input for an offline state sync of unlockables updates.
+message SyncUnlockables {
+  // Unlockable instance IDs to remove.
+  repeated string removes = 1;
+  // Unlockable updates keyed by instance identifier, such as new grants or unlock starts.
+  map<string, SyncUnlockableUpdate> updates = 2;
+}
+
+// Input for an offline state sync operation.
+message SyncRequest {
+  // Inventory.
+  SyncInventory inventory = 1;
+  // Economy.
+  SyncEconomy economy = 2;
+  // Achievements.
+  SyncAchievements achievements = 3;
+  // Energy.
+  SyncEnergy energy = 4;
+  // Event leaderboards.
+  SyncEventLeaderboards event_leaderboards = 5;
+  // Progressions.
+  SyncProgressions progressions = 6;
+  // Stats. Message reused from standard synchronous stats updates.
+  StatUpdateRequest stats = 7;
+  // Tutorials.
+  SyncTutorials tutorials = 8;
+  // Unlockables.
+  SyncUnlockables unlockables = 9;
+}
+
+// Resulting updates after an offline state sync operation.
+// Fields are only populated if the corresponding updated was requested via the sync.
+message SyncResponse {
+  // Updated wallet data, if any.
+  map<string, int64> wallet = 1;
+  // Inventory.
+  Inventory inventory = 2;
+  // Achievements.
+  AchievementList achievements = 3;
+  // Energies.
+  EnergyList energy = 4;
+  // Event leaderboards.
+  repeated EventLeaderboard event_leaderboards = 5;
+  // Progressions.
+  ProgressionList progressions = 6;
+  // Stats.
+  StatList stats = 7;
+  // Tutorials.
+  TutorialList tutorials = 8;
+  // Unlockables.
+  UnlockablesList unlockables = 9;
 }
