@@ -5,6 +5,9 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [Unreleased]
+- Add "UnregisterRpc" to clear the implementation of one or more of the RPCs registered by gameplay systems in Hiro.
+
 ## [1.10.0] - 2024-04-12
 ### Added
 - (Unity) Add function to write score to regional leaderboards.
