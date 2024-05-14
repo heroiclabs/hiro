@@ -1020,8 +1020,6 @@ message EconomyList {
   repeated EconomyListPlacement placements = 2;
   // The set of active donations for the current user.
   map<string, EconomyDonation> donations = 3;
-  // The list of active reward modifiers.
-  repeated RewardModifier reward_modifiers = 4;
 }
 
 // A item owned by the current user.
@@ -1198,10 +1196,9 @@ message EconomyPlacementStatus {
   Reward reward = 6;
 }
 
-// Response from granting currencies, reward modifiers and/or items.
+// Response from granting currencies and/or items.
 // Contains updated wallet and inventory data, if changed.
 // Contains reward granted, if any.
-// Contains reward modifiers, if changed.
 message EconomyUpdateAck {
   // Updated wallet data, if changed.
   map<string, int64> wallet = 1;
@@ -1209,8 +1206,6 @@ message EconomyUpdateAck {
   Inventory inventory = 2;
   // Reward, if any.
   Reward reward = 3;
-  // Updated active reward modifiers, if changed.
-  repeated RewardModifier reward_modifiers = 4;
 }
 
 // Response from purchasing currencies and/or items.
