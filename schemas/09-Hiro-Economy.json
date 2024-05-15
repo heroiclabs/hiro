@@ -75,6 +75,11 @@
               "title": "name",
               "pattern": ".{1,}"
             },
+            "max_count": {
+              "type": "number",
+              "title": "max_count",
+              "minimum": 0
+            },
             "recipient_reward": {
               "$ref": "Hiro-Rewards"
             },
