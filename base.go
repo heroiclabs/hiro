@@ -327,3 +327,23 @@ func WithIncentivesSystem(configFile string, register bool) SystemConfig {
 		register:   register,
 	}
 }
+
+// UnregisterRpc clears the implementation of one or more RPCs registered in Nakama by Hiro gameplay systems with a
+// no-op version (http response 404). This is useful to remove individual RPCs which you do not want to be callable by
+// game clients:
+//
+//	hiro.UnregisterRpc(initializer, hiro.RpcId_RPC_ID_ECONOMY_GRANT, hiro.RpcId_RPC_ID_INVENTORY_GRANT)
+//
+// The behaviour of `initializer.RegisterRpc` in Nakama is last registration wins. It's recommended to use UnregisterRpc
+// only after `hiro.Init` has been executed.
+func UnregisterRpc(initializer runtime.Initializer, ids ...RpcId) error {
+	noopFn := func(context.Context, runtime.Logger, *sql.DB, runtime.NakamaModule, string) (string, error) {
+		return "", runtime.NewError("not found", 12) // GRPC - UNIMPLEMENTED
+	}
+	for _, id := range ids {
+		if err := initializer.RegisterRpc(id.String(), noopFn); err != nil {
+			return err
+		}
+	}
+	return nil
+}
