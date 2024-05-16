@@ -8,29 +8,23 @@
             "additional_properties": {
               "patternProperties": {
                 ".{1,}": {
-                  "title": "key",
                   "type": "string"
                 }
               },
-              "title": "additional_properties",
               "type": "object"
             },
             "max_step": {
               "minimum": 0,
-              "title": "max_step",
               "type": "number"
             },
             "start_step": {
               "minimum": 0,
-              "title": "start_step",
               "type": "number"
             }
           },
-          "title": "id",
           "type": "object"
         }
       },
-      "title": "tutorials",
       "type": "object"
     }
   },
