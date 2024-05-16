@@ -171,6 +171,7 @@ type EconomyConfigStoreItem struct {
 	Name                 string                      `json:"name,omitempty"`
 	Reward               *EconomyConfigReward        `json:"reward,omitempty"`
 	AdditionalProperties map[string]string           `json:"additional_properties,omitempty"`
+	Disabled             bool                        `json:"disabled,omitempty"`
 }
 
 type EconomyConfigStoreItemCost struct {
