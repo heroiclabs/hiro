@@ -309,8 +309,9 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 			}
 		}
 	} else {
+		var cacheEntry *SatoriPersonalizerCache
 		p.cacheMutex.RLock()
-		cacheEntry, found := p.cache[ctx]
+		cacheEntry, found = p.cache[ctx]
 		p.cacheMutex.RUnlock()
 
 		if !found {
