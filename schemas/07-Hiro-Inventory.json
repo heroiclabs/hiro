@@ -7,11 +7,9 @@
           "properties": {
             "category": {
               "pattern": ".{1,}",
-              "title": "category",
               "type": "string"
             },
             "consumable": {
-              "title": "consumable",
               "type": "boolean"
             },
             "consume_reward": {
@@ -19,7 +17,6 @@
             },
             "description": {
               "pattern": ".{1,}",
-              "title": "description",
               "type": "string"
             },
             "item_sets": {
@@ -27,17 +24,14 @@
                 "pattern": ".{1,}",
                 "type": "string"
               },
-              "title": "item_sets",
               "type": "array"
             },
             "max_count": {
               "minimum": 0,
-              "title": "max_count",
               "type": "number"
             },
             "name": {
               "pattern": ".{1,}",
-              "title": "name",
               "type": "string"
             },
             "numeric_properties": {
@@ -46,11 +40,9 @@
                   "type": "number"
                 }
               },
-              "title": "string_properties",
               "type": "object"
             },
             "stackable": {
-              "title": "stackable",
               "type": "boolean"
             },
             "string_properties": {
@@ -60,7 +52,6 @@
                   "type": "string"
                 }
               },
-              "title": "string_properties",
               "type": "object"
             }
           },

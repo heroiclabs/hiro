@@ -7,17 +7,14 @@
           "properties": {
             "max": {
               "minimum": 0,
-              "title": "max",
               "type": "number"
             },
             "min": {
               "minimum": 0,
-              "title": "min",
               "type": "number"
             },
             "multiple": {
               "minimum": 0,
-              "title": "multiple",
               "type": "number"
             }
           },
@@ -25,11 +22,9 @@
             "min",
             "max"
           ],
-          "title": "id",
           "type": "object"
         }
       },
-      "title": "currencies",
       "type": "object"
     },
     "energies": {
@@ -38,17 +33,14 @@
           "properties": {
             "max": {
               "minimum": 0,
-              "title": "max",
               "type": "number"
             },
             "min": {
               "minimum": 0,
-              "title": "min",
               "type": "number"
             },
             "multiple": {
               "minimum": 0,
-              "title": "multiple",
               "type": "number"
             }
           },
@@ -56,11 +48,9 @@
             "min",
             "max"
           ],
-          "title": "id",
           "type": "object"
         }
       },
-      "title": "energies",
       "type": "object"
     },
     "energy_modifiers": {
@@ -70,17 +60,14 @@
             "properties": {
               "max": {
                 "minimum": 0,
-                "title": "max",
                 "type": "number"
               },
               "min": {
                 "minimum": 0,
-                "title": "min",
                 "type": "number"
               },
               "multiple": {
                 "minimum": 0,
-                "title": "multiple",
                 "type": "number"
               }
             },
@@ -92,14 +79,12 @@
           },
           "id": {
             "pattern": ".{1,}",
-            "title": "id",
             "type": "string"
           },
           "operator": {
             "enum": [
               "infinite"
             ],
-            "title": "operator",
             "type": "string"
           }
         },
@@ -110,7 +95,6 @@
         ],
         "type": "object"
       },
-      "title": "energy_modifiers",
       "type": "array"
     },
     "item_sets": {
@@ -118,22 +102,18 @@
         "properties": {
           "max": {
             "minimum": 0,
-            "title": "max",
             "type": "number"
           },
           "max_repeats": {
             "minimum": 0,
-            "title": "max_repeats",
             "type": "number"
           },
           "min": {
             "minimum": 0,
-            "title": "min",
             "type": "number"
           },
           "multiple": {
             "minimum": 0,
-            "title": "multiple",
             "type": "number"
           },
           "set": {
@@ -141,7 +121,6 @@
               "pattern": ".{1,}",
               "type": "string"
             },
-            "title": "set",
             "type": "array"
           }
         },
@@ -152,7 +131,6 @@
         ],
         "type": "object"
       },
-      "title": "item_sets",
       "type": "array"
     },
     "items": {
@@ -161,34 +139,28 @@
           "properties": {
             "max": {
               "minimum": 0,
-              "title": "max",
               "type": "number"
             },
             "min": {
               "minimum": 0,
-              "title": "min",
               "type": "number"
             },
             "multiple": {
               "minimum": 0,
-              "title": "multiple",
               "type": "number"
             },
             "string_properties": {
-              "title": "string_properties",
               "type": "object",
               "patternProperties": {
                 ".{1,}": {
                   "properties": {
                     "options": {
-                      "title": "options",
                       "type": "object",
                       "patternProperties": {
                         ".{1,}": {
                           "properties": {
                             "weight": {
                               "minimum": 0,
-                              "title": "weight",
                               "type": "number"
                             }
                           }
@@ -197,7 +169,6 @@
                     },
                     "total_weight": {
                       "minimum": 0,
-                      "title": "total_weight",
                       "type": "number"
                     }
                   }
@@ -205,22 +176,18 @@
               }
             },
             "numeric_properties": {
-              "title": "numeric_properties",
               "type": "object",
               "patternProperties": {
                 ".{1,}": {
                   "properties": {
                     "max": {
-                      "title": "max",
                       "type": "number"
                     },
                     "min": {
-                      "title": "min",
                       "type": "number"
                     },
                     "multiple": {
                       "minimum": 0,
-                      "title": "multiple",
                       "type": "number"
                     }
                   },
@@ -236,11 +203,9 @@
             "min",
             "max"
           ],
-          "title": "id",
           "type": "object"
         }
       },
-      "title": "items",
       "type": "object"
     },
     "reward_modifiers": {
@@ -250,17 +215,14 @@
             "properties": {
               "max": {
                 "minimum": 0,
-                "title": "max",
                 "type": "number"
               },
               "min": {
                 "minimum": 0,
-                "title": "min",
                 "type": "number"
               },
               "multiple": {
                 "minimum": 0,
-                "title": "multiple",
                 "type": "number"
               }
             },
@@ -268,12 +230,10 @@
               "min",
               "max"
             ],
-            "title": "duration_sec",
             "type": "object"
           },
           "id": {
             "pattern": ".{1,}",
-            "title": "id",
             "type": "string"
           },
           "operator": {
@@ -281,7 +241,6 @@
               "multiplier",
               "addition"
             ],
-            "title": "operator",
             "type": "string"
           },
           "type": {
@@ -289,24 +248,20 @@
               "currency",
               "item"
             ],
-            "title": "type",
             "type": "string"
           },
           "value": {
             "properties": {
               "max": {
                 "minimum": 0,
-                "title": "max",
                 "type": "number"
               },
               "min": {
                 "minimum": 0,
-                "title": "min",
                 "type": "number"
               },
               "multiple": {
                 "minimum": 0,
-                "title": "multiple",
                 "type": "number"
               }
             },
@@ -314,7 +269,6 @@
               "min",
               "max"
             ],
-            "title": "value",
             "type": "object"
           }
         },
@@ -327,12 +281,10 @@
         ],
         "type": "object"
       },
-      "title": "reward_modifiers",
       "type": "array"
     },
     "weight": {
       "minimum": 0,
-      "title": "weight",
       "type": "number"
     }
   },

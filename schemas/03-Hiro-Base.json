@@ -3,48 +3,39 @@
   "properties": {
     "rate_app_smtp_addr": {
       "pattern": ".{1,}",
-      "title": "rate_app_smtp_addr",
       "type": "string"
     },
     "rate_app_smtp_email_from": {
       "format": "email",
-      "title": "rate_app_smtp_email_from",
       "type": "string"
     },
     "rate_app_smtp_email_from_name": {
       "pattern": ".{1,}",
-      "title": "rate_app_smtp_email_from_name",
       "type": "string"
     },
     "rate_app_smtp_email_subject": {
       "pattern": ".{1,}",
-      "title": "rate_app_smtp_email_subject",
       "type": "string"
     },
     "rate_app_smtp_email_to": {
       "format": "email",
-      "title": "rate_app_smtp_email_to",
       "type": "string"
     },
     "rate_app_smtp_password": {
       "pattern": ".{1,}",
-      "title": "rate_app_smtp_password",
       "type": "string"
     },
     "rate_app_smtp_port": {
       "maximum": 65535,
       "minimum": 1,
-      "title": "rate_app_smtp_port",
       "type": "number"
     },
     "rate_app_smtp_username": {
       "pattern": ".{1,}",
-      "title": "rate_app_smtp_username",
       "type": "string"
     },
     "rate_app_template": {
       "pattern": ".{1,}",
-      "title": "rate_app_template",
       "type": "string"
     }
   },

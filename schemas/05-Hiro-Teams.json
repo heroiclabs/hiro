@@ -3,7 +3,6 @@
   "properties": {
     "max_team_size": {
       "minimum": 1,
-      "title": "max_team_size",
       "type": "number"
     }
   },
