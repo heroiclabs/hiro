@@ -16,7 +16,7 @@
               "$ref": "Hiro-Rewards"
             },
             "description": {
-              "pattern": ".{1,}",
+              "pattern": ".*",
               "type": "string"
             },
             "item_sets": {

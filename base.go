@@ -70,6 +70,8 @@ type BaseSystemConfig struct {
 
 type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, session *api.Session) error
 
+type CollectionResolverFn func(ctx context.Context, systemType SystemType, collection string) (string, error)
+
 // Hiro provides a type which combines all gameplay systems.
 type Hiro interface {
 	// SetPersonalizer is deprecated in favor of AddPersonalizer function to compose a chain of configuration personalization.
@@ -77,6 +79,9 @@ type Hiro interface {
 	AddPersonalizer(personalizer Personalizer)
 
 	SetAfterAuthenticate(fn AfterAuthenticateFn)
+
+	// SetCollectionResolver sets a function that may change the storage collection target for Hiro systems. Not typically used.
+	SetCollectionResolver(fn CollectionResolverFn)
 
 	GetAchievementsSystem() AchievementsSystem
 	GetBaseSystem() BaseSystem

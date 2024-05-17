@@ -9,13 +9,16 @@
           "type": "object",
           "properties": {
             "name": {
-              "type": "string"
+              "type": "string",
+              "pattern": ".+"
             },
             "description": {
-              "type": "string"
+              "type": "string",
+              "pattern": ".*"
             },
             "category": {
-              "type": "string"
+              "type": "string",
+              "pattern": ".*"
             },
             "additional_properties": {
               "type": "object",

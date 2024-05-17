@@ -79,7 +79,7 @@
             },
             "description": {
               "type": "string",
-              "pattern": ".{1,}"
+              "pattern": ".*"
             },
             "name": {
               "type": "string",

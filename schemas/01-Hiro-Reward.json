@@ -19,8 +19,7 @@
             }
           },
           "required": [
-            "min",
-            "max"
+            "min"
           ],
           "type": "object"
         }
@@ -45,8 +44,7 @@
             }
           },
           "required": [
-            "min",
-            "max"
+            "min"
           ],
           "type": "object"
         }
@@ -72,8 +70,7 @@
               }
             },
             "required": [
-              "min",
-              "max"
+              "min"
             ],
             "type": "object"
           },
@@ -126,7 +123,6 @@
         },
         "required": [
           "min",
-          "max",
           "set"
         ],
         "type": "object"
@@ -192,16 +188,14 @@
                     }
                   },
                   "required": [
-                    "min",
-                    "max"
+                    "min"
                   ]
                 }
               }
             }
           },
           "required": [
-            "min",
-            "max"
+            "min"
           ],
           "type": "object"
         }
@@ -227,8 +221,7 @@
               }
             },
             "required": [
-              "min",
-              "max"
+              "min"
             ],
             "type": "object"
           },
@@ -266,8 +259,7 @@
               }
             },
             "required": [
-              "min",
-              "max"
+              "min"
             ],
             "type": "object"
           }
