@@ -13,10 +13,12 @@
               "minimum": 0
             },
             "name": {
-              "type": "string"
+              "type": "string",
+              "pattern": ".+"
             },
             "description": {
-              "type": "string"
+              "type": "string",
+              "pattern": ".*"
             },
             "max_claims": {
               "type": "integer",

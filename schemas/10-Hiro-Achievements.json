@@ -30,7 +30,7 @@
             },
             "description": {
               "type": "string",
-              "pattern": ".{1,}"
+              "pattern": ".*"
             },
             "reset_cronexpr": {
               "type": "string",
@@ -91,7 +91,7 @@
                     },
                     "description": {
                       "type": "string",
-                      "pattern": ".{1,}"
+                      "pattern": ".*"
                     },
                     "reset_cronexpr": {
                       "type": "string",

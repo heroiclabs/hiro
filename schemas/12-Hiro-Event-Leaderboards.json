@@ -13,7 +13,7 @@
             },
             "description": {
               "type": "string",
-              "pattern": ".+"
+              "pattern": ".*"
             },
             "category": {
               "type": "string",
