@@ -138,6 +138,9 @@
                 }
               },
               "type": "object"
+            },
+            "disabled": {
+              "type": "boolean"
             }
           },
           "required": [ "name", "category" ]
