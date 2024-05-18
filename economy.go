@@ -189,6 +189,9 @@ type EconomySystem interface {
 	// RewardCreate prepares a new reward configuration to be filled in and used later.
 	RewardCreate() *EconomyConfigReward
 
+	// RewardConvert transforms a wire representation of a reward into an equivalent configuration representation.
+	RewardConvert(contents *AvailableRewardsContents) *EconomyConfigRewardContents
+
 	// RewardRoll takes a reward configuration and rolls an actual reward from it, applying all appropriate rules.
 	RewardRoll(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, rewardConfig *EconomyConfigReward) (*Reward, error)
 
