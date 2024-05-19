@@ -5,8 +5,23 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.11.0] - 2024-05-19
+### Added
 - Add "UnregisterRpc" to clear the implementation of one or more of the RPCs registered by gameplay systems in Hiro.
+- Add helper function to convert "AvailableRewardsContents" type to an "EconomyConfigRewardContents" type.
+- The "SatoriPersonalizer" can now cache data definitions within the lifecycle of a request if enabled.
+
+### Changed
+- The "ForceNetworkProbe" can now be switched between true/false at runtime.
+- The collection name used to store data per player can be (optionally) set.
+- Explicitly include "unordered_map" in CPP generated output for Windows platform.
+- Run Economy initialize user before any custom after authentication hook.
+
+### Fixed
+- Fix how currencies are decoded when values are larger than "int32.MaxSize".
+- Fix incorrect WARN message at startup with some Economy reward data definition validations.
+- Add "type" field to JSON schemas for Incentives, Progressions, and Stats.
+- Add "max_count" field to JSON schema in Economy.
 
 ## [1.10.0] - 2024-04-12
 ### Added
