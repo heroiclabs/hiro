@@ -113,8 +113,7 @@
                         "minimum": 0
                       },
                       "tier_change": {
-                        "type": "number",
-                        "minimum": 0
+                        "type": "number"
                       },
                       "reward": {
                         "$ref": "Hiro-Rewards"
