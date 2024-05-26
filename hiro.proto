@@ -18,6 +18,7 @@ syntax = "proto3";
 package hiro;
 
 import "google/protobuf/descriptor.proto";
+import "google/protobuf/struct.proto";
 
 option go_package = "github.com/heroiclabs/hiro";
 
@@ -876,6 +877,8 @@ message EventLeaderboard {
   bool can_claim = 22;
   // Indicates if the event can be rolled to get a new set of opponents.
   bool can_roll = 23;
+  // Extra matchmaker properties for this cohort.
+  google.protobuf.Struct matchmaker_properties = 24;
 }
 
 // A contributor to this donation.
