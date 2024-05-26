@@ -5,6 +5,21 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.12.0] - 2024-05-26
+### Added
+- Support custom matchmaker properties with Event Leaderboards.
+- Inventory items and Economy store items can be disabled.
+- (Unity) Add "GetWallet" by enum as an extension to the "IApiAccount" type.
+- (Unity) Add "GetPublicStats" by enum as an extension to the "IApiUser" type.
+- (Unity) Add "GetPrivateStats" by enum as an extension to the "IApiUser" type.
+
+### Changed
+- (Unity) "GetRecordsAsync" in "LeaderboardsSystem" can now return more than 100 records.
+- (Unity) "GetItemCodexAsync" in "InventorySystem" can now take category as an optional input.
+
+### Fixed
+- Fix JSON schema "tier_change" validation rule in Event Leaderboards.
+
 ## [1.11.0] - 2024-05-19
 ### Added
 - Add "UnregisterRpc" to clear the implementation of one or more of the RPCs registered by gameplay systems in Hiro.
@@ -18,7 +33,7 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 - Run Economy initialize user before any custom after authentication hook.
 
 ### Fixed
-- Fix how currencies are decoded when values are larger than "int32.MaxSize".
+- (Unity) Fix how currencies are decoded when values are larger than "int32.MaxSize".
 - Fix incorrect WARN message at startup with some Economy reward data definition validations.
 - Add "type" field to JSON schemas for Incentives, Progressions, and Stats.
 - Add "max_count" field to JSON schema in Economy.
