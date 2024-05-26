@@ -65,7 +65,7 @@ type EventLeaderboardsSystem interface {
 	GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) (*EventLeaderboard, error)
 
 	// RollEventLeaderboard places the user into a new cohort for the specified event leaderboard if possible.
-	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) (*EventLeaderboard, error)
+	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string, tier *int, matchmakerProperties map[string]interface{}) (*EventLeaderboard, error)
 
 	// UpdateEventLeaderboard updates the user's score in the specified event leaderboard, and returns the user's updated cohort information.
 	UpdateEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, username, eventLeaderboardID string, score, subscore int64) (*EventLeaderboard, error)
@@ -80,4 +80,4 @@ type EventLeaderboardsSystem interface {
 	SetOnEventLeaderboardCohortSelection(fn OnEventLeaderboardCohortSelection)
 }
 
-type OnEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, eventID string, config *EventLeaderboardsConfigLeaderboard, userID string, tier int) (cohortID string, cohortUserIDs []string, err error)
+type OnEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, eventID string, config *EventLeaderboardsConfigLeaderboard, userID string, tier int, matchmakerProperties map[string]interface{}) (cohortID string, cohortUserIDs []string, err error)
