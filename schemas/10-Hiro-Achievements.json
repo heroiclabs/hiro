@@ -2,62 +2,50 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "properties": {
     "achievements": {
-      "title": "achievements",
       "type": "object",
       "patternProperties": {
         ".{1,}": {
           "type": "object",
           "properties": {
             "auto_claim": {
-              "type": "boolean",
-              "title": "auto_claim"
+              "type": "boolean"
             },
             "auto_claim_total": {
-              "type": "boolean",
-              "title": "auto_claim_total"
+              "type": "boolean"
             },
             "auto_reset": {
-              "type": "boolean",
-              "title": "auto_reset"
+              "type": "boolean"
             },
             "category": {
               "type": "string",
-              "title": "category",
               "pattern": ".{1,}"
             },
             "count": {
               "type": "number",
-              "title": "count",
               "minimum": 0
             },
             "max_count": {
               "type": "number",
-              "title": "max_count",
               "minimum": 0
             },
             "description": {
               "type": "string",
-              "title": "description",
-              "pattern": ".{1,}"
+              "pattern": ".*"
             },
             "reset_cronexpr": {
               "type": "string",
-              "title": "reset_cronexpr",
               "pattern": ".{1,}"
             },
             "duration_sec": {
               "type": "number",
-              "title": "duration_sec",
               "minimum": 0
             },
             "name": {
               "type": "string",
-              "title": "name",
               "pattern": ".{1,}"
             },
             "precondition_ids": {
               "type": "array",
-              "title": "precondition_ids",
               "items": {
                 "type": "string",
                 "pattern": ".{1,}"
@@ -72,66 +60,53 @@
             "additional_properties": {
               "patternProperties": {
                 ".{1,}": {
-                  "title": "key",
                   "type": "string"
                 }
               },
-              "title": "additional_properties",
               "type": "object"
             },
             "sub_achievements": {
               "type": "object",
-              "title": "sub_achievements",
               "patternProperties": {
                 ".{1,}": {
                   "type": "object",
                   "properties": {
                     "auto_claim": {
-                      "type": "boolean",
-                      "title": "auto_claim"
+                      "type": "boolean"
                     },
                     "auto_reset": {
-                      "type": "boolean",
-                      "title": "auto_reset"
+                      "type": "boolean"
                     },
                     "category": {
                       "type": "string",
-                      "title": "category",
                       "pattern": ".{1,}"
                     },
                     "count": {
                       "type": "number",
-                      "title": "count",
                       "minimum": 0
                     },
                     "max_count": {
                       "type": "number",
-                      "title": "max_count",
                       "minimum": 0
                     },
                     "description": {
                       "type": "string",
-                      "title": "description",
-                      "pattern": ".{1,}"
+                      "pattern": ".*"
                     },
                     "reset_cronexpr": {
                       "type": "string",
-                      "title": "reset_cronexpr",
                       "pattern": ".{1,}"
                     },
                     "duration_sec": {
                       "type": "number",
-                      "title": "duration_sec",
                       "minimum": 0
                     },
                     "name": {
                       "type": "string",
-                      "title": "name",
                       "pattern": ".{1,}"
                     },
                     "precondition_ids": {
                       "type": "array",
-                      "title": "precondition_ids",
                       "items": {
                         "type": "string",
                         "pattern": ".{1,}"
@@ -143,11 +118,9 @@
                     "additional_properties": {
                       "patternProperties": {
                         ".{1,}": {
-                          "title": "key",
                           "type": "string"
                         }
                       },
-                      "title": "additional_properties",
                       "type": "object"
                     }
                   },

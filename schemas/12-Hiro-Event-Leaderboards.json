@@ -3,33 +3,27 @@
   "properties": {
     "event_leaderboards": {
       "type": "object",
-      "title": "event_leaderboards",
       "patternProperties": {
         ".+": {
           "type": "object",
           "properties": {
             "name": {
               "type": "string",
-              "title": "name",
               "pattern": ".+"
             },
             "description": {
               "type": "string",
-              "title": "description",
-              "pattern": ".+"
+              "pattern": ".*"
             },
             "category": {
               "type": "string",
-              "title": "category",
               "pattern": ".+"
             },
             "ascending": {
-              "type": "boolean",
-              "title": "ascending"
+              "type": "boolean"
             },
             "operator": {
               "type": "string",
-              "title": "operator",
               "enum": [
                 "best",
                 "set",
@@ -40,17 +34,14 @@
               ]
             },
             "reset_schedule": {
-              "type": "string",
-              "title": "reset_schedule"
+              "type": "string"
             },
             "cohort_size": {
               "type": "number",
-              "title": "cohort_size",
               "minimum": 1
             },
             "additional_properties": {
               "type": "object",
-              "title": "additional_properties",
               "patternProperties": {
                 ".+": {
                   "type": "string"
@@ -59,54 +50,44 @@
             },
             "max_num_score": {
               "type": "number",
-              "title": "max_num_score",
               "minimum": 0
             },
             "tiers": {
               "type": "number",
-              "title": "tiers",
               "minimum": 1
             },
             "max_idle_tier_drop": {
               "type": "number",
-              "title": "max_idle_tier_drop",
               "minimum": 0
             },
             "start_time_sec": {
               "type": "number",
-              "title": "start_time_sec",
               "minimum": 0
             },
             "end_time_sec": {
               "type": "number",
-              "title": "end_time_sec",
               "minimum": 0
             },
             "duration": {
               "type": "number",
-              "title": "duration",
               "minimum": 0
             },
             "change_zones": {
               "type": "object",
-              "title": "change_zones",
               "patternProperties": {
                 "[0-9]+": {
                   "type": "object",
                   "properties": {
                     "promotion": {
                       "type": "number",
-                      "title": "promotion",
                       "minimum": 0
                     },
                     "demotion": {
                       "type": "number",
-                      "title": "demotion",
                       "minimum": 0
                     },
                     "demote_idle": {
-                      "type": "boolean",
-                      "title": "demote_idle"
+                      "type": "boolean"
                     }
                   }
                 }
@@ -114,7 +95,6 @@
             },
             "reward_tiers": {
               "type": "object",
-              "title": "reward_tiers",
               "patternProperties": {
                 "[0-9]+": {
                   "type": "array",
@@ -122,26 +102,20 @@
                     "type": "object",
                     "properties": {
                       "name": {
-                        "type": "string",
-                        "title": "name"
+                        "type": "string"
                       },
                       "rank_min": {
                         "type": "number",
-                        "title": "rank_min",
                         "minimum": 0
                       },
                       "rank_max": {
                         "type": "number",
-                        "title": "rank_max",
                         "minimum": 0
                       },
                       "tier_change": {
-                        "type": "number",
-                        "title": "tier_change",
-                        "minimum": 0
+                        "type": "number"
                       },
                       "reward": {
-                        "title": "reward",
                         "$ref": "Hiro-Rewards"
                       }
                     }

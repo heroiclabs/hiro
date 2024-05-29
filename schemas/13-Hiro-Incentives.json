@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
   "properties": {
     "incentives": {
       "type": "object",
@@ -9,49 +10,41 @@
           "properties": {
             "type": {
               "type": "integer",
-              "minimum": 0,
-              "title": "type"
+              "minimum": 0
             },
             "name": {
               "type": "string",
-              "title": "name"
+              "pattern": ".+"
             },
             "description": {
               "type": "string",
-              "title": "description"
+              "pattern": ".*"
             },
             "max_claims": {
               "type": "integer",
-              "minimum": 0,
-              "title": "max_claims"
+              "minimum": 0
             },
             "max_global_claims": {
               "type": "integer",
-              "minimum": 0,
-              "title": "max_global_claims"
+              "minimum": 0
             },
             "max_recipient_age_sec": {
               "type": "integer",
-              "minimum": 0,
-              "title": "max_recipient_age_sec"
+              "minimum": 0
             },
             "recipient_reward": {
-              "$ref": "Hiro-Rewards",
-              "title": "recipient_reward"
+              "$ref": "Hiro-Rewards"
             },
             "sender_reward": {
-              "$ref": "Hiro-Rewards",
-              "title": "sender_reward"
+              "$ref": "Hiro-Rewards"
             },
             "max_concurrent": {
               "type": "integer",
-              "minimum": 0,
-              "title": "max_concurrent"
+              "minimum": 0
             },
             "expiry_duration_sec": {
               "type": "integer",
-              "minimum": 0,
-              "title": "expiry_duration_sec"
+              "minimum": 0
             }
           },
           "required": [
@@ -62,8 +55,7 @@
             "expiry_duration_sec"
           ]
         }
-      },
-      "title": "incentives"
+      }
     }
   },
   "required": [

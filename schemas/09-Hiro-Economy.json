@@ -3,11 +3,9 @@
   "properties": {
     "initialize_user": {
       "type": "object",
-      "title": "initialize_user",
       "properties": {
         "currencies": {
           "type": "object",
-          "title": "currencies",
           "patternProperties": {
             ".{1,}": {
               "type": "number",
@@ -17,7 +15,6 @@
         },
         "items": {
           "type": "object",
-          "title": "items",
           "patternProperties": {
             ".{1,}": {
               "type": "number",
@@ -29,18 +26,15 @@
     },
     "donations": {
       "type": "object",
-      "title": "donations",
       "patternProperties": {
         ".{1,}": {
           "type": "object",
           "properties": {
             "cost": {
               "type": "object",
-              "title": "cost",
               "properties": {
                 "currencies": {
                   "type": "object",
-                  "title": "currencies",
                   "patternProperties": {
                     ".{1,}": {
                       "type": "number",
@@ -50,7 +44,6 @@
                 },
                 "items": {
                   "type": "object",
-                  "title": "items",
                   "patternProperties": {
                     ".{1,}": {
                       "type": "number",
@@ -62,18 +55,19 @@
             },
             "count": {
               "type": "number",
-              "title": "count",
               "minimum": 0
             },
             "description": {
               "type": "string",
-              "title": "description",
-              "pattern": ".{1,}"
+              "pattern": ".*"
             },
             "name": {
               "type": "string",
-              "title": "name",
               "pattern": ".{1,}"
+            },
+            "max_count": {
+              "type": "number",
+              "minimum": 0
             },
             "recipient_reward": {
               "$ref": "Hiro-Rewards"
@@ -83,17 +77,14 @@
             },
             "user_contribution_max_count": {
               "type": "number",
-              "title": "user_contribution_max_count",
               "minimum": 0
             },
             "additional_properties": {
               "patternProperties": {
                 ".{1,}": {
-                  "title": "key",
                   "type": "string"
                 }
               },
-              "title": "additional_properties",
               "type": "object"
             }
           },
@@ -103,23 +94,19 @@
     },
     "store_items": {
       "type": "object",
-      "title": "store_items",
       "patternProperties": {
         ".{1,}": {
           "type": "object",
           "properties": {
             "category": {
               "type": "string",
-              "title": "category",
               "pattern": ".{1,}"
             },
             "cost": {
               "type": "object",
-              "title": "cost",
               "properties": {
                 "currencies": {
                   "type": "object",
-                  "title": "currencies",
                   "patternProperties": {
                     ".{1,}": {
                       "type": "number",
@@ -129,19 +116,16 @@
                 },
                 "sku": {
                   "type": "string",
-                  "title": "sku",
                   "pattern": ".{1,}"
                 }
               }
             },
             "description": {
               "type": "string",
-              "title": "description",
-              "pattern": ".{1,}"
+              "pattern": ".*"
             },
             "name": {
               "type": "string",
-              "title": "name",
               "pattern": ".{1,}"
             },
             "reward": {
@@ -150,12 +134,13 @@
             "additional_properties": {
               "patternProperties": {
                 ".{1,}": {
-                  "title": "key",
                   "type": "string"
                 }
               },
-              "title": "additional_properties",
               "type": "object"
+            },
+            "disabled": {
+              "type": "boolean"
             }
           },
           "required": [ "name", "category" ]
@@ -164,7 +149,6 @@
     },
     "placements": {
       "type": "object",
-      "title": "placements",
       "patternProperties": {
         ".{1,}": {
           "type": "object",
@@ -175,11 +159,9 @@
             "additional_properties": {
               "patternProperties": {
                 ".{1,}": {
-                  "title": "key",
                   "type": "string"
                 }
               },
-              "title": "additional_properties",
               "type": "object"
             }
           }
