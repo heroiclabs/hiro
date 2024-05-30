@@ -1581,6 +1581,10 @@ message SubAchievement {
   AvailableRewards available_rewards = 13;
   // Additional metadata properties.
   map<string, string> additional_properties = 14;
+  // Whether the subachievement reward will be given automatically upon completion.
+  bool auto_claim = 15;
+  // Whether the subachievement will reset after completion.
+  bool auto_reset = 16;
 }
 
 // An achievement which is a numeric task which can be unlocked and has an optional reward.
