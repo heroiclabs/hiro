@@ -1621,6 +1621,12 @@ message Achievement {
   map<string, SubAchievement> sub_achievements = 17;
   // Additional metadata properties.
   map<string, string> additional_properties = 18;
+  // Whether the achievement reward will be given automatically upon completion.
+  bool auto_claim = 19;
+  // Whether the achievement total reward will be given automatically upon completing this and all sub-achievements.
+  bool auto_claim_total = 20;
+  // Whether the achievement will reset after completion.
+  bool auto_reset = 21;
 }
 
 // The achievements returned by the server.
