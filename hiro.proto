@@ -129,6 +129,10 @@ enum RpcId {
   RPC_ID_EVENT_LEADERBOARD_CLAIM = 44 [(input) = "EventLeaderboardClaim", (output) = "EventLeaderboard"];
   // Roll a new cohort for the specified event leaderboard.
   RPC_ID_EVENT_LEADERBOARD_ROLL = 45 [(input) = "EventLeaderboardRoll", (output) = "EventLeaderboard"];
+  // DEBUG. Fill an event leaderboard with random user IDs.
+  RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL = 60 [(input) = "", (output) = "EventLeaderboard"];
+  // DEBUG. Assign random scores within a given range to users within the caller's cohort, except for the caller themselves.
+  RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES = 61 [(input) = "EventLeaderboardDebugRandomScores", (output) = "EventLeaderboard"];
 
   // Get all stats.
   RPC_ID_STATS_GET = 46 [(input) = "", (output) = "StatList"];
@@ -879,6 +883,16 @@ message EventLeaderboard {
   bool can_roll = 23;
   // Extra matchmaker properties for this cohort.
   google.protobuf.Struct matchmaker_properties = 24;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 25;
+}
+
+// DEBUG. Payload describing scores to set for a cohort's participants.
+message EventLeaderboardDebugRandomScores {
+  // Minimum score, inclusive.
+  int64 min = 1;
+  // Maximum score, inclusive.
+  int64 max = 2;
 }
 
 // A contributor to this donation.

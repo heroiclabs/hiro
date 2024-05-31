@@ -352,3 +352,19 @@ func UnregisterRpc(initializer runtime.Initializer, ids ...RpcId) error {
 	}
 	return nil
 }
+
+// UnregisterDebugRpc clears the implementation of ALL debug RPCs registered in Nakama by Hiro gameplay systems with
+// a no-op version (http response 404). This is useful to remove debug RPCs if you do not want them to be callable
+// by game clients:
+//
+//	hiro.UnregisterDebugRpc(initializer)
+//
+// The behaviour of `initializer.RegisterRpc` in Nakama is last registration wins. It's recommended to use
+// UnregisterDebugRpc only after `hiro.Init` has been executed.
+func UnregisterDebugRpc(initializer runtime.Initializer) error {
+	ids := []RpcId{
+		RpcId_RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL,
+		RpcId_RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES,
+	}
+	return UnregisterRpc(initializer, ids...)
+}
