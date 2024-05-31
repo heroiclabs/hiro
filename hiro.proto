@@ -1023,6 +1023,8 @@ message EconomyList {
   repeated EconomyListPlacement placements = 2;
   // The set of active donations for the current user.
   map<string, EconomyDonation> donations = 3;
+  // The list of active reward modifiers.
+  repeated RewardModifier reward_modifiers = 4;
 }
 
 // A item owned by the current user.
@@ -1199,9 +1201,10 @@ message EconomyPlacementStatus {
   Reward reward = 6;
 }
 
-// Response from granting currencies and/or items.
+// Response from granting currencies, reward modifiers and/or items.
 // Contains updated wallet and inventory data, if changed.
 // Contains reward granted, if any.
+// Contains reward modifiers, if changed.
 message EconomyUpdateAck {
   // Updated wallet data, if changed.
   map<string, int64> wallet = 1;
@@ -1209,6 +1212,8 @@ message EconomyUpdateAck {
   Inventory inventory = 2;
   // Reward, if any.
   Reward reward = 3;
+  // Updated active reward modifiers, if changed.
+  repeated RewardModifier reward_modifiers = 4;
 }
 
 // Response from purchasing currencies and/or items.
@@ -1576,6 +1581,10 @@ message SubAchievement {
   AvailableRewards available_rewards = 13;
   // Additional metadata properties.
   map<string, string> additional_properties = 14;
+  // Whether the subachievement reward will be given automatically upon completion.
+  bool auto_claim = 15;
+  // Whether the subachievement will reset after completion.
+  bool auto_reset = 16;
 }
 
 // An achievement which is a numeric task which can be unlocked and has an optional reward.
@@ -1616,6 +1625,12 @@ message Achievement {
   map<string, SubAchievement> sub_achievements = 17;
   // Additional metadata properties.
   map<string, string> additional_properties = 18;
+  // Whether the achievement reward will be given automatically upon completion.
+  bool auto_claim = 19;
+  // Whether the achievement total reward will be given automatically upon completing this and all sub-achievements.
+  bool auto_claim_total = 20;
+  // Whether the achievement will reset after completion.
+  bool auto_reset = 21;
 }
 
 // The achievements returned by the server.
