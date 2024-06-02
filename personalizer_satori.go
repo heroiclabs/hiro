@@ -25,6 +25,25 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+type SatoriPublisher interface {
+	IsPublishAuthenticateRequest() bool
+	IsPublishAchievementsEvents() bool
+	IsPublishBaseEvents() bool
+	IsPublishEconomyEvents() bool
+	IsPublishEnergyEvents() bool
+	IsPublishEventLeaderboardsEvents() bool
+	IsPublishIncentivesEvents() bool
+	IsPublishInventoryEvents() bool
+	IsPublishLeaderboardsEvents() bool
+	IsPublishProgressionEvents() bool
+	IsPublishStatsEvents() bool
+	IsPublishTeamsEvents() bool
+	IsPublishTutorialsEvents() bool
+	IsPublishUnlockablesEvents() bool
+}
+
+var _ SatoriPublisher = (*SatoriPersonalizer)(nil)
+
 var _ Personalizer = (*SatoriPersonalizer)(nil)
 
 type SatoriPersonalizerOption interface {
