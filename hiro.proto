@@ -19,6 +19,7 @@ package hiro;
 
 import "google/protobuf/descriptor.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/heroiclabs/hiro";
 
@@ -129,6 +130,10 @@ enum RpcId {
   RPC_ID_EVENT_LEADERBOARD_CLAIM = 44 [(input) = "EventLeaderboardClaim", (output) = "EventLeaderboard"];
   // Roll a new cohort for the specified event leaderboard.
   RPC_ID_EVENT_LEADERBOARD_ROLL = 45 [(input) = "EventLeaderboardRoll", (output) = "EventLeaderboard"];
+  // DEBUG. Fill an event leaderboard with random user IDs.
+  RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL = 60 [(input) = "", (output) = "EventLeaderboard"];
+  // DEBUG. Assign random scores within a given range to users within the caller's cohort, except for the caller themselves.
+  RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES = 61 [(input) = "EventLeaderboardDebugRandomScores", (output) = "EventLeaderboard"];
 
   // Get all stats.
   RPC_ID_STATS_GET = 46 [(input) = "", (output) = "StatList"];
@@ -879,6 +884,25 @@ message EventLeaderboard {
   bool can_roll = 23;
   // Extra matchmaker properties for this cohort.
   google.protobuf.Struct matchmaker_properties = 24;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 25;
+}
+
+message EventLeaderboardDebugFillRequest {
+  // Event leaderboard ID to fill.
+  string id = 1;
+}
+
+// DEBUG. Payload describing scores to set for a cohort's participants.
+message EventLeaderboardDebugRandomScoresRequest {
+  // Event leaderboard ID to update.
+  string id = 1;
+  // Minimum score, inclusive.
+  int64 min = 2;
+  // Maximum score, inclusive.
+  int64 max = 3;
+  // Optional operator to use when updating scores.
+  google.protobuf.Int32Value operator = 4;
 }
 
 // A contributor to this donation.
