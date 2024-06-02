@@ -5,6 +5,22 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.13.0] - 2024-06-02
+### Added
+- A Nakama Console import file to make it easy to set up storage objects for the "StoragePersonalizer" type.
+- Add debug functions to help with QA on Event Leaderboards.
+- Add "UnregisterDebugRpc" to clear the implementation of all debug functions across gameplay systems.
+
+### Changed
+- (Unity) When the "NakamaSystem" is refreshed, reauthenticate if needed. This is useful when a logout has been performed or auto refresh in the "Nakama.Client" has been disabled.
+- (Unity) The Nakama and Satori client dependencies are updated to their 3.12.0 releases.
+- Refactor the "SatoriPersonalizer" for more modularity.
+- An Event Leaderboard now contains "CurrentTimeSec" (UNIX time) same as an Achievement type.
+
+### Fixed
+- In some reward types ensure we create multiple Inventory items when "non-stackable" is enabled.
+- Don't return stale wallet values in sync RPC responses.
+
 ## [1.12.0] - 2024-05-26
 ### Added
 - Support custom matchmaker properties with Event Leaderboards.
