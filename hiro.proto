@@ -133,7 +133,7 @@ enum RpcId {
   // DEBUG. Fill an event leaderboard with random user IDs.
   RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL = 60 [(input) = "", (output) = "EventLeaderboard"];
   // DEBUG. Assign random scores within a given range to users within the caller's cohort, except for the caller themselves.
-  RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES = 61 [(input) = "EventLeaderboardDebugRandomScores", (output) = "EventLeaderboard"];
+  RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES = 61 [(input) = "EventLeaderboardDebugRandomScoresRequest", (output) = "EventLeaderboard"];
 
   // Get all stats.
   RPC_ID_STATS_GET = 46 [(input) = "", (output) = "StatList"];
