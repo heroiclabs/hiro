@@ -27,7 +27,7 @@
           	"max_count": 5,
           	"name": "name2",
           	"precondition_ids": [],
-          	"reward_config": {},
+          	"reward": {},
           	"additional_properties": {
           	  "key2": "value2",
           	  "key3": "value3"
@@ -42,7 +42,7 @@
           	"max_count": 5,
           	"name": "name2",
           	"precondition_ids": [],
-          	"reward_config": {},
+          	"reward": {},
           	"additional_properties": {
           	  "key2": "value2",
           	  "key3": "value3"
