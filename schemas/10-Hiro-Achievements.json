@@ -1,12 +1,19 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
   "properties": {
     "achievements": {
-      "type": "object",
       "patternProperties": {
         ".{1,}": {
-          "type": "object",
           "properties": {
+            "additional_properties": {
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
             "auto_claim": {
               "type": "boolean"
             },
@@ -17,104 +24,47 @@
               "type": "boolean"
             },
             "category": {
-              "type": "string",
-              "pattern": ".{1,}"
+              "pattern": ".{1,}",
+              "type": "string"
             },
             "count": {
-              "type": "number",
-              "minimum": 0
-            },
-            "max_count": {
-              "type": "number",
-              "minimum": 0
+              "minimum": 0,
+              "type": "number"
             },
             "description": {
-              "type": "string",
-              "pattern": ".*"
-            },
-            "reset_cronexpr": {
-              "type": "string",
-              "pattern": ".{1,}"
+              "pattern": ".*",
+              "type": "string"
             },
             "duration_sec": {
-              "type": "number",
-              "minimum": 0
+              "minimum": 0,
+              "type": "number"
+            },
+            "max_count": {
+              "minimum": 0,
+              "type": "number"
             },
             "name": {
-              "type": "string",
-              "pattern": ".{1,}"
+              "pattern": ".{1,}",
+              "type": "string"
             },
             "precondition_ids": {
-              "type": "array",
               "items": {
-                "type": "string",
-                "pattern": ".{1,}"
-              }
+                "pattern": ".{1,}",
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "reset_cronexpr": {
+              "pattern": ".{1,}",
+              "type": "string"
             },
             "reward": {
               "$ref": "Hiro-Rewards"
             },
-            "total_reward": {
-              "$ref": "Hiro-Rewards"
-            },
-            "additional_properties": {
-              "patternProperties": {
-                ".{1,}": {
-                  "type": "string"
-                }
-              },
-              "type": "object"
-            },
             "sub_achievements": {
-              "type": "object",
               "patternProperties": {
                 ".{1,}": {
-                  "type": "object",
                   "properties": {
-                    "auto_claim": {
-                      "type": "boolean"
-                    },
-                    "auto_reset": {
-                      "type": "boolean"
-                    },
-                    "category": {
-                      "type": "string",
-                      "pattern": ".{1,}"
-                    },
-                    "count": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "max_count": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "description": {
-                      "type": "string",
-                      "pattern": ".*"
-                    },
-                    "reset_cronexpr": {
-                      "type": "string",
-                      "pattern": ".{1,}"
-                    },
-                    "duration_sec": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "name": {
-                      "type": "string",
-                      "pattern": ".{1,}"
-                    },
-                    "precondition_ids": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "pattern": ".{1,}"
-                      }
-                    },
-                    "reward": {
-                      "$ref": "Hiro-Rewards"
-                    },
                     "additional_properties": {
                       "patternProperties": {
                         ".{1,}": {
@@ -122,20 +72,76 @@
                         }
                       },
                       "type": "object"
+                    },
+                    "auto_claim": {
+                      "type": "boolean"
+                    },
+                    "auto_reset": {
+                      "type": "boolean"
+                    },
+                    "category": {
+                      "pattern": ".{1,}",
+                      "type": "string"
+                    },
+                    "count": {
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "description": {
+                      "pattern": ".*",
+                      "type": "string"
+                    },
+                    "duration_sec": {
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "max_count": {
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "name": {
+                      "pattern": ".{1,}",
+                      "type": "string"
+                    },
+                    "precondition_ids": {
+                      "items": {
+                        "pattern": ".{1,}",
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "reset_cronexpr": {
+                      "pattern": ".{1,}",
+                      "type": "string"
+                    },
+                    "reward": {
+                      "$ref": "Hiro-Rewards"
                     }
                   },
-                  "required": [ "name", "category", "max_count" ]
+                  "required": [
+                    "name",
+                    "category",
+                    "max_count"
+                  ],
+                  "type": "object"
                 }
-              }
+              },
+              "type": "object"
+            },
+            "total_reward": {
+              "$ref": "Hiro-Rewards"
             }
           },
-          "required": [ "name", "category", "max_count" ]
+          "required": [
+            "name",
+            "category",
+            "max_count"
+          ],
+          "type": "object"
         }
-      }
+      },
+      "type": "object"
     }
   },
-  "required": [
-    "achievements"
-  ],
   "type": "object"
 }

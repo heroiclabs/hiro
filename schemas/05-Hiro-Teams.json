@@ -1,13 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
   "properties": {
     "max_team_size": {
       "minimum": 1,
       "type": "number"
     }
   },
-  "required": [
-    "max_team_size"
-  ],
   "type": "object"
 }

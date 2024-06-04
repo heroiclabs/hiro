@@ -1,29 +1,76 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
   "properties": {
     "event_leaderboards": {
-      "type": "object",
       "patternProperties": {
         ".+": {
-          "type": "object",
           "properties": {
-            "name": {
-              "type": "string",
-              "pattern": ".+"
-            },
-            "description": {
-              "type": "string",
-              "pattern": ".*"
-            },
-            "category": {
-              "type": "string",
-              "pattern": ".+"
+            "additional_properties": {
+              "patternProperties": {
+                ".+": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
             },
             "ascending": {
               "type": "boolean"
             },
+            "category": {
+              "pattern": ".+",
+              "type": "string"
+            },
+            "change_zones": {
+              "patternProperties": {
+                "[0-9]+": {
+                  "properties": {
+                    "demote_idle": {
+                      "type": "boolean"
+                    },
+                    "demotion": {
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "promotion": {
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "cohort_size": {
+              "minimum": 1,
+              "type": "number"
+            },
+            "description": {
+              "pattern": ".*",
+              "type": "string"
+            },
+            "duration": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "end_time_sec": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "max_idle_tier_drop": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "max_num_score": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "name": {
+              "pattern": ".+",
+              "type": "string"
+            },
             "operator": {
-              "type": "string",
               "enum": [
                 "best",
                 "set",
@@ -31,105 +78,56 @@
                 "decr",
                 "increment",
                 "decrement"
-              ]
+              ],
+              "type": "string"
             },
             "reset_schedule": {
               "type": "string"
             },
-            "cohort_size": {
-              "type": "number",
-              "minimum": 1
-            },
-            "additional_properties": {
-              "type": "object",
-              "patternProperties": {
-                ".+": {
-                  "type": "string"
-                }
-              }
-            },
-            "max_num_score": {
-              "type": "number",
-              "minimum": 0
-            },
-            "tiers": {
-              "type": "number",
-              "minimum": 1
-            },
-            "max_idle_tier_drop": {
-              "type": "number",
-              "minimum": 0
-            },
-            "start_time_sec": {
-              "type": "number",
-              "minimum": 0
-            },
-            "end_time_sec": {
-              "type": "number",
-              "minimum": 0
-            },
-            "duration": {
-              "type": "number",
-              "minimum": 0
-            },
-            "change_zones": {
-              "type": "object",
-              "patternProperties": {
-                "[0-9]+": {
-                  "type": "object",
-                  "properties": {
-                    "promotion": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "demotion": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "demote_idle": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
             "reward_tiers": {
-              "type": "object",
               "patternProperties": {
                 "[0-9]+": {
-                  "type": "array",
                   "items": {
-                    "type": "object",
                     "properties": {
                       "name": {
                         "type": "string"
                       },
-                      "rank_min": {
-                        "type": "number",
-                        "minimum": 0
-                      },
                       "rank_max": {
-                        "type": "number",
-                        "minimum": 0
+                        "minimum": 0,
+                        "type": "number"
                       },
-                      "tier_change": {
+                      "rank_min": {
+                        "minimum": 0,
                         "type": "number"
                       },
                       "reward": {
                         "$ref": "Hiro-Rewards"
+                      },
+                      "tier_change": {
+                        "type": "number"
                       }
-                    }
-                  }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
                 }
-              }
+              },
+              "type": "object"
+            },
+            "start_time_sec": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "tiers": {
+              "minimum": 1,
+              "type": "number"
             }
-          }
+          },
+          "type": "object"
         }
-      }
+      },
+      "type": "object"
     }
   },
-  "required": [
-    "event_leaderboards"
-  ],
   "type": "object"
 }

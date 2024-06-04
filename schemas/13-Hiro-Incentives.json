@@ -1,36 +1,38 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
+  "additionalProperties": false,
   "properties": {
     "incentives": {
-      "type": "object",
       "patternProperties": {
         ".{1,}": {
-          "type": "object",
           "properties": {
-            "type": {
-              "type": "integer",
-              "minimum": 0
-            },
-            "name": {
-              "type": "string",
-              "pattern": ".+"
-            },
             "description": {
-              "type": "string",
-              "pattern": ".*"
+              "pattern": ".*",
+              "type": "string"
+            },
+            "expiry_duration_sec": {
+              "minimum": 0,
+              "type": "integer"
             },
             "max_claims": {
-              "type": "integer",
-              "minimum": 0
+              "minimum": 0,
+              "type": "integer"
+            },
+            "max_concurrent": {
+              "minimum": 0,
+              "type": "integer"
             },
             "max_global_claims": {
-              "type": "integer",
-              "minimum": 0
+              "minimum": 0,
+              "type": "integer"
             },
             "max_recipient_age_sec": {
-              "type": "integer",
-              "minimum": 0
+              "minimum": 0,
+              "type": "integer"
+            },
+            "name": {
+              "pattern": ".+",
+              "type": "string"
             },
             "recipient_reward": {
               "$ref": "Hiro-Rewards"
@@ -38,13 +40,9 @@
             "sender_reward": {
               "$ref": "Hiro-Rewards"
             },
-            "max_concurrent": {
-              "type": "integer",
-              "minimum": 0
-            },
-            "expiry_duration_sec": {
-              "type": "integer",
-              "minimum": 0
+            "type": {
+              "minimum": 0,
+              "type": "integer"
             }
           },
           "required": [
@@ -53,12 +51,12 @@
             "max_claims",
             "max_global_claims",
             "expiry_duration_sec"
-          ]
+          ],
+          "type": "object"
         }
-      }
+      },
+      "type": "object"
     }
   },
-  "required": [
-    "incentives"
-  ]
+  "type": "object"
 }
