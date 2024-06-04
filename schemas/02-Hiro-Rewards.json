@@ -1,26 +1,27 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
   "properties": {
     "guaranteed": {
       "$ref": "Hiro-Reward"
     },
-    "weighted": {
-      "type": "array",
-      "items": {
-        "$ref": "Hiro-Reward"
-      }
+    "max_repeat_rolls": {
+      "minimum": 0,
+      "type": "number"
     },
     "max_rolls": {
-      "type": "number",
-      "minimum": 0
-    },
-    "max_repeat_rolls": {
-      "type": "number",
-      "minimum": 0
+      "minimum": 0,
+      "type": "number"
     },
     "total_weight": {
-      "type": "number",
-      "minimum": 0
+      "minimum": 0,
+      "type": "number"
+    },
+    "weighted": {
+      "items": {
+        "$ref": "Hiro-Reward"
+      },
+      "type": "array"
     }
   },
   "type": "object"

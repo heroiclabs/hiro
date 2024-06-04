@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
   "properties": {
     "leaderboards": {
       "items": {
@@ -53,8 +54,5 @@
       "type": "array"
     }
   },
-  "required": [
-    "leaderboards"
-  ],
   "type": "object"
 }

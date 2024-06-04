@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
   "properties": {
     "currencies": {
       "patternProperties": {
@@ -145,34 +146,7 @@
               "minimum": 0,
               "type": "number"
             },
-            "string_properties": {
-              "type": "object",
-              "patternProperties": {
-                ".{1,}": {
-                  "properties": {
-                    "options": {
-                      "type": "object",
-                      "patternProperties": {
-                        ".{1,}": {
-                          "properties": {
-                            "weight": {
-                              "minimum": 0,
-                              "type": "number"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "total_weight": {
-                      "minimum": 0,
-                      "type": "number"
-                    }
-                  }
-                }
-              }
-            },
             "numeric_properties": {
-              "type": "object",
               "patternProperties": {
                 ".{1,}": {
                   "properties": {
@@ -191,7 +165,34 @@
                     "min"
                   ]
                 }
-              }
+              },
+              "type": "object"
+            },
+            "string_properties": {
+              "patternProperties": {
+                ".{1,}": {
+                  "properties": {
+                    "options": {
+                      "patternProperties": {
+                        ".{1,}": {
+                          "properties": {
+                            "weight": {
+                              "minimum": 0,
+                              "type": "number"
+                            }
+                          }
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "total_weight": {
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "type": "object"
             }
           },
           "required": [
