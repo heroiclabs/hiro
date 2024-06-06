@@ -62,8 +62,8 @@ type UnlockablesConfigUnlockableStartCost struct {
 type UnlockablesSystem interface {
 	System
 
-	// Create will place a new unlockable into a slot by ID.
-	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, unlockableID string) (*UnlockablesList, error)
+	// Create will place a new unlockable into a slot either randomly, by ID, or optionally using a custom configuration.
+	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable) (*UnlockablesList, error)
 
 	// Get returns all unlockables active for a user by ID.
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*UnlockablesList, error)
