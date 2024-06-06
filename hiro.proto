@@ -766,6 +766,8 @@ message EventLeaderboardUpdate {
   int64 score = 2;
   // Subscore.
   int64 subscore = 3;
+  // Metadata.
+  string metadata = 4;
 }
 
 // Claim the available reward for an event leaderboard by ID.
@@ -802,6 +804,8 @@ message EventLeaderboardScore {
   int64 subscore = 9;
   // Number of score submissions.
   int64 num_scores = 10;
+  // Metadata.
+  string metadata = 11;
 }
 
 // A reward range within a specific tier based on ranks.
