@@ -5,6 +5,20 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.14.0] - 2024-06-09
+### Changed
+- Update to Nakama 3.22.0 version on the nakama-common 1.32.0 release.
+- Update dependency which include Protobuf 1.34.1 release.
+- Leaderboard record metadata can be passed into score writes with Event Leaderboards.
+- (Unity) Fix request object sent with "DebugRandomScores" function in Event Leaderboards.
+- (Unity) Handle edge case where incorrectly defined Rewards within a hard currency purchase could leave the purchase in pending state.
+- (Unity) Rename "DebugRandomScores" to "DebugRandomScoresAsync" to follow C# naming conventions.
+
+### Fixed
+- Prevent a panic when consuming an Inventory Item but the Energy system has not been initialized.
+- Fix non-stackable Inventory Item grants which could go beyond the max count defined.
+- Use "reward" key name in Achievements JSON schema definition.
+
 ## [1.13.0] - 2024-06-02
 ### Added
 - A Nakama Console import file to make it easy to set up storage objects for the "StoragePersonalizer" type.
