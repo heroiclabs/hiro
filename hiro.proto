@@ -1563,7 +1563,9 @@ message UnlockablesList {
   // The newly granted unlockable, if any.
   string instance_id = 7;
   // Unlockable instance IDs queued to start unlocking as soon as possible.
-  repeated string queued_instance_ids = 8;
+  repeated string queued_unlocks = 8;
+  // Maximum unlock queue size.
+  int32 max_queued_unlocks = 9;
 }
 
 // A reward that was granted upon unlock, and a new state of all unlockables.

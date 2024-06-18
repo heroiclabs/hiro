@@ -21,11 +21,12 @@ import (
 
 // UnlockablesConfig is the data definition for a UnlockablesSystem type.
 type UnlockablesConfig struct {
-	ActiveSlots    int                                     `json:"active_slots,omitempty"`
-	MaxActiveSlots int                                     `json:"max_active_slots,omitempty"`
-	Slots          int                                     `json:"slots,omitempty"`
-	SlotCost       *UnlockablesConfigSlotCost              `json:"slot_cost,omitempty"`
-	Unlockables    map[string]*UnlockablesConfigUnlockable `json:"unlockables,omitempty"`
+	ActiveSlots      int                                     `json:"active_slots,omitempty"`
+	MaxActiveSlots   int                                     `json:"max_active_slots,omitempty"`
+	Slots            int                                     `json:"slots,omitempty"`
+	SlotCost         *UnlockablesConfigSlotCost              `json:"slot_cost,omitempty"`
+	Unlockables      map[string]*UnlockablesConfigUnlockable `json:"unlockables,omitempty"`
+	MaxQueuedUnlocks int                                     `json:"max_queued_unlocks,omitempty"`
 
 	UnlockableProbabilities []string `json:"-"`
 }
