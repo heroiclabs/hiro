@@ -111,6 +111,12 @@ enum RpcId {
   RPC_ID_UNLOCKABLES_PURCHASE_SLOT = 34 [(input) = "", (output) = "UnlockablesList"];
   // Claim an unlockable whose start timer has completed or completion was fast tracked with a purchase.
   RPC_ID_UNLOCKABLES_CLAIM = 35 [(input) = "UnlockablesRequest", (output) = "UnlockablesReward"];
+  // Add some set of unlockables to the unlock queue.
+  RPC_ID_UNLOCKABLES_QUEUE_ADD = 62 [(input) = "UnlockablesQueueAddRequest", (output) = "UnlockablesList"];
+  // Remove some set of unlockables from the unlock queue.
+  RPC_ID_UNLOCKABLES_QUEUE_REMOVE = 63 [(input) = "UnlockablesQueueRemoveRequest", (output) = "UnlockablesList"];
+  // Replace the unlock queue with the given set of unlockables.
+  RPC_ID_UNLOCKABLES_QUEUE_SET = 64 [(input) = "UnlockablesQueueSetRequest", (output) = "UnlockablesList"];
 
   // Send feedback to the game's developers over email.
   RPC_ID_BASE_RATE_APP = 36 [(input) = "RateAppRequest", (output) = ""];
@@ -1556,6 +1562,8 @@ message UnlockablesList {
   UnlockableSlotCost slot_cost = 6;
   // The newly granted unlockable, if any.
   string instance_id = 7;
+  // Unlockable instance IDs queued to start unlocking as soon as possible.
+  repeated string queued_instance_ids = 8;
 }
 
 // A reward that was granted upon unlock, and a new state of all unlockables.
@@ -1572,6 +1580,24 @@ message UnlockablesReward {
 message UnlockablesRequest {
   // The unlockable instance ID.
   string instance_id = 1;
+}
+
+// Request to add a set of unlockables to the unlock queue.
+message UnlockablesQueueAddRequest {
+  // Unlockable instance IDs to add.
+  repeated string instance_ids = 1;
+}
+
+// Request to remove a set of unlockables from the unlock queue.
+message UnlockablesQueueRemoveRequest {
+  // Unlockable instance IDs to remove.
+  repeated string instance_ids = 1;
+}
+
+// Request to replace the unlock queue with the given set of unlockables.
+message UnlockablesQueueSetRequest {
+  // Unlockable instance IDs to set.
+  repeated string instance_ids = 1;
 }
 
 // A sub-achievement is an achievement which belongs as part of a parent achievement.
