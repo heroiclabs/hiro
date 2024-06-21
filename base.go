@@ -194,7 +194,7 @@ func (sc *systemConfig) GetExtra() any {
 }
 
 // OnReward is a function which can be used by each gameplay system to provide an override reward.
-type OnReward[T any] func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, source T, rewardConfig *EconomyConfigReward, reward *Reward) (*Reward, error)
+type OnReward[T any] func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, sourceID string, source T, rewardConfig *EconomyConfigReward, reward *Reward) (*Reward, error)
 
 // A System is a base type for a gameplay system.
 type System interface {
