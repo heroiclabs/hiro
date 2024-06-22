@@ -5,6 +5,24 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.15.0] - 2024-06-22
+### Added
+- Unlockables can now be queued to unlock when stored within slots.
+- New "max_queued_unlocks" param to restrict how many Unlockables can be queued to unlock.
+- Add "metadata" field to Event Leaderboard score updates.
+
+### Changed
+- The "OnReward" hooks now include the ID of the gameplay system entity which is the source of the reward.
+- "PlacementStart" can take additional metadata as the context of what started the rewarded video placement.
+- (Unity) (TypeScript) (CPP) (Unreal) Add functions for new queued Unlockables.
+- Do not return an error when Inventory grant operations result in no change.
+- (Unity) Switch over all enumerable data types to use "IReadOnlyCollection" to expose the "Count" field.
+- A small Unlockable gameplay system design changed so an Unlockable can be started even if another Unlockable which was active is completed but not claimed yet.
+
+### Fixed
+- Any active Reward Modifiers are returned in various gameplay system ACK responses.
+- The Unlockables state now retains "null" in the list to indicate their position in the available slots.
+
 ## [1.14.0] - 2024-06-09
 ### Changed
 - Update to Nakama 3.22.0 version on the nakama-common 1.32.0 release.
