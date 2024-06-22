@@ -180,6 +180,14 @@ type EconomyConfigStoreItemCost struct {
 	Sku        string           `json:"sku,omitempty"`
 }
 
+// EconomyPlacementInfo contains information about a placement instance.
+type EconomyPlacementInfo struct {
+	// Placement configuration.
+	Placement *EconomyConfigPlacement `json:"placement,omitempty"`
+	// Metadata, if any was set when the placement was started.
+	Metadata map[string]string `json:"metadata,omitempty"`
+}
+
 // The EconomySystem is the foundation of a game's economy.
 //
 // It provides functionality for 4 different reward types: basic, gacha, weighted table, and custom. These rolled
@@ -248,7 +256,7 @@ type EconomySystem interface {
 	SetOnDonationContributorReward(fn OnReward[*EconomyConfigDonation])
 
 	// SetOnPlacementReward sets a custom reward function which will run after a placement's reward is rolled.
-	SetOnPlacementReward(fn OnReward[*EconomyConfigPlacement])
+	SetOnPlacementReward(fn OnReward[*EconomyPlacementInfo])
 
 	// SetOnStoreItemReward sets a custom reward function which will run after store item's reward is rolled.
 	SetOnStoreItemReward(fn OnReward[*EconomyConfigStoreItem])
