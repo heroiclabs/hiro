@@ -21,11 +21,12 @@ import (
 
 // UnlockablesConfig is the data definition for a UnlockablesSystem type.
 type UnlockablesConfig struct {
-	ActiveSlots    int                                     `json:"active_slots,omitempty"`
-	MaxActiveSlots int                                     `json:"max_active_slots,omitempty"`
-	Slots          int                                     `json:"slots,omitempty"`
-	SlotCost       *UnlockablesConfigSlotCost              `json:"slot_cost,omitempty"`
-	Unlockables    map[string]*UnlockablesConfigUnlockable `json:"unlockables,omitempty"`
+	ActiveSlots      int                                     `json:"active_slots,omitempty"`
+	MaxActiveSlots   int                                     `json:"max_active_slots,omitempty"`
+	Slots            int                                     `json:"slots,omitempty"`
+	SlotCost         *UnlockablesConfigSlotCost              `json:"slot_cost,omitempty"`
+	Unlockables      map[string]*UnlockablesConfigUnlockable `json:"unlockables,omitempty"`
+	MaxQueuedUnlocks int                                     `json:"max_queued_unlocks,omitempty"`
 
 	UnlockableProbabilities []string `json:"-"`
 }
@@ -79,6 +80,15 @@ type UnlockablesSystem interface {
 
 	// Claim an unlockable which has been unlocked by instance ID for the user.
 	Claim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, instanceID string) (*UnlockablesReward, error)
+
+	// QueueAdd adds one or more unlockable instance IDs to the queue to be unlocked as soon as an active slot is available.
+	QueueAdd(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs []string) (*UnlockablesList, error)
+
+	// QueueRemove removes one or more unlockable instance IDs from the unlock queue, unless they have started unlocking already.
+	QueueRemove(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs []string) (*UnlockablesList, error)
+
+	// QueueSet replaces the entirety of the queue with the specified instance IDs, or wipes the queue if no instance IDs are given.
+	QueueSet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs []string) (*UnlockablesList, error)
 
 	// SetOnClaimReward sets a custom reward function which will run after an unlockable's reward is rolled.
 	SetOnClaimReward(fn OnReward[*UnlockablesConfigUnlockable])

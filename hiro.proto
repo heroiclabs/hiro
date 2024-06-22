@@ -111,6 +111,12 @@ enum RpcId {
   RPC_ID_UNLOCKABLES_PURCHASE_SLOT = 34 [(input) = "", (output) = "UnlockablesList"];
   // Claim an unlockable whose start timer has completed or completion was fast tracked with a purchase.
   RPC_ID_UNLOCKABLES_CLAIM = 35 [(input) = "UnlockablesRequest", (output) = "UnlockablesReward"];
+  // Add some set of unlockables to the unlock queue.
+  RPC_ID_UNLOCKABLES_QUEUE_ADD = 62 [(input) = "UnlockablesQueueAddRequest", (output) = "UnlockablesList"];
+  // Remove some set of unlockables from the unlock queue.
+  RPC_ID_UNLOCKABLES_QUEUE_REMOVE = 63 [(input) = "UnlockablesQueueRemoveRequest", (output) = "UnlockablesList"];
+  // Replace the unlock queue with the given set of unlockables.
+  RPC_ID_UNLOCKABLES_QUEUE_SET = 64 [(input) = "UnlockablesQueueSetRequest", (output) = "UnlockablesList"];
 
   // Send feedback to the game's developers over email.
   RPC_ID_BASE_RATE_APP = 36 [(input) = "RateAppRequest", (output) = ""];
@@ -465,6 +471,22 @@ message RewardModifier {
   int64 value = 4;
   // The duration of the item modifier in seconds.
   uint64 duration_sec = 5;
+}
+
+// A reward modifier that is currently active.
+message ActiveRewardModifier {
+  // The ID of the reward content to modify.
+  string id = 1;
+  // The type of reward content to modify.
+  string type = 2;
+  // The operator to apply.
+  string operator = 3;
+  // The value to apply. Its behavior depends on the operator.
+  int64 value = 4;
+  // The start time when this reward modifier was activated.
+  int64 start_time_sec = 5;
+  // The time when this reward modifier will expire.
+  int64 end_time_sec = 6;
 }
 
 // Rewards granted to the player.
@@ -1051,6 +1073,10 @@ message EconomyList {
   repeated EconomyListPlacement placements = 2;
   // The set of active donations for the current user.
   map<string, EconomyDonation> donations = 3;
+  // The list of active reward modifiers.
+  repeated ActiveRewardModifier active_reward_modifiers = 4;
+  // Current server time.
+  int64 current_time_sec = 5;
 }
 
 // A item owned by the current user.
@@ -1209,6 +1235,8 @@ message EconomyPlacementStatusRequest {
 message EconomyPlacementStartRequest {
   // The identifier to start a reward for.
   string placement_id = 1;
+  // Optional metadata to associate with the placement.
+  map<string, string> metadata = 2;
 }
 
 // The current status of a placement reward.
@@ -1225,11 +1253,14 @@ message EconomyPlacementStatus {
   bool success = 5;
   // The reward for completing the placement, if it was autocompleted as part of the status request.
   Reward reward = 6;
+  // Metadata associated with the placement, if any.
+  map<string, string> metadata = 7;
 }
 
-// Response from granting currencies and/or items.
+// Response from granting currencies, reward modifiers, and/or items.
 // Contains updated wallet and inventory data, if changed.
 // Contains reward granted, if any.
+// Contains active reward modifiers, if changed.
 message EconomyUpdateAck {
   // Updated wallet data, if changed.
   map<string, int64> wallet = 1;
@@ -1237,6 +1268,10 @@ message EconomyUpdateAck {
   Inventory inventory = 2;
   // Reward, if any.
   Reward reward = 3;
+  // Updated active reward modifiers, if changed.
+  repeated ActiveRewardModifier active_reward_modifiers = 4;
+  // Current server time.
+  int64 current_time_sec = 5;
 }
 
 // Response from purchasing currencies and/or items.
@@ -1556,6 +1591,10 @@ message UnlockablesList {
   UnlockableSlotCost slot_cost = 6;
   // The newly granted unlockable, if any.
   string instance_id = 7;
+  // Unlockable instance IDs queued to start unlocking as soon as possible.
+  repeated string queued_unlocks = 8;
+  // Maximum unlock queue size.
+  int32 max_queued_unlocks = 9;
 }
 
 // A reward that was granted upon unlock, and a new state of all unlockables.
@@ -1572,6 +1611,24 @@ message UnlockablesReward {
 message UnlockablesRequest {
   // The unlockable instance ID.
   string instance_id = 1;
+}
+
+// Request to add a set of unlockables to the unlock queue.
+message UnlockablesQueueAddRequest {
+  // Unlockable instance IDs to add.
+  repeated string instance_ids = 1;
+}
+
+// Request to remove a set of unlockables from the unlock queue.
+message UnlockablesQueueRemoveRequest {
+  // Unlockable instance IDs to remove.
+  repeated string instance_ids = 1;
+}
+
+// Request to replace the unlock queue with the given set of unlockables.
+message UnlockablesQueueSetRequest {
+  // Unlockable instance IDs to set.
+  repeated string instance_ids = 1;
 }
 
 // A sub-achievement is an achievement which belongs as part of a parent achievement.
@@ -1604,6 +1661,10 @@ message SubAchievement {
   AvailableRewards available_rewards = 13;
   // Additional metadata properties.
   map<string, string> additional_properties = 14;
+  // Whether the sub-achievement reward will be given automatically upon completion.
+  bool auto_claim = 15;
+  // Whether the sub-achievement will reset after completion.
+  bool auto_reset = 16;
 }
 
 // An achievement which is a numeric task which can be unlocked and has an optional reward.
@@ -1644,6 +1705,12 @@ message Achievement {
   map<string, SubAchievement> sub_achievements = 17;
   // Additional metadata properties.
   map<string, string> additional_properties = 18;
+  // Whether the achievement reward will be given automatically upon completion.
+  bool auto_claim = 19;
+  // Whether the achievement total reward will be given automatically upon completing this and all sub-achievements.
+  bool auto_claim_total = 20;
+  // Whether the achievement will reset after completion.
+  bool auto_reset = 21;
 }
 
 // The achievements returned by the server.
@@ -1701,20 +1768,12 @@ message SyncInventory {
   map<string, SyncInventoryItem> items = 1;
 }
 
-// Single economy reward modifier data.
-message SyncEconomyModifier {
-  // The full reward modifier to apply.
-  RewardModifier modifier = 1;
-  // Time when this applied from.
-  int64 create_time_sec = 2;
-}
-
 // Input for an offline state sync operation for the economy system.
 message SyncEconomy {
   // Currencies deltas.
   map<string, int64> currencies = 1;
   // Economy modifiers to add.
-  repeated SyncEconomyModifier modifiers = 2;
+  repeated ActiveRewardModifier modifiers = 2;
 }
 
 // Sync operation for a single achievement.
@@ -1862,4 +1921,8 @@ message SyncResponse {
   TutorialList tutorials = 8;
   // Unlockables.
   UnlockablesList unlockables = 9;
+  // The list of active reward modifiers.
+  repeated ActiveRewardModifier active_reward_modifiers = 10;
+  // Current server time.
+  int64 current_time_sec = 11;
 }

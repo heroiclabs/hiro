@@ -10,6 +10,10 @@
       "minimum": 0,
       "type": "number"
     },
+    "max_queued_unlocks": {
+      "minimum": 0,
+      "type": "number"
+    },
     "slot_cost": {
       "properties": {
         "currencies": {
