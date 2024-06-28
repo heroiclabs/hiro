@@ -429,6 +429,8 @@ enum EconomyStoreType {
   ECONOMY_STORE_TYPE_GOOGLE_PLAY = 2;
   // Facebook Instant games.
   ECONOMY_STORE_TYPE_FBINSTANT = 3;
+  // Discord Store.
+  ECONOMY_STORE_TYPE_DISCORD = 4;
 }
 
 // Inventory item granted.
