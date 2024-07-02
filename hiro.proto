@@ -917,6 +917,8 @@ message EventLeaderboard {
 message EventLeaderboardDebugFillRequest {
   // Event leaderboard ID to fill.
   string id = 1;
+  // Optional target cohort size to fill to, otherwise fill to max cohort size.
+  int32 target_count = 2;
 }
 
 // DEBUG. Payload describing scores to set for a cohort's participants.
@@ -929,6 +931,10 @@ message EventLeaderboardDebugRandomScoresRequest {
   int64 max = 3;
   // Optional operator to use when updating scores.
   google.protobuf.Int32Value operator = 4;
+  // Minimum subscore, inclusive.
+  int64 subscore_min = 5;
+  // Maximum subscore, inclusive.
+  int64 subscore_max = 6;
 }
 
 // A contributor to this donation.
