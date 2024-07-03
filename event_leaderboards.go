@@ -80,10 +80,10 @@ type EventLeaderboardsSystem interface {
 	SetOnEventLeaderboardCohortSelection(fn OnEventLeaderboardCohortSelection)
 
 	// DebugFill fills the user's current cohort with dummy users for all remaining available slots.
-	DebugFill(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) (*EventLeaderboard, error)
+	DebugFill(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string, targetCount int) (*EventLeaderboard, error)
 
 	// DebugRandomScores assigns random scores to the participants of the user's current cohort, except to the user themselves.
-	DebugRandomScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string, min, max int64, operator *int) (*EventLeaderboard, error)
+	DebugRandomScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string, scoreMin, scoreMax, subscoreMin, subscoreMax int64, operator *int) (*EventLeaderboard, error)
 }
 
 type OnEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, storageIndex string, eventID string, config *EventLeaderboardsConfigLeaderboard, userID string, tier int, matchmakerProperties map[string]interface{}) (cohortID string, cohortUserIDs []string, err error)
