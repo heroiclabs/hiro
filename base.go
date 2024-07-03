@@ -51,7 +51,7 @@ type BaseSystem interface {
 	SetDevicePrefs(ctx context.Context, logger runtime.Logger, db *sql.DB, userID, deviceID, pushTokenAndroid, pushTokenIos string, preferences map[string]bool) (err error)
 
 	// Sync processes an operation to update the server with offline state changes.
-	Sync(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *SyncRequest) (response *SyncResponse, err error)
+	Sync(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *SyncRequest) (resp *SyncResponse, err error)
 }
 
 // BaseSystemConfig is the data definition for the BaseSystem type.
