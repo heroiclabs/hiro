@@ -14,7 +14,8 @@
         },
         "numeric_properties": {
           "prop2": 123
-        }
+        },
+        "keep_zero": true
       },
       "item2": {
         "name": "name2",

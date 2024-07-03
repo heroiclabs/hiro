@@ -30,6 +30,9 @@
               },
               "type": "array"
             },
+            "keep_zero": {
+              "type": "boolean"
+            },
             "max_count": {
               "minimum": 0,
               "type": "number"

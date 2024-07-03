@@ -36,6 +36,7 @@ type InventoryConfigItem struct {
 	StringProperties  map[string]string    `json:"string_properties,omitempty"`
 	NumericProperties map[string]float64   `json:"numeric_properties,omitempty"`
 	Disabled          bool                 `json:"disabled,omitempty"`
+	KeepZero          bool                 `json:"keep_zero,omitempty"`
 }
 
 // The InventorySystem provides a gameplay system which can manage a player's inventory.
