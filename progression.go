@@ -48,14 +48,14 @@ type ProgressionSystem interface {
 	System
 
 	// Get returns all or an optionally-filtered set of progressions for the given user.
-	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, lastKnownProgressions map[string]*Progression) (map[string]*Progression, map[string]*ProgressionDelta, error)
+	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, lastKnownProgressions map[string]*Progression) (progressions map[string]*Progression, deltas map[string]*ProgressionDelta, err error)
 
 	// Purchase permanently unlocks a specified progression, if that progression supports this operation.
-	Purchase(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionID string) (map[string]*Progression, error)
+	Purchase(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionID string) (progressions map[string]*Progression, err error)
 
 	// Update a specified progression, if that progression supports this operation.
-	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionID string, counts map[string]int64) (map[string]*Progression, error)
+	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, progressionID string, counts map[string]int64) (progressions map[string]*Progression, err error)
 
 	// Reset one or more progressions to clear their progress. Only applies to progression counts and unlock costs.
-	Reset(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, progressionIDs []string) (map[string]*Progression, error)
+	Reset(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, progressionIDs []string) (progressions map[string]*Progression, err error)
 }

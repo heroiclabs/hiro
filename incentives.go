@@ -16,6 +16,7 @@ package hiro
 
 import (
 	"context"
+
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -40,17 +41,17 @@ type IncentivesConfigIncentive struct {
 type IncentivesSystem interface {
 	System
 
-	SenderList(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) ([]*Incentive, error)
+	SenderList(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (incentives []*Incentive, err error)
 
-	SenderCreate(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, incentiveID string) ([]*Incentive, error)
+	SenderCreate(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, incentiveID string) (incentives []*Incentive, err error)
 
-	SenderDelete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, code string) ([]*Incentive, error)
+	SenderDelete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, code string) (incentives []*Incentive, err error)
 
-	SenderClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, code string, claimantIDs []string) ([]*Incentive, error)
+	SenderClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, code string, claimantIDs []string) (incentives []*Incentive, err error)
 
-	RecipientGet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, code string) (*IncentiveInfo, error)
+	RecipientGet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, code string) (incentive *IncentiveInfo, err error)
 
-	RecipientClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, code string) (*IncentiveInfo, error)
+	RecipientClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, code string) (incentive *IncentiveInfo, err error)
 
 	// SetOnSenderReward sets a custom reward function which will run after an incentive sender's reward is rolled.
 	SetOnSenderReward(fn OnReward[*IncentivesConfigIncentive])

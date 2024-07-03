@@ -16,6 +16,7 @@ package hiro
 
 import (
 	"context"
+
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -35,17 +36,17 @@ type TutorialsSystem interface {
 	System
 
 	// Get returns all tutorials defined and progress made by the user towards them.
-	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*Tutorial, error)
+	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (tutorials map[string]*Tutorial, err error)
 
 	// Accept marks a tutorial as accepted by the user.
-	Accept(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (*Tutorial, error)
+	Accept(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (tutorial *Tutorial, err error)
 
 	// Decline marks a tutorial as declined by the user.
-	Decline(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (*Tutorial, error)
+	Decline(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (tutorial *Tutorial, err error)
 
 	// Abandon marks the tutorial as abandoned by the user.
-	Abandon(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (*Tutorial, error)
+	Abandon(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (tutorial *Tutorial, err error)
 
 	// Update modifies a tutorial by its ID to step through it for the user by ID.
-	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, tutorialID string, step int) (map[string]*Tutorial, error)
+	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, tutorialID string, step int) (tutorial map[string]*Tutorial, err error)
 }

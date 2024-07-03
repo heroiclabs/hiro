@@ -16,6 +16,7 @@ package hiro
 
 import (
 	"context"
+
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -62,13 +63,13 @@ type AchievementsSystem interface {
 	System
 
 	// ClaimAchievements when one or more achievements whose progress has completed by their IDs.
-	ClaimAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, achievementIDs []string, claimTotal bool) (map[string]*Achievement, map[string]*Achievement, error)
+	ClaimAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, achievementIDs []string, claimTotal bool) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
 
 	// GetAchievements returns all achievements available to the user and progress on them.
-	GetAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*Achievement, map[string]*Achievement, error)
+	GetAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
 
 	// UpdateAchievements updates progress on one or more achievements by the same amount.
-	UpdateAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, achievementUpdates map[string]int64) (map[string]*Achievement, map[string]*Achievement, error)
+	UpdateAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, achievementUpdates map[string]int64) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
 
 	// SetOnAchievementReward sets a custom reward function which will run after an achievement's reward is rolled.
 	SetOnAchievementReward(fn OnReward[*AchievementsConfigAchievement])

@@ -45,13 +45,13 @@ type BaseSystem interface {
 	System
 
 	// RateApp uses the SMTP configuration to receive feedback from players via email.
-	RateApp(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, username string, score uint32, message string) error
+	RateApp(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, username string, score uint32, message string) (err error)
 
 	// SetDevicePrefs sets push notification tokens on a user's account so push messages can be received.
-	SetDevicePrefs(ctx context.Context, logger runtime.Logger, db *sql.DB, userID, deviceID, pushTokenAndroid, pushTokenIos string, preferences map[string]bool) error
+	SetDevicePrefs(ctx context.Context, logger runtime.Logger, db *sql.DB, userID, deviceID, pushTokenAndroid, pushTokenIos string, preferences map[string]bool) (err error)
 
 	// Sync processes an operation to update the server with offline state changes.
-	Sync(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *SyncRequest) (*SyncResponse, error)
+	Sync(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *SyncRequest) (response *SyncResponse, err error)
 }
 
 // BaseSystemConfig is the data definition for the BaseSystem type.
