@@ -527,6 +527,8 @@ const (
 	EconomyStoreType_ECONOMY_STORE_TYPE_GOOGLE_PLAY EconomyStoreType = 2
 	// Facebook Instant games.
 	EconomyStoreType_ECONOMY_STORE_TYPE_FBINSTANT EconomyStoreType = 3
+	// Discord Store.
+	EconomyStoreType_ECONOMY_STORE_TYPE_DISCORD EconomyStoreType = 4
 )
 
 // Enum value maps for EconomyStoreType.
@@ -536,12 +538,14 @@ var (
 		1: "ECONOMY_STORE_TYPE_APPLE_APPSTORE",
 		2: "ECONOMY_STORE_TYPE_GOOGLE_PLAY",
 		3: "ECONOMY_STORE_TYPE_FBINSTANT",
+		4: "ECONOMY_STORE_TYPE_DISCORD",
 	}
 	EconomyStoreType_value = map[string]int32{
 		"ECONOMY_STORE_TYPE_UNSPECIFIED":    0,
 		"ECONOMY_STORE_TYPE_APPLE_APPSTORE": 1,
 		"ECONOMY_STORE_TYPE_GOOGLE_PLAY":    2,
 		"ECONOMY_STORE_TYPE_FBINSTANT":      3,
+		"ECONOMY_STORE_TYPE_DISCORD":        4,
 	}
 )
 
@@ -13822,7 +13826,7 @@ var file_hiro_proto_rawDesc = []byte{
 	0x54, 0x45, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4d, 0x49, 0x4e, 0x10,
 	0x03, 0x12, 0x1c, 0x0a, 0x18, 0x53, 0x54, 0x41, 0x54, 0x5f, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45,
 	0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4d, 0x41, 0x58, 0x10, 0x04, 0x2a,
-	0xa3, 0x01, 0x0a, 0x10, 0x45, 0x63, 0x6f, 0x6e, 0x6f, 0x6d, 0x79, 0x53, 0x74, 0x6f, 0x72, 0x65,
+	0xc3, 0x01, 0x0a, 0x10, 0x45, 0x63, 0x6f, 0x6e, 0x6f, 0x6d, 0x79, 0x53, 0x74, 0x6f, 0x72, 0x65,
 	0x54, 0x79, 0x70, 0x65, 0x12, 0x22, 0x0a, 0x1e, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f,
 	0x53, 0x54, 0x4f, 0x52, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45,
 	0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x25, 0x0a, 0x21, 0x45, 0x43, 0x4f, 0x4e,
@@ -13832,7 +13836,9 @@ var file_hiro_proto_rawDesc = []byte{
 	0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x47, 0x4f, 0x4f, 0x47, 0x4c, 0x45, 0x5f, 0x50, 0x4c, 0x41,
 	0x59, 0x10, 0x02, 0x12, 0x20, 0x0a, 0x1c, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x53,
 	0x54, 0x4f, 0x52, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x46, 0x42, 0x49, 0x4e, 0x53, 0x54,
-	0x41, 0x4e, 0x54, 0x10, 0x03, 0x2a, 0x4a, 0x0a, 0x0d, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69,
+	0x41, 0x4e, 0x54, 0x10, 0x03, 0x12, 0x1e, 0x0a, 0x1a, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59,
+	0x5f, 0x53, 0x54, 0x4f, 0x52, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x44, 0x49, 0x53, 0x43,
+	0x4f, 0x52, 0x44, 0x10, 0x04, 0x2a, 0x4a, 0x0a, 0x0d, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69,
 	0x76, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1e, 0x0a, 0x1a, 0x49, 0x4e, 0x43, 0x45, 0x4e, 0x54,
 	0x49, 0x56, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49,
 	0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x19, 0x0a, 0x15, 0x49, 0x4e, 0x43, 0x45, 0x4e, 0x54,
@@ -13876,7 +13882,7 @@ func file_hiro_proto_rawDescGZIP() []byte {
 
 var file_hiro_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
 var file_hiro_proto_msgTypes = make([]protoimpl.MessageInfo, 234)
-var file_hiro_proto_goTypes = []any{
+var file_hiro_proto_goTypes = []interface{}{
 	(RpcId)(0),                                       // 0: hiro.RpcId
 	(ProgressionPreconditionsOperator)(0),            // 1: hiro.ProgressionPreconditionsOperator
 	(ProgressionDeltaState)(0),                       // 2: hiro.ProgressionDeltaState
@@ -14381,7 +14387,7 @@ func file_hiro_proto_init() {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_hiro_proto_msgTypes[0].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProgressionCost); i {
 			case 0:
 				return &v.state
@@ -14393,7 +14399,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[1].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProgressionPreconditions); i {
 			case 0:
 				return &v.state
@@ -14405,7 +14411,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[2].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProgressionPreconditionsBlock); i {
 			case 0:
 				return &v.state
@@ -14417,7 +14423,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[3].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Progression); i {
 			case 0:
 				return &v.state
@@ -14429,7 +14435,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[4].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProgressionDelta); i {
 			case 0:
 				return &v.state
@@ -14441,7 +14447,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[5].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProgressionList); i {
 			case 0:
 				return &v.state
@@ -14453,7 +14459,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[6].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProgressionGetRequest); i {
 			case 0:
 				return &v.state
@@ -14465,7 +14471,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[7].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProgressionPurchaseRequest); i {
 			case 0:
 				return &v.state
@@ -14477,7 +14483,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[8].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProgressionUpdateRequest); i {
 			case 0:
 				return &v.state
@@ -14489,7 +14495,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[9].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProgressionResetRequest); i {
 			case 0:
 				return &v.state
@@ -14501,7 +14507,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[10].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StatUpdate); i {
 			case 0:
 				return &v.state
@@ -14513,7 +14519,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[11].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StatUpdateRequest); i {
 			case 0:
 				return &v.state
@@ -14525,7 +14531,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[12].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Stat); i {
 			case 0:
 				return &v.state
@@ -14537,7 +14543,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[13].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StatList); i {
 			case 0:
 				return &v.state
@@ -14549,7 +14555,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[14].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ChannelMessageAck); i {
 			case 0:
 				return &v.state
@@ -14561,7 +14567,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[15].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DevicePrefsRequest); i {
 			case 0:
 				return &v.state
@@ -14573,7 +14579,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[16].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RewardInventoryItem); i {
 			case 0:
 				return &v.state
@@ -14585,7 +14591,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[17].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RewardEnergyModifier); i {
 			case 0:
 				return &v.state
@@ -14597,7 +14603,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[18].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RewardModifier); i {
 			case 0:
 				return &v.state
@@ -14609,7 +14615,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[19].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ActiveRewardModifier); i {
 			case 0:
 				return &v.state
@@ -14621,7 +14627,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[20].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Reward); i {
 			case 0:
 				return &v.state
@@ -14633,7 +14639,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[21].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RewardList); i {
 			case 0:
 				return &v.state
@@ -14645,7 +14651,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[22].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RewardRangeInt32); i {
 			case 0:
 				return &v.state
@@ -14657,7 +14663,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[23].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RewardRangeInt64); i {
 			case 0:
 				return &v.state
@@ -14669,7 +14675,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[24].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RewardRangeUInt64); i {
 			case 0:
 				return &v.state
@@ -14681,7 +14687,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[25].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RewardRangeDouble); i {
 			case 0:
 				return &v.state
@@ -14693,7 +14699,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[26].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AvailableRewardsStringPropertyOption); i {
 			case 0:
 				return &v.state
@@ -14705,7 +14711,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[27].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AvailableRewardsStringProperty); i {
 			case 0:
 				return &v.state
@@ -14717,7 +14723,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[28].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AvailableRewardsItem); i {
 			case 0:
 				return &v.state
@@ -14729,7 +14735,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[29].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AvailableRewardsItemSet); i {
 			case 0:
 				return &v.state
@@ -14741,7 +14747,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[30].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AvailableRewardsCurrency); i {
 			case 0:
 				return &v.state
@@ -14753,7 +14759,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[31].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AvailableRewardsEnergy); i {
 			case 0:
 				return &v.state
@@ -14765,7 +14771,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[32].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AvailableRewardsEnergyModifier); i {
 			case 0:
 				return &v.state
@@ -14777,7 +14783,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[33].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AvailableRewardsRewardModifier); i {
 			case 0:
 				return &v.state
@@ -14789,7 +14795,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[34].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AvailableRewardsContents); i {
 			case 0:
 				return &v.state
@@ -14801,7 +14807,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[35].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AvailableRewards); i {
 			case 0:
 				return &v.state
@@ -14813,7 +14819,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[36].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*IncentiveClaim); i {
 			case 0:
 				return &v.state
@@ -14825,7 +14831,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[37].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Incentive); i {
 			case 0:
 				return &v.state
@@ -14837,7 +14843,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[38].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*IncentiveList); i {
 			case 0:
 				return &v.state
@@ -14849,7 +14855,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[39].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*IncentiveInfo); i {
 			case 0:
 				return &v.state
@@ -14861,7 +14867,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[40].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*IncentiveSenderCreateRequest); i {
 			case 0:
 				return &v.state
@@ -14873,7 +14879,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[41].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*IncentiveSenderDeleteRequest); i {
 			case 0:
 				return &v.state
@@ -14885,7 +14891,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[42].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*IncentiveSenderClaimRequest); i {
 			case 0:
 				return &v.state
@@ -14897,7 +14903,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[43].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*IncentiveRecipientGetRequest); i {
 			case 0:
 				return &v.state
@@ -14909,7 +14915,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[44].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*IncentiveRecipientClaimRequest); i {
 			case 0:
 				return &v.state
@@ -14921,7 +14927,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[45].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboardGet); i {
 			case 0:
 				return &v.state
@@ -14933,7 +14939,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[46].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboardUpdate); i {
 			case 0:
 				return &v.state
@@ -14945,7 +14951,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[47].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboardClaim); i {
 			case 0:
 				return &v.state
@@ -14957,7 +14963,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[48].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboardRoll); i {
 			case 0:
 				return &v.state
@@ -14969,7 +14975,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[49].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboardScore); i {
 			case 0:
 				return &v.state
@@ -14981,7 +14987,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[50].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboardRewardTier); i {
 			case 0:
 				return &v.state
@@ -14993,7 +14999,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[51].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboardRewardTiers); i {
 			case 0:
 				return &v.state
@@ -15005,7 +15011,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[52].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboardChangeZone); i {
 			case 0:
 				return &v.state
@@ -15017,7 +15023,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[53].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboard); i {
 			case 0:
 				return &v.state
@@ -15029,7 +15035,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[54].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboardDebugFillRequest); i {
 			case 0:
 				return &v.state
@@ -15041,7 +15047,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[55].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventLeaderboardDebugRandomScoresRequest); i {
 			case 0:
 				return &v.state
@@ -15053,7 +15059,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[56].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyDonationContributor); i {
 			case 0:
 				return &v.state
@@ -15065,7 +15071,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[57].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyDonation); i {
 			case 0:
 				return &v.state
@@ -15077,7 +15083,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[58].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyDonationAck); i {
 			case 0:
 				return &v.state
@@ -15089,7 +15095,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[59].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyDonationsList); i {
 			case 0:
 				return &v.state
@@ -15101,7 +15107,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[60].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyDonationClaimRequest); i {
 			case 0:
 				return &v.state
@@ -15113,7 +15119,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[61].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyDonationClaimRewards); i {
 			case 0:
 				return &v.state
@@ -15125,7 +15131,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[62].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyDonationGiveRequest); i {
 			case 0:
 				return &v.state
@@ -15137,7 +15143,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[63].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyDonationGetRequest); i {
 			case 0:
 				return &v.state
@@ -15149,7 +15155,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[64].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyDonationRequest); i {
 			case 0:
 				return &v.state
@@ -15161,7 +15167,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[65].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyDonationsByUserList); i {
 			case 0:
 				return &v.state
@@ -15173,7 +15179,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[66].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyListStoreItemCost); i {
 			case 0:
 				return &v.state
@@ -15185,7 +15191,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[67].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyListStoreItem); i {
 			case 0:
 				return &v.state
@@ -15197,7 +15203,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[68].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyListPlacement); i {
 			case 0:
 				return &v.state
@@ -15209,7 +15215,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[69].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyList); i {
 			case 0:
 				return &v.state
@@ -15221,7 +15227,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[70].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InventoryItem); i {
 			case 0:
 				return &v.state
@@ -15233,7 +15239,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[71].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InventoryListRequest); i {
 			case 0:
 				return &v.state
@@ -15245,7 +15251,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[72].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InventoryGrantRequest); i {
 			case 0:
 				return &v.state
@@ -15257,7 +15263,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[73].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InventoryUpdateItemProperties); i {
 			case 0:
 				return &v.state
@@ -15269,7 +15275,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[74].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InventoryUpdateItemsRequest); i {
 			case 0:
 				return &v.state
@@ -15281,7 +15287,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[75].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Inventory); i {
 			case 0:
 				return &v.state
@@ -15293,7 +15299,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[76].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InventoryConsumeRequest); i {
 			case 0:
 				return &v.state
@@ -15305,7 +15311,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[77].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InventoryConsumeRewards); i {
 			case 0:
 				return &v.state
@@ -15317,7 +15323,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[78].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[78].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InventoryUpdateAck); i {
 			case 0:
 				return &v.state
@@ -15329,7 +15335,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[79].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[79].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*InventoryList); i {
 			case 0:
 				return &v.state
@@ -15341,7 +15347,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[80].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[80].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyListRequest); i {
 			case 0:
 				return &v.state
@@ -15353,7 +15359,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[81].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[81].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyGrantRequest); i {
 			case 0:
 				return &v.state
@@ -15365,7 +15371,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[82].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[82].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyPurchaseIntentRequest); i {
 			case 0:
 				return &v.state
@@ -15377,7 +15383,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[83].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[83].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyPurchaseRequest); i {
 			case 0:
 				return &v.state
@@ -15389,7 +15395,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[84].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[84].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyPurchaseRestoreRequest); i {
 			case 0:
 				return &v.state
@@ -15401,7 +15407,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[85].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[85].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyPlacementStatusRequest); i {
 			case 0:
 				return &v.state
@@ -15413,7 +15419,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[86].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[86].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyPlacementStartRequest); i {
 			case 0:
 				return &v.state
@@ -15425,7 +15431,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[87].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[87].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyPlacementStatus); i {
 			case 0:
 				return &v.state
@@ -15437,7 +15443,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[88].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[88].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyUpdateAck); i {
 			case 0:
 				return &v.state
@@ -15449,7 +15455,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[89].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[89].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EconomyPurchaseAck); i {
 			case 0:
 				return &v.state
@@ -15461,7 +15467,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[90].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[90].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EnergyModifier); i {
 			case 0:
 				return &v.state
@@ -15473,7 +15479,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[91].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[91].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Energy); i {
 			case 0:
 				return &v.state
@@ -15485,7 +15491,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[92].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[92].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EnergyList); i {
 			case 0:
 				return &v.state
@@ -15497,7 +15503,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[93].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[93].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EnergySpendRequest); i {
 			case 0:
 				return &v.state
@@ -15509,7 +15515,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[94].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[94].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EnergySpendReward); i {
 			case 0:
 				return &v.state
@@ -15521,7 +15527,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[95].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[95].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*LeaderboardConfig); i {
 			case 0:
 				return &v.state
@@ -15533,7 +15539,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[96].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[96].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*LeaderboardConfigList); i {
 			case 0:
 				return &v.state
@@ -15545,7 +15551,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[97].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[97].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Tutorial); i {
 			case 0:
 				return &v.state
@@ -15557,7 +15563,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[98].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[98].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TutorialList); i {
 			case 0:
 				return &v.state
@@ -15569,7 +15575,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[99].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[99].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TutorialAcceptRequest); i {
 			case 0:
 				return &v.state
@@ -15581,7 +15587,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[100].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[100].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TutorialDeclineRequest); i {
 			case 0:
 				return &v.state
@@ -15593,7 +15599,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[101].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[101].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TutorialAbandonRequest); i {
 			case 0:
 				return &v.state
@@ -15605,7 +15611,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[102].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[102].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TutorialUpdateRequest); i {
 			case 0:
 				return &v.state
@@ -15617,7 +15623,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[103].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[103].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RateAppRequest); i {
 			case 0:
 				return &v.state
@@ -15629,7 +15635,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[104].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[104].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Team); i {
 			case 0:
 				return &v.state
@@ -15641,7 +15647,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[105].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[105].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TeamCreateRequest); i {
 			case 0:
 				return &v.state
@@ -15653,7 +15659,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[106].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[106].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TeamListRequest); i {
 			case 0:
 				return &v.state
@@ -15665,7 +15671,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[107].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[107].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TeamList); i {
 			case 0:
 				return &v.state
@@ -15677,7 +15683,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[108].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[108].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TeamSearchRequest); i {
 			case 0:
 				return &v.state
@@ -15689,7 +15695,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[109].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[109].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TeamWriteChatMessageRequest); i {
 			case 0:
 				return &v.state
@@ -15701,7 +15707,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[110].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[110].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnlockableCost); i {
 			case 0:
 				return &v.state
@@ -15713,7 +15719,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[111].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[111].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Unlockable); i {
 			case 0:
 				return &v.state
@@ -15725,7 +15731,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[112].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[112].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnlockableSlotCost); i {
 			case 0:
 				return &v.state
@@ -15737,7 +15743,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[113].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[113].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnlockablesList); i {
 			case 0:
 				return &v.state
@@ -15749,7 +15755,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[114].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[114].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnlockablesReward); i {
 			case 0:
 				return &v.state
@@ -15761,7 +15767,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[115].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[115].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnlockablesRequest); i {
 			case 0:
 				return &v.state
@@ -15773,7 +15779,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[116].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[116].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnlockablesQueueAddRequest); i {
 			case 0:
 				return &v.state
@@ -15785,7 +15791,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[117].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[117].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnlockablesQueueRemoveRequest); i {
 			case 0:
 				return &v.state
@@ -15797,7 +15803,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[118].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[118].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnlockablesQueueSetRequest); i {
 			case 0:
 				return &v.state
@@ -15809,7 +15815,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[119].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[119].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SubAchievement); i {
 			case 0:
 				return &v.state
@@ -15821,7 +15827,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[120].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[120].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Achievement); i {
 			case 0:
 				return &v.state
@@ -15833,7 +15839,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[121].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[121].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AchievementList); i {
 			case 0:
 				return &v.state
@@ -15845,7 +15851,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[122].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[122].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AchievementsClaimRequest); i {
 			case 0:
 				return &v.state
@@ -15857,7 +15863,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[123].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[123].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AchievementsGetRequest); i {
 			case 0:
 				return &v.state
@@ -15869,7 +15875,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[124].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[124].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AchievementsUpdateAck); i {
 			case 0:
 				return &v.state
@@ -15881,7 +15887,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[125].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[125].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AchievementsUpdateRequest); i {
 			case 0:
 				return &v.state
@@ -15893,7 +15899,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[126].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[126].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncInventoryItem); i {
 			case 0:
 				return &v.state
@@ -15905,7 +15911,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[127].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[127].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncInventory); i {
 			case 0:
 				return &v.state
@@ -15917,7 +15923,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[128].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[128].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncEconomy); i {
 			case 0:
 				return &v.state
@@ -15929,7 +15935,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[129].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[129].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncAchievementsUpdate); i {
 			case 0:
 				return &v.state
@@ -15941,7 +15947,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[130].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[130].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncAchievements); i {
 			case 0:
 				return &v.state
@@ -15953,7 +15959,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[131].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[131].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncEnergyState); i {
 			case 0:
 				return &v.state
@@ -15965,7 +15971,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[132].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[132].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncEnergy); i {
 			case 0:
 				return &v.state
@@ -15977,7 +15983,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[133].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[133].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncEventLeaderboardUpdate); i {
 			case 0:
 				return &v.state
@@ -15989,7 +15995,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[134].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[134].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncEventLeaderboards); i {
 			case 0:
 				return &v.state
@@ -16001,7 +16007,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[135].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[135].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncProgressionUpdate); i {
 			case 0:
 				return &v.state
@@ -16013,7 +16019,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[136].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[136].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncProgressions); i {
 			case 0:
 				return &v.state
@@ -16025,7 +16031,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[137].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[137].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncTutorials); i {
 			case 0:
 				return &v.state
@@ -16037,7 +16043,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[138].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[138].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncUnlockableUpdate); i {
 			case 0:
 				return &v.state
@@ -16049,7 +16055,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[139].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[139].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncUnlockables); i {
 			case 0:
 				return &v.state
@@ -16061,7 +16067,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[140].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[140].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncRequest); i {
 			case 0:
 				return &v.state
@@ -16073,7 +16079,7 @@ func file_hiro_proto_init() {
 				return nil
 			}
 		}
-		file_hiro_proto_msgTypes[141].Exporter = func(v any, i int) any {
+		file_hiro_proto_msgTypes[141].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SyncResponse); i {
 			case 0:
 				return &v.state
