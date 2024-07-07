@@ -5,6 +5,28 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.16.0] - 2024-07-07
+### Added
+- Virtual store now supports [Discord In-App Purchases](https://github.com/discord/embedded-app-sdk/blob/main/docs/in-app-purchases.md).
+- Event Leaderboard debug functions can now use "targetCount", "subscoreMin", and "subscoreMax" as optional parameters.
+
+### Changed
+- Inventory system will keep zero count items in the player's storage if "keep_zero" is enabled.
+- Use named return arguments in Go interfaces for improved readability.
+- Any active reward modifiers are returned in "EconomyUpdateAck" responses.
+- Unlockables which have completed but are not yet claimed do not count towards the active (in-use) slots.
+- Fake users in Event Leaderboards are given zero scores rather than have no score set.
+- (Unity) Update "ExampleCoordinator" for improved offline mode example.
+- Stats system now observes "resolveCollection" for gameplay system's state.
+
+### Fixed
+- (Unity) Confirm pending purchase even if non-consumable products exist on an Apple ID but are not known to the Virtual Store.
+- (Unity) Fix queued unlocks which are not updated in the gameplay system's state.
+- Fix "RewardGrant" error when energy system is not in use.
+- (Unity) Remove various usages of "System.Linq" from codebase.
+- Fix error on publish of Satori events about store items with no rewards.
+- Fix energy "Spend" did not return aggregate rewards in response.
+
 ## [1.15.0] - 2024-06-22
 ### Added
 - Unlockables can now be queued to unlock when stored within slots.
