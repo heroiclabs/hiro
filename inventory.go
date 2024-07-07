@@ -16,6 +16,7 @@ package hiro
 
 import (
 	"context"
+
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -46,19 +47,19 @@ type InventorySystem interface {
 	System
 
 	// List will return the items defined as well as the computed item sets for the user by ID.
-	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*InventoryConfigItem, map[string][]string, error)
+	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (items map[string]*InventoryConfigItem, itemSets map[string][]string, err error)
 
 	// ListInventoryItems will return the items which are part of a user's inventory by ID.
-	ListInventoryItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, category string) (*Inventory, error)
+	ListInventoryItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, category string) (inventory *Inventory, err error)
 
 	// ConsumeItems will deduct the item(s) from the user's inventory and run the consume reward for each one, if defined.
-	ConsumeItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs, instanceIDs map[string]int64, overConsume bool) (*Inventory, map[string][]*Reward, map[string][]*Reward, error)
+	ConsumeItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs, instanceIDs map[string]int64, overConsume bool) (updatedInventory *Inventory, rewards map[string][]*Reward, instanceRewards map[string][]*Reward, err error)
 
 	// GrantItems will add the item(s) to a user's inventory by ID.
-	GrantItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs map[string]int64) (*Inventory, map[string]*InventoryItem, error)
+	GrantItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs map[string]int64) (updatedInventory *Inventory, newItems map[string]*InventoryItem, err error)
 
 	// UpdateItems will update the properties which are stored on each item by instance ID for a user.
-	UpdateItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs map[string]*InventoryUpdateItemProperties) (*Inventory, error)
+	UpdateItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs map[string]*InventoryUpdateItemProperties) (updatedInventory *Inventory, err error)
 
 	// SetOnConsumeReward sets a custom reward function which will run after an inventory items' consume reward is rolled.
 	SetOnConsumeReward(fn OnReward[*InventoryConfigItem])

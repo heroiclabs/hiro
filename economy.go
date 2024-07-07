@@ -196,58 +196,58 @@ type EconomySystem interface {
 	System
 
 	// RewardCreate prepares a new reward configuration to be filled in and used later.
-	RewardCreate() *EconomyConfigReward
+	RewardCreate() (rewardConfig *EconomyConfigReward)
 
 	// RewardConvert transforms a wire representation of a reward into an equivalent configuration representation.
-	RewardConvert(contents *AvailableRewards) *EconomyConfigReward
+	RewardConvert(contents *AvailableRewards) (rewardConfig *EconomyConfigReward)
 
 	// RewardRoll takes a reward configuration and rolls an actual reward from it, applying all appropriate rules.
-	RewardRoll(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, rewardConfig *EconomyConfigReward) (*Reward, error)
+	RewardRoll(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, rewardConfig *EconomyConfigReward) (reward *Reward, err error)
 
 	// RewardGrant updates a user's economy, inventory, and/or energy models with the contents of a rolled reward.
-	RewardGrant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, reward *Reward, metadata map[string]interface{}) error
+	RewardGrant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, reward *Reward, metadata map[string]interface{}) (err error)
 
 	// DonationClaim will claim donation rewards for a user and the given donation IDs.
-	DonationClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, donationIDs []string) (*EconomyDonationsList, error)
+	DonationClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, donationIDs []string) (donationsList *EconomyDonationsList, err error)
 
 	// DonationGet will get all donations for the given list of user IDs.
-	DonationGet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userIDs []string) (*EconomyDonationsByUserList, error)
+	DonationGet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userIDs []string) (donationsList *EconomyDonationsByUserList, err error)
 
 	// DonationGive will contribute to a particular donation for a user ID.
-	DonationGive(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, donationID, fromUserID string) (map[string]int64, *Inventory, []*ActiveRewardModifier, *Reward, int64, error)
+	DonationGive(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, donationID, fromUserID string) (updatedWallet map[string]int64, updatedInventory *Inventory, rewardModifiers []*ActiveRewardModifier, contributorReward *Reward, timestamp int64, err error)
 
 	// DonationRequest will create a donation request for a given donation ID and user ID.
-	DonationRequest(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, donationID string) (*EconomyDonation, bool, error)
+	DonationRequest(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, donationID string) (donation *EconomyDonation, success bool, err error)
 
 	// List will get the defined store items and placements within the economy system.
-	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*EconomyConfigStoreItem, map[string]*EconomyConfigPlacement, []*ActiveRewardModifier, int64, error)
+	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (storeItems map[string]*EconomyConfigStoreItem, placements map[string]*EconomyConfigPlacement, rewardModifiers []*ActiveRewardModifier, timestamp int64, err error)
 
 	// Grant will add currencies, and reward modifiers to a user's economy by ID.
-	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, currencies map[string]int64, items map[string]int64, modifiers []*RewardModifier, walletMetadata map[string]interface{}) (map[string]int64, []*ActiveRewardModifier, int64, error)
+	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, currencies map[string]int64, items map[string]int64, modifiers []*RewardModifier, walletMetadata map[string]interface{}) (updatedWallet map[string]int64, rewardModifiers []*ActiveRewardModifier, timestamp int64, err error)
 
 	// UnmarshalWallet unmarshals and returns the account's wallet as a map[string]int64.
-	UnmarshalWallet(account *api.Account) (map[string]int64, error)
+	UnmarshalWallet(account *api.Account) (wallet map[string]int64, err error)
 
 	// PurchaseIntent will create a purchase intent for a particular store item for a user ID.
-	PurchaseIntent(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, sku string) error
+	PurchaseIntent(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, sku string) (err error)
 
 	// PurchaseItem will validate a purchase and give the user ID the appropriate rewards.
-	PurchaseItem(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, receipt string) (map[string]int64, *Inventory, *Reward, bool, error)
+	PurchaseItem(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, receipt string) (updatedWallet map[string]int64, updatedInventory *Inventory, reward *Reward, isSandboxPurchase bool, err error)
 
 	// PurchaseRestore will process a restore attempt for the given user, based on a set of restore receipts.
-	PurchaseRestore(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, store EconomyStoreType, receipts []string) error
+	PurchaseRestore(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, store EconomyStoreType, receipts []string) (err error)
 
 	// PlacementStatus will get the status of a specified placement.
-	PlacementStatus(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string, retryCount int) (*EconomyPlacementStatus, error)
+	PlacementStatus(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string, retryCount int) (resp *EconomyPlacementStatus, err error)
 
 	// PlacementStart will indicate that a user ID has begun viewing an ad placement.
-	PlacementStart(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, placementID string, metadata map[string]string) (*EconomyPlacementStatus, error)
+	PlacementStart(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, placementID string, metadata map[string]string) (resp *EconomyPlacementStatus, err error)
 
 	// PlacementSuccess will indicate that the user ID has successfully viewed an ad placement and provide the appropriate reward.
-	PlacementSuccess(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string) (*Reward, map[string]string, error)
+	PlacementSuccess(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string) (reward *Reward, placementMetadata map[string]string, err error)
 
 	// PlacementFail will indicate that the user ID has failed to successfully view the ad placement.
-	PlacementFail(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string) (map[string]string, error)
+	PlacementFail(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string) (placementMetadata map[string]string, err error)
 
 	// SetOnDonationClaimReward sets a custom reward function which will run after a donation's reward is rolled.
 	SetOnDonationClaimReward(fn OnReward[*EconomyConfigDonation])

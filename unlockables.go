@@ -16,6 +16,7 @@ package hiro
 
 import (
 	"context"
+
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -64,31 +65,31 @@ type UnlockablesSystem interface {
 	System
 
 	// Create will place a new unlockable into a slot either randomly, by ID, or optionally using a custom configuration.
-	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable) (*UnlockablesList, error)
+	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable) (unlockables *UnlockablesList, err error)
 
 	// Get returns all unlockables active for a user by ID.
-	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*UnlockablesList, error)
+	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (unlockables *UnlockablesList, err error)
 
 	// UnlockStart will begin an unlock of an unlockable by instance ID for a user.
-	UnlockStart(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, instanceID string) (*UnlockablesList, error)
+	UnlockStart(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, instanceID string) (unlockables *UnlockablesList, err error)
 
 	// PurchaseUnlock will immediately unlock an unlockable with the specified instance ID for a user.
-	PurchaseUnlock(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, instanceID string) (*UnlockablesList, error)
+	PurchaseUnlock(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, instanceID string) (unlockables *UnlockablesList, err error)
 
 	// PurchaseSlot will create a new slot for a user by ID.
-	PurchaseSlot(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*UnlockablesList, error)
+	PurchaseSlot(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (unlockables *UnlockablesList, err error)
 
 	// Claim an unlockable which has been unlocked by instance ID for the user.
-	Claim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, instanceID string) (*UnlockablesReward, error)
+	Claim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, instanceID string) (reward *UnlockablesReward, err error)
 
 	// QueueAdd adds one or more unlockable instance IDs to the queue to be unlocked as soon as an active slot is available.
-	QueueAdd(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs []string) (*UnlockablesList, error)
+	QueueAdd(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs []string) (unlockables *UnlockablesList, err error)
 
 	// QueueRemove removes one or more unlockable instance IDs from the unlock queue, unless they have started unlocking already.
-	QueueRemove(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs []string) (*UnlockablesList, error)
+	QueueRemove(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs []string) (unlockables *UnlockablesList, err error)
 
 	// QueueSet replaces the entirety of the queue with the specified instance IDs, or wipes the queue if no instance IDs are given.
-	QueueSet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs []string) (*UnlockablesList, error)
+	QueueSet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs []string) (unlockables *UnlockablesList, err error)
 
 	// SetOnClaimReward sets a custom reward function which will run after an unlockable's reward is rolled.
 	SetOnClaimReward(fn OnReward[*UnlockablesConfigUnlockable])

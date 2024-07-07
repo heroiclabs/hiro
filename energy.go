@@ -16,6 +16,7 @@ package hiro
 
 import (
 	"context"
+
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -43,13 +44,13 @@ type EnergySystem interface {
 	System
 
 	// Get returns all energies defined and the values a user currently owns by ID.
-	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (map[string]*Energy, error)
+	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (energies map[string]*Energy, err error)
 
 	// Spend will deduct the amounts from each energy for a user by ID.
-	Spend(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32) (map[string]*Energy, *Reward, error)
+	Spend(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32) (energies map[string]*Energy, reward *Reward, err error)
 
 	// Grant will add the amounts to each energy (while applying any energy modifiers) for a user by ID.
-	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32, modifiers []*RewardEnergyModifier) (map[string]*Energy, error)
+	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32, modifiers []*RewardEnergyModifier) (energies map[string]*Energy, err error)
 
 	// SetOnSpendReward sets a custom reward function which will run after an energy reward's value has been rolled.
 	SetOnSpendReward(fn OnReward[*EnergyConfigEnergy])
