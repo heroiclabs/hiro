@@ -914,6 +914,8 @@ message EventLeaderboard {
   google.protobuf.Struct matchmaker_properties = 24;
   // The UNIX timestamp for the current server time.
   int64 current_time_sec = 25;
+  // Cohort ID the user belongs to for this active phase.
+  string cohort_id = 26;
 }
 
 message EventLeaderboardDebugFillRequest {
