@@ -1575,6 +1575,8 @@ message Unlockable {
   bool can_claim = 14;
   // Additional metadata properties.
   map<string, string> additional_properties = 15;
+  // Additional time that has been added to speed up the unlockable's progress, if any.
+  int64 advance_time_sec = 16;
 }
 
 // The cost to purchase an additional unlockable active slot.
