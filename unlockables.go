@@ -70,6 +70,9 @@ type UnlockablesSystem interface {
 	// Get returns all unlockables active for a user by ID.
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (unlockables *UnlockablesList, err error)
 
+	// UnlockAdvance will add the given amount of time towards the completion of an unlockable that has been started.
+	UnlockAdvance(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, instanceID string, seconds int64) (unlockables *UnlockablesList, err error)
+
 	// UnlockStart will begin an unlock of an unlockable by instance ID for a user.
 	UnlockStart(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, instanceID string) (unlockables *UnlockablesList, err error)
 
