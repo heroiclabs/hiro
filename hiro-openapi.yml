@@ -1,0 +1,3370 @@
+openapi: 3.0.0
+info:
+  title: Hiro RPC API
+  description: An OpenAPI collection for the Hiro RPC API
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:7350/v2/rpc/
+paths:
+  /RPC_ID_UNSPECIFIED?unwrap:
+    post:
+      summary: UNSPECIFIED
+      operationId: UNSPECIFIED
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INVENTORY_LIST?unwrap:
+    post:
+      summary: INVENTORY_LIST
+      operationId: INVENTORY_LIST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryListRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INVENTORY_LIST_INVENTORY?unwrap:
+    post:
+      summary: INVENTORY_LIST_INVENTORY
+      operationId: INVENTORY_LIST_INVENTORY
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryListRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INVENTORY_CONSUME?unwrap:
+    post:
+      summary: INVENTORY_CONSUME
+      operationId: INVENTORY_CONSUME
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryConsumeRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryConsumeRewards'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INVENTORY_GRANT?unwrap:
+    post:
+      summary: INVENTORY_GRANT
+      operationId: INVENTORY_GRANT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryGrantRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryUpdateAck'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INVENTORY_UPDATE?unwrap:
+    post:
+      summary: INVENTORY_UPDATE
+      operationId: INVENTORY_UPDATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryUpdateItemsRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryUpdateAck'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_DONATION_CLAIM?unwrap:
+    post:
+      summary: ECONOMY_DONATION_CLAIM
+      operationId: ECONOMY_DONATION_CLAIM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyDonationClaimRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomyDonationClaimRewards'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_DONATION_GIVE?unwrap:
+    post:
+      summary: ECONOMY_DONATION_GIVE
+      operationId: ECONOMY_DONATION_GIVE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyDonationGiveRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomyUpdateAck'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_DONATION_GET?unwrap:
+    post:
+      summary: ECONOMY_DONATION_GET
+      operationId: ECONOMY_DONATION_GET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyDonationGetRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomyDonationsByUserList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_DONATION_REQUEST?unwrap:
+    post:
+      summary: ECONOMY_DONATION_REQUEST
+      operationId: ECONOMY_DONATION_REQUEST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyDonationRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomyDonationAck'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_STORE_GET?unwrap:
+    post:
+      summary: ECONOMY_STORE_GET
+      operationId: ECONOMY_STORE_GET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyListRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomyList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_GRANT?unwrap:
+    post:
+      summary: ECONOMY_GRANT
+      operationId: ECONOMY_GRANT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyGrantRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomyUpdateAck'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_PURCHASE_INTENT?unwrap:
+    post:
+      summary: ECONOMY_PURCHASE_INTENT
+      operationId: ECONOMY_PURCHASE_INTENT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyPurchaseIntentRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_PURCHASE_ITEM?unwrap:
+    post:
+      summary: ECONOMY_PURCHASE_ITEM
+      operationId: ECONOMY_PURCHASE_ITEM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyPurchaseRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomyPurchaseAck'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_PURCHASE_RESTORE?unwrap:
+    post:
+      summary: ECONOMY_PURCHASE_RESTORE
+      operationId: ECONOMY_PURCHASE_RESTORE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyPurchaseRestoreRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_PLACEMENT_STATUS?unwrap:
+    post:
+      summary: ECONOMY_PLACEMENT_STATUS
+      operationId: ECONOMY_PLACEMENT_STATUS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyPlacementStatusRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomyPlacementStatus'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_PLACEMENT_START?unwrap:
+    post:
+      summary: ECONOMY_PLACEMENT_START
+      operationId: ECONOMY_PLACEMENT_START
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomyPlacementStartRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomyPlacementStatus'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ACHIEVEMENTS_CLAIM?unwrap:
+    post:
+      summary: ACHIEVEMENTS_CLAIM
+      operationId: ACHIEVEMENTS_CLAIM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AchievementsClaimRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AchievementsUpdateAck'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ACHIEVEMENTS_GET?unwrap:
+    post:
+      summary: ACHIEVEMENTS_GET
+      operationId: ACHIEVEMENTS_GET
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AchievementList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ACHIEVEMENTS_UPDATE?unwrap:
+    post:
+      summary: ACHIEVEMENTS_UPDATE
+      operationId: ACHIEVEMENTS_UPDATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AchievementsUpdateRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AchievementsUpdateAck'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ENERGY_GET?unwrap:
+    post:
+      summary: ENERGY_GET
+      operationId: ENERGY_GET
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnergyList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ENERGY_SPEND?unwrap:
+    post:
+      summary: ENERGY_SPEND
+      operationId: ENERGY_SPEND
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnergySpendRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnergySpendReward'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_TUTORIALS_GET?unwrap:
+    post:
+      summary: TUTORIALS_GET
+      operationId: TUTORIALS_GET
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TutorialList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_TUTORIALS_ACCEPT?unwrap:
+    post:
+      summary: TUTORIALS_ACCEPT
+      operationId: TUTORIALS_ACCEPT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TutorialAcceptRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tutorial'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_TUTORIALS_DECLINE?unwrap:
+    post:
+      summary: TUTORIALS_DECLINE
+      operationId: TUTORIALS_DECLINE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TutorialDeclineRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tutorial'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_TUTORIALS_ABANDON?unwrap:
+    post:
+      summary: TUTORIALS_ABANDON
+      operationId: TUTORIALS_ABANDON
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TutorialAbandonRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tutorial'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_TUTORIALS_UPDATE?unwrap:
+    post:
+      summary: TUTORIALS_UPDATE
+      operationId: TUTORIALS_UPDATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TutorialUpdateRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TutorialList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_TEAMS_CREATE?unwrap:
+    post:
+      summary: TEAMS_CREATE
+      operationId: TEAMS_CREATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamCreateRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_TEAMS_LIST?unwrap:
+    post:
+      summary: TEAMS_LIST
+      operationId: TEAMS_LIST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamListRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_TEAMS_SEARCH?unwrap:
+    post:
+      summary: TEAMS_SEARCH
+      operationId: TEAMS_SEARCH
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamSearchRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_TEAMS_WRITE_CHAT_MESSAGE?unwrap:
+    post:
+      summary: TEAMS_WRITE_CHAT_MESSAGE
+      operationId: TEAMS_WRITE_CHAT_MESSAGE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamWriteChatMessageRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelMessageAck'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_UNLOCKABLES_CREATE?unwrap:
+    post:
+      summary: UNLOCKABLES_CREATE
+      operationId: UNLOCKABLES_CREATE
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnlockablesList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_UNLOCKABLES_GET?unwrap:
+    post:
+      summary: UNLOCKABLES_GET
+      operationId: UNLOCKABLES_GET
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnlockablesList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_UNLOCKABLES_UNLOCK_START?unwrap:
+    post:
+      summary: UNLOCKABLES_UNLOCK_START
+      operationId: UNLOCKABLES_UNLOCK_START
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlockablesRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnlockablesList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_UNLOCKABLES_PURCHASE_UNLOCK?unwrap:
+    post:
+      summary: UNLOCKABLES_PURCHASE_UNLOCK
+      operationId: UNLOCKABLES_PURCHASE_UNLOCK
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlockablesRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnlockablesList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_UNLOCKABLES_PURCHASE_SLOT?unwrap:
+    post:
+      summary: UNLOCKABLES_PURCHASE_SLOT
+      operationId: UNLOCKABLES_PURCHASE_SLOT
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnlockablesList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_UNLOCKABLES_CLAIM?unwrap:
+    post:
+      summary: UNLOCKABLES_CLAIM
+      operationId: UNLOCKABLES_CLAIM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlockablesRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnlockablesReward'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_UNLOCKABLES_QUEUE_ADD?unwrap:
+    post:
+      summary: UNLOCKABLES_QUEUE_ADD
+      operationId: UNLOCKABLES_QUEUE_ADD
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlockablesQueueAddRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnlockablesList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_UNLOCKABLES_QUEUE_REMOVE?unwrap:
+    post:
+      summary: UNLOCKABLES_QUEUE_REMOVE
+      operationId: UNLOCKABLES_QUEUE_REMOVE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlockablesQueueRemoveRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnlockablesList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_UNLOCKABLES_QUEUE_SET?unwrap:
+    post:
+      summary: UNLOCKABLES_QUEUE_SET
+      operationId: UNLOCKABLES_QUEUE_SET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlockablesQueueSetRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnlockablesList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_BASE_RATE_APP?unwrap:
+    post:
+      summary: BASE_RATE_APP
+      operationId: BASE_RATE_APP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateAppRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_BASE_SET_DEVICE_PREFS?unwrap:
+    post:
+      summary: BASE_SET_DEVICE_PREFS
+      operationId: BASE_SET_DEVICE_PREFS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DevicePrefsRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_BASE_SYNC?unwrap:
+    post:
+      summary: BASE_SYNC
+      operationId: BASE_SYNC
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SyncRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncResponse'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_LEADERBOARDS_CONFIG_GET?unwrap:
+    post:
+      summary: LEADERBOARDS_CONFIG_GET
+      operationId: LEADERBOARDS_CONFIG_GET
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaderboardConfigList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_EVENT_LEADERBOARD_GET?unwrap:
+    post:
+      summary: EVENT_LEADERBOARD_GET
+      operationId: EVENT_LEADERBOARD_GET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventLeaderboardGet'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventLeaderboard'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_EVENT_LEADERBOARD_UPDATE?unwrap:
+    post:
+      summary: EVENT_LEADERBOARD_UPDATE
+      operationId: EVENT_LEADERBOARD_UPDATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventLeaderboardUpdate'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventLeaderboard'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_EVENT_LEADERBOARD_CLAIM?unwrap:
+    post:
+      summary: EVENT_LEADERBOARD_CLAIM
+      operationId: EVENT_LEADERBOARD_CLAIM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventLeaderboardClaim'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventLeaderboard'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_EVENT_LEADERBOARD_ROLL?unwrap:
+    post:
+      summary: EVENT_LEADERBOARD_ROLL
+      operationId: EVENT_LEADERBOARD_ROLL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventLeaderboardRoll'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventLeaderboard'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL?unwrap:
+    post:
+      summary: EVENT_LEADERBOARD_DEBUG_FILL
+      operationId: EVENT_LEADERBOARD_DEBUG_FILL
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventLeaderboard'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES?unwrap:
+    post:
+      summary: EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES
+      operationId: EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventLeaderboardDebugRandomScoresRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventLeaderboard'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_STATS_GET?unwrap:
+    post:
+      summary: STATS_GET
+      operationId: STATS_GET
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_STATS_UPDATE?unwrap:
+    post:
+      summary: STATS_UPDATE
+      operationId: STATS_UPDATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatUpdateRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_PROGRESSIONS_GET?unwrap:
+    post:
+      summary: PROGRESSIONS_GET
+      operationId: PROGRESSIONS_GET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgressionGetRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProgressionList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_PROGRESSIONS_PURCHASE?unwrap:
+    post:
+      summary: PROGRESSIONS_PURCHASE
+      operationId: PROGRESSIONS_PURCHASE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgressionPurchaseRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProgressionList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_PROGRESSIONS_UPDATE?unwrap:
+    post:
+      summary: PROGRESSIONS_UPDATE
+      operationId: PROGRESSIONS_UPDATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgressionUpdateRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProgressionList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INCENTIVES_SENDER_LIST?unwrap:
+    post:
+      summary: INCENTIVES_SENDER_LIST
+      operationId: INCENTIVES_SENDER_LIST
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncentiveList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INCENTIVES_SENDER_CREATE?unwrap:
+    post:
+      summary: INCENTIVES_SENDER_CREATE
+      operationId: INCENTIVES_SENDER_CREATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncentiveSenderCreateRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncentiveList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INCENTIVES_SENDER_DELETE?unwrap:
+    post:
+      summary: INCENTIVES_SENDER_DELETE
+      operationId: INCENTIVES_SENDER_DELETE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncentiveSenderDeleteRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncentiveList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INCENTIVES_SENDER_CLAIM?unwrap:
+    post:
+      summary: INCENTIVES_SENDER_CLAIM
+      operationId: INCENTIVES_SENDER_CLAIM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncentiveSenderClaimRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncentiveList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INCENTIVES_RECIPIENT_GET?unwrap:
+    post:
+      summary: INCENTIVES_RECIPIENT_GET
+      operationId: INCENTIVES_RECIPIENT_GET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncentiveRecipientGetRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncentiveInfo'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_INCENTIVES_RECIPIENT_CLAIM?unwrap:
+    post:
+      summary: INCENTIVES_RECIPIENT_CLAIM
+      operationId: INCENTIVES_RECIPIENT_CLAIM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncentiveRecipientClaimRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncentiveInfo'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_PROGRESSIONS_RESET?unwrap:
+    post:
+      summary: PROGRESSIONS_RESET
+      operationId: PROGRESSIONS_RESET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgressionResetRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProgressionList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_PLACEMENT_SUCCESS?unwrap:
+    post:
+      summary: ECONOMY_PLACEMENT_SUCCESS
+      operationId: ECONOMY_PLACEMENT_SUCCESS
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_ECONOMY_PLACEMENT_FAIL?unwrap:
+    post:
+      summary: ECONOMY_PLACEMENT_FAIL
+      operationId: ECONOMY_PLACEMENT_FAIL
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /RPC_ID_STORAGE_PERSONALIZER_UPLOAD?unwrap:
+    post:
+      summary: STORAGE_PERSONALIZER_UPLOAD
+      operationId: STORAGE_PERSONALIZER_UPLOAD
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    ProgressionCost:
+      type: object
+      properties:
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    ProgressionPreconditions:
+      type: object
+      properties:
+        cost:
+          $ref: '#/components/schemas/ProgressionCost'
+        progressions:
+          type: array
+          items:
+            type: string
+        achievements:
+          type: array
+          items:
+            type: string
+        counts:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        itemsMin:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        itemsMax:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        statsMin:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        statsMax:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        energyMin:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        energyMax:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencyMin:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencyMax:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    ProgressionPreconditionsBlock:
+      type: object
+      properties:
+        direct:
+          $ref: '#/components/schemas/ProgressionPreconditions'
+        operator:
+          $ref: '#/components/schemas/ProgressionPreconditionsOperator'
+        nested:
+          $ref: '#/components/schemas/ProgressionPreconditionsBlock'
+    Progression:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        unlocked:
+          type: boolean
+        preconditions:
+          $ref: '#/components/schemas/ProgressionPreconditionsBlock'
+        unmet_preconditions:
+          $ref: '#/components/schemas/ProgressionPreconditionsBlock'
+        counts:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    ProgressionDelta:
+      type: object
+      properties:
+        id:
+          type: string
+        state:
+          $ref: '#/components/schemas/ProgressionDeltaState'
+        preconditions:
+          $ref: '#/components/schemas/ProgressionPreconditionsBlock'
+        counts:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    ProgressionList:
+      type: object
+      properties:
+    ProgressionGetRequest:
+      type: object
+      properties:
+    ProgressionPurchaseRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    ProgressionUpdateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        counts:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    ProgressionResetRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    StatUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: integer
+          format: int64
+        operator:
+          $ref: '#/components/schemas/StatUpdateOperator'
+    StatUpdateRequest:
+      type: object
+      properties:
+        public:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatUpdate'
+        private:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatUpdate'
+    Stat:
+      type: object
+      properties:
+        name:
+          type: string
+        public:
+          type: boolean
+        update_time_sec:
+          type: integer
+          format: int64
+        value:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        total:
+          type: integer
+          format: int64
+        min:
+          type: integer
+          format: int64
+        max:
+          type: integer
+          format: int64
+        first:
+          type: integer
+          format: int64
+        last:
+          type: integer
+          format: int64
+    StatList:
+      type: object
+      properties:
+    ChannelMessageAck:
+      type: object
+      properties:
+        channel_id:
+          type: string
+        message_id:
+          type: string
+        code:
+          type: integer
+          format: int32
+        username:
+          type: string
+        create_time:
+          type: integer
+          format: int64
+        update_time:
+          type: integer
+          format: int64
+        persistent:
+          type: boolean
+        room_name:
+          type: string
+        group_id:
+          type: string
+        user_id_one:
+          type: string
+        user_id_two:
+          type: string
+    DevicePrefsRequest:
+      type: object
+      properties:
+        device_id:
+          type: string
+        push_token_android:
+          type: string
+        push_token_ios:
+          type: string
+    RewardInventoryItem:
+      type: object
+      properties:
+        id:
+          type: string
+        count:
+          type: integer
+          format: int64
+        instance_id:
+          type: string
+        stringProperties:
+          type: object
+          additionalProperties:
+            type: string
+    RewardEnergyModifier:
+      type: object
+      properties:
+        id:
+          type: string
+        operator:
+          type: string
+        value:
+          type: integer
+          format: int64
+        duration_sec:
+          type: integer
+          format: int64
+        weight:
+          type: integer
+          format: int64
+    RewardModifier:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        operator:
+          type: string
+        value:
+          type: integer
+          format: int64
+        duration_sec:
+          type: integer
+          format: int64
+    ActiveRewardModifier:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        operator:
+          type: string
+        value:
+          type: integer
+          format: int64
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+    Reward:
+      type: object
+      properties:
+        energy_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardEnergyModifier'
+        reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardModifier'
+        grant_time_sec:
+          type: integer
+          format: int64
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    RewardList:
+      type: object
+      properties:
+        rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reward'
+    RewardRangeInt32:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int32
+        max:
+          type: integer
+          format: int32
+        multiple:
+          type: integer
+          format: int32
+    RewardRangeInt64:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int64
+        max:
+          type: integer
+          format: int64
+        multiple:
+          type: integer
+          format: int64
+    RewardRangeUiNt64:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int64
+        max:
+          type: integer
+          format: int64
+        multiple:
+          type: integer
+          format: int64
+    RewardRangeDouble:
+      type: object
+      properties:
+        min:
+          type: number
+          format: double
+        max:
+          type: number
+          format: double
+        multiple:
+          type: number
+          format: double
+    AvailableRewardsStringPropertyOption:
+      type: object
+      properties:
+        weight:
+          type: integer
+          format: int64
+    AvailableRewardsStringProperty:
+      type: object
+      properties:
+        total_weight:
+          type: integer
+          format: int64
+    AvailableRewardsItem:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/RewardRangeInt64'
+    AvailableRewardsItemSet:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/RewardRangeInt64'
+        max_repeats:
+          type: integer
+          format: int64
+        set:
+          type: array
+          items:
+            type: string
+    AvailableRewardsCurrency:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/RewardRangeInt64'
+    AvailableRewardsEnergy:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/RewardRangeInt32'
+    AvailableRewardsEnergyModifier:
+      type: object
+      properties:
+        id:
+          type: string
+        operator:
+          type: string
+        value:
+          $ref: '#/components/schemas/RewardRangeInt64'
+        duration_sec:
+          $ref: '#/components/schemas/RewardRangeUiNt64'
+    AvailableRewardsRewardModifier:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        operator:
+          type: string
+        value:
+          $ref: '#/components/schemas/RewardRangeInt64'
+        duration_sec:
+          $ref: '#/components/schemas/RewardRangeUiNt64'
+    AvailableRewardsContents:
+      type: object
+      properties:
+        item_sets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsItemSet'
+        energy_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsEnergyModifier'
+        reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsRewardModifier'
+        weight:
+          type: integer
+          format: int64
+    AvailableRewards:
+      type: object
+      properties:
+        guaranteed:
+          $ref: '#/components/schemas/AvailableRewardsContents'
+        weighted:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsContents'
+        max_rolls:
+          type: integer
+          format: int64
+        total_weight:
+          type: integer
+          format: int64
+        max_repeat_rolls:
+          type: integer
+          format: int64
+    IncentiveClaim:
+      type: object
+      properties:
+        reward:
+          $ref: '#/components/schemas/Reward'
+        claim_time_sec:
+          type: integer
+          format: int64
+    Incentive:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        type:
+          $ref: '#/components/schemas/IncentiveType'
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        expiry_time_sec:
+          type: integer
+          format: int64
+        recipient_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        sender_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        unclaimed_recipients:
+          type: array
+          items:
+            type: string
+        rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reward'
+        max_claims:
+          type: integer
+          format: int64
+    IncentiveList:
+      type: object
+      properties:
+        incentives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Incentive'
+    IncentiveInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        type:
+          $ref: '#/components/schemas/IncentiveType'
+        sender:
+          type: string
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        can_claim:
+          type: boolean
+        reward:
+          $ref: '#/components/schemas/Reward'
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        expiry_time_sec:
+          type: integer
+          format: int64
+        claim_time_sec:
+          type: integer
+          format: int64
+    IncentiveSenderCreateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    IncentiveSenderDeleteRequest:
+      type: object
+      properties:
+        code:
+          type: string
+    IncentiveSenderClaimRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        recipient_ids:
+          type: array
+          items:
+            type: string
+    IncentiveRecipientGetRequest:
+      type: object
+      properties:
+        code:
+          type: string
+    IncentiveRecipientClaimRequest:
+      type: object
+      properties:
+        code:
+          type: string
+    EventLeaderboardGet:
+      type: object
+      properties:
+        id:
+          type: string
+    EventLeaderboardUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+    EventLeaderboardClaim:
+      type: object
+      properties:
+        id:
+          type: string
+    EventLeaderboardRoll:
+      type: object
+      properties:
+        id:
+          type: string
+    EventLeaderboardScore:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        display_name:
+          type: string
+        avatar_url:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        rank:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+    EventLeaderboardRewardTier:
+      type: object
+      properties:
+        name:
+          type: string
+        rank_max:
+          type: integer
+          format: int32
+        rank_min:
+          type: integer
+          format: int32
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        tier_change:
+          type: integer
+          format: int32
+    EventLeaderboardRewardTiers:
+      type: object
+      properties:
+        reward_tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventLeaderboardRewardTier'
+    EventLeaderboardChangeZone:
+      type: object
+      properties:
+        promotion:
+          type: number
+          format: double
+        demotion:
+          type: number
+          format: double
+        demote_idle:
+          type: boolean
+    EventLeaderboard:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        ascending:
+          type: boolean
+        operator:
+          type: string
+        tier:
+          type: integer
+          format: int32
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        expiry_time_sec:
+          type: integer
+          format: int64
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        claim_time_sec:
+          type: integer
+          format: int64
+        reward:
+          $ref: '#/components/schemas/Reward'
+        count:
+          type: integer
+          format: int64
+        max_count:
+          type: integer
+          format: int64
+        max_num_score:
+          type: integer
+          format: int64
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventLeaderboardScore'
+        is_active:
+          type: boolean
+        can_claim:
+          type: boolean
+        can_roll:
+          type: boolean
+        matchmaker_properties:
+          $ref: '#/components/schemas/GoogleProtobufStruct'
+        current_time_sec:
+          type: integer
+          format: int64
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    EventLeaderboardDebugFillRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        target_count:
+          type: integer
+          format: int32
+    EventLeaderboardDebugRandomScoresRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        min:
+          type: integer
+          format: int64
+        max:
+          type: integer
+          format: int64
+        operator:
+          $ref: '#/components/schemas/GoogleProtobufInt32value'
+        subscore_min:
+          type: integer
+          format: int64
+        subscore_max:
+          type: integer
+          format: int64
+    EconomyDonationContributor:
+      type: object
+      properties:
+        user_id:
+          type: string
+        count:
+          type: integer
+          format: int64
+    EconomyDonation:
+      type: object
+      properties:
+        user_id:
+          type: string
+        claim_count:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        description:
+          type: string
+        expire_time_sec:
+          type: integer
+          format: int64
+        id:
+          type: string
+        max_count:
+          type: integer
+          format: int64
+        name:
+          type: string
+        recipient_available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        user_contribution_max_count:
+          type: integer
+          format: int64
+        contributors:
+          type: array
+          items:
+            $ref: '#/components/schemas/EconomyDonationContributor'
+        contributor_available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        recipient_rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reward'
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    EconomyDonationAck:
+      type: object
+      properties:
+        created:
+          type: boolean
+        donation:
+          $ref: '#/components/schemas/EconomyDonation'
+    EconomyDonationsList:
+      type: object
+      properties:
+        donations:
+          type: array
+          items:
+            $ref: '#/components/schemas/EconomyDonation'
+    EconomyDonationClaimRequest:
+      type: object
+      properties:
+        donation_ids:
+          type: array
+          items:
+            type: string
+    EconomyDonationClaimRewards:
+      type: object
+      properties:
+        donations:
+          $ref: '#/components/schemas/EconomyDonationsList'
+    EconomyDonationGiveRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+        donation_id:
+          type: string
+    EconomyDonationGetRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    EconomyDonationRequest:
+      type: object
+      properties:
+        donation_id:
+          type: string
+    EconomyDonationsByUserList:
+      type: object
+      properties:
+    EconomyListStoreItemCost:
+      type: object
+      properties:
+        sku:
+          type: string
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EconomyListStoreItem:
+      type: object
+      properties:
+        category:
+          type: string
+        cost:
+          $ref: '#/components/schemas/EconomyListStoreItemCost'
+        description:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    EconomyListPlacement:
+      type: object
+      properties:
+        id:
+          type: string
+        reward:
+          $ref: '#/components/schemas/Reward'
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    EconomyList:
+      type: object
+      properties:
+        store_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/EconomyListStoreItem'
+        placements:
+          type: array
+          items:
+            $ref: '#/components/schemas/EconomyListPlacement'
+        active_reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveRewardModifier'
+        current_time_sec:
+          type: integer
+          format: int64
+    InventoryItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        item_sets:
+          type: array
+          items:
+            type: string
+        count:
+          type: integer
+          format: int64
+        max_count:
+          type: integer
+          format: int64
+        stackable:
+          type: boolean
+        consumable:
+          type: boolean
+        consume_available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        owned_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        instance_id:
+          type: string
+        stringProperties:
+          type: object
+          additionalProperties:
+            type: string
+    InventoryListRequest:
+      type: object
+      properties:
+        item_category:
+          type: string
+    InventoryGrantRequest:
+      type: object
+      properties:
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    InventoryUpdateItemProperties:
+      type: object
+      properties:
+        stringProperties:
+          type: object
+          additionalProperties:
+            type: string
+    InventoryUpdateItemsRequest:
+      type: object
+      properties:
+    Inventory:
+      type: object
+      properties:
+    InventoryConsumeRequest:
+      type: object
+      properties:
+        overconsume:
+          type: boolean
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        instances:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    InventoryConsumeRewards:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+    InventoryUpdateAck:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+    InventoryList:
+      type: object
+      properties:
+    EconomyListRequest:
+      type: object
+      properties:
+        store_type:
+          $ref: '#/components/schemas/EconomyStoreType'
+    EconomyGrantRequest:
+      type: object
+      properties:
+        reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardModifier'
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EconomyPurchaseIntentRequest:
+      type: object
+      properties:
+        item_id:
+          type: string
+        store_type:
+          $ref: '#/components/schemas/EconomyStoreType'
+        sku:
+          type: string
+    EconomyPurchaseRequest:
+      type: object
+      properties:
+        item_id:
+          type: string
+        store_type:
+          $ref: '#/components/schemas/EconomyStoreType'
+        receipt:
+          type: string
+    EconomyPurchaseRestoreRequest:
+      type: object
+      properties:
+        store_type:
+          $ref: '#/components/schemas/EconomyStoreType'
+        receipts:
+          type: array
+          items:
+            type: string
+    EconomyPlacementStatusRequest:
+      type: object
+      properties:
+        reward_id:
+          type: string
+        placement_id:
+          type: string
+        count:
+          type: integer
+          format: int32
+    EconomyPlacementStartRequest:
+      type: object
+      properties:
+        placement_id:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    EconomyPlacementStatus:
+      type: object
+      properties:
+        reward_id:
+          type: string
+        placement_id:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        complete_time_sec:
+          type: integer
+          format: int64
+        success:
+          type: boolean
+        reward:
+          $ref: '#/components/schemas/Reward'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    EconomyUpdateAck:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        active_reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveRewardModifier'
+        current_time_sec:
+          type: integer
+          format: int64
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EconomyPurchaseAck:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        is_sandbox_purchase:
+          type: boolean
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EnergyModifier:
+      type: object
+      properties:
+        operator:
+          type: string
+        value:
+          type: integer
+          format: int32
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+    Energy:
+      type: object
+      properties:
+        id:
+          type: string
+        current:
+          type: integer
+          format: int32
+        max:
+          type: integer
+          format: int32
+        refill:
+          type: integer
+          format: int32
+        refill_sec:
+          type: integer
+          format: int64
+        next_refill_time_sec:
+          type: integer
+          format: int64
+        max_refill_time_sec:
+          type: integer
+          format: int64
+        start_refill_time_sec:
+          type: integer
+          format: int64
+        modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnergyModifier'
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        current_time_sec:
+          type: integer
+          format: int64
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    EnergyList:
+      type: object
+      properties:
+    EnergySpendRequest:
+      type: object
+      properties:
+    EnergySpendReward:
+      type: object
+      properties:
+        energies:
+          $ref: '#/components/schemas/EnergyList'
+        reward:
+          $ref: '#/components/schemas/Reward'
+    LeaderboardConfig:
+      type: object
+      properties:
+        id:
+          type: string
+        sort_order:
+          type: string
+        operator:
+          type: string
+        reset_schedule:
+          type: string
+        authoritative:
+          type: boolean
+        regions:
+          type: array
+          items:
+            type: string
+    LeaderboardConfigList:
+      type: object
+      properties:
+        leaderboard_configs:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardConfig'
+    Tutorial:
+      type: object
+      properties:
+        id:
+          type: string
+        current:
+          type: integer
+          format: int32
+        max:
+          type: integer
+          format: int32
+        state:
+          $ref: '#/components/schemas/TutorialState'
+        update_time_sec:
+          type: integer
+          format: int64
+        complete_time_sec:
+          type: integer
+          format: int64
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    TutorialList:
+      type: object
+      properties:
+    TutorialAcceptRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    TutorialDeclineRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    TutorialAbandonRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    TutorialUpdateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        step:
+          type: integer
+          format: int32
+    RateAppRequest:
+      type: object
+      properties:
+        score:
+          type: integer
+          format: int32
+        message:
+          type: string
+    Team:
+      type: object
+      properties:
+        id:
+          type: string
+        creator_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        lang_tag:
+          type: string
+        metadata:
+          type: string
+        avatar_url:
+          type: string
+        open:
+          type: boolean
+        edge_count:
+          type: integer
+          format: int32
+        max_count:
+          type: integer
+          format: int32
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        icon:
+          type: string
+    TeamCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        desc:
+          type: string
+        open:
+          type: boolean
+        icon:
+          type: string
+        lang_tag:
+          type: string
+        setup_metadata:
+          type: string
+    TeamListRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+        location:
+          type: string
+        limit:
+          type: integer
+          format: int32
+    TeamList:
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+        cursor:
+          type: string
+    TeamSearchRequest:
+      type: object
+      properties:
+        input:
+          type: string
+        limit:
+          type: integer
+          format: int32
+    TeamWriteChatMessageRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+    UnlockableCost:
+      type: object
+      properties:
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    Unlockable:
+      type: object
+      properties:
+        id:
+          type: string
+        instance_id:
+          type: string
+        category:
+          type: string
+        start_cost:
+          $ref: '#/components/schemas/UnlockableCost'
+        cost:
+          $ref: '#/components/schemas/UnlockableCost'
+        description:
+          type: string
+        name:
+          type: string
+        reward:
+          $ref: '#/components/schemas/Reward'
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        wait_time_sec:
+          type: integer
+          format: int32
+        create_time_sec:
+          type: integer
+          format: int64
+        unlock_start_time_sec:
+          type: integer
+          format: int64
+        unlock_complete_time_sec:
+          type: integer
+          format: int64
+        can_claim:
+          type: boolean
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    UnlockableSlotCost:
+      type: object
+      properties:
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    UnlockablesList:
+      type: object
+      properties:
+        unlockables:
+          type: array
+          items:
+            $ref: '#/components/schemas/Unlockable'
+        overflow:
+          $ref: '#/components/schemas/Unlockable'
+        slots:
+          type: integer
+          format: int32
+        active_slots:
+          type: integer
+          format: int32
+        max_active_slots:
+          type: integer
+          format: int32
+        slot_cost:
+          $ref: '#/components/schemas/UnlockableSlotCost'
+        instance_id:
+          type: string
+        queued_unlocks:
+          type: array
+          items:
+            type: string
+        max_queued_unlocks:
+          type: integer
+          format: int32
+    UnlockablesReward:
+      type: object
+      properties:
+        unlockables:
+          $ref: '#/components/schemas/UnlockablesList'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+    UnlockablesRequest:
+      type: object
+      properties:
+        instance_id:
+          type: string
+    UnlockablesQueueAddRequest:
+      type: object
+      properties:
+        instance_ids:
+          type: array
+          items:
+            type: string
+    UnlockablesQueueRemoveRequest:
+      type: object
+      properties:
+        instance_ids:
+          type: array
+          items:
+            type: string
+    UnlockablesQueueSetRequest:
+      type: object
+      properties:
+        instance_ids:
+          type: array
+          items:
+            type: string
+    SubAchievement:
+      type: object
+      properties:
+        category:
+          type: string
+        claim_time_sec:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        description:
+          type: string
+        expire_time_sec:
+          type: integer
+          format: int64
+        id:
+          type: string
+        max_count:
+          type: integer
+          format: int64
+        name:
+          type: string
+        precondition_ids:
+          type: array
+          items:
+            type: string
+        reset_time_sec:
+          type: integer
+          format: int64
+        reward:
+          $ref: '#/components/schemas/Reward'
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        auto_claim:
+          type: boolean
+        auto_reset:
+          type: boolean
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    Achievement:
+      type: object
+      properties:
+        category:
+          type: string
+        claim_time_sec:
+          type: integer
+          format: int64
+        total_claim_time_sec:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        description:
+          type: string
+        expire_time_sec:
+          type: integer
+          format: int64
+        id:
+          type: string
+        max_count:
+          type: integer
+          format: int64
+        name:
+          type: string
+        precondition_ids:
+          type: array
+          items:
+            type: string
+        reset_time_sec:
+          type: integer
+          format: int64
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        available_total_reward:
+          $ref: '#/components/schemas/AvailableRewards'
+        total_reward:
+          $ref: '#/components/schemas/Reward'
+        auto_claim:
+          type: boolean
+        auto_claim_total:
+          type: boolean
+        auto_reset:
+          type: boolean
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    AchievementList:
+      type: object
+      properties:
+    AchievementsClaimRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+        claim_total_reward:
+          type: boolean
+    AchievementsGetRequest:
+      type: object
+      properties:
+    AchievementsUpdateAck:
+      type: object
+      properties:
+    AchievementsUpdateRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+        amount:
+          type: integer
+          format: int64
+        achievements:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    SyncInventoryItem:
+      type: object
+      properties:
+        item_id:
+          type: string
+        delta:
+          type: integer
+          format: int64
+        stringProperties:
+          type: object
+          additionalProperties:
+            type: string
+    SyncInventory:
+      type: object
+      properties:
+    SyncEconomy:
+      type: object
+      properties:
+        modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveRewardModifier'
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    SyncAchievementsUpdate:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        claim_time_sec:
+          type: integer
+          format: int64
+        total_claim_time_sec:
+          type: integer
+          format: int64
+    SyncAchievements:
+      type: object
+      properties:
+    SyncEnergyState:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        last_spend_time_sec:
+          type: integer
+          format: int64
+    SyncEnergy:
+      type: object
+      properties:
+        modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnergyModifier'
+    SyncEventLeaderboardUpdate:
+      type: object
+      properties:
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+    SyncEventLeaderboards:
+      type: object
+      properties:
+    SyncProgressionUpdate:
+      type: object
+      properties:
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        cost:
+          $ref: '#/components/schemas/ProgressionCost'
+        counts:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    SyncProgressions:
+      type: object
+      properties:
+    SyncTutorials:
+      type: object
+      properties:
+        accepts:
+          type: array
+          items:
+            type: string
+        declines:
+          type: array
+          items:
+            type: string
+        abandons:
+          type: array
+          items:
+            type: string
+        updates:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    SyncUnlockableUpdate:
+      type: object
+      properties:
+        unlockable_id:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        start_time_sec:
+          type: integer
+          format: int64
+        unlock_time_sec:
+          type: integer
+          format: int64
+    SyncUnlockables:
+      type: object
+      properties:
+        removes:
+          type: array
+          items:
+            type: string
+    SyncRequest:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/SyncInventory'
+        economy:
+          $ref: '#/components/schemas/SyncEconomy'
+        achievements:
+          $ref: '#/components/schemas/SyncAchievements'
+        energy:
+          $ref: '#/components/schemas/SyncEnergy'
+        event_leaderboards:
+          $ref: '#/components/schemas/SyncEventLeaderboards'
+        progressions:
+          $ref: '#/components/schemas/SyncProgressions'
+        stats:
+          $ref: '#/components/schemas/StatUpdateRequest'
+        tutorials:
+          $ref: '#/components/schemas/SyncTutorials'
+        unlockables:
+          $ref: '#/components/schemas/SyncUnlockables'
+    SyncResponse:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+        achievements:
+          $ref: '#/components/schemas/AchievementList'
+        energy:
+          $ref: '#/components/schemas/EnergyList'
+        event_leaderboards:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventLeaderboard'
+        progressions:
+          $ref: '#/components/schemas/ProgressionList'
+        stats:
+          $ref: '#/components/schemas/StatList'
+        tutorials:
+          $ref: '#/components/schemas/TutorialList'
+        unlockables:
+          $ref: '#/components/schemas/UnlockablesList'
+        active_reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveRewardModifier'
+        current_time_sec:
+          type: integer
+          format: int64
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    RpcId:
+      type: string
+      enum:
+        - RPC_ID_UNSPECIFIED
+        - RPC_ID_INVENTORY_LIST
+        - RPC_ID_INVENTORY_LIST_INVENTORY
+        - RPC_ID_INVENTORY_CONSUME
+        - RPC_ID_INVENTORY_GRANT
+        - RPC_ID_INVENTORY_UPDATE
+        - RPC_ID_ECONOMY_DONATION_CLAIM
+        - RPC_ID_ECONOMY_DONATION_GIVE
+        - RPC_ID_ECONOMY_DONATION_GET
+        - RPC_ID_ECONOMY_DONATION_REQUEST
+        - RPC_ID_ECONOMY_STORE_GET
+        - RPC_ID_ECONOMY_GRANT
+        - RPC_ID_ECONOMY_PURCHASE_INTENT
+        - RPC_ID_ECONOMY_PURCHASE_ITEM
+        - RPC_ID_ECONOMY_PURCHASE_RESTORE
+        - RPC_ID_ECONOMY_PLACEMENT_STATUS
+        - RPC_ID_ECONOMY_PLACEMENT_START
+        - RPC_ID_ACHIEVEMENTS_CLAIM
+        - RPC_ID_ACHIEVEMENTS_GET
+        - RPC_ID_ACHIEVEMENTS_UPDATE
+        - RPC_ID_ENERGY_GET
+        - RPC_ID_ENERGY_SPEND
+        - RPC_ID_TUTORIALS_GET
+        - RPC_ID_TUTORIALS_ACCEPT
+        - RPC_ID_TUTORIALS_DECLINE
+        - RPC_ID_TUTORIALS_ABANDON
+        - RPC_ID_TUTORIALS_UPDATE
+        - RPC_ID_TEAMS_CREATE
+        - RPC_ID_TEAMS_LIST
+        - RPC_ID_TEAMS_SEARCH
+        - RPC_ID_TEAMS_WRITE_CHAT_MESSAGE
+        - RPC_ID_UNLOCKABLES_CREATE
+        - RPC_ID_UNLOCKABLES_GET
+        - RPC_ID_UNLOCKABLES_UNLOCK_START
+        - RPC_ID_UNLOCKABLES_PURCHASE_UNLOCK
+        - RPC_ID_UNLOCKABLES_PURCHASE_SLOT
+        - RPC_ID_UNLOCKABLES_CLAIM
+        - RPC_ID_UNLOCKABLES_QUEUE_ADD
+        - RPC_ID_UNLOCKABLES_QUEUE_REMOVE
+        - RPC_ID_UNLOCKABLES_QUEUE_SET
+        - RPC_ID_BASE_RATE_APP
+        - RPC_ID_BASE_SET_DEVICE_PREFS
+        - RPC_ID_BASE_SYNC
+        - RPC_ID_LEADERBOARDS_CONFIG_GET
+        - RPC_ID_EVENT_LEADERBOARD_GET
+        - RPC_ID_EVENT_LEADERBOARD_UPDATE
+        - RPC_ID_EVENT_LEADERBOARD_CLAIM
+        - RPC_ID_EVENT_LEADERBOARD_ROLL
+        - RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL
+        - RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES
+        - RPC_ID_STATS_GET
+        - RPC_ID_STATS_UPDATE
+        - RPC_ID_PROGRESSIONS_GET
+        - RPC_ID_PROGRESSIONS_PURCHASE
+        - RPC_ID_PROGRESSIONS_UPDATE
+        - RPC_ID_INCENTIVES_SENDER_LIST
+        - RPC_ID_INCENTIVES_SENDER_CREATE
+        - RPC_ID_INCENTIVES_SENDER_DELETE
+        - RPC_ID_INCENTIVES_SENDER_CLAIM
+        - RPC_ID_INCENTIVES_RECIPIENT_GET
+        - RPC_ID_INCENTIVES_RECIPIENT_CLAIM
+        - RPC_ID_PROGRESSIONS_RESET
+        - RPC_ID_ECONOMY_PLACEMENT_SUCCESS
+        - RPC_ID_ECONOMY_PLACEMENT_FAIL
+        - RPC_ID_STORAGE_PERSONALIZER_UPLOAD
+    ProgressionPreconditionsOperator:
+      type: string
+      enum:
+        - PROGRESSION_PRECONDITIONS_OPERATOR_UNSPECIFIED
+        - PROGRESSION_PRECONDITIONS_OPERATOR_AND
+        - PROGRESSION_PRECONDITIONS_OPERATOR_OR
+        - PROGRESSION_PRECONDITIONS_OPERATOR_XOR
+        - PROGRESSION_PRECONDITIONS_OPERATOR_NOT
+    ProgressionDeltaState:
+      type: string
+      enum:
+        - PROGRESSION_DELTA_STATE_UNSPECIFIED
+        - PROGRESSION_DELTA_STATE_UNCHANGED
+        - PROGRESSION_DELTA_STATE_UNLOCKED
+        - PROGRESSION_DELTA_STATE_LOCKED
+    StatUpdateOperator:
+      type: string
+      enum:
+        - STAT_UPDATE_OPERATOR_UNSPECIFIED
+        - STAT_UPDATE_OPERATOR_SET
+        - STAT_UPDATE_OPERATOR_DELTA
+        - STAT_UPDATE_OPERATOR_MIN
+        - STAT_UPDATE_OPERATOR_MAX
+    EconomyStoreType:
+      type: string
+      enum:
+        - ECONOMY_STORE_TYPE_UNSPECIFIED
+        - ECONOMY_STORE_TYPE_APPLE_APPSTORE
+        - ECONOMY_STORE_TYPE_GOOGLE_PLAY
+        - ECONOMY_STORE_TYPE_FBINSTANT
+        - ECONOMY_STORE_TYPE_DISCORD
+    IncentiveType:
+      type: string
+      enum:
+        - INCENTIVE_TYPE_UNSPECIFIED
+        - INCENTIVE_TYPE_INVITE
+    TutorialState:
+      type: string
+      enum:
+        - TUTORIAL_STATE_NONE
+        - TUTORIAL_STATE_ACCEPTED
+        - TUTORIAL_STATE_DECLINED
+        - TUTORIAL_STATE_IN_PROGRESS
+        - TUTORIAL_STATE_COMPLETED
+        - TUTORIAL_STATE_ABANDONED
