@@ -22,6 +22,7 @@ import (
 
 type InventoryConfig struct {
 	Items    map[string]*InventoryConfigItem `json:"items,omitempty"`
+	Limits   *InventoryConfigLimits          `json:"limits,omitempty"`
 	ItemSets map[string]map[string]bool      `json:"-"` // Auto-computed when the config is read or personalized.
 }
 
@@ -38,6 +39,11 @@ type InventoryConfigItem struct {
 	NumericProperties map[string]float64   `json:"numeric_properties,omitempty"`
 	Disabled          bool                 `json:"disabled,omitempty"`
 	KeepZero          bool                 `json:"keep_zero,omitempty"`
+}
+
+type InventoryConfigLimits struct {
+	Categories map[string]int64 `json:"categories,omitempty"`
+	ItemSets   map[string]int64 `json:"item_sets,omitempty"`
 }
 
 // The InventorySystem provides a gameplay system which can manage a player's inventory.
