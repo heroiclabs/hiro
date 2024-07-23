@@ -47,10 +47,10 @@ type InventorySystem interface {
 	System
 
 	// List will return the items defined as well as the computed item sets for the user by ID.
-	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (items map[string]*InventoryConfigItem, itemSets map[string][]string, err error)
+	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, category string) (items map[string]*InventoryConfigItem, itemSets map[string][]string, err error)
 
 	// ListInventoryItems will return the items which are part of a user's inventory by ID.
-	ListInventoryItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, category string) (inventory *Inventory, err error)
+	ListInventoryItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, category string) (inventory *Inventory, err error)
 
 	// ConsumeItems will deduct the item(s) from the user's inventory and run the consume reward for each one, if defined.
 	ConsumeItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs, instanceIDs map[string]int64, overConsume bool) (updatedInventory *Inventory, rewards map[string][]*Reward, instanceRewards map[string][]*Reward, err error)
