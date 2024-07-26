@@ -70,6 +70,29 @@
         }
       },
       "type": "object"
+    },
+    "limits": {
+      "properties": {
+        "categories": {
+          "patternProperties": {
+            ".+": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "item_sets": {
+          "patternProperties": {
+            ".+": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
     }
   },
   "type": "object"

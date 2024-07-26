@@ -33,5 +33,10 @@
           "prop2": 456
         }
       }
+    },
+    "limits": {
+      "categories": {
+        "category1": 10
+      }
     }
 }
