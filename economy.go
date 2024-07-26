@@ -44,10 +44,11 @@ var (
 
 // EconomyConfig is the data definition for the EconomySystem type.
 type EconomyConfig struct {
-	InitializeUser *EconomyConfigInitializeUser       `json:"initialize_user,omitempty"`
-	Donations      map[string]*EconomyConfigDonation  `json:"donations,omitempty"`
-	StoreItems     map[string]*EconomyConfigStoreItem `json:"store_items,omitempty"`
-	Placements     map[string]*EconomyConfigPlacement `json:"placements,omitempty"`
+	InitializeUser    *EconomyConfigInitializeUser       `json:"initialize_user,omitempty"`
+	Donations         map[string]*EconomyConfigDonation  `json:"donations,omitempty"`
+	StoreItems        map[string]*EconomyConfigStoreItem `json:"store_items,omitempty"`
+	Placements        map[string]*EconomyConfigPlacement `json:"placements,omitempty"`
+	AllowFakeReceipts bool                               `json:"allow_fake_receipts,omitempty"`
 }
 
 type EconomyConfigDonation struct {
