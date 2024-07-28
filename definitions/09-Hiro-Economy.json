@@ -59,5 +59,6 @@
           "key1": "value1"
         }
       }
-    }
+    },
+    "allow_fake_receipts": false
 }
