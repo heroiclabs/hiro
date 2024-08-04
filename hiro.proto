@@ -78,6 +78,8 @@ enum RpcId {
   RPC_ID_ENERGY_GET = 19 [(input) = "", (output) = "EnergyList"];
   // Spend one or more energies for the player.
   RPC_ID_ENERGY_SPEND = 20 [(input) = "EnergySpendRequest", (output) = "EnergySpendReward"];
+  // Grant one or more energies to the player.
+  RPC_ID_ENERGY_GRANT = 65 [(input) = "EnergyGrantRequest", (output) = "EnergyList"];
 
   // Get the tutorials and current progress step for the player.
   RPC_ID_TUTORIALS_GET = 21 [(input) = "", (output) = "TutorialList"];
@@ -1357,6 +1359,12 @@ message EnergySpendReward {
   EnergyList energies = 1;
   // The cumulative reward of spending the energies.
   Reward reward = 2;
+}
+
+// Request to grant one or more energy amounts.
+message EnergyGrantRequest {
+  // Energy amounts to grant.
+  map<string, int32> amounts = 1;
 }
 
 // A leaderboard configuration.
