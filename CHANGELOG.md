@@ -5,6 +5,26 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.17.0] - 2024-08-05
+### Added
+- New "UnlockAdvance" function to advance the unlock of an active Unlockable.
+- Add OpenAPI v3 spec which can be used by API clients like [Bruno](https://www.usebruno.com/), Insomnia, etc.
+- (Unity) Google Play Games and Apple Sign-in are included as new integrations.
+- Inventory items can be filtered by category.
+- Inventory items can be restricted when granted with category and item set limits.
+- (Unity) Energy can now be granted to the player directly as well as part of a reward.
+
+### Changed
+- Expose the cohort ID which the user has been assigned to within the active phase of the Event Leaderboard.
+- Economy can now be configured to accept fake receipts and process grants for development.
+- Allow Achievements to have a max count of 0 (zero) and be claimable only after preconditions are completed.
+
+### Fixed
+- Progression counts on top level entities were not set in some API responses.
+- Handle "null" description and avatar URL with Teams search gracefully.
+- Purchased unlocks should also contribute towards the next queued unlockable start.
+- Use substitute transaction ID for Discord test purchases.
+
 ## [1.16.0] - 2024-07-07
 ### Added
 - Virtual store now supports [Discord In-App Purchases](https://github.com/discord/embedded-app-sdk/blob/main/docs/in-app-purchases.md).
