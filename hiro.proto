@@ -1820,8 +1820,8 @@ message SyncAchievements {
 message SyncEnergyState {
   // Current count.
   int64 count = 1;
-  // Last spend time.
-  int64 last_spend_time_sec = 2;
+  // Time when the energy started refilling.
+  int64 refill_start_time_sec = 2;
 }
 
 // Input for an offline state sync operation for the energy system.
