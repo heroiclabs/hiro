@@ -40,6 +40,7 @@ type SatoriPublisher interface {
 	IsPublishTeamsEvents() bool
 	IsPublishTutorialsEvents() bool
 	IsPublishUnlockablesEvents() bool
+	IsPublishAuctionsEvents() bool
 }
 
 var _ SatoriPublisher = (*SatoriPersonalizer)(nil)
@@ -170,6 +171,22 @@ func SatoriPersonalizerPublishUnlockablesEvents() SatoriPersonalizerOption {
 	}
 }
 
+func SatoriPersonalizerPublishAuctionsEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishAuctionsEvents = true
+		},
+	}
+}
+
+func SatoriPersonalizerPublishAllEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishAll = true
+		},
+	}
+}
+
 func SatoriPersonalizerNoCache() SatoriPersonalizerOption {
 	return &satoriPersonalizerOptionFunc{
 		f: func(personalizer *SatoriPersonalizer) {
@@ -184,6 +201,8 @@ type SatoriPersonalizerCache struct {
 }
 
 type SatoriPersonalizer struct {
+	publishAll bool
+
 	publishAuthenticateRequest bool
 
 	publishAchievementsEvents      bool
@@ -199,6 +218,7 @@ type SatoriPersonalizer struct {
 	publishTeamsEvents             bool
 	publishTutorialsEvents         bool
 	publishUnlockablesEvents       bool
+	publishAuctionsEvents          bool
 
 	noCache bool
 
@@ -241,7 +261,7 @@ func NewSatoriPersonalizer(ctx context.Context, opts ...SatoriPersonalizerOption
 	return s
 }
 
-var allFlagNames = []string{"Hiro-Achievements", "Hiro-Base", "Hiro-Economy", "Hiro-Energy", "Hiro-Inventory", "Hiro-Leaderboards", "Hiro-Teams", "Hiro-Tutorials", "Hiro-Unlockables", "Hiro-Stats", "Hiro-Event-Leaderboards", "Hiro-Progression", "Hiro-Incentives"}
+var allFlagNames = []string{"Hiro-Achievements", "Hiro-Base", "Hiro-Economy", "Hiro-Energy", "Hiro-Inventory", "Hiro-Leaderboards", "Hiro-Teams", "Hiro-Tutorials", "Hiro-Unlockables", "Hiro-Stats", "Hiro-Event-Leaderboards", "Hiro-Progression", "Hiro-Incentives", "Hiro-Auctions"}
 
 func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string) (any, error) {
 	var flagName string
@@ -272,6 +292,8 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		flagName = "Hiro-Progression"
 	case SystemTypeIncentives:
 		flagName = "Hiro-Incentives"
+	case SystemTypeAuctions:
+		flagName = "Hiro-Auctions"
 	default:
 		return nil, runtime.NewError("hiro system type unknown", 3)
 	}
@@ -424,57 +446,61 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 }
 
 func (p *SatoriPersonalizer) IsPublishAuthenticateRequest() bool {
-	return p.publishAuthenticateRequest
+	return p.publishAll || p.publishAuthenticateRequest
 }
 
 func (p *SatoriPersonalizer) IsPublishAchievementsEvents() bool {
-	return p.publishAchievementsEvents
+	return p.publishAll || p.publishAchievementsEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishBaseEvents() bool {
-	return p.publishBaseEvents
+	return p.publishAll || p.publishBaseEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishEconomyEvents() bool {
-	return p.publishEconomyEvents
+	return p.publishAll || p.publishEconomyEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishEnergyEvents() bool {
-	return p.publishEnergyEvents
+	return p.publishAll || p.publishEnergyEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishEventLeaderboardsEvents() bool {
-	return p.publishEventLeaderboardsEvents
+	return p.publishAll || p.publishEventLeaderboardsEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishIncentivesEvents() bool {
-	return p.publishIncentivesEvents
+	return p.publishAll || p.publishIncentivesEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishInventoryEvents() bool {
-	return p.publishInventoryEvents
+	return p.publishAll || p.publishInventoryEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishLeaderboardsEvents() bool {
-	return p.publishLeaderboardsEvents
+	return p.publishAll || p.publishLeaderboardsEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishProgressionEvents() bool {
-	return p.publishProgressionEvents
+	return p.publishAll || p.publishProgressionEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishStatsEvents() bool {
-	return p.publishStatsEvents
+	return p.publishAll || p.publishStatsEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishTeamsEvents() bool {
-	return p.publishTeamsEvents
+	return p.publishAll || p.publishTeamsEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishTutorialsEvents() bool {
-	return p.publishTutorialsEvents
+	return p.publishAll || p.publishTutorialsEvents
 }
 
 func (p *SatoriPersonalizer) IsPublishUnlockablesEvents() bool {
-	return p.publishUnlockablesEvents
+	return p.publishAll || p.publishUnlockablesEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishAuctionsEvents() bool {
+	return p.publishAll || p.publishAuctionsEvents
 }
