@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "auctions": {
+      "patternProperties": {
+        ".+": {
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "pattern": ".+",
+                "type": "string"
+              }
+            },
+            "item_sets": {
+              "type": "array",
+              "items": {
+                "pattern": ".+",
+                "type": "string"
+              }
+            },
+            "conditions": {
+              "patternProperties": {
+                ".+": {
+                  "properties": {
+                    "duration_sec": {
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "listing_cost": {
+                      "properties": {
+                        "currencies": {
+                          "patternProperties": {
+                            ".+": {
+                              "type": "number"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "items": {
+                          "patternProperties": {
+                            ".+": {
+                              "type": "number"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "energies": {
+                          "patternProperties": {
+                            ".+": {
+                              "type": "number"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "bid_start": {
+                      "properties": {
+                        "currencies": {
+                          "patternProperties": {
+                            ".+": {
+                              "type": "number"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "bid_increment": {
+                      "properties": {
+                        "percentage": {
+                          "type": "number"
+                        },
+                        "fixed": {
+                          "patternProperties": {
+                            ".+": {
+                              "type": "number"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "extension_threshold_sec": {
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "extension_sec": {
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "extension_max_sec": {
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "fee": {
+                      "properties": {
+                        "percentage": {
+                          "type": "number"
+                        },
+                        "fixed": {
+                          "patternProperties": {
+                            ".+": {
+                              "type": "number"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "duration_sec",
+                    "bid_start"
+                  ],
+                  "type": "object"
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": [
+            "conditions"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
