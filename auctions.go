@@ -104,7 +104,7 @@ type AuctionsSystem interface {
 	Cancel(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, auctionID string) (*AuctionCancel, error)
 
 	// Create a new auction based on supplied parameters and available configuration.
-	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, templateID, conditionID string, instanceIDs []string, startTimeSec int64) (*Auction, error)
+	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, templateID, conditionID string, instanceIDs []string, startTimeSec int64, items []*InventoryItem) (*Auction, error)
 
 	// ListBids returns auctions the user has successfully bid on.
 	ListBids(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, limit int, cursor string) (*AuctionList, error)
