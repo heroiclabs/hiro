@@ -459,7 +459,7 @@ message AuctionCancelRequest {
 // Request to create a new auction.
 message AuctionCreateRequest {
   // Auction template to use.
-  string auction_id = 1;
+  string template_id = 1;
   // Auction condition set to use.
   string condition_id = 2;
   // Item instance(s) to list in the auction.
