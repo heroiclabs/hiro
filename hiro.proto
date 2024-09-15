@@ -398,6 +398,8 @@ message AuctionClaimCreated {
   AuctionBidAmount reward = 2;
   // Fee(s) that were paid by the creator.
   AuctionBidAmount fee = 3;
+  // Items returned in the event of a failed auction.
+  repeated InventoryItem items = 4;
 }
 
 // Result of cancelling an auction.
