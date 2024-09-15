@@ -42,6 +42,7 @@ const (
 	storagePersonalizerKeyTeams             = "teams"
 	storagePersonalizerKeyTutorials         = "tutorials"
 	storagePersonalizerKeyUnlockables       = "unlockables"
+	storagePersonalizerKeyAuctions          = "auctions"
 )
 
 var _ Personalizer = (*StoragePersonalizer)(nil)
@@ -74,6 +75,7 @@ type storagePersonalizerUploadRequest struct {
 	Tutorials        *TutorialsConfig         `json:"tutorials"`
 	Unlockables      *UnlockablesConfig       `json:"unlockables"`
 	Base             *BaseSystemConfig        `json:"base"`
+	Auctions         *AuctionsConfig          `json:"auctions"`
 }
 
 func NewStoragePersonalizerDefault(logger runtime.Logger, initializer runtime.Initializer, register bool) *StoragePersonalizer {
@@ -243,6 +245,16 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			writes = append(writes, write)
 		}
 
+		if req.Auctions != nil {
+			write, err := p.newStorageWrite(req.Auctions, storagePersonalizerKeyAuctions)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error creating auctions storage object.")
+				return "", ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
 		_, err = nk.StorageWrite(ctx, writes)
 		if err != nil {
 			return "", err
@@ -289,6 +301,8 @@ func (p *StoragePersonalizer) GetValue(ctx context.Context, logger runtime.Logge
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyUnlockables}
 		case SystemTypeBase:
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyBase}
+		case SystemTypeAuctions:
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyAuctions}
 		default:
 			return nil, runtime.NewError("hiro system type unknown", 3)
 		}

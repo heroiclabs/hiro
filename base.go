@@ -30,6 +30,7 @@ var (
 	ErrBadInput           = runtime.NewError("bad input", 3)                // INVALID_ARGUMENT
 	ErrFileNotFound       = runtime.NewError("file not found", 3)
 	ErrNoSessionUser      = runtime.NewError("no user ID in session", 3)       // INVALID_ARGUMENT
+	ErrNoSessionID        = runtime.NewError("no session ID in session", 3)    // INVALID_ARGUMENT
 	ErrNoSessionUsername  = runtime.NewError("no username in session", 3)      // INVALID_ARGUMENT
 	ErrPayloadDecode      = runtime.NewError("cannot decode json", 13)         // INTERNAL
 	ErrPayloadEmpty       = runtime.NewError("payload should not be empty", 3) // INVALID_ARGUMENT
@@ -96,6 +97,7 @@ type Hiro interface {
 	GetEventLeaderboardsSystem() EventLeaderboardsSystem
 	GetProgressionSystem() ProgressionSystem
 	GetIncentivesSystem() IncentivesSystem
+	GetAuctionsSystem() AuctionsSystem
 }
 
 // The SystemType identifies each of the gameplay systems.
@@ -116,6 +118,7 @@ const (
 	SystemTypeEventLeaderboards
 	SystemTypeProgression
 	SystemTypeIncentives
+	SystemTypeAuctions
 )
 
 // Init initializes a Hiro type with the configurations provided.
@@ -328,6 +331,15 @@ func WithProgressionSystem(configFile string, register bool) SystemConfig {
 func WithIncentivesSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeIncentives,
+		configFile: configFile,
+		register:   register,
+	}
+}
+
+// WithAuctionsSystem configures a AuctionsSystem type and optionally registers its RPCs with the game server.
+func WithAuctionsSystem(configFile string, register bool) SystemConfig {
+	return &systemConfig{
+		systemType: SystemTypeAuctions,
 		configFile: configFile,
 		register:   register,
 	}

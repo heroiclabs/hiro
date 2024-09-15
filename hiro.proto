@@ -171,6 +171,25 @@ enum RpcId {
   // Reset progression progress.
   RPC_ID_PROGRESSIONS_RESET = 57 [(input) = "ProgressionResetRequest", (output) = "ProgressionList"];
 
+  // Fetch all available auction templates.
+  RPC_ID_AUCTIONS_GET_TEMPLATES = 66 [(input) = "", (output) = "AuctionTemplates"];
+  // List available auctions.
+  RPC_ID_AUCTIONS_LIST = 67 [(input) = "AuctionListRequest", (output) = "AuctionList"];
+  // Bid on an active auction.
+  RPC_ID_AUCTIONS_BID = 68 [(input) = "AuctionBidRequest", (output) = "Auction"];
+  // Claim a completed auction where the user was the winning bidder.
+  RPC_ID_AUCTIONS_CLAIM_BID = 69 [(input) = "AuctionClaimBidRequest", (output) = "AuctionClaimBid"];
+  // Claim a completed auction where the user was the seller.
+  RPC_ID_AUCTIONS_CLAIM_CREATED = 70 [(input) = "AuctionClaimCreatedRequest", (output) = "AuctionClaimCreated"];
+  // Cancel an in-progress auction.
+  RPC_ID_AUCTIONS_CANCEL = 71 [(input) = "AuctionCancelRequest", (output) = "AuctionCancel"];
+  // Create a new auction.
+  RPC_ID_AUCTIONS_CREATE = 72 [(input) = "AuctionCreateRequest", (output) = "Auction"];
+  // List auctions the user has bid on.
+  RPC_ID_AUCTIONS_LIST_BIDS = 73 [(input) = "AuctionListBidsRequest", (output) = "AuctionList"];
+  // List auctions the user has created.
+  RPC_ID_AUCTIONS_LIST_CREATED = 74 [(input) = "AuctionListCreatedRequest", (output) = "AuctionList"];
+
   //--- Server to server RPCs ---//
 
   // Webhook RPC to handle Rewarded Video Ad placement success callbacks.
@@ -179,6 +198,298 @@ enum RpcId {
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
   // RPC to upload Hiro system configurations for the storage personalizer.
   RPC_ID_STORAGE_PERSONALIZER_UPLOAD = 1003;
+}
+
+enum RpcSocketId {
+  RPC_SOCKET_ID_UNSPECIFIED = 0;
+
+  // Follow auctions a user has an interest in, bid or own. Must be called via a connected socket.
+  RPC_SOCKET_ID_AUCTIONS_FOLLOW = 1 [(input) = "AuctionFollowRequest", (output) = "AuctionList"];
+  // Bid on an auction and follow it for further updates.
+  RPC_SOCKET_ID_AUCTIONS_BID = 2 [(input) = "AuctionBidRequest", (output) = "Auction"];
+}
+
+// Bid amount associated with an auction.
+message AuctionBidAmount {
+  // Currencies required or placed as part of the bid.
+  map<string, int64> currencies = 1;
+}
+
+// Cost to be paid for listing an auction under this config condition.
+message AuctionTemplateConditionListingCost {
+  // Currencies cost, if any.
+  map<string, int64> currencies = 1;
+  // Inventory items cost, if any.
+  map<string, int64> items = 2;
+  // Energies cost, if any.
+  map<string, int64> energies = 3;
+}
+
+// Minimum increment required between bids.
+message AuctionTemplateConditionBidIncrement {
+  // Percentage-based increment value.
+  double percentage = 1;
+  // Fixed increment amount.
+  AuctionBidAmount fixed = 2;
+}
+
+// A condition set as part of an auction template.
+message AuctionTemplateCondition {
+  // Number of seconds the auction will be available for.
+  int64 duration_sec = 1;
+  // Cost to be paid on creating the auction listing, if any.
+  AuctionTemplateConditionListingCost listing_cost = 2;
+  // Minimum starting bid.
+  AuctionBidAmount bid_start = 3;
+  // Minimum increment between bids.
+  AuctionTemplateConditionBidIncrement bid_increment = 4;
+  // How close to auction end should it be extended if a new bid arrives.
+  int64 extension_threshold_sec = 5;
+  // How many seconds at a time will be added when extending.
+  int64 extension_sec = 6;
+  // How many seconds total may be added as extension.
+  int64 extension_max_sec = 7;
+  // Auction fee the creator will pay out of the winning bid amount, if any.
+  AuctionFee fee = 8;
+}
+
+// An individually usable auction template.
+message AuctionTemplate {
+  // Item identifiers that can be listed using this auction template.
+  repeated string items = 1;
+  // Item sets that can be listed using this auction template.
+  repeated string item_sets = 2;
+  // Condition configurations available.
+  map<string, AuctionTemplateCondition> conditions = 3;
+}
+
+// Set of all available auction templates.
+message AuctionTemplates {
+  // All available auction templates, keyed by an unique identifier.
+  map<string, AuctionTemplate> templates = 1;
+}
+
+// The content(s) of an auction.
+message AuctionReward {
+  // Items being sold as part of a given auction listing.
+  repeated InventoryItem items = 1;
+}
+
+// Represents a bid on an auction.
+message AuctionBid {
+  // The user ID of the bidder.
+  string user_id = 1;
+  // Amount(s) placed as a bid.
+  AuctionBidAmount bid = 2;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the bid was placed.
+  int64 create_time_sec = 3;
+}
+
+// Fee structure associated with an auction, which will be deducted on completion.
+message AuctionFee {
+  // Percentage-based fee value.
+  double percentage = 1;
+  // Fixed fee amount.
+  AuctionBidAmount fixed = 2;
+}
+
+// An individual auction listing.
+message Auction {
+  // Unique identifier for this auction.
+  string id = 1;
+  // Identifier of the user that created this auction.
+  string user_id = 2;
+  // Item(s) being auctioned.
+  AuctionReward reward = 3;
+  // Fees associated, to be deducted when the creator claims the winning bid.
+  AuctionFee fee = 4;
+  // Version hash of this auction data, used to ensure operations act on latest known state.
+  string version = 5;
+  // Current highest bid, if any.
+  AuctionBid bid = 6;
+  // Minimum next bid amount.
+  AuctionBidAmount bid_next = 7;
+  // Auction duration in seconds, including any extensions.
+  int64 duration_sec = 8;
+  // Original auction duration in seconds, not counting any extension time.
+  int64 original_duration_sec = 9;
+  // Additional time added so far to the original duration.
+  int64 extension_added_sec = 10;
+  // Threshold before end of auction where a bid would extend the time.
+  int64 extension_threshold_sec = 11;
+  // Extra time that would be added if a bid is placed within the threshold before the auction ends.
+  int64 extension_sec = 12;
+  // Maximum total number of seconds the auction can be extended by.
+  int64 extension_max_sec = 13;
+  // Extra time still available.
+  int64 extension_remaining_sec = 14;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the auction was created.
+  int64 create_time_sec = 15;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the current bid was updated, for example by placing a new bid.
+  int64 update_time_sec = 16;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the auction starts.
+  int64 start_time_sec = 17;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the auction ends.
+  int64 end_time_sec = 18;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the auction was originally intended to end, not counting extensions.
+  int64 original_end_time_sec = 19;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the auction was cancelled, if any.
+  int64 cancel_time_sec = 20;
+  // The current UNIX time (for gRPC clients) or ISO string (for REST clients) on the server.
+  int64 current_time_sec = 21;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the owner claimed the successful bid amount.
+  int64 owner_claim_sec = 22;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the winning bidder claimed the auction reward.
+  int64 winner_claim_sec = 23;
+  // Indicates if the auction has started from the server perspective.
+  bool has_started = 24;
+  // Indicates if the auction has ended from the server perspective.
+  bool has_ended = 25;
+  // Indicates if the caller can bid on this auction.
+  bool can_bid = 26;
+  // Indicates if the caller can claim a reward from this auction, either the reward or winning bid.
+  bool can_claim = 27;
+  // Indicates if the auction can be cancelled by its creator.
+  bool can_cancel = 28;
+}
+
+// Notification payload containing a bid update for a followed auction.
+message AuctionNotificationBid {
+  // Unique auction identifier.
+  string id = 1;
+  // New version hash for this auction.
+  string version = 2;
+  // Current highest bid, if any.
+  AuctionBid bid = 3;
+  // Minimum next bid amount.
+  AuctionBidAmount bid_next = 4;
+  // Additional time added so far to the original duration.
+  int64 extension_added_sec = 5;
+  // Extra time still available.
+  int64 extension_remaining_sec = 6;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the current bid was updated, for example by placing a new bid.
+  int64 update_time_sec = 7;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the auction ends.
+  int64 end_time_sec = 8;
+  // The current UNIX time (for gRPC clients) or ISO string (for REST clients) on the server.
+  int64 current_time_sec = 9;
+}
+
+// Server to client stream envelope.
+message StreamEnvelope {
+  oneof message {
+      AuctionNotificationBid auction_bid = 1;
+  }
+}
+
+// Result of claiming an auction as the winning bidder.
+message AuctionClaimBid {
+  // Auction that was just claimed.
+  Auction auction = 1;
+  // Reward(s) that were successfully claimed by the winning bidder.
+  AuctionReward reward = 2;
+}
+
+// Result of claiming an auction as the creator.
+message AuctionClaimCreated {
+  // Auction that was just claimed.
+  Auction auction = 1;
+  // Reward(s) that were successfully claimed by the creator.
+  AuctionBidAmount reward = 2;
+  // Fee(s) that were paid by the creator.
+  AuctionBidAmount fee = 3;
+  // Items returned in the event of a failed auction.
+  repeated InventoryItem returned_items = 4;
+}
+
+// Result of cancelling an auction.
+message AuctionCancel {
+  // Auction that was just cancelled.
+  Auction auction = 1;
+  // Reward(s) that were successfully refunded to the original auction creator.
+  AuctionReward reward = 2;
+}
+
+// A list of auctions filtered by some initial request criteria.
+message AuctionList {
+  // Auctions matching the requested filters.
+  repeated Auction auctions = 1;
+  // Pagination cursor to fetch more results, or empty if there are no more.
+  string cursor = 2;
+}
+
+// Request to list available auctions, optionally filtered based on given criteria.
+message AuctionListRequest {
+  // Formatted filter query.
+  string query = 1;
+  // Custom sort criteria.
+  repeated string sort = 2;
+  // Maximum number of auctions to return in a single response.
+  int64 limit = 3;
+  // Cursor to use for retrieving the next page of results.
+  string cursor = 4;
+}
+
+// Request to place a bid on an active auction.
+message AuctionBidRequest {
+  // Unique auction identifier to bid on.
+  string id = 1;
+  // The last seen version hash of the auction.
+  string version = 2;
+  // Bid amounts to place, must at least match the minimum next bid.
+  AuctionBidAmount bid = 3;
+}
+
+// Request to claim a successful auction by either the winning bidder.
+message AuctionClaimBidRequest {
+  // Unique auction identifier to claim.
+  string id = 1;
+}
+
+// Request to claim a successful auction by either the creator.
+message AuctionClaimCreatedRequest {
+  // Unique auction identifier to claim.
+  string id = 1;
+}
+
+// Request to cancel an active auction.
+message AuctionCancelRequest {
+  // Unique auction identifier to cancel.
+  string id = 1;
+}
+
+// Request to create a new auction.
+message AuctionCreateRequest {
+  // Auction template to use.
+  string template_id = 1;
+  // Auction condition set to use.
+  string condition_id = 2;
+  // Item instance(s) to list in the auction.
+  repeated string instance_ids = 3;
+  // Time when the auction should start, omit to start immediately.
+  int64 start_time_sec = 4;
+}
+
+// Request to retrieve a list of auctions the user has bid on.
+message AuctionListBidsRequest {
+  // Maximum number of auctions to return in a single response.
+  int64 limit = 1;
+  // Cursor to use for retrieving the next page of results.
+  string cursor = 2;
+}
+
+// Request to retrieve a list of auctions the user has created.
+message AuctionListCreatedRequest {
+  // Maximum number of auctions to return in a single response.
+  int64 limit = 1;
+  // Cursor to use for retrieving the next page of results.
+  string cursor = 2;
+}
+
+// Request to follow auctions the user has an interest in.
+message AuctionsFollowRequest {
+  // Auction IDs to follow.
+  repeated string ids = 1;
 }
 
 // The cost(s) associated with permanently unlocking a progression.
