@@ -206,7 +206,7 @@ type EconomySystem interface {
 	RewardRoll(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, rewardConfig *EconomyConfigReward) (reward *Reward, err error)
 
 	// RewardGrant updates a user's economy, inventory, and/or energy models with the contents of a rolled reward.
-	RewardGrant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, reward *Reward, metadata map[string]interface{}) (err error)
+	RewardGrant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, reward *Reward, metadata map[string]interface{}, ignoreLimits bool) (err error)
 
 	// DonationClaim will claim donation rewards for a user and the given donation IDs.
 	DonationClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, donationIDs []string) (donationsList *EconomyDonationsList, err error)
