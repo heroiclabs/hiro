@@ -1432,6 +1432,216 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_AUCTIONS_GET_TEMPLATES?unwrap:
+    post:
+      summary: AUCTIONS_GET_TEMPLATES
+      description: "Fetch all available auction templates."
+      operationId: AUCTIONS_GET_TEMPLATES
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionTemplates'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_AUCTIONS_LIST?unwrap:
+    post:
+      summary: AUCTIONS_LIST
+      description: "List available auctions."
+      operationId: AUCTIONS_LIST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionListRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_AUCTIONS_BID?unwrap:
+    post:
+      summary: AUCTIONS_BID
+      description: "Bid on an active auction."
+      operationId: AUCTIONS_BID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionBidRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auction'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_AUCTIONS_CLAIM_BID?unwrap:
+    post:
+      summary: AUCTIONS_CLAIM_BID
+      description: "Claim a completed auction where the user was the winning bidder."
+      operationId: AUCTIONS_CLAIM_BID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionClaimBidRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionClaimBid'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_AUCTIONS_CLAIM_CREATED?unwrap:
+    post:
+      summary: AUCTIONS_CLAIM_CREATED
+      description: "Claim a completed auction where the user was the seller."
+      operationId: AUCTIONS_CLAIM_CREATED
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionClaimCreatedRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionClaimCreated'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_AUCTIONS_CANCEL?unwrap:
+    post:
+      summary: AUCTIONS_CANCEL
+      description: "Cancel an in-progress auction."
+      operationId: AUCTIONS_CANCEL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionCancelRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionCancel'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_AUCTIONS_CREATE?unwrap:
+    post:
+      summary: AUCTIONS_CREATE
+      description: "Create a new auction."
+      operationId: AUCTIONS_CREATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionCreateRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auction'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_AUCTIONS_LIST_BIDS?unwrap:
+    post:
+      summary: AUCTIONS_LIST_BIDS
+      description: "List auctions the user has bid on."
+      operationId: AUCTIONS_LIST_BIDS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionListBidsRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_AUCTIONS_LIST_CREATED?unwrap:
+    post:
+      summary: AUCTIONS_LIST_CREATED
+      description: "List auctions the user has created."
+      operationId: AUCTIONS_LIST_CREATED
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionListCreatedRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_ECONOMY_PLACEMENT_SUCCESS?unwrap:
     post:
       summary: ECONOMY_PLACEMENT_SUCCESS
@@ -1491,6 +1701,317 @@ components:
         code:
           type: integer
           format: int32
+    AuctionBidAmount:
+      type: object
+      properties:
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    AuctionTemplateConditionListingCost:
+      type: object
+      properties:
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        energies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    AuctionTemplateConditionBidIncrement:
+      type: object
+      properties:
+        percentage:
+          type: number
+          format: double
+        fixed:
+          $ref: '#/components/schemas/AuctionBidAmount'
+    AuctionTemplateCondition:
+      type: object
+      properties:
+        duration_sec:
+          type: integer
+          format: int64
+        listing_cost:
+          $ref: '#/components/schemas/AuctionTemplateConditionListingCost'
+        bid_start:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        bid_increment:
+          $ref: '#/components/schemas/AuctionTemplateConditionBidIncrement'
+        extension_threshold_sec:
+          type: integer
+          format: int64
+        extension_sec:
+          type: integer
+          format: int64
+        extension_max_sec:
+          type: integer
+          format: int64
+        fee:
+          $ref: '#/components/schemas/AuctionFee'
+    AuctionTemplate:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+        item_sets:
+          type: array
+          items:
+            type: string
+    AuctionTemplates:
+      type: object
+      properties:
+    AuctionReward:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+    AuctionBid:
+      type: object
+      properties:
+        user_id:
+          type: string
+        bid:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        create_time_sec:
+          type: integer
+          format: int64
+    AuctionFee:
+      type: object
+      properties:
+        percentage:
+          type: number
+          format: double
+        fixed:
+          $ref: '#/components/schemas/AuctionBidAmount'
+    Auction:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        reward:
+          $ref: '#/components/schemas/AuctionReward'
+        fee:
+          $ref: '#/components/schemas/AuctionFee'
+        version:
+          type: string
+        bid:
+          $ref: '#/components/schemas/AuctionBid'
+        bid_next:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        duration_sec:
+          type: integer
+          format: int64
+        original_duration_sec:
+          type: integer
+          format: int64
+        extension_added_sec:
+          type: integer
+          format: int64
+        extension_threshold_sec:
+          type: integer
+          format: int64
+        extension_sec:
+          type: integer
+          format: int64
+        extension_max_sec:
+          type: integer
+          format: int64
+        extension_remaining_sec:
+          type: integer
+          format: int64
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        original_end_time_sec:
+          type: integer
+          format: int64
+        cancel_time_sec:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        owner_claim_sec:
+          type: integer
+          format: int64
+        winner_claim_sec:
+          type: integer
+          format: int64
+        has_started:
+          type: boolean
+        has_ended:
+          type: boolean
+        can_bid:
+          type: boolean
+        can_claim:
+          type: boolean
+        can_cancel:
+          type: boolean
+    AuctionNotificationBid:
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+        bid:
+          $ref: '#/components/schemas/AuctionBid'
+        bid_next:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        extension_added_sec:
+          type: integer
+          format: int64
+        extension_remaining_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+    StreamEnvelope:
+      type: object
+      properties:
+    AuctionClaimBid:
+      type: object
+      properties:
+        auction:
+          $ref: '#/components/schemas/Auction'
+        reward:
+          $ref: '#/components/schemas/AuctionReward'
+    AuctionClaimCreated:
+      type: object
+      properties:
+        auction:
+          $ref: '#/components/schemas/Auction'
+        reward:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        fee:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        returned_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+    AuctionCancel:
+      type: object
+      properties:
+        auction:
+          $ref: '#/components/schemas/Auction'
+        reward:
+          $ref: '#/components/schemas/AuctionReward'
+    AuctionList:
+      type: object
+      properties:
+        auctions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Auction'
+        cursor:
+          type: string
+    AuctionListRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        sort:
+          type: array
+          items:
+            type: string
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+    AuctionBidRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+        bid:
+          $ref: '#/components/schemas/AuctionBidAmount'
+    AuctionClaimBidRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    AuctionClaimCreatedRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    AuctionCancelRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    AuctionCreateRequest:
+      type: object
+      properties:
+        template_id:
+          type: string
+        condition_id:
+          type: string
+        instance_ids:
+          type: array
+          items:
+            type: string
+        start_time_sec:
+          type: integer
+          format: int64
+    AuctionListBidsRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+    AuctionListCreatedRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+    AuctionsFollowRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
     ProgressionCost:
       type: object
       properties:
@@ -3198,7 +3719,7 @@ components:
         count:
           type: integer
           format: int64
-        last_spend_time_sec:
+        refill_start_time_sec:
           type: integer
           format: int64
     SyncEnergy:
@@ -3403,9 +3924,24 @@ components:
         - RPC_ID_INCENTIVES_RECIPIENT_GET
         - RPC_ID_INCENTIVES_RECIPIENT_CLAIM
         - RPC_ID_PROGRESSIONS_RESET
+        - RPC_ID_AUCTIONS_GET_TEMPLATES
+        - RPC_ID_AUCTIONS_LIST
+        - RPC_ID_AUCTIONS_BID
+        - RPC_ID_AUCTIONS_CLAIM_BID
+        - RPC_ID_AUCTIONS_CLAIM_CREATED
+        - RPC_ID_AUCTIONS_CANCEL
+        - RPC_ID_AUCTIONS_CREATE
+        - RPC_ID_AUCTIONS_LIST_BIDS
+        - RPC_ID_AUCTIONS_LIST_CREATED
         - RPC_ID_ECONOMY_PLACEMENT_SUCCESS
         - RPC_ID_ECONOMY_PLACEMENT_FAIL
         - RPC_ID_STORAGE_PERSONALIZER_UPLOAD
+    RpcSocketId:
+      type: string
+      enum:
+        - RPC_SOCKET_ID_UNSPECIFIED
+        - RPC_SOCKET_ID_AUCTIONS_FOLLOW
+        - RPC_SOCKET_ID_AUCTIONS_BID
     ProgressionPreconditionsOperator:
       type: string
       enum:

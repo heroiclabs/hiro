@@ -5,6 +5,20 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.18.0] - 2024-09-16
+### Added
+- New Auctions gameplay system to allow players to offer and bid on Inventory items.
+
+### Changed
+- The contents of the Energies sync sub-message had some fields renamed for clarity.
+- Inventory and Economy can now optionally grant over the max count defined against an Item.
+- Additional checks are used to perform Economy initialize user in case raw SQL has been used on account creation.
+- Godot support is now packaged within Hiro releases.
+
+### Fixed
+- Active modifiers are correctly returned in Economy refresh and ACKs.
+- (Unity) Team chat messages now use an appropriate `IComparer` for sorted order.
+
 ## [1.17.0] - 2024-08-05
 ### Added
 - New "UnlockAdvance" function to advance the unlock of an active Unlockable.
