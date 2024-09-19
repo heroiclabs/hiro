@@ -88,7 +88,7 @@ type AuctionsSystem interface {
 	// GetTemplates lists all available auction configurations that can be used to create auction listings.
 	GetTemplates(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*AuctionTemplates, error)
 
-	// List achievements based on provided criteria.
+	// List auctions based on provided criteria.
 	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, query string, sort []string, limit int, cursor string) (*AuctionList, error)
 
 	// Bid on an active auction.
