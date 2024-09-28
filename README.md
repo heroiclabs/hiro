@@ -5,11 +5,16 @@ Hiro
 
 [Hiro](https://heroiclabs.com/hiro/) is a client and server framework built on top of [Nakama server](https://heroiclabs.com/nakama/) to rapidly build high performance, flexible, and composable gameplay systems like Achievements, Energies, Event Leaderboards, and much more.
 
-The code is divided into a Go package of interfaces and a C# DLL which is packaged with utilities (such as UnityPurchasing, Unity Mobile Notifications, etc) for Unity Engine.
+The code is divided into a Go package of interfaces and a client package for one of these supported languages and game engines:
 
-This repository maintains the public interfaces which make it easy to use the library from inside a Nakama game server project to extend and build additional gameplay systems.
+- A C# DLL which is packaged with utilities (such as UnityPurchasing, Unity Mobile Notifications, etc) for Unity Engine,
+- An Unreal plugin, as well as CPP support for other engines,
+- TypeScript-based JavaScript package for web games,
+- And a Godot asset written in GDScript.
 
-To learn more about Hiro and integrate it into your Unity game project, have a look at these resources:
+This repository maintains the public interfaces which make it easy to use the library from inside a Nakama game server project to extend and build additional gameplay systems. You can explore the features with an [API client](https://www.usebruno.com/) when you import the "hiro-openapi.yml" collection.
+
+To learn more about Hiro and integrate it into your game project, have a look at these resources:
 
 - [heroiclabs.com/hiro](https://heroiclabs.com/hiro/)
 - [heroiclabs.com/docs/hiro](https://heroiclabs.com/docs/hiro/)
@@ -35,8 +40,17 @@ Reach out to [Heroic Labs](mailto:sales@heroiclabs.com) for more information abo
 The game framework initializes and returns the configured gameplay systems with `Init`: 
 
 ```go
+package main
+
+import (
+	"context"
+	"database/sql"
+	"github.com/heroiclabs/hiro"
+	"github.com/heroiclabs/nakama-common/runtime"
+)
+
 func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
-	systems, err := hiro.Init(ctx, logger, nk, initializer, "hiro.bin", "LicenseKey"
+	systems, err := hiro.Init(ctx, logger, nk, initializer, "hiro.bin", "LicenseKey",
 		hiro.WithEconomySystem("economy.json", true),
 		hiro.WithEnergySystem("energy.json", true),
 		hiro.WithInventorySystem("inventory.json", true))
