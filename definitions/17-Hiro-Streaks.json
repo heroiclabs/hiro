@@ -1,0 +1,47 @@
+{
+  "streaks": {
+    "wins": {
+      "name": "Consecutive Wins",
+      "count": 0,
+      "max_count": 9,
+      "max_count_current_reset": 3,
+      "idle_count_decay_reset": 9,
+      "reset_cronexpr": "0 0 * * *",
+      "rewards": [
+        {
+          "count_min": 3,
+          "count_max": 3,
+          "reward": {
+            "guaranteed": {
+              "currencies": {
+                "coins": 10
+              }
+            }
+          }
+        },
+        {
+          "count_min": 6,
+          "count_max": 6,
+          "reward": {
+            "guaranteed": {
+              "currencies": {
+                "coins": 30
+              }
+            }
+          }
+        },
+        {
+          "count_min": 9,
+          "count_max": 9,
+          "reward": {
+            "guaranteed": {
+              "currencies": {
+                "coins": 100
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

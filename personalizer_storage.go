@@ -43,6 +43,7 @@ const (
 	storagePersonalizerKeyTutorials         = "tutorials"
 	storagePersonalizerKeyUnlockables       = "unlockables"
 	storagePersonalizerKeyAuctions          = "auctions"
+	storagePersonalizerKeyStreaks           = "streaks"
 )
 
 var _ Personalizer = (*StoragePersonalizer)(nil)
@@ -62,20 +63,21 @@ type StoragePersonalizer struct {
 }
 
 type storagePersonalizerUploadRequest struct {
-	Achievements     *AchievementsConfig      `json:"achievements"`
-	Economy          *EconomyConfig           `json:"economy"`
-	Energy           *EnergyConfig            `json:"energy"`
-	Inventory        *InventoryConfig         `json:"inventory"`
-	EventLeaderboard *EventLeaderboardsConfig `json:"event_leaderboards"`
-	Incentives       *IncentivesConfig        `json:"incentives"`
-	Leaderboards     *LeaderboardConfig       `json:"leaderboards"`
-	Progression      *ProgressionConfig       `json:"progression"`
-	Stats            *StatsConfig             `json:"stats"`
-	Teams            *TeamsConfig             `json:"teams"`
-	Tutorials        *TutorialsConfig         `json:"tutorials"`
-	Unlockables      *UnlockablesConfig       `json:"unlockables"`
-	Base             *BaseSystemConfig        `json:"base"`
-	Auctions         *AuctionsConfig          `json:"auctions"`
+	Achievements     *AchievementsConfig      `json:"achievements,omitempty"`
+	Economy          *EconomyConfig           `json:"economy,omitempty"`
+	Energy           *EnergyConfig            `json:"energy,omitempty"`
+	Inventory        *InventoryConfig         `json:"inventory,omitempty"`
+	EventLeaderboard *EventLeaderboardsConfig `json:"event_leaderboards,omitempty"`
+	Incentives       *IncentivesConfig        `json:"incentives,omitempty"`
+	Leaderboards     *LeaderboardConfig       `json:"leaderboards,omitempty"`
+	Progression      *ProgressionConfig       `json:"progression,omitempty"`
+	Stats            *StatsConfig             `json:"stats,omitempty"`
+	Teams            *TeamsConfig             `json:"teams,omitempty"`
+	Tutorials        *TutorialsConfig         `json:"tutorials,omitempty"`
+	Unlockables      *UnlockablesConfig       `json:"unlockables,omitempty"`
+	Base             *BaseSystemConfig        `json:"base,omitempty"`
+	Auctions         *AuctionsConfig          `json:"auctions,omitempty"`
+	Streaks          *StreaksConfig           `json:"streaks,omitempty"`
 }
 
 func NewStoragePersonalizerDefault(logger runtime.Logger, initializer runtime.Initializer, register bool) *StoragePersonalizer {
@@ -255,6 +257,16 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			writes = append(writes, write)
 		}
 
+		if req.Streaks != nil {
+			write, err := p.newStorageWrite(req.Streaks, storagePersonalizerKeyStreaks)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error creating streaks storage object.")
+				return "", ErrInternal
+			}
+
+			writes = append(writes, write)
+		}
+
 		_, err = nk.StorageWrite(ctx, writes)
 		if err != nil {
 			return "", err
@@ -303,6 +315,8 @@ func (p *StoragePersonalizer) GetValue(ctx context.Context, logger runtime.Logge
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyBase}
 		case SystemTypeAuctions:
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyAuctions}
+		case SystemTypeStreaks:
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyStreaks}
 		default:
 			return nil, runtime.NewError("hiro system type unknown", 3)
 		}

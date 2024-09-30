@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "streaks": {
+      "patternProperties": {
+        ".+": {
+          "properties": {
+            "name": {
+              "type": "string",
+              "pattern": ".*"
+            },
+            "count": {
+              "type": "number",
+              "minimum": 0
+            },
+            "max_count": {
+              "type": "number",
+              "minimum": 0
+            },
+            "max_count_current_reset": {
+              "type": "number",
+              "minimum": 0
+            },
+            "idle_count_decay_reset": {
+              "type": "number",
+              "minimum": 0
+            },
+            "reset_cronexpr": {
+              "type": "string"
+            },
+            "rewards": {
+              "type": "array",
+              "items": {
+                "$ref": "Hiro-Rewards"
+              }
+            }
+          },
+          "required": [
+            "conditions"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

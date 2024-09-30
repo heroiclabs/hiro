@@ -98,6 +98,7 @@ type Hiro interface {
 	GetProgressionSystem() ProgressionSystem
 	GetIncentivesSystem() IncentivesSystem
 	GetAuctionsSystem() AuctionsSystem
+	GetStreaksSystem() StreaksSystem
 }
 
 // The SystemType identifies each of the gameplay systems.
@@ -119,6 +120,7 @@ const (
 	SystemTypeProgression
 	SystemTypeIncentives
 	SystemTypeAuctions
+	SystemTypeStreaks
 )
 
 // Init initializes a Hiro type with the configurations provided.
@@ -340,6 +342,15 @@ func WithIncentivesSystem(configFile string, register bool) SystemConfig {
 func WithAuctionsSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeAuctions,
+		configFile: configFile,
+		register:   register,
+	}
+}
+
+// WithStreaksSystem configures a StreaksSystem type and optionally registers its RPCs with the game server.
+func WithStreaksSystem(configFile string, register bool) SystemConfig {
+	return &systemConfig{
+		systemType: SystemTypeStreaks,
 		configFile: configFile,
 		register:   register,
 	}

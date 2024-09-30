@@ -179,6 +179,14 @@ func SatoriPersonalizerPublishAuctionsEvents() SatoriPersonalizerOption {
 	}
 }
 
+func SatoriPersonalizerPublishStreaksEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishStreaksEvents = true
+		},
+	}
+}
+
 func SatoriPersonalizerPublishAllEvents() SatoriPersonalizerOption {
 	return &satoriPersonalizerOptionFunc{
 		f: func(personalizer *SatoriPersonalizer) {
@@ -219,6 +227,7 @@ type SatoriPersonalizer struct {
 	publishTutorialsEvents         bool
 	publishUnlockablesEvents       bool
 	publishAuctionsEvents          bool
+	publishStreaksEvents           bool
 
 	noCache bool
 
@@ -261,7 +270,7 @@ func NewSatoriPersonalizer(ctx context.Context, opts ...SatoriPersonalizerOption
 	return s
 }
 
-var allFlagNames = []string{"Hiro-Achievements", "Hiro-Base", "Hiro-Economy", "Hiro-Energy", "Hiro-Inventory", "Hiro-Leaderboards", "Hiro-Teams", "Hiro-Tutorials", "Hiro-Unlockables", "Hiro-Stats", "Hiro-Event-Leaderboards", "Hiro-Progression", "Hiro-Incentives", "Hiro-Auctions"}
+var allFlagNames = []string{"Hiro-Achievements", "Hiro-Base", "Hiro-Economy", "Hiro-Energy", "Hiro-Inventory", "Hiro-Leaderboards", "Hiro-Teams", "Hiro-Tutorials", "Hiro-Unlockables", "Hiro-Stats", "Hiro-Event-Leaderboards", "Hiro-Progression", "Hiro-Incentives", "Hiro-Auctions", "Hiro-Streaks"}
 
 func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string) (any, error) {
 	var flagName string
@@ -294,6 +303,8 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		flagName = "Hiro-Incentives"
 	case SystemTypeAuctions:
 		flagName = "Hiro-Auctions"
+	case SystemTypeStreaks:
+		flagName = "Hiro-Streaks"
 	default:
 		return nil, runtime.NewError("hiro system type unknown", 3)
 	}
@@ -503,4 +514,8 @@ func (p *SatoriPersonalizer) IsPublishUnlockablesEvents() bool {
 
 func (p *SatoriPersonalizer) IsPublishAuctionsEvents() bool {
 	return p.publishAll || p.publishAuctionsEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishStreaksEvents() bool {
+	return p.publishAll || p.publishStreaksEvents
 }
