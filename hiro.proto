@@ -2295,36 +2295,46 @@ message Streak {
   string id = 1;
   // Display name for this streak.
   string name = 2;
+  // A user-facing description for this streak.
+  string description = 3;
   // Current overall progress count.
-  int64 count = 3;
+  int64 count = 4;
   // Maximum allowed overall progress count.
-  int64 max_count = 4;
+  int64 max_count = 5;
   // Progress count submitted during this reset.
-  int64 count_current_reset = 5;
+  int64 count_current_reset = 6;
   // Maximum progress count allowed during any single reset.
-  int64 max_count_current_reset = 6;
+  int64 max_count_current_reset = 7;
   // How much overall count is lost per idle reset.
-  int64 idle_count_decay_reset = 7;
+  int64 idle_count_decay_reset = 8;
   // How much overall count can be lost total in any contiguous idle period.
-  int64 max_idle_count_decay = 8;
+  int64 max_idle_count_decay = 9;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak's last reset period was.
-  int64 prev_reset_time_sec = 9;
+  int64 prev_reset_time_sec = 10;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak's next reset period is.
-  int64 reset_time_sec = 10;
+  int64 reset_time_sec = 11;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak was first registered for this user.
-  int64 create_time_sec = 11;
+  int64 create_time_sec = 12;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak was last updated.
-  int64 update_time_sec = 12;
+  int64 update_time_sec = 13;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak was last claimed.
-  int64 claim_time_sec = 13;
+  int64 claim_time_sec = 14;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak becomes available for use.
+  int64 start_time_sec = 15;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak is no longer available for use.
+  int64 end_time_sec = 16;
   // All rewards configured for this streak.
-  repeated StreakAvailableReward rewards = 14;
+  repeated StreakAvailableReward rewards = 17;
   // Rewards currently available to claim for this streak.
-  repeated StreakAvailableReward available_rewards = 15;
+  repeated StreakAvailableReward available_rewards = 18;
   // Claimed rewards.
-  repeated StreakReward claimed_rewards = 16;
+  repeated StreakReward claimed_rewards = 19;
   // Flag indicating if this streak can currently be claimed to obtain some rewards.
-  bool can_claim = 17;
+  bool can_claim = 20;
+  // Flag indicating if submitting a count update is allowed.
+  bool can_update = 21;
+  // Flag indicating if resetting the streak is allowed.
+  bool can_reset = 22;
 }
 
 // A list of all streaks for a given user.

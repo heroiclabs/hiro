@@ -29,6 +29,7 @@ type StreaksConfig struct {
 
 type StreaksConfigStreak struct {
 	Name                 string                       `json:"name,omitempty"`
+	Description          string                       `json:"description,omitempty"`
 	Count                int64                        `json:"count,omitempty"`
 	MaxCount             int64                        `json:"max_count,omitempty"`
 	MaxCountCurrentReset int64                        `json:"max_count_current_reset,omitempty"`
@@ -36,6 +37,9 @@ type StreaksConfigStreak struct {
 	MaxIdleCountDecay    int64                        `json:"max_idle_count_decay,omitempty"`
 	ResetCronexpr        string                       `json:"reset_cronexpr,omitempty"`
 	Rewards              []*StreaksConfigStreakReward `json:"rewards,omitempty"`
+	StartTimeSec         int64                        `json:"start_time_sec,omitempty"`
+	EndTimeSec           int64                        `json:"end_time_sec,omitempty"`
+	Disabled             bool                         `json:"disabled,omitempty"`
 }
 
 type StreaksConfigStreakReward struct {

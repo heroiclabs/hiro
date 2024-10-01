@@ -2,6 +2,7 @@
   "streaks": {
     "wins": {
       "name": "Consecutive Wins",
+      "description": "Number of consecutive wins, without any losses.",
       "count": 0,
       "max_count": 9,
       "max_count_current_reset": 3,

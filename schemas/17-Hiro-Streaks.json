@@ -10,6 +10,10 @@
               "type": "string",
               "pattern": ".*"
             },
+            "description": {
+              "type": "string",
+              "pattern": ".*"
+            },
             "count": {
               "type": "number",
               "minimum": 0
@@ -34,6 +38,17 @@
               "items": {
                 "$ref": "Hiro-Rewards"
               }
+            },
+            "start_time_sec": {
+              "type": "number",
+              "minimum": 0
+            },
+            "end_time_sec": {
+              "type": "number",
+              "minimum": 0
+            },
+            "disabled": {
+              "type": "boolean"
             }
           },
           "required": [
