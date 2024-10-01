@@ -15,7 +15,9 @@
           "reward": {
             "guaranteed": {
               "currencies": {
-                "coins": 10
+                "coins": {
+                  "min": 10
+                }
               }
             }
           }
@@ -26,7 +28,9 @@
           "reward": {
             "guaranteed": {
               "currencies": {
-                "coins": 30
+                "coins": {
+                  "min": 30
+                }
               }
             }
           }
@@ -37,7 +41,9 @@
           "reward": {
             "guaranteed": {
               "currencies": {
-                "coins": 100
+                "coins": {
+                  "min": 100
+                }
               }
             }
           }
