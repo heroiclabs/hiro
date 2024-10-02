@@ -49,4 +49,7 @@ type TutorialsSystem interface {
 
 	// Update modifies a tutorial by its ID to step through it for the user by ID.
 	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, tutorialID string, step int) (tutorial map[string]*Tutorial, err error)
+
+	// Reset wipes all known state for the given tutorial identifier(s).
+	Reset(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, tutorialIDs []string) (tutorials map[string]*Tutorial, err error)
 }

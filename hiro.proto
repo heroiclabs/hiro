@@ -91,6 +91,8 @@ enum RpcId {
   RPC_ID_TUTORIALS_ABANDON = 24 [(input) = "TutorialAbandonRequest", (output) = "Tutorial"];
   // Update the current progress step in the tutorial by ID.
   RPC_ID_TUTORIALS_UPDATE = 25 [(input) = "TutorialUpdateRequest", (output) = "TutorialList"];
+  // Reset the state of all given tutorial IDs.
+  RPC_ID_TUTORIALS_RESET = 79 [(input) = "TutorialResetRequest", (output) = "TutorialList"];
 
   // Create a team which other players can join.
   RPC_ID_TEAMS_CREATE = 26 [(input) = "TeamCreateRequest", (output) = "Team"];
@@ -1773,6 +1775,12 @@ message TutorialUpdateRequest {
   string id = 1;
   // The latest step that should be marked completed. All previous steps will also be marked as completed.
   int32 step = 2;
+}
+
+// A request to reset the state of one or more tutorials.
+message TutorialResetRequest {
+  // The tutorials to reset.
+  repeated string ids = 1;
 }
 
 // The input message when the user rates the app.
