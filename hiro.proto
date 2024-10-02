@@ -2098,6 +2098,100 @@ message AchievementsUpdateRequest {
   map<string, int64> achievements = 3;
 }
 
+// Represents an available reward based on the progress of a streak.
+message StreakAvailableReward {
+  // Minimum streak progress count required for this reward, inclusive.
+  int64 count_min = 1;
+  // Maximum streak progress count required for this reward, inclusive.
+  int64 count_max = 2;
+  // Available reward contents.
+  AvailableRewards reward = 3;
+}
+
+// A single claimed streak reward.
+message StreakReward {
+  // Minimum streak progress count required for this reward, inclusive.
+  int64 count_min = 1;
+  // Maximum streak progress count required for this reward, inclusive.
+  int64 count_max = 2;
+  // Reward that was actually granted.
+  Reward reward = 3;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when this reward was claimed.
+  int64 claim_time_sec = 4;
+}
+
+// An individual streak, along with its status and progress if any.
+message Streak {
+  // Unique identifier.
+  string id = 1;
+  // Display name for this streak.
+  string name = 2;
+  // A user-facing description for this streak.
+  string description = 3;
+  // Current overall progress count.
+  int64 count = 4;
+  // Maximum allowed overall progress count.
+  int64 max_count = 5;
+  // Progress count submitted during this reset.
+  int64 count_current_reset = 6;
+  // Maximum progress count allowed during any single reset.
+  int64 max_count_current_reset = 7;
+  // How much overall count is lost per idle reset.
+  int64 idle_count_decay_reset = 8;
+  // How much overall count can be lost total in any contiguous idle period.
+  int64 max_idle_count_decay = 9;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak's last reset period was.
+  int64 prev_reset_time_sec = 10;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak's next reset period is.
+  int64 reset_time_sec = 11;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak was first registered for this user.
+  int64 create_time_sec = 12;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak was last updated.
+  int64 update_time_sec = 13;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak was last claimed.
+  int64 claim_time_sec = 14;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak becomes available for use.
+  int64 start_time_sec = 15;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak is no longer available for use.
+  int64 end_time_sec = 16;
+  // All rewards configured for this streak.
+  repeated StreakAvailableReward rewards = 17;
+  // Rewards currently available to claim for this streak.
+  repeated StreakAvailableReward available_rewards = 18;
+  // Claimed rewards.
+  repeated StreakReward claimed_rewards = 19;
+  // Flag indicating if this streak can currently be claimed to obtain some rewards.
+  bool can_claim = 20;
+  // Flag indicating if submitting a count update is allowed.
+  bool can_update = 21;
+  // Flag indicating if resetting the streak is allowed.
+  bool can_reset = 22;
+}
+
+// A list of all streaks for a given user.
+message StreaksList {
+  // All available streaks for the caller.
+  map<string, Streak> streaks = 1;
+}
+
+// Request to update one or more streaks with new progress.
+message StreaksUpdateRequest {
+  // Update one or more streaks by identifier.
+  map<string, int64> updates = 1;
+}
+
+// Request to claim rewards for one or more streaks.
+message StreaksClaimRequest {
+  // List of streak identifiers to claim.
+  repeated string ids = 1;
+}
+
+// Request to fully reset the progress of one or more streaks.
+message StreaksResetRequest {
+  // List of streak identifiers to reset.
+  repeated string ids = 1;
+}
+
 // Sync operation for a single inventory item.
 message SyncInventoryItem {
   // Item identifier from config mapping.
@@ -2226,6 +2320,32 @@ message SyncUnlockables {
   map<string, SyncUnlockableUpdate> updates = 2;
 }
 
+// Single streak state update.
+message SyncStreakUpdate {
+  // Current progress count for this streak.
+  int64 count = 1;
+  // Progress count for the current reset.
+  int64 count_current_reset = 2;
+  // Last count that was claimed.
+  int64 claim_count = 3;
+  // When updates for this streak were first recorded.
+  int64 create_time_sec = 4;
+  // When an update for this streak was most recently recorded.
+  int64 update_time_sec = 5;
+  // When the last claim for this streak was.
+  int64 claim_time_sec = 6;
+  // Record of rewards that have been claimed.
+  repeated StreakReward claimed_rewards = 7;
+}
+
+// Input for an offline state sync of streaks updates.
+message SyncStreaks {
+  // Streak identifiers to reset.
+  repeated string resets = 1;
+  // Streak state updates keyed by streak identifier.
+  map<string, SyncStreakUpdate> updates = 2;
+}
+
 // Input for an offline state sync operation.
 message SyncRequest {
   // Inventory.
@@ -2246,6 +2366,8 @@ message SyncRequest {
   SyncTutorials tutorials = 8;
   // Unlockables.
   SyncUnlockables unlockables = 9;
+  // Streaks.
+  SyncStreaks streaks = 10;
 }
 
 // Resulting updates after an offline state sync operation.
@@ -2273,98 +2395,6 @@ message SyncResponse {
   repeated ActiveRewardModifier active_reward_modifiers = 10;
   // Current server time.
   int64 current_time_sec = 11;
-}
-
-// Represents an available reward based on the progress of a streak.
-message StreakAvailableReward {
-  // Minimum streak progress count required for this reward, inclusive.
-  int64 count_min = 1;
-  // Maximum streak progress count required for this reward, inclusive.
-  int64 count_max = 2;
-  // Available reward contents.
-  AvailableRewards reward = 3;
-}
-
-// A single claimed streak reward.
-message StreakReward {
-  // Minimum streak progress count required for this reward, inclusive.
-  int64 count_min = 1;
-  // Maximum streak progress count required for this reward, inclusive.
-  int64 count_max = 2;
-  // Reward that was actually granted.
-  Reward reward = 3;
-  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when this reward was claimed.
-  int64 claim_time_sec = 4;
-}
-
-// An individual streak, along with its status and progress if any.
-message Streak {
-  // Unique identifier.
-  string id = 1;
-  // Display name for this streak.
-  string name = 2;
-  // A user-facing description for this streak.
-  string description = 3;
-  // Current overall progress count.
-  int64 count = 4;
-  // Maximum allowed overall progress count.
-  int64 max_count = 5;
-  // Progress count submitted during this reset.
-  int64 count_current_reset = 6;
-  // Maximum progress count allowed during any single reset.
-  int64 max_count_current_reset = 7;
-  // How much overall count is lost per idle reset.
-  int64 idle_count_decay_reset = 8;
-  // How much overall count can be lost total in any contiguous idle period.
-  int64 max_idle_count_decay = 9;
-  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak's last reset period was.
-  int64 prev_reset_time_sec = 10;
-  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak's next reset period is.
-  int64 reset_time_sec = 11;
-  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak was first registered for this user.
-  int64 create_time_sec = 12;
-  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak was last updated.
-  int64 update_time_sec = 13;
-  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak was last claimed.
-  int64 claim_time_sec = 14;
-  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak becomes available for use.
-  int64 start_time_sec = 15;
-  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the streak is no longer available for use.
-  int64 end_time_sec = 16;
-  // All rewards configured for this streak.
-  repeated StreakAvailableReward rewards = 17;
-  // Rewards currently available to claim for this streak.
-  repeated StreakAvailableReward available_rewards = 18;
-  // Claimed rewards.
-  repeated StreakReward claimed_rewards = 19;
-  // Flag indicating if this streak can currently be claimed to obtain some rewards.
-  bool can_claim = 20;
-  // Flag indicating if submitting a count update is allowed.
-  bool can_update = 21;
-  // Flag indicating if resetting the streak is allowed.
-  bool can_reset = 22;
-}
-
-// A list of all streaks for a given user.
-message StreaksList {
-  // All available streaks for the caller.
-  map<string, Streak> streaks = 1;
-}
-
-// Request to update one or more streaks with new progress.
-message StreaksUpdateRequest {
-  // Update one or more streaks by identifier.
-  map<string, int64> updates = 1;
-}
-
-// Request to claim rewards for one or more streaks.
-message StreaksClaimRequest {
-  // List of streak identifiers to claim.
-  repeated string ids = 1;
-}
-
-// Request to fully reset the progress of one or more streaks.
-message StreaksResetRequest {
-  // List of streak identifiers to reset.
-  repeated string ids = 1;
+  // Streaks.
+  StreaksList streaks = 12;
 }
