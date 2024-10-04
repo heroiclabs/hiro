@@ -121,7 +121,8 @@
                   ],
                   "type": "object"
                 }
-              }
+              },
+              "type": "object"
             }
           },
           "required": [
