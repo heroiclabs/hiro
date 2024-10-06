@@ -36,7 +36,7 @@ type TeamsSystem interface {
 	// List will return a list of teams which the user can join.
 	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, req *TeamListRequest) (teams *TeamList, err error)
 
-	// Search
+	// Search for teams based on given criteria.
 	Search(ctx context.Context, db *sql.DB, logger runtime.Logger, nk runtime.NakamaModule, req *TeamSearchRequest) (teams *TeamList, err error)
 
 	// WriteChatMessage sends a message to the user's team even when they're not connected on a realtime socket.
