@@ -5,6 +5,24 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.19.0] - 2024-10-06
+### Added
+- New Streaks gameplay system to allow players to accumulate rewards with win streaks.
+- A tutorial can now be reset so its steps can be played again.
+- (Unity) Subscribe to chat history and other updates in a Team with a "Nakama.ISocket".
+
+### Changed
+- A custom cohort created with Event Leaderboards can be forced to build a new cohort rather than fallback on the builtin matchmaker behaviour.
+- Inventory grant items now returns items which were not granted but generated as part of the reward roll for the player.
+- Teams can now be searched over by their language tag field.
+- Migrate to Buf tool for Protobuf Go code generation.
+
+### Fixed
+- Fix errors in JSON schema for Auctions feature.
+- Economy virtual store soft currency purchases did not generate "purchaseCompleted" events.
+- (Unity) Use a hash implementation with chat messages which can be compared for ordering.
+- (Unity) Update internal state when a join request which is accepted in Teams system.
+
 ## [1.18.0] - 2024-09-16
 ### Added
 - New Auctions gameplay system to allow players to offer and bid on Inventory items.

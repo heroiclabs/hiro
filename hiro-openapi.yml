@@ -642,6 +642,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_TUTORIALS_RESET?unwrap:
+    post:
+      summary: TUTORIALS_RESET
+      description: "Reset the state of all given tutorial IDs."
+      operationId: TUTORIALS_RESET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TutorialResetRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TutorialList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_TEAMS_CREATE?unwrap:
     post:
       summary: TEAMS_CREATE
@@ -1642,6 +1666,96 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_STREAKS_LIST?unwrap:
+    post:
+      summary: STREAKS_LIST
+      description: "List all available streaks, including their current state and progress if any."
+      operationId: STREAKS_LIST
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreaksList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_STREAKS_UPDATE?unwrap:
+    post:
+      summary: STREAKS_UPDATE
+      description: "Update one or more streaks with the given progress amounts."
+      operationId: STREAKS_UPDATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreaksUpdateRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreaksList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_STREAKS_CLAIM?unwrap:
+    post:
+      summary: STREAKS_CLAIM
+      description: "Claim the rewards from one or more streaks."
+      operationId: STREAKS_CLAIM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreaksClaimRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreaksList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_STREAKS_RESET?unwrap:
+    post:
+      summary: STREAKS_RESET
+      description: "Reset all progress for one or more streaks."
+      operationId: STREAKS_RESET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreaksResetRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreaksList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_ECONOMY_PLACEMENT_SUCCESS?unwrap:
     post:
       summary: ECONOMY_PLACEMENT_SUCCESS
@@ -1701,317 +1815,6 @@ components:
         code:
           type: integer
           format: int32
-    AuctionBidAmount:
-      type: object
-      properties:
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    AuctionTemplateConditionListingCost:
-      type: object
-      properties:
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        items:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        energies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    AuctionTemplateConditionBidIncrement:
-      type: object
-      properties:
-        percentage:
-          type: number
-          format: double
-        fixed:
-          $ref: '#/components/schemas/AuctionBidAmount'
-    AuctionTemplateCondition:
-      type: object
-      properties:
-        duration_sec:
-          type: integer
-          format: int64
-        listing_cost:
-          $ref: '#/components/schemas/AuctionTemplateConditionListingCost'
-        bid_start:
-          $ref: '#/components/schemas/AuctionBidAmount'
-        bid_increment:
-          $ref: '#/components/schemas/AuctionTemplateConditionBidIncrement'
-        extension_threshold_sec:
-          type: integer
-          format: int64
-        extension_sec:
-          type: integer
-          format: int64
-        extension_max_sec:
-          type: integer
-          format: int64
-        fee:
-          $ref: '#/components/schemas/AuctionFee'
-    AuctionTemplate:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: string
-        item_sets:
-          type: array
-          items:
-            type: string
-    AuctionTemplates:
-      type: object
-      properties:
-    AuctionReward:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InventoryItem'
-    AuctionBid:
-      type: object
-      properties:
-        user_id:
-          type: string
-        bid:
-          $ref: '#/components/schemas/AuctionBidAmount'
-        create_time_sec:
-          type: integer
-          format: int64
-    AuctionFee:
-      type: object
-      properties:
-        percentage:
-          type: number
-          format: double
-        fixed:
-          $ref: '#/components/schemas/AuctionBidAmount'
-    Auction:
-      type: object
-      properties:
-        id:
-          type: string
-        user_id:
-          type: string
-        reward:
-          $ref: '#/components/schemas/AuctionReward'
-        fee:
-          $ref: '#/components/schemas/AuctionFee'
-        version:
-          type: string
-        bid:
-          $ref: '#/components/schemas/AuctionBid'
-        bid_next:
-          $ref: '#/components/schemas/AuctionBidAmount'
-        duration_sec:
-          type: integer
-          format: int64
-        original_duration_sec:
-          type: integer
-          format: int64
-        extension_added_sec:
-          type: integer
-          format: int64
-        extension_threshold_sec:
-          type: integer
-          format: int64
-        extension_sec:
-          type: integer
-          format: int64
-        extension_max_sec:
-          type: integer
-          format: int64
-        extension_remaining_sec:
-          type: integer
-          format: int64
-        create_time_sec:
-          type: integer
-          format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        start_time_sec:
-          type: integer
-          format: int64
-        end_time_sec:
-          type: integer
-          format: int64
-        original_end_time_sec:
-          type: integer
-          format: int64
-        cancel_time_sec:
-          type: integer
-          format: int64
-        current_time_sec:
-          type: integer
-          format: int64
-        owner_claim_sec:
-          type: integer
-          format: int64
-        winner_claim_sec:
-          type: integer
-          format: int64
-        has_started:
-          type: boolean
-        has_ended:
-          type: boolean
-        can_bid:
-          type: boolean
-        can_claim:
-          type: boolean
-        can_cancel:
-          type: boolean
-    AuctionNotificationBid:
-      type: object
-      properties:
-        id:
-          type: string
-        version:
-          type: string
-        bid:
-          $ref: '#/components/schemas/AuctionBid'
-        bid_next:
-          $ref: '#/components/schemas/AuctionBidAmount'
-        extension_added_sec:
-          type: integer
-          format: int64
-        extension_remaining_sec:
-          type: integer
-          format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        end_time_sec:
-          type: integer
-          format: int64
-        current_time_sec:
-          type: integer
-          format: int64
-    StreamEnvelope:
-      type: object
-      properties:
-    AuctionClaimBid:
-      type: object
-      properties:
-        auction:
-          $ref: '#/components/schemas/Auction'
-        reward:
-          $ref: '#/components/schemas/AuctionReward'
-    AuctionClaimCreated:
-      type: object
-      properties:
-        auction:
-          $ref: '#/components/schemas/Auction'
-        reward:
-          $ref: '#/components/schemas/AuctionBidAmount'
-        fee:
-          $ref: '#/components/schemas/AuctionBidAmount'
-        returned_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InventoryItem'
-    AuctionCancel:
-      type: object
-      properties:
-        auction:
-          $ref: '#/components/schemas/Auction'
-        reward:
-          $ref: '#/components/schemas/AuctionReward'
-    AuctionList:
-      type: object
-      properties:
-        auctions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Auction'
-        cursor:
-          type: string
-    AuctionListRequest:
-      type: object
-      properties:
-        query:
-          type: string
-        sort:
-          type: array
-          items:
-            type: string
-        limit:
-          type: integer
-          format: int64
-        cursor:
-          type: string
-    AuctionBidRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        version:
-          type: string
-        bid:
-          $ref: '#/components/schemas/AuctionBidAmount'
-    AuctionClaimBidRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    AuctionClaimCreatedRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    AuctionCancelRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    AuctionCreateRequest:
-      type: object
-      properties:
-        template_id:
-          type: string
-        condition_id:
-          type: string
-        instance_ids:
-          type: array
-          items:
-            type: string
-        start_time_sec:
-          type: integer
-          format: int64
-    AuctionListBidsRequest:
-      type: object
-      properties:
-        limit:
-          type: integer
-          format: int64
-        cursor:
-          type: string
-    AuctionListCreatedRequest:
-      type: object
-      properties:
-        limit:
-          type: integer
-          format: int64
-        cursor:
-          type: string
-    AuctionsFollowRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
     ProgressionCost:
       type: object
       properties:
@@ -3047,6 +2850,317 @@ components:
     InventoryList:
       type: object
       properties:
+    AuctionBidAmount:
+      type: object
+      properties:
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    AuctionFee:
+      type: object
+      properties:
+        percentage:
+          type: number
+          format: double
+        fixed:
+          $ref: '#/components/schemas/AuctionBidAmount'
+    AuctionTemplateConditionListingCost:
+      type: object
+      properties:
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        energies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    AuctionTemplateConditionBidIncrement:
+      type: object
+      properties:
+        percentage:
+          type: number
+          format: double
+        fixed:
+          $ref: '#/components/schemas/AuctionBidAmount'
+    AuctionTemplateCondition:
+      type: object
+      properties:
+        duration_sec:
+          type: integer
+          format: int64
+        listing_cost:
+          $ref: '#/components/schemas/AuctionTemplateConditionListingCost'
+        bid_start:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        bid_increment:
+          $ref: '#/components/schemas/AuctionTemplateConditionBidIncrement'
+        extension_threshold_sec:
+          type: integer
+          format: int64
+        extension_sec:
+          type: integer
+          format: int64
+        extension_max_sec:
+          type: integer
+          format: int64
+        fee:
+          $ref: '#/components/schemas/AuctionFee'
+    AuctionTemplate:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+        item_sets:
+          type: array
+          items:
+            type: string
+    AuctionTemplates:
+      type: object
+      properties:
+    AuctionReward:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+    AuctionBid:
+      type: object
+      properties:
+        user_id:
+          type: string
+        bid:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        create_time_sec:
+          type: integer
+          format: int64
+    Auction:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        reward:
+          $ref: '#/components/schemas/AuctionReward'
+        fee:
+          $ref: '#/components/schemas/AuctionFee'
+        version:
+          type: string
+        bid:
+          $ref: '#/components/schemas/AuctionBid'
+        bid_next:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        duration_sec:
+          type: integer
+          format: int64
+        original_duration_sec:
+          type: integer
+          format: int64
+        extension_added_sec:
+          type: integer
+          format: int64
+        extension_threshold_sec:
+          type: integer
+          format: int64
+        extension_sec:
+          type: integer
+          format: int64
+        extension_max_sec:
+          type: integer
+          format: int64
+        extension_remaining_sec:
+          type: integer
+          format: int64
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        original_end_time_sec:
+          type: integer
+          format: int64
+        cancel_time_sec:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        owner_claim_sec:
+          type: integer
+          format: int64
+        winner_claim_sec:
+          type: integer
+          format: int64
+        has_started:
+          type: boolean
+        has_ended:
+          type: boolean
+        can_bid:
+          type: boolean
+        can_claim:
+          type: boolean
+        can_cancel:
+          type: boolean
+    AuctionNotificationBid:
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+        bid:
+          $ref: '#/components/schemas/AuctionBid'
+        bid_next:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        extension_added_sec:
+          type: integer
+          format: int64
+        extension_remaining_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+    StreamEnvelope:
+      type: object
+      properties:
+    AuctionClaimBid:
+      type: object
+      properties:
+        auction:
+          $ref: '#/components/schemas/Auction'
+        reward:
+          $ref: '#/components/schemas/AuctionReward'
+    AuctionClaimCreated:
+      type: object
+      properties:
+        auction:
+          $ref: '#/components/schemas/Auction'
+        reward:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        fee:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        returned_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+    AuctionCancel:
+      type: object
+      properties:
+        auction:
+          $ref: '#/components/schemas/Auction'
+        reward:
+          $ref: '#/components/schemas/AuctionReward'
+    AuctionList:
+      type: object
+      properties:
+        auctions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Auction'
+        cursor:
+          type: string
+    AuctionListRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        sort:
+          type: array
+          items:
+            type: string
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+    AuctionBidRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+        bid:
+          $ref: '#/components/schemas/AuctionBidAmount'
+    AuctionClaimBidRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    AuctionClaimCreatedRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    AuctionCancelRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    AuctionCreateRequest:
+      type: object
+      properties:
+        template_id:
+          type: string
+        condition_id:
+          type: string
+        instance_ids:
+          type: array
+          items:
+            type: string
+        start_time_sec:
+          type: integer
+          format: int64
+    AuctionListBidsRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+    AuctionListCreatedRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+    AuctionsFollowRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
     EconomyListRequest:
       type: object
       properties:
@@ -3311,6 +3425,13 @@ components:
         step:
           type: integer
           format: int32
+    TutorialResetRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
     RateAppRequest:
       type: object
       properties:
@@ -3394,6 +3515,8 @@ components:
         limit:
           type: integer
           format: int32
+        lang_tag:
+          type: string
     TeamWriteChatMessageRequest:
       type: object
       properties:
@@ -3665,6 +3788,122 @@ components:
           additionalProperties:
             type: integer
             format: int64
+    StreakAvailableReward:
+      type: object
+      properties:
+        count_min:
+          type: integer
+          format: int64
+        count_max:
+          type: integer
+          format: int64
+        reward:
+          $ref: '#/components/schemas/AvailableRewards'
+    StreakReward:
+      type: object
+      properties:
+        count_min:
+          type: integer
+          format: int64
+        count_max:
+          type: integer
+          format: int64
+        reward:
+          $ref: '#/components/schemas/Reward'
+        claim_time_sec:
+          type: integer
+          format: int64
+    Streak:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        count:
+          type: integer
+          format: int64
+        max_count:
+          type: integer
+          format: int64
+        count_current_reset:
+          type: integer
+          format: int64
+        max_count_current_reset:
+          type: integer
+          format: int64
+        idle_count_decay_reset:
+          type: integer
+          format: int64
+        max_idle_count_decay:
+          type: integer
+          format: int64
+        prev_reset_time_sec:
+          type: integer
+          format: int64
+        reset_time_sec:
+          type: integer
+          format: int64
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        claim_time_sec:
+          type: integer
+          format: int64
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/StreakAvailableReward'
+        available_rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/StreakAvailableReward'
+        claimed_rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/StreakReward'
+        can_claim:
+          type: boolean
+        can_update:
+          type: boolean
+        can_reset:
+          type: boolean
+    StreaksList:
+      type: object
+      properties:
+    StreaksUpdateRequest:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    StreaksClaimRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    StreaksResetRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
     SyncInventoryItem:
       type: object
       properties:
@@ -3804,6 +4043,38 @@ components:
           type: array
           items:
             type: string
+    SyncStreakUpdate:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        count_current_reset:
+          type: integer
+          format: int64
+        claim_count:
+          type: integer
+          format: int64
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        claim_time_sec:
+          type: integer
+          format: int64
+        claimed_rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/StreakReward'
+    SyncStreaks:
+      type: object
+      properties:
+        resets:
+          type: array
+          items:
+            type: string
     SyncRequest:
       type: object
       properties:
@@ -3825,6 +4096,8 @@ components:
           $ref: '#/components/schemas/SyncTutorials'
         unlockables:
           $ref: '#/components/schemas/SyncUnlockables'
+        streaks:
+          $ref: '#/components/schemas/SyncStreaks'
     SyncResponse:
       type: object
       properties:
@@ -3853,6 +4126,8 @@ components:
         current_time_sec:
           type: integer
           format: int64
+        streaks:
+          $ref: '#/components/schemas/StreaksList'
         wallet:
           type: object
           additionalProperties:
@@ -3889,6 +4164,7 @@ components:
         - RPC_ID_TUTORIALS_DECLINE
         - RPC_ID_TUTORIALS_ABANDON
         - RPC_ID_TUTORIALS_UPDATE
+        - RPC_ID_TUTORIALS_RESET
         - RPC_ID_TEAMS_CREATE
         - RPC_ID_TEAMS_LIST
         - RPC_ID_TEAMS_SEARCH
@@ -3933,6 +4209,10 @@ components:
         - RPC_ID_AUCTIONS_CREATE
         - RPC_ID_AUCTIONS_LIST_BIDS
         - RPC_ID_AUCTIONS_LIST_CREATED
+        - RPC_ID_STREAKS_LIST
+        - RPC_ID_STREAKS_UPDATE
+        - RPC_ID_STREAKS_CLAIM
+        - RPC_ID_STREAKS_RESET
         - RPC_ID_ECONOMY_PLACEMENT_SUCCESS
         - RPC_ID_ECONOMY_PLACEMENT_FAIL
         - RPC_ID_STORAGE_PERSONALIZER_UPLOAD
