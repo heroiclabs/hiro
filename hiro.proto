@@ -2015,6 +2015,14 @@ message SubAchievement {
   bool auto_claim = 15;
   // Whether the sub-achievement will reset after completion.
   bool auto_reset = 16;
+  // Whether the sub-achievement can be updated with new progress.
+  bool can_update = 17;
+  // Whether the sub-achievement has a reward that can be claimed.
+  bool can_claim = 18;
+  // The UNIX timestamp when this sub-achievement will allow updates. This may be before its next reset. A zero means it is immediately available.
+  int64 start_time_sec = 19;
+  // The UNIX timestamp when this sub-achievement will allow updates. This may be before its next reset. A zero means it does not end.
+  int64 end_time_sec = 20;
 }
 
 // An achievement which is a numeric task which can be unlocked and has an optional reward.
@@ -2061,6 +2069,14 @@ message Achievement {
   bool auto_claim_total = 20;
   // Whether the achievement will reset after completion.
   bool auto_reset = 21;
+  // Whether the achievement can be updated with new progress.
+  bool can_update = 22;
+  // Whether the achievement has a reward that can be claimed.
+  bool can_claim = 23;
+  // The UNIX timestamp when this achievement will allow updates. This may be before its next reset. A zero means it is immediately available.
+  int64 start_time_sec = 24;
+  // The UNIX timestamp when this achievement will allow updates. This may be before its next reset. A zero means it does not end.
+  int64 end_time_sec = 25;
 }
 
 // The achievements returned by the server.
