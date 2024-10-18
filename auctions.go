@@ -79,6 +79,8 @@ type AuctionsConfigAuctionConditionFee struct {
 	Fixed      *AuctionsConfigAuctionConditionBid `json:"fixed,omitempty"`
 }
 
+type OnAuctionReward[T any] func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, sourceID string, source *Auction, reward T) (T, error)
+
 // The AuctionsSystem provides a gameplay system for Auctions and their listing, bidding, and timers.
 //
 // Players list items for auctioning, bid on other auctions, and collect their rewards when appropriate.
@@ -114,4 +116,13 @@ type AuctionsSystem interface {
 
 	// Follow ensures users receive real-time updates for auctions they have an interest in.
 	Follow(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, sessionID string, auctionIDs []string) (*AuctionList, error)
+
+	// SetOnClaimBid sets a custom reward function which will run after an auction's reward is claimed by the winning bidder.
+	SetOnClaimBid(fn OnAuctionReward[*AuctionReward])
+
+	// SetOnClaimCreated sets a custom reward function which will run after an auction's winning bid is claimed by the auction creator.
+	SetOnClaimCreated(fn OnAuctionReward[*AuctionBidAmount])
+
+	// SetOnClaimCreatedFailed sets a custom reward function which will run after a failed auction is claimed by the auction creator.
+	SetOnClaimCreatedFailed(fn OnAuctionReward[*AuctionReward])
 }
