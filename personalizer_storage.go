@@ -109,13 +109,20 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			return "", ErrSessionUser
 		}
 
+		decoder := json.NewDecoder(strings.NewReader(payload))
+		decoder.DisallowUnknownFields()
+
 		req := &storagePersonalizerUploadRequest{}
-		err := json.Unmarshal([]byte(payload), req)
-		if err != nil {
+
+		if err := decoder.Decode(req); err != nil {
+			logger.WithField("error", err.Error()).Error("decoder.Decode error")
+			if strings.HasPrefix(err.Error(), "json: unknown field") {
+				return "", runtime.NewError(err.Error(), 3)
+			}
 			return "", ErrPayloadDecode
 		}
 
-		writes := []*runtime.StorageWrite{}
+		writes := make([]*runtime.StorageWrite, 0, 15)
 
 		if req.Achievements != nil {
 			write, err := p.newStorageWrite(req.Achievements, storagePersonalizerKeyAchievements)
@@ -267,9 +274,11 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			writes = append(writes, write)
 		}
 
-		_, err = nk.StorageWrite(ctx, writes)
-		if err != nil {
-			return "", err
+		if len(writes) > 0 {
+			if _, err := nk.StorageWrite(ctx, writes); err != nil {
+				logger.WithField("error", err.Error()).Error("nk.StorageWrite error")
+				return "", err
+			}
 		}
 
 		return "{}", nil

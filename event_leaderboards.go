@@ -87,4 +87,11 @@ type EventLeaderboardsSystem interface {
 	DebugRandomScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string, scoreMin, scoreMax, subscoreMin, subscoreMax int64, operator *int) (eventLeaderboard *EventLeaderboard, err error)
 }
 
-type OnEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, storageIndex string, eventID string, config *EventLeaderboardsConfigLeaderboard, userID string, tier int, matchmakerProperties map[string]interface{}) (cohortID string, cohortUserIDs []string, forceNewCohort bool, err error)
+type EventLeaderboardCohortConfig struct {
+	// Force a new cohort even if cohort selection did not find an appropriate one.
+	ForceNewCohort bool `json:"force_new_cohort,omitempty"`
+	// Optionally use a specified tier instead of the expected one for the user.
+	Tier *int `json:"tier,omitempty"`
+}
+
+type OnEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, storageIndex string, eventID string, config *EventLeaderboardsConfigLeaderboard, userID string, tier int, matchmakerProperties map[string]interface{}) (cohortID string, cohortUserIDs []string, newCohort *EventLeaderboardCohortConfig, err error)
