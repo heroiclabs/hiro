@@ -17,6 +17,7 @@ package hiro
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -25,25 +26,7 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
-type SatoriPublisher interface {
-	IsPublishAuthenticateRequest() bool
-	IsPublishAchievementsEvents() bool
-	IsPublishBaseEvents() bool
-	IsPublishEconomyEvents() bool
-	IsPublishEnergyEvents() bool
-	IsPublishEventLeaderboardsEvents() bool
-	IsPublishIncentivesEvents() bool
-	IsPublishInventoryEvents() bool
-	IsPublishLeaderboardsEvents() bool
-	IsPublishProgressionEvents() bool
-	IsPublishStatsEvents() bool
-	IsPublishTeamsEvents() bool
-	IsPublishTutorialsEvents() bool
-	IsPublishUnlockablesEvents() bool
-	IsPublishAuctionsEvents() bool
-}
-
-var _ SatoriPublisher = (*SatoriPersonalizer)(nil)
+var _ Publisher = (*SatoriPersonalizer)(nil)
 
 var _ Personalizer = (*SatoriPersonalizer)(nil)
 
@@ -233,6 +216,103 @@ type SatoriPersonalizer struct {
 
 	cacheMutex sync.RWMutex
 	cache      map[context.Context]*SatoriPersonalizerCache
+}
+
+func (p *SatoriPersonalizer) Authenticate(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, created bool) {
+	if !p.IsPublishAuthenticateRequest() {
+		return
+	}
+	if err := nk.GetSatori().Authenticate(ctx, userID); err != nil && !errors.Is(err, runtime.ErrSatoriConfigurationInvalid) {
+		logger.WithField("error", err.Error()).Error("failed to authenticate with Satori")
+	}
+}
+
+func (p *SatoriPersonalizer) Send(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, events []*PublisherEvent) {
+	if len(events) == 0 {
+		return
+	}
+
+	satoriEvents := make([]*runtime.Event, 0, len(events))
+	for _, event := range events {
+		switch event.System.GetType() {
+		case SystemTypeAchievements:
+			if !p.IsPublishAchievementsEvents() {
+				continue
+			}
+		case SystemTypeBase:
+			if !p.IsPublishBaseEvents() {
+				continue
+			}
+		case SystemTypeEconomy:
+			if !p.IsPublishEconomyEvents() {
+				continue
+			}
+		case SystemTypeEnergy:
+			if !p.IsPublishEnergyEvents() {
+				continue
+			}
+		case SystemTypeInventory:
+			if !p.IsPublishInventoryEvents() {
+				continue
+			}
+		case SystemTypeLeaderboards:
+			if !p.IsPublishLeaderboardsEvents() {
+				continue
+			}
+		case SystemTypeTeams:
+			if !p.IsPublishTeamsEvents() {
+				continue
+			}
+		case SystemTypeTutorials:
+			if !p.IsPublishTutorialsEvents() {
+				continue
+			}
+		case SystemTypeUnlockables:
+			if !p.IsPublishUnlockablesEvents() {
+				continue
+			}
+		case SystemTypeStats:
+			if !p.IsPublishStatsEvents() {
+				continue
+			}
+		case SystemTypeEventLeaderboards:
+			if !p.IsPublishEventLeaderboardsEvents() {
+				continue
+			}
+		case SystemTypeProgression:
+			if !p.IsPublishProgressionEvents() {
+				continue
+			}
+		case SystemTypeIncentives:
+			if !p.IsPublishIncentivesEvents() {
+				continue
+			}
+		case SystemTypeAuctions:
+			if !p.IsPublishAuctionsEvents() {
+				continue
+			}
+		case SystemTypeStreaks:
+			if !p.IsPublishStreaksEvents() {
+				continue
+			}
+		default:
+		}
+
+		satoriEvent := &runtime.Event{
+			Name:      event.Name,
+			Id:        event.Id,
+			Metadata:  event.Metadata,
+			Value:     event.Value,
+			Timestamp: event.Timestamp,
+		}
+		satoriEvents = append(satoriEvents, satoriEvent)
+	}
+	if len(satoriEvents) == 0 {
+		return
+	}
+	if err := nk.GetSatori().EventsPublish(ctx, userID, satoriEvents); err != nil {
+		logger.WithField("error", err.Error()).Error("failed to publish Satori events")
+	}
 }
 
 func NewSatoriPersonalizer(ctx context.Context, opts ...SatoriPersonalizerOption) *SatoriPersonalizer {

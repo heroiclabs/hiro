@@ -79,6 +79,8 @@ type Hiro interface {
 	SetPersonalizer(Personalizer)
 	AddPersonalizer(personalizer Personalizer)
 
+	AddPublisher(publisher Publisher)
+
 	SetAfterAuthenticate(fn AfterAuthenticateFn)
 
 	// SetCollectionResolver sets a function that may change the storage collection target for Hiro systems. Not typically used.
