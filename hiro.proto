@@ -2061,6 +2061,10 @@ message Achievement {
   bool auto_claim_total = 20;
   // Whether the achievement will reset after completion.
   bool auto_reset = 21;
+  // The UNIX timestamp when this achievement will allow updates. This may be before its next reset. A zero means it is immediately available.
+  int64 start_time_sec = 22;
+  // The UNIX timestamp when this achievement will allow updates. This may be before its next reset. A zero means it does not end.
+  int64 end_time_sec = 23;
 }
 
 // The achievements returned by the server.
