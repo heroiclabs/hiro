@@ -1,41 +1,43 @@
 {
   "auctions": {
-    "items": [],
-    "item_sets": ["weapons"],
-    "conditions": {
-      "short": {
-        "duration_sec": 3600,
-        "listing_cost": {
-          "currencies": {
-            "coins": 50
+    "auction1": {
+      "items": [],
+      "item_sets": ["weapons"],
+      "conditions": {
+        "short": {
+          "duration_sec": 3600,
+          "listing_cost": {
+            "currencies": {
+              "coins": 50
+            }
+          },
+          "bid_start": {
+            "currencies": {
+              "coins": 10
+            }
+          },
+          "fee": {
+            "percentage": 0.10
+          },
+          "extension_threshold_sec": 30,
+          "extension_sec": 60,
+          "extension_max_sec": 300
+        },
+        "long": {
+          "duration_sec": 86400,
+          "listing_cost": {
+            "currencies": {
+              "coins": 200
+            }
+          },
+          "bid_start": {
+            "currencies": {
+              "coins": 10
+            }
+          },
+          "fee": {
+            "percentage": 0.05
           }
-        },
-        "bid_start": {
-          "currencies": {
-            "coins": 10
-          }
-        },
-        "fee": {
-          "percentage": 0.10
-        },
-        "extension_threshold_sec": 30,
-        "extension_sec": 60,
-        "extension_max_sec": 300
-      },
-      "long": {
-        "duration_sec": 86400,
-        "listing_cost": {
-          "currencies": {
-            "coins": 200
-          }
-        },
-        "bid_start": {
-          "currencies": {
-            "coins": 10
-          }
-        },
-        "fee": {
-          "percentage": 0.05
         }
       }
     }
