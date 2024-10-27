@@ -24,6 +24,7 @@ import (
 
 var (
 	ErrEconomyNoItem            = runtime.NewError("item not found", 3)                        // INVALID_ARGUMENT
+	ErrEconomyItemUnavailable   = runtime.NewError("item unavailable", 3)                      // INVALID_ARGUMENT
 	ErrEconomyNoSku             = runtime.NewError("sku not found", 3)                         // INVALID_ARGUMENT
 	ErrEconomySkuInvalid        = runtime.NewError("invalid sku", 3)                           // INVALID_ARGUMENT
 	ErrEconomyNotEnoughCurrency = runtime.NewError("not enough currency for purchase", 3)      // INVALID_ARGUMENT
@@ -174,6 +175,7 @@ type EconomyConfigStoreItem struct {
 	Reward               *EconomyConfigReward        `json:"reward,omitempty"`
 	AdditionalProperties map[string]string           `json:"additional_properties,omitempty"`
 	Disabled             bool                        `json:"disabled,omitempty"`
+	Unavailable          bool                        `json:"unavailable,omitempty"`
 }
 
 type EconomyConfigStoreItemCost struct {

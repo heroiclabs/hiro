@@ -1102,6 +1102,8 @@ message EconomyListStoreItem {
   AvailableRewards available_rewards = 6;
   // Additional metadata properties.
   map<string, string> additional_properties = 7;
+  // The item is visible, but if true it's unavailable to purchase by the player.
+  bool unavailable = 8;
 }
 
 // Represents an available ad placement.
