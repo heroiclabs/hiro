@@ -39,6 +39,14 @@
               "minimum": 0,
               "type": "number"
             },
+            "start_time_sec": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "end_time_sec": {
+              "minimum": 0,
+              "type": "number"
+            },
             "max_count": {
               "minimum": 0,
               "type": "number"

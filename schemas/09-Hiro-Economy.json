@@ -158,6 +158,9 @@
             "disabled": {
               "type": "boolean"
             },
+            "unavailable": {
+              "type": "boolean"
+            },
             "name": {
               "pattern": ".{1,}",
               "type": "string"
