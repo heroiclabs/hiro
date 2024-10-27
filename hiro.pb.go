@@ -5922,7 +5922,7 @@ type EconomyListStoreItem struct {
 	AvailableRewards *AvailableRewards `protobuf:"bytes,6,opt,name=available_rewards,json=availableRewards,proto3" json:"available_rewards,omitempty"`
 	// Additional metadata properties.
 	AdditionalProperties map[string]string `protobuf:"bytes,7,rep,name=additional_properties,json=additionalProperties,proto3" json:"additional_properties,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	// If the item is visible, but unavailable for purchase.
+	// The item is visible, but if true it's unavailable to purchase by the player.
 	Unavailable bool `protobuf:"varint,8,opt,name=unavailable,proto3" json:"unavailable,omitempty"`
 }
 
