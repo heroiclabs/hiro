@@ -2722,6 +2722,8 @@ components:
           type: string
         available_rewards:
           $ref: '#/components/schemas/AvailableRewards'
+        unavailable:
+          type: boolean
         additionalProperties:
           type: object
           additionalProperties:
@@ -3751,6 +3753,12 @@ components:
           type: boolean
         auto_reset:
           type: boolean
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
         additionalProperties:
           type: object
           additionalProperties:

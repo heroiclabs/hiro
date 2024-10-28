@@ -5,6 +5,29 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.20.0] - 2024-10-26
+### Added
+- New Auctions lifecycle function hooks for "OnClaimBid", "OnClaimCreated", and "OnClaimCreatedFailed".
+- New "Publisher" interface which can be registered to provide analytics to a separate service.
+- Economy store items can be marked as "unavailable" which makes them visible to the player but not purchaseable.
+
+### Changed
+- Return more detailed error messages with malformed inputs in "StoragePersonalizer" upload RPC.
+- Cohort selection can force a new cohort and specific tier on fallback in Event Leaderboards.
+- "SatoriPersonalizer" type now also implements the "Publisher" type.
+- (Unity) Update "ExampleCoordinator" type to use refresh signal in Satori client.
+- Use any registered personalizers to apply definition changes in Leaderboards gameplay system.
+- Dynamically create Leaderboards if a personalizer has added ones not previously seen at server startup.
+- (Unity) Use "UnityPurchasingSystem" observer to fetch additional products on previously unseen store item SKUs.
+- Update to Achievement progress now act the same way as other gameplay systems by returning the latest state in the Ack returned.
+
+### Fixed
+- Improve how malformed input is handled in the "StoragePersonalizer" type with upload RPC.
+- (Unreal) Fix generated code on some non-map custom types in Hiro protocol.
+- Update Auctions definition JSON example to use correct format.
+- Trim older rewards which have already been claimed in a Streak.
+- Fix registration of Tutorials reset RPC function.
+
 ## [1.19.0] - 2024-10-06
 ### Added
 - New Streaks gameplay system to allow players to accumulate rewards with win streaks.
