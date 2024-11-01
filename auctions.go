@@ -125,4 +125,7 @@ type AuctionsSystem interface {
 
 	// SetOnClaimCreatedFailed sets a custom reward function which will run after a failed auction is claimed by the auction creator.
 	SetOnClaimCreatedFailed(fn OnAuctionReward[*AuctionReward])
+
+	// SetOnCancel sets a custom reward function which will run after an auction is cancelled by the auction creator.
+	SetOnCancel(fn OnAuctionReward[*AuctionReward])
 }
