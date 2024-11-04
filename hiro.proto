@@ -1290,6 +1290,8 @@ message AuctionTemplate {
   repeated string item_sets = 2;
   // Condition configurations available.
   map<string, AuctionTemplateCondition> conditions = 3;
+  // Number of historic bids that will be kept.
+  int32 bid_history_count = 4;
 }
 
 // Set of all available auction templates.
@@ -1372,6 +1374,10 @@ message Auction {
   bool can_claim = 27;
   // Indicates if the auction can be cancelled by its creator.
   bool can_cancel = 28;
+  // First bid placed on this auction.
+  AuctionBid bid_first = 29;
+  // Most recent set of bids placed on this auction, ordered from newest to oldest retained.
+  repeated AuctionBid bid_history = 30;
 }
 
 // Notification payload containing a bid update for a followed auction.

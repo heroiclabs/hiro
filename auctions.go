@@ -43,9 +43,10 @@ type AuctionsConfig struct {
 }
 
 type AuctionsConfigAuction struct {
-	Items      []string                                   `json:"items,omitempty"`
-	ItemSets   []string                                   `json:"item_sets,omitempty"`
-	Conditions map[string]*AuctionsConfigAuctionCondition `json:"conditions,omitempty"`
+	Items           []string                                   `json:"items,omitempty"`
+	ItemSets        []string                                   `json:"item_sets,omitempty"`
+	Conditions      map[string]*AuctionsConfigAuctionCondition `json:"conditions,omitempty"`
+	BidHistoryCount int                                        `json:"bid_history_count,omitempty"`
 }
 
 type AuctionsConfigAuctionCondition struct {
@@ -106,7 +107,7 @@ type AuctionsSystem interface {
 	Cancel(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, auctionID string) (*AuctionCancel, error)
 
 	// Create a new auction based on supplied parameters and available configuration.
-	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, templateID, conditionID string, instanceIDs []string, startTimeSec int64, items []*InventoryItem) (*Auction, error)
+	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, templateID, conditionID string, instanceIDs []string, startTimeSec int64, items []*InventoryItem, overrideConfig *AuctionsConfigAuction) (*Auction, error)
 
 	// ListBids returns auctions the user has successfully bid on.
 	ListBids(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, limit int, cursor string) (*AuctionList, error)
