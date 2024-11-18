@@ -42,6 +42,7 @@ type EventLeaderboardsConfigLeaderboard struct {
 	StartTimeSec         int64                                                      `json:"start_time_sec,omitempty"`
 	EndTimeSec           int64                                                      `json:"end_time_sec,omitempty"`
 	Duration             int64                                                      `json:"duration,omitempty"`
+	BackingId            string                                                     `json:"backing_id,omitempty"`
 }
 
 type EventLeaderboardsConfigLeaderboardRewardTier struct {
@@ -61,6 +62,9 @@ type EventLeaderboardsConfigChangeZone struct {
 // An EventLeaderboardsSystem is a gameplay system which represents cohort-segmented, tier-based event leaderboards.
 type EventLeaderboardsSystem interface {
 	System
+
+	// ListEventLeaderboard returns available event leaderboards for the user.
+	ListEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, categories []string) (eventLeaderboards []*EventLeaderboard, err error)
 
 	// GetEventLeaderboard returns a specified event leaderboard's cohort for the user.
 	GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) (eventLeaderboard *EventLeaderboard, err error)

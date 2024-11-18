@@ -132,6 +132,8 @@ enum RpcId {
   // Get the leaderboards defined for the game.
   RPC_ID_LEADERBOARDS_CONFIG_GET = 38 [(input) = "", (output) = "LeaderboardConfigList"];
 
+  // List available event leaderboards.
+  RPC_ID_EVENT_LEADERBOARD_LIST = 80 [(input) = "EventLeaderboardList", (output) = "EventLeaderboards"];
   // Get a specified event leaderboard defined for the game.
   RPC_ID_EVENT_LEADERBOARD_GET = 42 [(input) = "EventLeaderboardGet", (output) = "EventLeaderboard"];
   // Update an event leaderboard record for a user.
@@ -817,6 +819,12 @@ message IncentiveRecipientClaimRequest {
   string code = 1;
 }
 
+// Retrieve available event leaderboards.
+message EventLeaderboardList {
+  // Optional filter of Event Leaderboard categories to list. If empty does not filter on category.
+  repeated string categories = 1;
+}
+
 // Find and retrieve an event leaderboard by ID, automatically joining the event if necessary.
 message EventLeaderboardGet {
   // Event leaderboard ID to get, and join if necessary/possible.
@@ -957,6 +965,12 @@ message EventLeaderboard {
   int64 current_time_sec = 25;
   // Cohort ID the user belongs to for this active phase.
   string cohort_id = 26;
+}
+
+// Several event leaderboards the user has access to, resulting from a listing operation.
+message EventLeaderboards {
+  // Zero or more event leaderboards.
+  repeated EventLeaderboard event_leaderboards = 1;
 }
 
 message EventLeaderboardDebugFillRequest {
