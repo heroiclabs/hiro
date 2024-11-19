@@ -42,7 +42,9 @@ type EventLeaderboardsConfigLeaderboard struct {
 	StartTimeSec         int64                                                      `json:"start_time_sec,omitempty"`
 	EndTimeSec           int64                                                      `json:"end_time_sec,omitempty"`
 	Duration             int64                                                      `json:"duration,omitempty"`
-	BackingId            string                                                     `json:"backing_id,omitempty"`
+
+	BackingId           string `json:"-"`
+	CalculatedBackingId string `json:"-"`
 }
 
 type EventLeaderboardsConfigLeaderboardRewardTier struct {

@@ -121,9 +121,6 @@
             "tiers": {
               "minimum": 1,
               "type": "number"
-            },
-            "backing_id": {
-              "type": "string"
             }
           },
           "type": "object"
