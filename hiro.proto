@@ -414,6 +414,8 @@ message Stat {
   int64 first = 9;
   // Latest value submitted.
   int64 last = 10;
+  // Additional properties.
+  google.protobuf.Struct additional_properties = 11;
 }
 
 // A list of stats all belonging to one user.

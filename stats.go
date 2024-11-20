@@ -28,7 +28,8 @@ type StatsConfig struct {
 }
 
 type StatsConfigStat struct {
-	Value int64 `json:"value,omitempty"`
+	Value                int64                  `json:"value,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"additional_properties,omitempty"`
 }
 
 type StatsSystem interface {
