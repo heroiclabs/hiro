@@ -821,8 +821,10 @@ message IncentiveRecipientClaimRequest {
 
 // Retrieve available event leaderboards.
 message EventLeaderboardList {
+  // Whether or not the response should include scores, defaults to false.
+  bool with_scores = 1;
   // Optional filter of Event Leaderboard categories to list. If empty does not filter on category.
-  repeated string categories = 1;
+  repeated string categories = 2;
 }
 
 // Find and retrieve an event leaderboard by ID, automatically joining the event if necessary.

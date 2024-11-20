@@ -66,7 +66,7 @@ type EventLeaderboardsSystem interface {
 	System
 
 	// ListEventLeaderboard returns available event leaderboards for the user.
-	ListEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, categories []string) (eventLeaderboards []*EventLeaderboard, err error)
+	ListEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, withScores bool, categories []string) (eventLeaderboards []*EventLeaderboard, err error)
 
 	// GetEventLeaderboard returns a specified event leaderboard's cohort for the user.
 	GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) (eventLeaderboard *EventLeaderboard, err error)
