@@ -22,6 +22,7 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+	"unique"
 
 	"github.com/heroiclabs/nakama-common/runtime"
 )
@@ -187,7 +188,7 @@ func SatoriPersonalizerNoCache() SatoriPersonalizerOption {
 }
 
 type SatoriPersonalizerCache struct {
-	flags      *runtime.FlagList
+	flags      map[string]unique.Handle[string]
 	liveEvents *atomic.Pointer[runtime.LiveEventList]
 }
 
@@ -471,8 +472,14 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 			}
 
 			cacheEntry = &SatoriPersonalizerCache{
-				flags:      flagList,
+				// flags set below.
 				liveEvents: &atomic.Pointer[runtime.LiveEventList]{},
+			}
+			if flagList != nil {
+				cacheEntry.flags = make(map[string]unique.Handle[string], len(flagList.Flags))
+				for _, flag := range flagList.Flags {
+					cacheEntry.flags[flag.Name] = unique.Make[string](flag.Value)
+				}
 			}
 			if liveEventsList != nil {
 				cacheEntry.liveEvents.Store(liveEventsList)
@@ -497,13 +504,13 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 
 		found = false
 
-		for _, flag := range cacheEntry.flags.Flags {
-			if flag.Name != flagName {
+		for flName, flHandle := range cacheEntry.flags {
+			if flName != flagName {
 				continue
 			}
 
 			config = system.GetConfig()
-			decoder := json.NewDecoder(strings.NewReader(flag.Value))
+			decoder := json.NewDecoder(strings.NewReader(flHandle.Value()))
 			decoder.DisallowUnknownFields()
 			if err := decoder.Decode(config); err != nil {
 				logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
