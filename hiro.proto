@@ -1663,6 +1663,8 @@ message Energy {
   map<string, string> additional_properties = 11;
   // The current UNIX timestamp in seconds.
   int64 current_time_sec = 12;
+  // The outcome (rolled) reward for spending an energy, if any.
+  Reward reward = 13;
 }
 
 // One or more energy values for a user.
