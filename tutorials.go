@@ -53,6 +53,6 @@ type TutorialsSystem interface {
 	// Reset wipes all known state for the given tutorial identifier(s).
 	Reset(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, tutorialIDs []string) (tutorials map[string]*Tutorial, err error)
 
-	// SetOnStepCompleted registers a hook that fires on tournament step completions.
+	// SetOnStepCompleted registers a hook that fires on tutorial step completions.
 	SetOnStepCompleted(func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, tutorialID string, config *TutorialsConfigTutorial, resetCount, step int, prevStep *int))
 }

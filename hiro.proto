@@ -969,6 +969,8 @@ message EventLeaderboard {
   int64 current_time_sec = 25;
   // Cohort ID the user belongs to for this active phase.
   string cohort_id = 26;
+  // Backing ID for underlying score tracking.
+  string backing_id = 27;
 }
 
 // Several event leaderboards the user has access to, resulting from a listing operation.
