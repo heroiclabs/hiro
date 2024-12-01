@@ -5,6 +5,32 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.21.0] - 2024-11-22
+### Added
+- New Auctions lifecycle function hook for "OnCancel".
+- All Event Leaderboards can be listed (optionally) with scores.
+- Lifecycle hooks for Tutorials system which can be used to implement server-side rewards.
+
+### Changed
+- Update to Nakama 3.25.0 version on the nakama-common 1.35.0 release.
+- Incentive codes can be set never to expire with a 0 (zero) end time.
+- Stats with zero values are returned rather than assumed to be zeroed out on the client.
+- All definitions for gameplay systems are stripped of byte-order marker (BOM) for better Windows compatibility.
+- Event Leaderboards now use a content hash ID to allow easier changes to their configuration with LiveOps.
+- More efficient memory usage with cached Feature Flags in Satori Personalizer.
+
+### Fixed
+- Inventory items marked with keep zero are kept when granted with zero in initialize user.
+- (Unity) Use Energies dictionary keys only with applying offline updates.
+- Always set username, display name, and avatar URL with non-debug players in Event Leaderboard scores.
+- (Unity) Store Items which have the same SKU product ID are found through "WithStoreSpecificID".
+- Don't throw error when all reward tiers in an Event Leaderboard are empty.
+- Unlockable purchases to reduce time left should apply against final remainder cost.
+- Use If-None-Match OCC in Event Leaderboard roll when using a custom selection function.
+- Energy rewards should have "AvailableRewards" field returned when spend succeeds.
+- Inventory items which are rolled but not granted should increment grant count except if overflow is allowed.
+- Apply cohort selection storage bucket lock when using custom cohort selection function.
+
 ## [1.20.0] - 2024-10-26
 ### Added
 - New Auctions lifecycle function hooks for "OnClaimBid", "OnClaimCreated", and "OnClaimCreatedFailed".
