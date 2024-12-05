@@ -213,7 +213,9 @@ type System interface {
 }
 
 // UsernameOverrideFn can be used to provide a different username generation strategy from the default in Nakama server.
-type UsernameOverrideFn func() string
+// Requested username indicates what the username would otherwise be set to, if the incoming request specified a value.
+// The function is always expected to return a value, and returning "" defers to Nakama's built-in behaviour.
+type UsernameOverrideFn func(requestedUsername string) string
 
 // WithAchievementsSystem configures an AchievementsSystem type and optionally registers its RPCs with the game server.
 func WithAchievementsSystem(configFile string, register bool) SystemConfig {
