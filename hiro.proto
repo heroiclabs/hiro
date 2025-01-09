@@ -751,6 +751,8 @@ message Incentive {
   int64 max_claims = 13;
   // Current user IDs that have claimed, and their outcomes.
   map<string, IncentiveClaim> claims = 14;
+  // Additional properties.
+  google.protobuf.Struct additional_properties = 15;
 }
 
 // A list of incentives set up by a user.
