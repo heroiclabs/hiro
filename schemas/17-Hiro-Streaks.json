@@ -1,6 +1,24 @@
 {
+
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
+  "definitions": {
+    "Hiro-StreakReward": {
+      "properties": {
+        "count_min": {
+          "type": "number",
+          "minimum": 0
+        },
+        "count_max": {
+          "type": "number",
+          "minimum": 0
+        },
+        "reward": {
+          "$ref": "Hiro-Rewards"
+        }
+      }
+    }
+  },
   "properties": {
     "streaks": {
       "patternProperties": {
@@ -30,13 +48,17 @@
               "type": "number",
               "minimum": 0
             },
+            "max_idle_count_decay": {
+              "type": "number",
+              "minimum": 0
+            },
             "reset_cronexpr": {
               "type": "string"
             },
             "rewards": {
               "type": "array",
               "items": {
-                "$ref": "Hiro-Rewards"
+                "$ref": "#/definitions/Hiro-StreakReward"
               }
             },
             "start_time_sec": {
