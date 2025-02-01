@@ -751,6 +751,8 @@ message Incentive {
   int64 max_claims = 13;
   // Current user IDs that have claimed, and their outcomes.
   map<string, IncentiveClaim> claims = 14;
+  // Additional properties.
+  google.protobuf.Struct additional_properties = 15;
 }
 
 // A list of incentives set up by a user.
@@ -1008,6 +1010,8 @@ message EconomyDonationContributor {
   string user_id = 1;
   // The amount they've donated.
   int64 count = 2;
+  // The amount that has been claimed by the recipient already.
+  int64 claim_count = 3;
 }
 
 // A donation for a user.
@@ -1058,10 +1062,18 @@ message EconomyDonationsList {
   repeated EconomyDonation donations = 1;
 }
 
+// Information about a specific donation claim.
+message EconomyDonationClaimRequestDetails {
+  // List of donor IDs to claim and amount to claim from each, or empty to claim all available.
+  map<string, int64> donors = 1;
+}
+
 // Request to claim one or more donations.
 message EconomyDonationClaimRequest {
   // The donation IDs to claim.
   repeated string donation_ids = 1;
+  // A mapped set of donations to donors to claim.
+  map<string, EconomyDonationClaimRequestDetails> donations = 2;
 }
 
 // Response to claiming one or more donations.

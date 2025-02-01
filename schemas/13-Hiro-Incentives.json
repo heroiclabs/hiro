@@ -6,6 +6,14 @@
       "patternProperties": {
         ".{1,}": {
           "properties": {
+            "additional_properties": {
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
             "description": {
               "pattern": ".*",
               "type": "string"
