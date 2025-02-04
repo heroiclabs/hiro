@@ -223,7 +223,7 @@ func (p *SatoriPersonalizer) Authenticate(ctx context.Context, logger runtime.Lo
 	if !p.IsPublishAuthenticateRequest() {
 		return
 	}
-	if err := nk.GetSatori().Authenticate(ctx, userID, nil, nil); err != nil && !errors.Is(err, runtime.ErrSatoriConfigurationInvalid) {
+	if _, err := nk.GetSatori().Authenticate(ctx, userID, nil, nil, true); err != nil && !errors.Is(err, runtime.ErrSatoriConfigurationInvalid) {
 		logger.WithField("error", err.Error()).Error("failed to authenticate with Satori")
 	}
 }
