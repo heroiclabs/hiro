@@ -24,6 +24,8 @@ type InventoryConfig struct {
 	Items    map[string]*InventoryConfigItem `json:"items,omitempty"`
 	Limits   *InventoryConfigLimits          `json:"limits,omitempty"`
 	ItemSets map[string]map[string]bool      `json:"-"` // Auto-computed when the config is read or personalized.
+
+	ConfigSource ConfigSource[*InventoryConfigItem] `json:"-"` // Not included in serialization, set dynamically.
 }
 
 type InventoryConfigItem struct {
@@ -69,4 +71,10 @@ type InventorySystem interface {
 
 	// SetOnConsumeReward sets a custom reward function which will run after an inventory items' consume reward is rolled.
 	SetOnConsumeReward(fn OnReward[*InventoryConfigItem])
+
+	// SetConfigSource sets a custom additional config lookup function.
+	SetConfigSource(fn ConfigSource[*InventoryConfigItem])
 }
+
+// ConfigSource is a function which can be used to provide additional on-demand configuration data to a requesting system.
+type ConfigSource[T any] func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, configID string) (T, error)
