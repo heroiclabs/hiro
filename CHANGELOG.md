@@ -5,6 +5,37 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.22.0] - 2025-02-14
+### Added
+- Add "claim_count" field to Streaks gameplay system.
+- A Donation now tracks and allows claiming from individual contributors.
+- Inventory has a new lifecycle hook to allow Item IDs to be validated externally.
+- Add List function to Event Leaderboards. 
+
+### Changed
+- Update to Nakama 3.26.0 version on the nakama-common 1.36.0 release.
+- Username generator will not replace a username set as part of first account creation.
+- Update JSON schema for Streaks gameplay system.
+- Leaderboards can now use score operator directly from the Nakama SDK type.
+- The root ID is now stored in metadata with generated Event Leaderboard IDs.
+- (Unity) Use ReadOnlyCollection with Donations gameplay system.
+- (Unity) Purchase Intents will always be sent if multiple Store Items share the same SKU code.
+- Event Leaderboard rolls include retry backoff logic to minimize contention.
+- (Unity) Notification package is updated to use 2.4.0 release.
+- Expired donations are garbage collected only after claimed.
+
+### Fixed
+- Use Preserve annotation to retain System and other type constructors with IL2CPP builds.
+- Return Tier name with Event Leaderboard tiers in responses.
+- Fix custom Tier selector in first Event Leaderboard roll logic.
+- Rewards in Streaks which are achieved in intermediate steps can also be claimed.
+- (Unity) [Fake Store](https://docs.unity3d.com/Packages/com.unity.purchasing@4.12/manual/WhatIsFakeStore.html) is now recognised by the Economy Store system.
+- Idle activity in Event Leaderboard active phases does not demote incorrectly.
+- Fix queue start calculation with Unlockables when an early unlock is spent.
+- Weighted rewards in weight value is copied correctly in a deep clone.
+- (Unity) Inventory gameplay system decodes JSON to type correctly with updates.
+- Progressions reset CRON expression is calculated with the correct offset.
+
 ## [1.21.0] - 2024-11-22
 ### Added
 - New Auctions lifecycle function hook for "OnCancel".
