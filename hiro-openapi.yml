@@ -2368,6 +2368,9 @@ components:
         max_claims:
           type: integer
           format: int64
+        additional_properties:
+          type: object
+          additionalProperties: true
     IncentiveList:
       type: object
       properties:
@@ -2649,6 +2652,9 @@ components:
         count:
           type: integer
           format: int64
+        claim_count:
+          type: integer
+          format: int64
     EconomyDonation:
       type: object
       properties:
@@ -2708,6 +2714,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EconomyDonation'
+    EconomyDonationClaimRequestDetails:
+      type: object
+      properties:
+        donors:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
     EconomyDonationClaimRequest:
       type: object
       properties:
@@ -3941,6 +3955,9 @@ components:
           type: boolean
         can_reset:
           type: boolean
+        claim_count:
+          type: integer
+          format: int64
     StreaksList:
       type: object
       properties:
