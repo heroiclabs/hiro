@@ -1252,7 +1252,7 @@ message InventoryConsumeRewards {
 
 // Response from granting or purchasing items. This contains updated inventory data, if changed.
 message InventoryUpdateAck {
-  // Update inventory data, if changed.
+  // Updated inventory data, if changed.
   Inventory inventory = 1;
 }
 
