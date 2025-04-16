@@ -203,6 +203,23 @@ enum RpcId {
   // Reset all progress for one or more streaks.
   RPC_ID_STREAKS_RESET = 78 [(input) = "StreaksResetRequest", (output) = "StreaksList"];
 
+  // List all available templates for challenges.
+  RPC_ID_CHALLENGES_GET_TEMPLATES = 81 [(input) = "", (output) = "ChallengeTemplates"];
+  // Get a challange by id.
+  RPC_ID_CHALLENGE_GET = 82 [(input) = "ChallengeGet", (output) = "Challenge"];
+  // List all the user's challenges.
+  RPC_ID_CHALLENGE_LIST = 83 [(input) = "ChallengeList", (output) = "Challenges"];
+  // Create a new challenge based on a template.
+  RPC_ID_CHALLENGE_CREATE = 84 [(input) = "ChallengeCreateRequest", (output) = "Challenge"];
+  // Join a challenge.
+  RPC_ID_CHALLENGE_JOIN = 85 [(input) = "ChallengeJoinRequest", (output) = "Challenge"];
+  // Leave a challenge.
+  RPC_ID_CHALLENGE_LEAVE = 86 [(input) = "ChallengeLeaveRequest", (output) = "Challenge"];
+  // Submit a score to a challenge.
+  RPC_ID_CHALLENGE_SUBMIT_SCORE = 87 [(input) = "ChallengeSubmitScoreRequest", (output) = "Challenge"];
+  // Claim a reward of a challenge.
+  RPC_ID_CHALLENGE_CLAIM = 88 [(input) = "ChallengeClaimRequest", (output) = "Challenge"];
+
   //--- Server to server RPCs ---//
 
   // Webhook RPC to handle Rewarded Video Ad placement success callbacks.
@@ -821,6 +838,184 @@ message IncentiveRecipientGetRequest {
 message IncentiveRecipientClaimRequest {
   // The unique incentive code.
   string code = 1;
+}
+
+message ChallengeCreateRequest {
+  // Challenge template ID.
+  string template_id = 1;
+  // The name of the challenge. May be an i18n code.
+  string name = 2;
+  // A description of the challenge. May be an i18n code.
+  string description = 3;
+  // UserIDs of the users to challenge.
+  repeated string invitees = 4;
+  // Whether the challenged users have to accept the challenge or not.
+  bool open = 5;
+  // Maximum number of scores a user can submit to the leaderboard.
+  int64 max_scores = 6;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 7;
+  // Start time of the challenge. Set to 0 to start immediately.
+  int64 start_delay_sec = 8;
+  // Duration of the challenge. Set to 0 to have an unlimited challenge.
+  int64 duration_sec = 9;
+  // Maximum number of participants in the challenge.
+  int64 max_participants = 10;
+}
+
+message ChallengeJoinRequest {
+  string challenge_id = 1;
+}
+
+message ChallengeLeaveRequest {
+  string challenge_id = 1;
+}
+
+message ChallengeClaimRequest {
+  string challenge_id = 1;
+}
+
+message ChallengeScoreSubmitRequest {
+  // Challenge ID.
+  string challenge_id = 1;
+  // Score.
+  int64 score = 2;
+  // Subscore.
+  int64 subscore = 3;
+  // Metadata.
+  string metadata = 4;
+}
+
+message Challenge {
+  // Challenge ID.
+  string id = 1;
+  // The name of the challenge. May be an i18n code.
+  string name = 2;
+  // A description of the challenge. May be an i18n code.
+  string description = 3;
+  // Score ordering.
+  bool ascending = 4;
+  // Score submission operator.
+  string operator = 5;
+  // Time when the event starts.
+  int64 start_time_sec = 6;
+  // Time when the event ends.
+  int64 end_time_sec = 7;
+  // The possible reward tiers for this instance of the challenge.
+  repeated ChallengeRewardTier reward_tiers = 12;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 8; // Available to Claim
+  // Additional metadata properties.
+  map<string, string> additional_properties = 9;
+  // Current participant count.
+  int64 count = 10;
+  // Maximum participant count.
+  int64 max_count = 11;
+  // Maximum number of score submissions per participant.
+  int64 max_num_score = 13;
+  // Participants and their scores.
+  repeated ChallengeScore scores = 14;
+  // Indicates if the event is still active, and scores can be submitted.
+  bool is_active = 15;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 16;
+  // Whether the user has joined this challenge or not.
+  bool joined = 17;
+  // Whether the user has been invited but has not joined the challenge yet.
+  bool pending = 18;
+  // Whether the user has rejected or left the challenge.
+  bool rejected = 19;
+}
+
+// Retrieve available challenge leaderboards.
+message ChallengeList {
+  // Whether or not the response should include scores, defaults to false.
+  bool with_scores = 1;
+  // Optional filter of Event Leaderboard categories to list. If empty does not filter on category.
+  repeated string categories = 2;
+}
+
+message ChallengeGet {
+  // Challenge leaderboard ID to get, and join if necessary/possible.
+  string challenge_id = 1;
+  // Whether or not the response should include scores, defaults to false.
+  bool with_scores = 2;
+}
+
+// Several challenges the user has access to, resulting from a listing operation.
+message Challenges {
+  // Zero or more challenges.
+  repeated Challenge challenges = 1;
+}
+
+// A single participant entry to an event leaderboard.
+message ChallengeScore {
+  // User ID.
+  string id = 1;
+  // Username.
+  string username = 2;
+  // Display name.
+  string display_name = 3;
+  // Avatar URL.
+  string avatar_url = 4;
+  // Time when the user joined the challenge leaderboard.
+  int64 create_time_sec = 5;
+  // Time when the user last submitted a score.
+  int64 update_time_sec = 6;
+  // Rank within the event leaderboard.
+  int64 rank = 7;
+  // Score.
+  int64 score = 8;
+  // Subscore.
+  int64 subscore = 9;
+  // Number of score submissions.
+  int64 num_scores = 10;
+  // Metadata.
+  string metadata = 11;
+  // Whether the participant has submitted a score or not.
+  bool score_submitted = 12;
+}
+
+// The reward tiers for the challenge.
+message ChallengeRewardTier {
+  // The maximum rank (inclusive).
+  int64 rank_max = 1;
+  // The minimum rank (inclusive).
+  int64 rank_min = 2;
+  // The available rewards for this range.
+  AvailableRewards available_rewards = 3;
+}
+
+// Get all available challenge templates.
+message ChallengeTemplates {
+  // All available auction templates, keyed by an unique identifier.
+  map<string, ChallengeTemplate> templates = 1;
+}
+
+// An individually usable challenge template.
+message ChallengeTemplate {
+  // The possible reward tiers for this instance of the challenge.
+  repeated ChallengeRewardTier reward_tiers = 1;
+  // The min and max players of the challenge.
+  ChallengeMaxMinPlayers players = 2;
+  // The min and max duration that can be set for the challenge.
+  ChallengeMinMaxDuration duration = 3;
+  // The maximum amount of delay before the challenge begins for participants.
+  int64 start_delay_max = 4;
+  // Whether the challenge is invite-only or not.
+  bool open = 5;
+  // The maximum number of scores that can be submitted to the challenge.
+  int64 max_scores = 6;
+}
+
+message ChallengeMaxMinPlayers {
+  int64 min = 1;
+  int64 max = 2; // TODO: Should we have a maximum?
+}
+
+message ChallengeMinMaxDuration {
+  int64 min_sec = 1;
+  int64 max_sec = 2;
 }
 
 // Retrieve available event leaderboards.
