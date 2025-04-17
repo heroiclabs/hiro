@@ -2312,10 +2312,14 @@ message SyncEventLeaderboardUpdate {
   int64 update_time_sec = 3;
 }
 
+message SyncEventLeaderboardUpdates {
+  repeated SyncEventLeaderboardUpdate = 1;
+}
+
 // Input for an offline state sync of event leaderboard updates.
 message SyncEventLeaderboards {
   // Updates for various event leaderboards, keyed by event leaderboard identifier.
-  map<string, SyncEventLeaderboardUpdate> event_leaderboards = 1;
+  map<string, SyncEventLeaderboardUpdates> event_leaderboards = 1;
 }
 
 // Single progression update.
