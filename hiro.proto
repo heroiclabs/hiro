@@ -861,6 +861,8 @@ message ChallengeCreateRequest {
   int64 duration_sec = 9;
   // Maximum number of participants in the challenge.
   int64 max_participants = 10;
+  // Category of the challenge.
+  string category = 11;
 }
 
 message ChallengeJoinRequest {
@@ -899,40 +901,57 @@ message Challenge {
   string operator = 5;
   // Time when the event starts.
   int64 start_time_sec = 6;
+  // Claim time, if any.
+  int64 claim_time_sec = 7;
   // Time when the event ends.
-  int64 end_time_sec = 7;
+  int64 end_time_sec = 8;
   // The possible reward tiers for this instance of the challenge.
-  repeated ChallengeRewardTier reward_tiers = 12;
+  repeated ChallengeRewardTier reward_tiers = 9;
   // The available reward and its probabilities.
-  AvailableRewards available_rewards = 8; // Available to Claim
+  AvailableRewards available_rewards = 10; // Available to Claim
   // Additional metadata properties.
-  map<string, string> additional_properties = 9;
+  map<string, string> additional_properties = 11;
   // Current participant count.
-  int64 count = 10;
+  int64 count = 12;
   // Maximum participant count.
-  int64 max_count = 11;
+  int64 max_count = 13;
   // Maximum number of score submissions per participant.
-  int64 max_num_score = 13;
+  int64 max_num_score = 14;
   // Participants and their scores.
-  repeated ChallengeScore scores = 14;
+  repeated ChallengeScore scores = 15;
   // Indicates if the event is still active, and scores can be submitted.
-  bool is_active = 15;
+  bool is_active = 16;
   // The UNIX timestamp for the current server time.
-  int64 current_time_sec = 16;
-  // Whether the user has joined this challenge or not.
-  bool joined = 17;
-  // Whether the user has been invited but has not joined the challenge yet.
-  bool pending = 18;
-  // Whether the user has rejected or left the challenge.
-  bool rejected = 19;
+  int64 current_time_sec = 17;
+  // Whether the user can claim a reward.
+  bool can_claim = 19;
+  // The state of the user participation in the challenge.
+  ChallengeState state = 20;
+  // A claimed reward, if any.
+  Reward reward = 21;
+  // The category to group the event leaderboard together with others.
+  string category = 22;
 }
+
+enum ChallengeState {
+  // The user has a pending invitation to the challenge.
+  CHALLENGE_STATE_INVITED = 0;
+  // The challenge was accepted.
+  CHALLENGE_STATE_JOINED = 1;
+  // The challenge was claimed.
+  CHALLENGE_STATE_CLAIMED = 2;
+  // The challenge was declined.
+  CHALLENGE_STATE_DECLINED = 3;
+  // The challenge was joined but later left.
+  CHALLENGE_STATE_LEFT = 4;
+}
+
+// TODO: Change pending/rejected to enum
 
 // Retrieve available challenge leaderboards.
 message ChallengeList {
-  // Whether or not the response should include scores, defaults to false.
-  bool with_scores = 1;
   // Optional filter of Event Leaderboard categories to list. If empty does not filter on category.
-  repeated string categories = 2;
+  repeated string categories = 1;
 }
 
 message ChallengeGet {
@@ -972,8 +991,8 @@ message ChallengeScore {
   int64 num_scores = 10;
   // Metadata.
   string metadata = 11;
-  // Whether the participant has submitted a score or not.
-  bool score_submitted = 12;
+  // The state of the user participation in the challenge.
+  ChallengeState state = 12;
 }
 
 // The reward tiers for the challenge.
@@ -1005,16 +1024,24 @@ message ChallengeTemplate {
   // Whether the challenge is invite-only or not.
   bool open = 5;
   // The maximum number of scores that can be submitted to the challenge.
-  int64 max_scores = 6;
+  int64 max_num_scores = 6;
+  // The ordering of the challenge scores.
+  bool ascending = 7;
+  // The operator of the challenge score submission.
+  string operator = 8;
 }
 
 message ChallengeMaxMinPlayers {
+  // The minimum number of players that can participate in the challenge.
   int64 min = 1;
-  int64 max = 2; // TODO: Should we have a maximum?
+  // The maximum number of players that can participate in the challenge.
+  int64 max = 2;
 }
 
 message ChallengeMinMaxDuration {
+  // The minimum duration of challenge.
   int64 min_sec = 1;
+  // The maximum duration of challenge.
   int64 max_sec = 2;
 }
 
