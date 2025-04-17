@@ -21,9 +21,36 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+var (
+	ErrTeamNotFound        = runtime.NewError("team not found", 3)         // INVALID_ARGUMENT
+	ErrTeamMaxSizeExceeded = runtime.NewError("team max size exceeded", 3) // INVALID_ARGUMENT
+)
+
 // TeamsConfig is the data definition for a TeamsSystem type.
 type TeamsConfig struct {
-	MaxTeamSize int `json:"max_team_size,omitempty"`
+	InitialMaxTeamSize int `json:"initial_max_team_size,omitempty"`
+	MaxTeamSize        int `json:"max_team_size,omitempty"`
+
+	Wallet    *TeamsWalletConfig    `json:"wallet,omitempty"`
+	Stats     *TeamsStatsConfig     `json:"stats,omitempty"`
+	Inventory *TeamsInventoryConfig `json:"inventory,omitempty"`
+}
+
+type TeamsWalletConfig struct {
+	Currencies map[string]int64 `json:"currencies,omitempty"`
+}
+
+type TeamsStatsConfig struct {
+	StatsPublic  map[string]*StatsConfigStat `json:"stats_public,omitempty"`
+	StatsPrivate map[string]*StatsConfigStat `json:"stats_private,omitempty"`
+}
+
+type TeamsInventoryConfig struct {
+	Items    map[string]*InventoryConfigItem `json:"items,omitempty"`
+	Limits   *InventoryConfigLimits          `json:"limits,omitempty"`
+	ItemSets map[string]map[string]bool      `json:"-"` // Auto-computed when the config is read or personalized.
+
+	ConfigSource ConfigSource[*InventoryConfigItem] `json:"-"` // Not included in serialization, set dynamically.
 }
 
 // A TeamsSystem is a gameplay system which wraps the groups system in Nakama server.
@@ -41,6 +68,36 @@ type TeamsSystem interface {
 
 	// WriteChatMessage sends a message to the user's team even when they're not connected on a realtime socket.
 	WriteChatMessage(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamWriteChatMessageRequest) (resp *ChannelMessageAck, err error)
+
+	// UpdateMaxSize sets a new maximum team size for the selected team.
+	UpdateMaxSize(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID string, count int, delta bool) error
+
+	// WalletGet fetches the wallet for a specified team.
+	WalletGet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string) (*TeamWallet, error)
+
+	// WalletGrant grants currencies to the specified team's wallet.
+	WalletGrant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, currencies map[string]int64) (*TeamWallet, error)
+
+	// InventoryList will return the items defined as well as the computed item sets for the team by ID.
+	InventoryList(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, category string) (items map[string]*InventoryConfigItem, itemSets map[string][]string, err error)
+
+	// InventoryListInventoryItems will return the items which are part of a team's inventory by ID.
+	InventoryListInventoryItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, category string) (inventory *Inventory, err error)
+
+	// InventoryConsumeItems will deduct the item(s) from the team's inventory and run the consume reward for each one, if defined.
+	InventoryConsumeItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, itemIDs, instanceIDs map[string]int64, overConsume bool) (updatedInventory *Inventory, rewards map[string][]*Reward, instanceRewards map[string][]*Reward, err error)
+
+	// InventoryGrantItems will add the item(s) to a team's inventory by ID.
+	InventoryGrantItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, itemIDs map[string]int64, ignoreLimits bool) (updatedInventory *Inventory, newItems map[string]*InventoryItem, updatedItems map[string]*InventoryItem, notGrantedItemIDs map[string]int64, err error)
+
+	// InventoryUpdateItems will update the properties which are stored on each item by instance ID for a team.
+	InventoryUpdateItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, instanceIDs map[string]*InventoryUpdateItemProperties) (updatedInventory *Inventory, err error)
+
+	// SetOnInventoryConsumeReward sets a custom reward function which will run after a team inventory item consume reward is rolled.
+	SetOnInventoryConsumeReward(fn OnReward[*InventoryConfigItem])
+
+	// SetInventoryConfigSource sets a custom additional config lookup function.
+	SetInventoryConfigSource(fn ConfigSource[*InventoryConfigItem])
 }
 
 // ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is
