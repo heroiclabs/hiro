@@ -103,6 +103,27 @@ enum RpcId {
   // Write a chat message to the Team's chat channel.
   RPC_ID_TEAMS_WRITE_CHAT_MESSAGE = 29 [(input) = "TeamWriteChatMessageRequest", (output) = "ChannelMessageAck"];
 
+  // Get a team's wallet.
+  RPC_ID_TEAMS_WALLET_GET = 91 [(input) = "TeamWalletGetRequest", (output) = "TeamWallet"];
+  // Grant currencies to a team's wallet.
+  RPC_ID_TEAMS_WALLET_GRANT = 92 [(input) = "TeamWalletGrantRequest", (output) = "TeamWallet"];
+
+  // Get a team's stats.
+  RPC_ID_TEAMS_STATS_GET = 93 [(input) = "TeamStatListRequest", (output) = "StatList"];
+  // Update a team's stats.
+  RPC_ID_TEAMS_STATS_UPDATE = 94 [(input) = "TeamStatUpdateRequest", (output) = "StatList"];
+
+  // List all inventory items defined in the team codex.
+  RPC_ID_TEAMS_INVENTORY_LIST = 95 [(input) = "TeamInventoryListRequest", (output) = "InventoryList"];
+  // List all inventory items owned by a team.
+  RPC_ID_TEAMS_INVENTORY_LIST_INVENTORY = 96 [(input) = "TeamInventoryListRequest", (output) = "InventoryList"];
+  // Consume one or more inventory items owned by a team.
+  RPC_ID_TEAMS_INVENTORY_CONSUME = 97 [(input) = "TeamInventoryConsumeRequest", (output) = "InventoryConsumeRewards"];
+  // Grant one or more inventory items to a team.
+  RPC_ID_TEAMS_INVENTORY_GRANT = 98 [(input) = "TeamInventoryGrantRequest", (output) = "InventoryUpdateAck"];
+  // Update the properties on one or more team inventory items accessible to the player.
+  RPC_ID_TEAMS_INVENTORY_UPDATE = 99 [(input) = "TeamInventoryUpdateItemsRequest", (output) = "InventoryUpdateAck"];
+
   // Create a random unlockable to assign to a slot (or overflow) unless there are no slots.
   RPC_ID_UNLOCKABLES_CREATE = 30 [(input) = "", (output) = "UnlockablesList"];
   // Get the unlockables which are currently in progress for the player.
@@ -149,7 +170,7 @@ enum RpcId {
 
   // Get all stats.
   RPC_ID_STATS_GET = 46 [(input) = "", (output) = "StatList"];
-  // Update private stats.
+  // Update stats.
   RPC_ID_STATS_UPDATE = 47 [(input) = "StatUpdateRequest", (output) = "StatList"];
 
   // Get progressions.
@@ -2512,6 +2533,82 @@ message StreaksClaimRequest {
 message StreaksResetRequest {
   // List of streak identifiers to reset.
   repeated string ids = 1;
+}
+
+// Request to fetch a team's wallet.
+message TeamWalletGetRequest {
+  // The team identifier to fetch a wallet for.
+  string id = 1;
+}
+
+// Request to update a team's wallet.
+message TeamWalletGrantRequest {
+  // The team identifier to update the wallet for.
+  string id = 1;
+  // Currencies to grant.
+  map<string, int64> currencies = 2;
+}
+
+// Represents the contents of a team's wallet.
+message TeamWallet {
+  // Team identifier this wallet belongs to.
+  string id = 1;
+  // Currencies currently in the team's wallet.
+  map<string, int64> currencies = 2;
+  // Last time in UTC seconds when the wallet was updated.
+  int64 update_time_sec = 3;
+}
+
+// Request to retrieve stats for specified team.
+message TeamStatListRequest {
+  // Team identifier to fetch stats for.
+  string id = 1;
+}
+
+// Request an optionally batched stats update for a specified team.
+message TeamStatUpdateRequest {
+  // Team identifier.
+  string id = 1;
+  // Public stat updates.
+  repeated StatUpdate public = 2;
+  // Private stat updates.
+  repeated StatUpdate private = 3;
+}
+
+// Request inventory items in the team inventory.
+message TeamInventoryListRequest {
+  // Team identifier.
+  string id = 1;
+  // The category for the items to filter for, or empty for all.
+  string item_category = 2;
+}
+
+// Request to consume some amount of items from a team inventory.
+message TeamInventoryConsumeRequest {
+  // Team identifier.
+  string id = 1;
+  // Item ID amounts to consume, if any.
+  map<string, int64> items = 2;
+  // Whether or not to allow overconsumption.
+  bool overconsume = 3;
+  // Instance ID amounts to consume, if any.
+  map<string, int64> instances = 4;
+}
+
+// Represents a request to grant items to a team.
+message TeamInventoryGrantRequest {
+  // Team identifier.
+  string id = 1;
+  // The items to grant.
+  map<string, int64> items = 2;
+}
+
+// Represents a request to update properties of instanced items belonging to a team.
+message TeamInventoryUpdateItemsRequest {
+  // Team identifier.
+  string id = 1;
+  // The item updates to action, keyed by item instance ID.
+  map<string, InventoryUpdateItemProperties> item_updates = 2;
 }
 
 // Sync operation for a single inventory item.
