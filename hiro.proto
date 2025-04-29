@@ -206,9 +206,9 @@ enum RpcId {
   // List all available templates for challenges.
   RPC_ID_CHALLENGES_GET_TEMPLATES = 81 [(input) = "", (output) = "ChallengeTemplates"];
   // Get a challange by id.
-  RPC_ID_CHALLENGE_GET = 82 [(input) = "ChallengeGet", (output) = "Challenge"];
+  RPC_ID_CHALLENGE_GET = 82 [(input) = "ChallengeGetRequest", (output) = "Challenge"];
   // List all the user's challenges.
-  RPC_ID_CHALLENGE_LIST = 83 [(input) = "ChallengeList", (output) = "Challenges"];
+  RPC_ID_CHALLENGE_LIST = 83 [(input) = "ChallengeListRequest", (output) = "Challenges"];
   // Create a new challenge based on a template.
   RPC_ID_CHALLENGE_CREATE = 84 [(input) = "ChallengeCreateRequest", (output) = "Challenge"];
   // Join a challenge.
@@ -949,12 +949,12 @@ enum ChallengeState {
 // TODO: Change pending/rejected to enum
 
 // Retrieve available challenge leaderboards.
-message ChallengeList {
+message ChallengeListRequest {
   // Optional filter of Event Leaderboard categories to list. If empty does not filter on category.
   repeated string categories = 1;
 }
 
-message ChallengeGet {
+message ChallengeGetRequest {
   // Challenge leaderboard ID to get, and join if necessary/possible.
   string challenge_id = 1;
   // Whether or not the response should include scores, defaults to false.
