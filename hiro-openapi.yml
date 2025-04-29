@@ -1780,6 +1780,192 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_CHALLENGES_GET_TEMPLATES?unwrap:
+    post:
+      summary: CHALLENGES_GET_TEMPLATES
+      description: "List all available templates for challenges."
+      operationId: CHALLENGES_GET_TEMPLATES
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChallengeTemplates'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_CHALLENGE_GET?unwrap:
+    post:
+      summary: CHALLENGE_GET
+      description: "Get a challange by id."
+      operationId: CHALLENGE_GET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeGetRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_CHALLENGE_LIST?unwrap:
+    post:
+      summary: CHALLENGE_LIST
+      description: "List all the user's challenges."
+      operationId: CHALLENGE_LIST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeListRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenges'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_CHALLENGE_CREATE?unwrap:
+    post:
+      summary: CHALLENGE_CREATE
+      description: "Create a new challenge based on a template."
+      operationId: CHALLENGE_CREATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeCreateRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_CHALLENGE_JOIN?unwrap:
+    post:
+      summary: CHALLENGE_JOIN
+      description: "Join a challenge."
+      operationId: CHALLENGE_JOIN
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeJoinRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_CHALLENGE_LEAVE?unwrap:
+    post:
+      summary: CHALLENGE_LEAVE
+      description: "Leave a challenge."
+      operationId: CHALLENGE_LEAVE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeLeaveRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_CHALLENGE_SUBMIT_SCORE?unwrap:
+    post:
+      summary: CHALLENGE_SUBMIT_SCORE
+      description: "Submit a score to a challenge."
+      operationId: CHALLENGE_SUBMIT_SCORE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeSubmitScoreRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_CHALLENGE_CLAIM?unwrap:
+    post:
+      summary: CHALLENGE_CLAIM
+      description: "Claim a reward of a challenge."
+      operationId: CHALLENGE_CLAIM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeClaimRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_ECONOMY_PLACEMENT_SUCCESS?unwrap:
     post:
       summary: ECONOMY_PLACEMENT_SUCCESS
@@ -2440,6 +2626,234 @@ components:
       properties:
         code:
           type: string
+    ChallengeCreateRequest:
+      type: object
+      properties:
+        template_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        invitees:
+          type: array
+          items:
+            type: string
+        open:
+          type: boolean
+        max_scores:
+          type: integer
+          format: int64
+        start_delay_sec:
+          type: integer
+          format: int64
+        duration_sec:
+          type: integer
+          format: int64
+        max_participants:
+          type: integer
+          format: int64
+        category:
+          type: string
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    ChallengeJoinRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+    ChallengeLeaveRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+    ChallengeClaimRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+    ChallengeSubmitScoreRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+    Challenge:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        ascending:
+          type: boolean
+        operator:
+          type: string
+        start_time_sec:
+          type: integer
+          format: int64
+        claim_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        reward_tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChallengeRewardTier'
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        count:
+          type: integer
+          format: int64
+        max_count:
+          type: integer
+          format: int64
+        max_num_score:
+          type: integer
+          format: int64
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChallengeScore'
+        is_active:
+          type: boolean
+        current_time_sec:
+          type: integer
+          format: int64
+        can_claim:
+          type: boolean
+        state:
+          $ref: '#/components/schemas/ChallengeState'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        category:
+          type: string
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    ChallengeListRequest:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            type: string
+    ChallengeGetRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+        with_scores:
+          type: boolean
+    Challenges:
+      type: object
+      properties:
+        challenges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Challenge'
+    ChallengeScore:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        display_name:
+          type: string
+        avatar_url:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        rank:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+        state:
+          $ref: '#/components/schemas/ChallengeState'
+    ChallengeRewardTier:
+      type: object
+      properties:
+        rank_max:
+          type: integer
+          format: int64
+        rank_min:
+          type: integer
+          format: int64
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+    ChallengeTemplates:
+      type: object
+      properties:
+    ChallengeTemplate:
+      type: object
+      properties:
+        reward_tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChallengeRewardTier'
+        players:
+          $ref: '#/components/schemas/ChallengeMaxMinPlayers'
+        duration:
+          $ref: '#/components/schemas/ChallengeMinMaxDuration'
+        start_delay_max:
+          type: integer
+          format: int64
+        open:
+          type: boolean
+        max_num_scores:
+          type: integer
+          format: int64
+        ascending:
+          type: boolean
+        operator:
+          type: string
+    ChallengeMaxMinPlayers:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int64
+        max:
+          type: integer
+          format: int64
+    ChallengeMinMaxDuration:
+      type: object
+      properties:
+        min_sec:
+          type: integer
+          format: int64
+        max_sec:
+          type: integer
+          format: int64
     EventLeaderboardList:
       type: object
       properties:
@@ -4293,6 +4707,14 @@ components:
         - RPC_ID_STREAKS_UPDATE
         - RPC_ID_STREAKS_CLAIM
         - RPC_ID_STREAKS_RESET
+        - RPC_ID_CHALLENGES_GET_TEMPLATES
+        - RPC_ID_CHALLENGE_GET
+        - RPC_ID_CHALLENGE_LIST
+        - RPC_ID_CHALLENGE_CREATE
+        - RPC_ID_CHALLENGE_JOIN
+        - RPC_ID_CHALLENGE_LEAVE
+        - RPC_ID_CHALLENGE_SUBMIT_SCORE
+        - RPC_ID_CHALLENGE_CLAIM
         - RPC_ID_ECONOMY_PLACEMENT_SUCCESS
         - RPC_ID_ECONOMY_PLACEMENT_FAIL
         - RPC_ID_STORAGE_PERSONALIZER_UPLOAD
@@ -4338,6 +4760,14 @@ components:
       enum:
         - INCENTIVE_TYPE_UNSPECIFIED
         - INCENTIVE_TYPE_INVITE
+    ChallengeState:
+      type: string
+      enum:
+        - CHALLENGE_STATE_INVITED
+        - CHALLENGE_STATE_JOINED
+        - CHALLENGE_STATE_CLAIMED
+        - CHALLENGE_STATE_DECLINED
+        - CHALLENGE_STATE_LEFT
     TutorialState:
       type: string
       enum:
