@@ -877,7 +877,7 @@ message ChallengeClaimRequest {
   string challenge_id = 1;
 }
 
-message ChallengeScoreSubmitRequest {
+message ChallengeSubmitScoreRequest {
   // Challenge ID.
   string challenge_id = 1;
   // Score.

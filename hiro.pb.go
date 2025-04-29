@@ -4597,7 +4597,7 @@ func (x *ChallengeClaimRequest) GetChallengeId() string {
 	return ""
 }
 
-type ChallengeScoreSubmitRequest struct {
+type ChallengeSubmitScoreRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -4612,8 +4612,8 @@ type ChallengeScoreSubmitRequest struct {
 	Metadata string `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
 }
 
-func (x *ChallengeScoreSubmitRequest) Reset() {
-	*x = ChallengeScoreSubmitRequest{}
+func (x *ChallengeSubmitScoreRequest) Reset() {
+	*x = ChallengeSubmitScoreRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_hiro_proto_msgTypes[49]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4621,13 +4621,13 @@ func (x *ChallengeScoreSubmitRequest) Reset() {
 	}
 }
 
-func (x *ChallengeScoreSubmitRequest) String() string {
+func (x *ChallengeSubmitScoreRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ChallengeScoreSubmitRequest) ProtoMessage() {}
+func (*ChallengeSubmitScoreRequest) ProtoMessage() {}
 
-func (x *ChallengeScoreSubmitRequest) ProtoReflect() protoreflect.Message {
+func (x *ChallengeSubmitScoreRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_hiro_proto_msgTypes[49]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4639,33 +4639,33 @@ func (x *ChallengeScoreSubmitRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ChallengeScoreSubmitRequest.ProtoReflect.Descriptor instead.
-func (*ChallengeScoreSubmitRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ChallengeSubmitScoreRequest.ProtoReflect.Descriptor instead.
+func (*ChallengeSubmitScoreRequest) Descriptor() ([]byte, []int) {
 	return file_hiro_proto_rawDescGZIP(), []int{49}
 }
 
-func (x *ChallengeScoreSubmitRequest) GetChallengeId() string {
+func (x *ChallengeSubmitScoreRequest) GetChallengeId() string {
 	if x != nil {
 		return x.ChallengeId
 	}
 	return ""
 }
 
-func (x *ChallengeScoreSubmitRequest) GetScore() int64 {
+func (x *ChallengeSubmitScoreRequest) GetScore() int64 {
 	if x != nil {
 		return x.Score
 	}
 	return 0
 }
 
-func (x *ChallengeScoreSubmitRequest) GetSubscore() int64 {
+func (x *ChallengeSubmitScoreRequest) GetSubscore() int64 {
 	if x != nil {
 		return x.Subscore
 	}
 	return 0
 }
 
-func (x *ChallengeScoreSubmitRequest) GetMetadata() string {
+func (x *ChallengeSubmitScoreRequest) GetMetadata() string {
 	if x != nil {
 		return x.Metadata
 	}
@@ -16546,7 +16546,7 @@ var file_hiro_proto_rawDesc = []byte{
 	0x74, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x5f, 0x69,
 	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e,
 	0x67, 0x65, 0x49, 0x64, 0x22, 0x8e, 0x01, 0x0a, 0x1b, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e,
-	0x67, 0x65, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x52, 0x65, 0x71,
+	0x67, 0x65, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67,
 	0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6c,
 	0x6c, 0x65, 0x6e, 0x67, 0x65, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65,
@@ -19188,7 +19188,7 @@ var file_hiro_proto_goTypes = []any{
 	(*ChallengeJoinRequest)(nil),                     // 55: hiro.ChallengeJoinRequest
 	(*ChallengeLeaveRequest)(nil),                    // 56: hiro.ChallengeLeaveRequest
 	(*ChallengeClaimRequest)(nil),                    // 57: hiro.ChallengeClaimRequest
-	(*ChallengeScoreSubmitRequest)(nil),              // 58: hiro.ChallengeScoreSubmitRequest
+	(*ChallengeSubmitScoreRequest)(nil),              // 58: hiro.ChallengeSubmitScoreRequest
 	(*Challenge)(nil),                                // 59: hiro.Challenge
 	(*ChallengeListRequest)(nil),                     // 60: hiro.ChallengeListRequest
 	(*ChallengeGetRequest)(nil),                      // 61: hiro.ChallengeGetRequest
@@ -20364,7 +20364,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[49].Exporter = func(v any, i int) any {
-			switch v := v.(*ChallengeScoreSubmitRequest); i {
+			switch v := v.(*ChallengeSubmitScoreRequest); i {
 			case 0:
 				return &v.state
 			case 1:
