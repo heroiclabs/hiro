@@ -208,7 +208,7 @@ enum RpcId {
   // Get a challange by id.
   RPC_ID_CHALLENGE_GET = 82 [(input) = "ChallengeGetRequest", (output) = "Challenge"];
   // List all the user's challenges.
-  RPC_ID_CHALLENGE_LIST = 83 [(input) = "ChallengeListRequest", (output) = "Challenges"];
+  RPC_ID_CHALLENGE_LIST = 83 [(input) = "ChallengeListRequest", (output) = "ChallengesList"];
   // Create a new challenge based on a template.
   RPC_ID_CHALLENGE_CREATE = 84 [(input) = "ChallengeCreateRequest", (output) = "Challenge"];
   // Join a challenge.
@@ -962,7 +962,7 @@ message ChallengeGetRequest {
 }
 
 // Several challenges the user has access to, resulting from a listing operation.
-message Challenges {
+message ChallengesList {
   // Zero or more challenges.
   repeated Challenge challenges = 1;
 }
