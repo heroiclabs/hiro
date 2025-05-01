@@ -1839,7 +1839,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Challenges'
+                $ref: '#/components/schemas/ChallengesList'
         'default':
           description: An error response
           content:
@@ -2759,7 +2759,7 @@ components:
           type: string
         with_scores:
           type: boolean
-    Challenges:
+    ChallengesList:
       type: object
       properties:
         challenges:
