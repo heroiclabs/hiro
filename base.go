@@ -101,7 +101,7 @@ type Hiro interface {
 	GetIncentivesSystem() IncentivesSystem
 	GetAuctionsSystem() AuctionsSystem
 	GetStreaksSystem() StreaksSystem
-	GetChallengeSystem() ChallengeSystem
+	GetChallengesSystem() ChallengesSystem
 }
 
 // The SystemType identifies each of the gameplay systems.
@@ -124,7 +124,7 @@ const (
 	SystemTypeIncentives
 	SystemTypeAuctions
 	SystemTypeStreaks
-	SystemTypeChallenge
+	SystemTypeChallenges
 )
 
 // Init initializes a Hiro type with the configurations provided.
@@ -362,10 +362,10 @@ func WithStreaksSystem(configFile string, register bool) SystemConfig {
 	}
 }
 
-// WithChallengeSystem configures a ChallengeSystem type and optionally registers its RPCs with the game server.
-func WithChallengeSystem(configFile string, register bool) SystemConfig {
+// WithChallengesSystem configures a ChallengesSystem type and optionally registers its RPCs with the game server.
+func WithChallengesSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
-		systemType: SystemTypeChallenge,
+		systemType: SystemTypeChallenges,
 		configFile: configFile,
 		register:   register,
 	}

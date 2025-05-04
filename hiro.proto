@@ -219,6 +219,8 @@ enum RpcId {
   RPC_ID_CHALLENGE_SUBMIT_SCORE = 87 [(input) = "ChallengeSubmitScoreRequest", (output) = "Challenge"];
   // Claim a reward of a challenge.
   RPC_ID_CHALLENGE_CLAIM = 88 [(input) = "ChallengeClaimRequest", (output) = "Challenge"];
+  // Search for an open challenge to join.
+  RPC_ID_CHALLENGE_SEARCH = 89 [(input) = "ChallengeSearchRequest", (output) = "ChallengesList"];
 
   //--- Server to server RPCs ---//
 
@@ -866,15 +868,27 @@ message ChallengeCreateRequest {
 }
 
 message ChallengeJoinRequest {
+  // Challenge id.
   string challenge_id = 1;
 }
 
 message ChallengeLeaveRequest {
+  // Challenge id.
   string challenge_id = 1;
 }
 
 message ChallengeClaimRequest {
+  // Challenge id.
   string challenge_id = 1;
+}
+
+message ChallengeSearchRequest {
+  // Optional name of challenge to filter by.
+  string name = 1;
+  // Optional category of challenge to filter by.
+  string category = 2;
+  // Maximum number of results to return.
+  int64 limit = 3;
 }
 
 message ChallengeSubmitScoreRequest {
@@ -912,9 +926,9 @@ message Challenge {
   // Additional metadata properties.
   map<string, string> additional_properties = 11;
   // Current participant count.
-  int64 count = 12;
+  int64 size = 12;
   // Maximum participant count.
-  int64 max_count = 13;
+  int64 max_size = 13;
   // Maximum number of score submissions per participant.
   int64 max_num_score = 14;
   // Participants and their scores.
@@ -931,19 +945,23 @@ message Challenge {
   Reward reward = 21;
   // The category to group the event leaderboard together with others.
   string category = 22;
+  // Whether the challenge is open to participants beyond the initial invitees or not.
+  bool open = 23;
 }
 
 enum ChallengeState {
+  // There is no applicable state
+  CHALLENGE_STATE_NONE = 0;
   // The user has a pending invitation to the challenge.
-  CHALLENGE_STATE_INVITED = 0;
+  CHALLENGE_STATE_INVITED = 1;
   // The challenge was accepted.
-  CHALLENGE_STATE_JOINED = 1;
+  CHALLENGE_STATE_JOINED = 2;
   // The challenge was claimed.
-  CHALLENGE_STATE_CLAIMED = 2;
+  CHALLENGE_STATE_CLAIMED = 3;
   // The challenge was declined.
-  CHALLENGE_STATE_DECLINED = 3;
+  CHALLENGE_STATE_DECLINED = 4;
   // The challenge was joined but later left.
-  CHALLENGE_STATE_LEFT = 4;
+  CHALLENGE_STATE_LEFT = 5;
 }
 
 // TODO: Change pending/rejected to enum
@@ -952,6 +970,8 @@ enum ChallengeState {
 message ChallengeListRequest {
   // Optional filter of Event Leaderboard categories to list. If empty does not filter on category.
   repeated string categories = 1;
+  // Whether or not the response should include scores, defaults to false.
+  bool with_scores = 2;
 }
 
 message ChallengeGetRequest {
