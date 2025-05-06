@@ -2105,6 +2105,8 @@ message Achievement {
   int64 start_time_sec = 22;
   // The UNIX timestamp when this achievement will allow updates. This may be before its next reset. A zero means it does not end.
   int64 end_time_sec = 23;
+  // The reset schedule expressed in CRON format.
+  string reset_cronexpr = 24;
 }
 
 // The achievements returned by the server.
