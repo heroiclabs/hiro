@@ -16,7 +16,6 @@ type ChallengesConfigChallenge struct {
 	AdditionalProperties map[string]string                      `json:"additional_properties,omitempty"`
 	MaxNumScore          int64                                  `json:"max_num_score,omitempty"`
 	StartDelayMaxSec     int64                                  `json:"start_delay_max_sec,omitempty"`
-	Open                 bool                                   `json:"open,omitempty"`
 	Ascending            bool                                   `json:"ascending,omitempty"`
 	Operator             string                                 `json:"operator,omitempty"`
 	Duration             *ChallengeDuration                     `json:"duration,omitempty"`
@@ -53,6 +52,9 @@ type ChallengesSystem interface {
 
 	// Create a new challenge for a list of users.
 	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, templateId, name, description, category string, open bool, startDelaySec, durationSec int64, invitees []string, maxPlayers int64) (*Challenge, error)
+
+	// Invite allows the creator of a challenge to invite more players to it.
+	Invite(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, challengeId string, invitees []string) (challenge *Challenge, err error)
 
 	// Join Joins a challenge the user's been invited to.
 	Join(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, challengeId string) (*Challenge, error)

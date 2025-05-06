@@ -221,6 +221,8 @@ enum RpcId {
   RPC_ID_CHALLENGE_CLAIM = 88 [(input) = "ChallengeClaimRequest", (output) = "Challenge"];
   // Search for an open challenge to join.
   RPC_ID_CHALLENGE_SEARCH = 89 [(input) = "ChallengeSearchRequest", (output) = "ChallengesList"];
+  // Invite more users to an ongoing challenge.
+  RPC_ID_CHALLENGE_INVITE = 90 [(input) = "ChallengeInviteRequest", (output) = "Challenge"];
 
   //--- Server to server RPCs ---//
 
@@ -889,6 +891,13 @@ message ChallengeSearchRequest {
   string category = 2;
   // Maximum number of results to return.
   int64 limit = 3;
+}
+
+message ChallengeInviteRequest {
+  // Challenge id.
+  string challenge_id = 1;
+  // Invitees.
+  repeated string invitees = 2;
 }
 
 message ChallengeSubmitScoreRequest {
