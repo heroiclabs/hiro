@@ -2057,6 +2057,8 @@ message SubAchievement {
   bool auto_reset = 16;
   // The reset schedule expressed in CRON format.
   string reset_cronexpr = 17;
+  // How long (in seconds) this achievement is available for progression after creation. Used for limited time achievements.
+  int64 duration_sec = 18;
 }
 
 // An achievement which is a numeric task which can be unlocked and has an optional reward.
@@ -2109,6 +2111,8 @@ message Achievement {
   int64 end_time_sec = 23;
   // The reset schedule expressed in CRON format.
   string reset_cronexpr = 24;
+  // How long (in seconds) this achievement is available for progression after creation. Used for limited time achievements.
+  int64 duration_sec = 25;
 }
 
 // The achievements returned by the server.
