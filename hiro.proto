@@ -222,7 +222,7 @@ enum RpcSocketId {
   RPC_SOCKET_ID_AUCTIONS_BID = 2 [(input) = "AuctionBidRequest", (output) = "Auction"];
 }
 
-// The cost(s) associated with permanently unlocking a progression.
+// [public] The cost(s) associated with permanently unlocking a progression.
 message ProgressionCost {
   // The items which will be deducted.
   map<string, int64> items = 1;
@@ -230,7 +230,7 @@ message ProgressionCost {
   map<string, int64> currencies = 2;
 }
 
-// Preconditions associated with a progression.
+// [public] Preconditions associated with a progression.
 message ProgressionPreconditions {
   // Counts required.
   map<string, int64> counts = 1;
@@ -271,7 +271,7 @@ enum ProgressionPreconditionsOperator {
   PROGRESSION_PRECONDITIONS_OPERATOR_NOT = 4;
 }
 
-// A complex set of progression preconditions.
+// [public] A complex set of progression preconditions.
 message ProgressionPreconditionsBlock {
   // Direct preconditions.
   ProgressionPreconditions direct = 1;
@@ -281,7 +281,7 @@ message ProgressionPreconditionsBlock {
   ProgressionPreconditionsBlock nested = 3;
 }
 
-// A progression element which can be unlocked to access further progressions.
+// [public] A progression element which can be unlocked to access further progressions.
 message Progression {
   // The ID of the progression.
   string id = 1;
@@ -374,7 +374,7 @@ enum StatUpdateOperator {
   STAT_UPDATE_OPERATOR_MAX = 4;
 }
 
-// Describes a single stat update.
+// [public] Describes a single stat update.
 message StatUpdate {
   // Name.
   string name = 1;
@@ -478,7 +478,7 @@ enum EconomyStoreType {
   ECONOMY_STORE_TYPE_DISCORD = 4;
 }
 
-// Inventory item granted.
+// [public] Inventory item granted.
 message RewardInventoryItem {
   // The ID of the item.
   string id = 1;
@@ -492,7 +492,7 @@ message RewardInventoryItem {
   string instance_id = 5;
 }
 
-// Energy modifier granted.
+// [public] Energy modifier granted.
 message RewardEnergyModifier {
   // The ID of they modifier granted.
   string id = 1;
@@ -506,7 +506,7 @@ message RewardEnergyModifier {
   int64 weight = 5;
 }
 
-// A reward modifier temporally adjusts the way all rewards are handled in the economy.
+// [public] A reward modifier temporally adjusts the way all rewards are handled in the economy.
 message RewardModifier {
   // The ID of the reward content to modify.
   string id = 1;
@@ -520,7 +520,7 @@ message RewardModifier {
   uint64 duration_sec = 5;
 }
 
-// A reward modifier that is currently active.
+// [public] A reward modifier that is currently active.
 message ActiveRewardModifier {
   // The ID of the reward content to modify.
   string id = 1;
@@ -536,7 +536,7 @@ message ActiveRewardModifier {
   int64 end_time_sec = 6;
 }
 
-// Rewards granted to the player.
+// [public] Rewards granted to the player.
 message Reward {
   // The items granted. Indexed by item ID.
   map<string, int64> items = 1;
@@ -1062,7 +1062,7 @@ message EconomyDonationsList {
   repeated EconomyDonation donations = 1;
 }
 
-// Information about a specific donation claim.
+// [public] Information about a specific donation claim.
 message EconomyDonationClaimRequestDetails {
   // List of donor IDs to claim and amount to claim from each, or empty to claim all available.
   map<string, int64> donors = 1;
@@ -1210,7 +1210,7 @@ message InventoryGrantRequest {
   map<string, int64> items = 1;
 }
 
-// The typed properties to update in an instanced inventory item.
+// [public] The typed properties to update in an instanced inventory item.
 message InventoryUpdateItemProperties {
   // The properties with string values.
   map<string, string> string_properties = 1;
@@ -1262,7 +1262,7 @@ message InventoryList {
   map<string, InventoryItem> items = 1;
 }
 
-// Bid amount associated with an auction.
+// [public] Bid amount associated with an auction.
 message AuctionBidAmount {
   // Currencies required or placed as part of the bid.
   map<string, int64> currencies = 1;
@@ -1663,7 +1663,7 @@ message EconomyPurchaseAck {
   bool is_sandbox_purchase = 4;
 }
 
-// A modifier that may change energy behaviour.
+// [public] A modifier that may change energy behaviour.
 message EnergyModifier {
   // The modifier operator.
   string operator = 1;
@@ -2154,7 +2154,7 @@ message StreakAvailableReward {
   AvailableRewards reward = 3;
 }
 
-// A single claimed streak reward.
+// [public] A single claimed streak reward.
 message StreakReward {
   // Minimum streak progress count required for this reward, inclusive.
   int64 count_min = 1;
@@ -2240,7 +2240,7 @@ message StreaksResetRequest {
   repeated string ids = 1;
 }
 
-// Sync operation for a single inventory item.
+// [public] Sync operation for a single inventory item.
 message SyncInventoryItem {
   // Item identifier from config mapping.
   string item_id = 1;
@@ -2252,13 +2252,13 @@ message SyncInventoryItem {
   map<string, double> numeric_properties = 4;
 }
 
-// Input for an offline state sync operation for the inventory system.
+// [public] Input for an offline state sync operation for the inventory system.
 message SyncInventory {
   // Map of instance IDs to update operation data.
   map<string, SyncInventoryItem> items = 1;
 }
 
-// Input for an offline state sync operation for the economy system.
+// [public] Input for an offline state sync operation for the economy system.
 message SyncEconomy {
   // Currencies deltas.
   map<string, int64> currencies = 1;
@@ -2266,7 +2266,7 @@ message SyncEconomy {
   repeated ActiveRewardModifier modifiers = 2;
 }
 
-// Sync operation for a single achievement.
+// [public] Sync operation for a single achievement.
 message SyncAchievementsUpdate {
   // Count to add.
   int64 count = 1;
@@ -2280,13 +2280,13 @@ message SyncAchievementsUpdate {
   int64 total_claim_time_sec = 5;
 }
 
-// Input for an offline state sync operation for the achievements system.
+// [public] Input for an offline state sync operation for the achievements system.
 message SyncAchievements {
   // Achievement updates and associated metadata.
   map<string, SyncAchievementsUpdate> achievements = 1;
 }
 
-// Full state (not delta) for an energy.
+// [public] Full state (not delta) for an energy.
 message SyncEnergyState {
   // Current count.
   int64 count = 1;
@@ -2294,7 +2294,7 @@ message SyncEnergyState {
   int64 refill_start_time_sec = 2;
 }
 
-// Input for an offline state sync operation for the energy system.
+// [public] Input for an offline state sync operation for the energy system.
 message SyncEnergy {
   // Energies and associated full sync data.
   map<string, SyncEnergyState> energies = 1;
@@ -2302,7 +2302,7 @@ message SyncEnergy {
   repeated EnergyModifier modifiers = 2;
 }
 
-// Single event leaderboard update.
+// [public] Single event leaderboard update.
 message SyncEventLeaderboardUpdate {
   // Score.
   int64 score = 1;
@@ -2312,13 +2312,13 @@ message SyncEventLeaderboardUpdate {
   int64 update_time_sec = 3;
 }
 
-// Input for an offline state sync of event leaderboard updates.
+// [public] Input for an offline state sync of event leaderboard updates.
 message SyncEventLeaderboards {
   // Updates for various event leaderboards, keyed by event leaderboard identifier.
   map<string, SyncEventLeaderboardUpdate> event_leaderboards = 1;
 }
 
-// Single progression update.
+// [public] Single progression update.
 message SyncProgressionUpdate {
   // The counts to set.
   map<string, int64> counts = 1;
@@ -2330,13 +2330,13 @@ message SyncProgressionUpdate {
   ProgressionCost cost = 4;
 }
 
-// Input for an offline state sync of progressions updates.
+// [public] Input for an offline state sync of progressions updates.
 message SyncProgressions {
   // Updates for various progressions, keyed by progression identifier.
   map<string, SyncProgressionUpdate> progressions = 1;
 }
 
-// Input for an offline state sync of tutorials updates.
+// [public] Input for an offline state sync of tutorials updates.
 message SyncTutorials {
   // Accept list.
   repeated string accepts = 1;
@@ -2348,7 +2348,7 @@ message SyncTutorials {
   map<string, int64> updates = 4;
 }
 
-// Single unlockable update, either grant or unlock start.
+// [public] Single unlockable update, either grant or unlock start.
 message SyncUnlockableUpdate {
   // Unlockable identifier from config.
   string unlockable_id = 1;
@@ -2360,7 +2360,7 @@ message SyncUnlockableUpdate {
   int64 unlock_time_sec = 4;
 }
 
-// Input for an offline state sync of unlockables updates.
+// [public] Input for an offline state sync of unlockables updates.
 message SyncUnlockables {
   // Unlockable instance IDs to remove.
   repeated string removes = 1;
@@ -2368,7 +2368,7 @@ message SyncUnlockables {
   map<string, SyncUnlockableUpdate> updates = 2;
 }
 
-// Single streak state update.
+// [public] Single streak state update.
 message SyncStreakUpdate {
   // Current progress count for this streak.
   int64 count = 1;
@@ -2386,7 +2386,7 @@ message SyncStreakUpdate {
   repeated StreakReward claimed_rewards = 7;
 }
 
-// Input for an offline state sync of streaks updates.
+// [public] Input for an offline state sync of streaks updates.
 message SyncStreaks {
   // Streak identifiers to reset.
   repeated string resets = 1;
