@@ -2055,6 +2055,8 @@ message SubAchievement {
   bool auto_claim = 15;
   // Whether the sub-achievement will reset after completion.
   bool auto_reset = 16;
+  // The reset schedule expressed in CRON format.
+  string reset_cronexpr = 17;
 }
 
 // An achievement which is a numeric task which can be unlocked and has an optional reward.
