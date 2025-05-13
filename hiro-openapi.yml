@@ -1966,6 +1966,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_CHALLENGE_SEARCH?unwrap:
+    post:
+      summary: CHALLENGE_SEARCH
+      description: "Search for an open challenge to join."
+      operationId: CHALLENGE_SEARCH
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeSearchRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChallengesList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_CHALLENGE_INVITE?unwrap:
+    post:
+      summary: CHALLENGE_INVITE
+      description: "Invite more users to an ongoing challenge."
+      operationId: CHALLENGE_INVITE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeInviteRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_ECONOMY_PLACEMENT_SUCCESS?unwrap:
     post:
       summary: ECONOMY_PLACEMENT_SUCCESS
@@ -2674,6 +2722,25 @@ components:
       properties:
         challenge_id:
           type: string
+    ChallengeSearchRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        limit:
+          type: integer
+          format: int64
+    ChallengeInviteRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+        invitees:
+          type: array
+          items:
+            type: string
     ChallengeSubmitScoreRequest:
       type: object
       properties:
@@ -2715,10 +2782,10 @@ components:
             $ref: '#/components/schemas/ChallengeRewardTier'
         available_rewards:
           $ref: '#/components/schemas/AvailableRewards'
-        count:
+        size:
           type: integer
           format: int64
-        max_count:
+        max_size:
           type: integer
           format: int64
         max_num_score:
@@ -2741,6 +2808,8 @@ components:
           $ref: '#/components/schemas/Reward'
         category:
           type: string
+        open:
+          type: boolean
         additionalProperties:
           type: object
           additionalProperties:
@@ -2752,6 +2821,8 @@ components:
           type: array
           items:
             type: string
+        with_scores:
+          type: boolean
     ChallengeGetRequest:
       type: object
       properties:
@@ -4715,6 +4786,8 @@ components:
         - RPC_ID_CHALLENGE_LEAVE
         - RPC_ID_CHALLENGE_SUBMIT_SCORE
         - RPC_ID_CHALLENGE_CLAIM
+        - RPC_ID_CHALLENGE_SEARCH
+        - RPC_ID_CHALLENGE_INVITE
         - RPC_ID_ECONOMY_PLACEMENT_SUCCESS
         - RPC_ID_ECONOMY_PLACEMENT_FAIL
         - RPC_ID_STORAGE_PERSONALIZER_UPLOAD
@@ -4763,6 +4836,7 @@ components:
     ChallengeState:
       type: string
       enum:
+        - CHALLENGE_STATE_NONE
         - CHALLENGE_STATE_INVITED
         - CHALLENGE_STATE_JOINED
         - CHALLENGE_STATE_CLAIMED
