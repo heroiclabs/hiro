@@ -197,6 +197,26 @@ const (
 	RpcId_RPC_ID_STREAKS_CLAIM RpcId = 77
 	// Reset all progress for one or more streaks.
 	RpcId_RPC_ID_STREAKS_RESET RpcId = 78
+	// List all available templates for challenges.
+	RpcId_RPC_ID_CHALLENGES_GET_TEMPLATES RpcId = 81
+	// Get a challange by id.
+	RpcId_RPC_ID_CHALLENGE_GET RpcId = 82
+	// List all the user's challenges.
+	RpcId_RPC_ID_CHALLENGE_LIST RpcId = 83
+	// Create a new challenge based on a template.
+	RpcId_RPC_ID_CHALLENGE_CREATE RpcId = 84
+	// Join a challenge.
+	RpcId_RPC_ID_CHALLENGE_JOIN RpcId = 85
+	// Leave a challenge.
+	RpcId_RPC_ID_CHALLENGE_LEAVE RpcId = 86
+	// Submit a score to a challenge.
+	RpcId_RPC_ID_CHALLENGE_SUBMIT_SCORE RpcId = 87
+	// Claim a reward of a challenge.
+	RpcId_RPC_ID_CHALLENGE_CLAIM RpcId = 88
+	// Search for an open challenge to join.
+	RpcId_RPC_ID_CHALLENGE_SEARCH RpcId = 89
+	// Invite more users to an ongoing challenge.
+	RpcId_RPC_ID_CHALLENGE_INVITE RpcId = 90
 	// Webhook RPC to handle Rewarded Video Ad placement success callbacks.
 	RpcId_RPC_ID_ECONOMY_PLACEMENT_SUCCESS RpcId = 1001
 	// Webhook RPC to handle Rewarded Video Ad placement failure callbacks.
@@ -286,6 +306,16 @@ var (
 		76:   "RPC_ID_STREAKS_UPDATE",
 		77:   "RPC_ID_STREAKS_CLAIM",
 		78:   "RPC_ID_STREAKS_RESET",
+		81:   "RPC_ID_CHALLENGES_GET_TEMPLATES",
+		82:   "RPC_ID_CHALLENGE_GET",
+		83:   "RPC_ID_CHALLENGE_LIST",
+		84:   "RPC_ID_CHALLENGE_CREATE",
+		85:   "RPC_ID_CHALLENGE_JOIN",
+		86:   "RPC_ID_CHALLENGE_LEAVE",
+		87:   "RPC_ID_CHALLENGE_SUBMIT_SCORE",
+		88:   "RPC_ID_CHALLENGE_CLAIM",
+		89:   "RPC_ID_CHALLENGE_SEARCH",
+		90:   "RPC_ID_CHALLENGE_INVITE",
 		1001: "RPC_ID_ECONOMY_PLACEMENT_SUCCESS",
 		1002: "RPC_ID_ECONOMY_PLACEMENT_FAIL",
 		1003: "RPC_ID_STORAGE_PERSONALIZER_UPLOAD",
@@ -369,6 +399,16 @@ var (
 		"RPC_ID_STREAKS_UPDATE":                        76,
 		"RPC_ID_STREAKS_CLAIM":                         77,
 		"RPC_ID_STREAKS_RESET":                         78,
+		"RPC_ID_CHALLENGES_GET_TEMPLATES":              81,
+		"RPC_ID_CHALLENGE_GET":                         82,
+		"RPC_ID_CHALLENGE_LIST":                        83,
+		"RPC_ID_CHALLENGE_CREATE":                      84,
+		"RPC_ID_CHALLENGE_JOIN":                        85,
+		"RPC_ID_CHALLENGE_LEAVE":                       86,
+		"RPC_ID_CHALLENGE_SUBMIT_SCORE":                87,
+		"RPC_ID_CHALLENGE_CLAIM":                       88,
+		"RPC_ID_CHALLENGE_SEARCH":                      89,
+		"RPC_ID_CHALLENGE_INVITE":                      90,
 		"RPC_ID_ECONOMY_PLACEMENT_SUCCESS":             1001,
 		"RPC_ID_ECONOMY_PLACEMENT_FAIL":                1002,
 		"RPC_ID_STORAGE_PERSONALIZER_UPLOAD":           1003,
@@ -740,6 +780,70 @@ func (IncentiveType) EnumDescriptor() ([]byte, []int) {
 	return file_hiro_proto_rawDescGZIP(), []int{6}
 }
 
+type ChallengeState int32
+
+const (
+	// There is no applicable state
+	ChallengeState_CHALLENGE_STATE_NONE ChallengeState = 0
+	// The user has a pending invitation to the challenge.
+	ChallengeState_CHALLENGE_STATE_INVITED ChallengeState = 1
+	// The challenge was accepted.
+	ChallengeState_CHALLENGE_STATE_JOINED ChallengeState = 2
+	// The challenge was claimed.
+	ChallengeState_CHALLENGE_STATE_CLAIMED ChallengeState = 3
+	// The challenge was declined.
+	ChallengeState_CHALLENGE_STATE_DECLINED ChallengeState = 4
+	// The challenge was joined but later left.
+	ChallengeState_CHALLENGE_STATE_LEFT ChallengeState = 5
+)
+
+// Enum value maps for ChallengeState.
+var (
+	ChallengeState_name = map[int32]string{
+		0: "CHALLENGE_STATE_NONE",
+		1: "CHALLENGE_STATE_INVITED",
+		2: "CHALLENGE_STATE_JOINED",
+		3: "CHALLENGE_STATE_CLAIMED",
+		4: "CHALLENGE_STATE_DECLINED",
+		5: "CHALLENGE_STATE_LEFT",
+	}
+	ChallengeState_value = map[string]int32{
+		"CHALLENGE_STATE_NONE":     0,
+		"CHALLENGE_STATE_INVITED":  1,
+		"CHALLENGE_STATE_JOINED":   2,
+		"CHALLENGE_STATE_CLAIMED":  3,
+		"CHALLENGE_STATE_DECLINED": 4,
+		"CHALLENGE_STATE_LEFT":     5,
+	}
+)
+
+func (x ChallengeState) Enum() *ChallengeState {
+	p := new(ChallengeState)
+	*p = x
+	return p
+}
+
+func (x ChallengeState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ChallengeState) Descriptor() protoreflect.EnumDescriptor {
+	return file_hiro_proto_enumTypes[7].Descriptor()
+}
+
+func (ChallengeState) Type() protoreflect.EnumType {
+	return &file_hiro_proto_enumTypes[7]
+}
+
+func (x ChallengeState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ChallengeState.Descriptor instead.
+func (ChallengeState) EnumDescriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{7}
+}
+
 // The states of a Tutorial.
 type TutorialState int32
 
@@ -789,11 +893,11 @@ func (x TutorialState) String() string {
 }
 
 func (TutorialState) Descriptor() protoreflect.EnumDescriptor {
-	return file_hiro_proto_enumTypes[7].Descriptor()
+	return file_hiro_proto_enumTypes[8].Descriptor()
 }
 
 func (TutorialState) Type() protoreflect.EnumType {
-	return &file_hiro_proto_enumTypes[7]
+	return &file_hiro_proto_enumTypes[8]
 }
 
 func (x TutorialState) Number() protoreflect.EnumNumber {
@@ -802,7 +906,7 @@ func (x TutorialState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TutorialState.Descriptor instead.
 func (TutorialState) EnumDescriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{7}
+	return file_hiro_proto_rawDescGZIP(), []int{8}
 }
 
 // The cost(s) associated with permanently unlocking a progression.
@@ -4226,6 +4330,1377 @@ func (x *IncentiveRecipientClaimRequest) GetCode() string {
 	return ""
 }
 
+type ChallengeCreateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Challenge template ID.
+	TemplateId string `protobuf:"bytes,1,opt,name=template_id,json=templateId,proto3" json:"template_id,omitempty"`
+	// The name of the challenge. May be an i18n code.
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// A description of the challenge. May be an i18n code.
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// UserIDs of the users to challenge.
+	Invitees []string `protobuf:"bytes,4,rep,name=invitees,proto3" json:"invitees,omitempty"`
+	// Whether the challenged users have to accept the challenge or not.
+	Open bool `protobuf:"varint,5,opt,name=open,proto3" json:"open,omitempty"`
+	// Maximum number of scores a user can submit to the leaderboard.
+	MaxScores int64 `protobuf:"varint,6,opt,name=max_scores,json=maxScores,proto3" json:"max_scores,omitempty"`
+	// Additional metadata properties.
+	AdditionalProperties map[string]string `protobuf:"bytes,7,rep,name=additional_properties,json=additionalProperties,proto3" json:"additional_properties,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	// Start time of the challenge. Set to 0 to start immediately.
+	StartDelaySec int64 `protobuf:"varint,8,opt,name=start_delay_sec,json=startDelaySec,proto3" json:"start_delay_sec,omitempty"`
+	// Duration of the challenge. Set to 0 to have an unlimited challenge.
+	DurationSec int64 `protobuf:"varint,9,opt,name=duration_sec,json=durationSec,proto3" json:"duration_sec,omitempty"`
+	// Maximum number of participants in the challenge.
+	MaxParticipants int64 `protobuf:"varint,10,opt,name=max_participants,json=maxParticipants,proto3" json:"max_participants,omitempty"`
+	// Category of the challenge.
+	Category string `protobuf:"bytes,11,opt,name=category,proto3" json:"category,omitempty"`
+}
+
+func (x *ChallengeCreateRequest) Reset() {
+	*x = ChallengeCreateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[45]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeCreateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeCreateRequest) ProtoMessage() {}
+
+func (x *ChallengeCreateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[45]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeCreateRequest.ProtoReflect.Descriptor instead.
+func (*ChallengeCreateRequest) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *ChallengeCreateRequest) GetTemplateId() string {
+	if x != nil {
+		return x.TemplateId
+	}
+	return ""
+}
+
+func (x *ChallengeCreateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ChallengeCreateRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *ChallengeCreateRequest) GetInvitees() []string {
+	if x != nil {
+		return x.Invitees
+	}
+	return nil
+}
+
+func (x *ChallengeCreateRequest) GetOpen() bool {
+	if x != nil {
+		return x.Open
+	}
+	return false
+}
+
+func (x *ChallengeCreateRequest) GetMaxScores() int64 {
+	if x != nil {
+		return x.MaxScores
+	}
+	return 0
+}
+
+func (x *ChallengeCreateRequest) GetAdditionalProperties() map[string]string {
+	if x != nil {
+		return x.AdditionalProperties
+	}
+	return nil
+}
+
+func (x *ChallengeCreateRequest) GetStartDelaySec() int64 {
+	if x != nil {
+		return x.StartDelaySec
+	}
+	return 0
+}
+
+func (x *ChallengeCreateRequest) GetDurationSec() int64 {
+	if x != nil {
+		return x.DurationSec
+	}
+	return 0
+}
+
+func (x *ChallengeCreateRequest) GetMaxParticipants() int64 {
+	if x != nil {
+		return x.MaxParticipants
+	}
+	return 0
+}
+
+func (x *ChallengeCreateRequest) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
+type ChallengeJoinRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Challenge id.
+	ChallengeId string `protobuf:"bytes,1,opt,name=challenge_id,json=challengeId,proto3" json:"challenge_id,omitempty"`
+}
+
+func (x *ChallengeJoinRequest) Reset() {
+	*x = ChallengeJoinRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[46]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeJoinRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeJoinRequest) ProtoMessage() {}
+
+func (x *ChallengeJoinRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[46]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeJoinRequest.ProtoReflect.Descriptor instead.
+func (*ChallengeJoinRequest) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *ChallengeJoinRequest) GetChallengeId() string {
+	if x != nil {
+		return x.ChallengeId
+	}
+	return ""
+}
+
+type ChallengeLeaveRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Challenge id.
+	ChallengeId string `protobuf:"bytes,1,opt,name=challenge_id,json=challengeId,proto3" json:"challenge_id,omitempty"`
+}
+
+func (x *ChallengeLeaveRequest) Reset() {
+	*x = ChallengeLeaveRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[47]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeLeaveRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeLeaveRequest) ProtoMessage() {}
+
+func (x *ChallengeLeaveRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[47]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeLeaveRequest.ProtoReflect.Descriptor instead.
+func (*ChallengeLeaveRequest) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *ChallengeLeaveRequest) GetChallengeId() string {
+	if x != nil {
+		return x.ChallengeId
+	}
+	return ""
+}
+
+type ChallengeClaimRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Challenge id.
+	ChallengeId string `protobuf:"bytes,1,opt,name=challenge_id,json=challengeId,proto3" json:"challenge_id,omitempty"`
+}
+
+func (x *ChallengeClaimRequest) Reset() {
+	*x = ChallengeClaimRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[48]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeClaimRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeClaimRequest) ProtoMessage() {}
+
+func (x *ChallengeClaimRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[48]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeClaimRequest.ProtoReflect.Descriptor instead.
+func (*ChallengeClaimRequest) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *ChallengeClaimRequest) GetChallengeId() string {
+	if x != nil {
+		return x.ChallengeId
+	}
+	return ""
+}
+
+type ChallengeSearchRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Optional name of challenge to filter by.
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Optional category of challenge to filter by.
+	Category string `protobuf:"bytes,2,opt,name=category,proto3" json:"category,omitempty"`
+	// Maximum number of results to return.
+	Limit int64 `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+}
+
+func (x *ChallengeSearchRequest) Reset() {
+	*x = ChallengeSearchRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[49]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeSearchRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeSearchRequest) ProtoMessage() {}
+
+func (x *ChallengeSearchRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[49]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeSearchRequest.ProtoReflect.Descriptor instead.
+func (*ChallengeSearchRequest) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *ChallengeSearchRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ChallengeSearchRequest) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
+func (x *ChallengeSearchRequest) GetLimit() int64 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type ChallengeInviteRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Challenge id.
+	ChallengeId string `protobuf:"bytes,1,opt,name=challenge_id,json=challengeId,proto3" json:"challenge_id,omitempty"`
+	// Invitees.
+	Invitees []string `protobuf:"bytes,2,rep,name=invitees,proto3" json:"invitees,omitempty"`
+}
+
+func (x *ChallengeInviteRequest) Reset() {
+	*x = ChallengeInviteRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[50]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeInviteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeInviteRequest) ProtoMessage() {}
+
+func (x *ChallengeInviteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[50]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeInviteRequest.ProtoReflect.Descriptor instead.
+func (*ChallengeInviteRequest) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *ChallengeInviteRequest) GetChallengeId() string {
+	if x != nil {
+		return x.ChallengeId
+	}
+	return ""
+}
+
+func (x *ChallengeInviteRequest) GetInvitees() []string {
+	if x != nil {
+		return x.Invitees
+	}
+	return nil
+}
+
+type ChallengeSubmitScoreRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Challenge ID.
+	ChallengeId string `protobuf:"bytes,1,opt,name=challenge_id,json=challengeId,proto3" json:"challenge_id,omitempty"`
+	// Score.
+	Score int64 `protobuf:"varint,2,opt,name=score,proto3" json:"score,omitempty"`
+	// Subscore.
+	Subscore int64 `protobuf:"varint,3,opt,name=subscore,proto3" json:"subscore,omitempty"`
+	// Metadata.
+	Metadata string `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
+}
+
+func (x *ChallengeSubmitScoreRequest) Reset() {
+	*x = ChallengeSubmitScoreRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[51]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeSubmitScoreRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeSubmitScoreRequest) ProtoMessage() {}
+
+func (x *ChallengeSubmitScoreRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[51]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeSubmitScoreRequest.ProtoReflect.Descriptor instead.
+func (*ChallengeSubmitScoreRequest) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{51}
+}
+
+func (x *ChallengeSubmitScoreRequest) GetChallengeId() string {
+	if x != nil {
+		return x.ChallengeId
+	}
+	return ""
+}
+
+func (x *ChallengeSubmitScoreRequest) GetScore() int64 {
+	if x != nil {
+		return x.Score
+	}
+	return 0
+}
+
+func (x *ChallengeSubmitScoreRequest) GetSubscore() int64 {
+	if x != nil {
+		return x.Subscore
+	}
+	return 0
+}
+
+func (x *ChallengeSubmitScoreRequest) GetMetadata() string {
+	if x != nil {
+		return x.Metadata
+	}
+	return ""
+}
+
+type Challenge struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Challenge ID.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// The name of the challenge. May be an i18n code.
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// A description of the challenge. May be an i18n code.
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// Score ordering.
+	Ascending bool `protobuf:"varint,4,opt,name=ascending,proto3" json:"ascending,omitempty"`
+	// Score submission operator.
+	Operator string `protobuf:"bytes,5,opt,name=operator,proto3" json:"operator,omitempty"`
+	// Time when the event starts.
+	StartTimeSec int64 `protobuf:"varint,6,opt,name=start_time_sec,json=startTimeSec,proto3" json:"start_time_sec,omitempty"`
+	// Claim time, if any.
+	ClaimTimeSec int64 `protobuf:"varint,7,opt,name=claim_time_sec,json=claimTimeSec,proto3" json:"claim_time_sec,omitempty"`
+	// Time when the event ends.
+	EndTimeSec int64 `protobuf:"varint,8,opt,name=end_time_sec,json=endTimeSec,proto3" json:"end_time_sec,omitempty"`
+	// The possible reward tiers for this instance of the challenge.
+	RewardTiers []*ChallengeRewardTier `protobuf:"bytes,9,rep,name=reward_tiers,json=rewardTiers,proto3" json:"reward_tiers,omitempty"`
+	// The available reward and its probabilities.
+	AvailableRewards *AvailableRewards `protobuf:"bytes,10,opt,name=available_rewards,json=availableRewards,proto3" json:"available_rewards,omitempty"` // Available to Claim
+	// Additional metadata properties.
+	AdditionalProperties map[string]string `protobuf:"bytes,11,rep,name=additional_properties,json=additionalProperties,proto3" json:"additional_properties,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	// Current participant count.
+	Size int64 `protobuf:"varint,12,opt,name=size,proto3" json:"size,omitempty"`
+	// Maximum participant count.
+	MaxSize int64 `protobuf:"varint,13,opt,name=max_size,json=maxSize,proto3" json:"max_size,omitempty"`
+	// Maximum number of score submissions per participant.
+	MaxNumScore int64 `protobuf:"varint,14,opt,name=max_num_score,json=maxNumScore,proto3" json:"max_num_score,omitempty"`
+	// Participants and their scores.
+	Scores []*ChallengeScore `protobuf:"bytes,15,rep,name=scores,proto3" json:"scores,omitempty"`
+	// Indicates if the event is still active, and scores can be submitted.
+	IsActive bool `protobuf:"varint,16,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	// The UNIX timestamp for the current server time.
+	CurrentTimeSec int64 `protobuf:"varint,17,opt,name=current_time_sec,json=currentTimeSec,proto3" json:"current_time_sec,omitempty"`
+	// Whether the user can claim a reward.
+	CanClaim bool `protobuf:"varint,19,opt,name=can_claim,json=canClaim,proto3" json:"can_claim,omitempty"`
+	// The state of the user participation in the challenge.
+	State ChallengeState `protobuf:"varint,20,opt,name=state,proto3,enum=hiro.ChallengeState" json:"state,omitempty"`
+	// A claimed reward, if any.
+	Reward *Reward `protobuf:"bytes,21,opt,name=reward,proto3" json:"reward,omitempty"`
+	// The category to group the event leaderboard together with others.
+	Category string `protobuf:"bytes,22,opt,name=category,proto3" json:"category,omitempty"`
+	// Whether the challenge is open to participants beyond the initial invitees or not.
+	Open bool `protobuf:"varint,23,opt,name=open,proto3" json:"open,omitempty"`
+}
+
+func (x *Challenge) Reset() {
+	*x = Challenge{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[52]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Challenge) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Challenge) ProtoMessage() {}
+
+func (x *Challenge) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[52]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Challenge.ProtoReflect.Descriptor instead.
+func (*Challenge) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{52}
+}
+
+func (x *Challenge) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Challenge) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Challenge) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *Challenge) GetAscending() bool {
+	if x != nil {
+		return x.Ascending
+	}
+	return false
+}
+
+func (x *Challenge) GetOperator() string {
+	if x != nil {
+		return x.Operator
+	}
+	return ""
+}
+
+func (x *Challenge) GetStartTimeSec() int64 {
+	if x != nil {
+		return x.StartTimeSec
+	}
+	return 0
+}
+
+func (x *Challenge) GetClaimTimeSec() int64 {
+	if x != nil {
+		return x.ClaimTimeSec
+	}
+	return 0
+}
+
+func (x *Challenge) GetEndTimeSec() int64 {
+	if x != nil {
+		return x.EndTimeSec
+	}
+	return 0
+}
+
+func (x *Challenge) GetRewardTiers() []*ChallengeRewardTier {
+	if x != nil {
+		return x.RewardTiers
+	}
+	return nil
+}
+
+func (x *Challenge) GetAvailableRewards() *AvailableRewards {
+	if x != nil {
+		return x.AvailableRewards
+	}
+	return nil
+}
+
+func (x *Challenge) GetAdditionalProperties() map[string]string {
+	if x != nil {
+		return x.AdditionalProperties
+	}
+	return nil
+}
+
+func (x *Challenge) GetSize() int64 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *Challenge) GetMaxSize() int64 {
+	if x != nil {
+		return x.MaxSize
+	}
+	return 0
+}
+
+func (x *Challenge) GetMaxNumScore() int64 {
+	if x != nil {
+		return x.MaxNumScore
+	}
+	return 0
+}
+
+func (x *Challenge) GetScores() []*ChallengeScore {
+	if x != nil {
+		return x.Scores
+	}
+	return nil
+}
+
+func (x *Challenge) GetIsActive() bool {
+	if x != nil {
+		return x.IsActive
+	}
+	return false
+}
+
+func (x *Challenge) GetCurrentTimeSec() int64 {
+	if x != nil {
+		return x.CurrentTimeSec
+	}
+	return 0
+}
+
+func (x *Challenge) GetCanClaim() bool {
+	if x != nil {
+		return x.CanClaim
+	}
+	return false
+}
+
+func (x *Challenge) GetState() ChallengeState {
+	if x != nil {
+		return x.State
+	}
+	return ChallengeState_CHALLENGE_STATE_NONE
+}
+
+func (x *Challenge) GetReward() *Reward {
+	if x != nil {
+		return x.Reward
+	}
+	return nil
+}
+
+func (x *Challenge) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
+func (x *Challenge) GetOpen() bool {
+	if x != nil {
+		return x.Open
+	}
+	return false
+}
+
+// Retrieve available challenge leaderboards.
+type ChallengeListRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Optional filter of Event Leaderboard categories to list. If empty does not filter on category.
+	Categories []string `protobuf:"bytes,1,rep,name=categories,proto3" json:"categories,omitempty"`
+	// Whether or not the response should include scores, defaults to false.
+	WithScores bool `protobuf:"varint,2,opt,name=with_scores,json=withScores,proto3" json:"with_scores,omitempty"`
+}
+
+func (x *ChallengeListRequest) Reset() {
+	*x = ChallengeListRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[53]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeListRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeListRequest) ProtoMessage() {}
+
+func (x *ChallengeListRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[53]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeListRequest.ProtoReflect.Descriptor instead.
+func (*ChallengeListRequest) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{53}
+}
+
+func (x *ChallengeListRequest) GetCategories() []string {
+	if x != nil {
+		return x.Categories
+	}
+	return nil
+}
+
+func (x *ChallengeListRequest) GetWithScores() bool {
+	if x != nil {
+		return x.WithScores
+	}
+	return false
+}
+
+type ChallengeGetRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Challenge leaderboard ID to get, and join if necessary/possible.
+	ChallengeId string `protobuf:"bytes,1,opt,name=challenge_id,json=challengeId,proto3" json:"challenge_id,omitempty"`
+	// Whether or not the response should include scores, defaults to false.
+	WithScores bool `protobuf:"varint,2,opt,name=with_scores,json=withScores,proto3" json:"with_scores,omitempty"`
+}
+
+func (x *ChallengeGetRequest) Reset() {
+	*x = ChallengeGetRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[54]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeGetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeGetRequest) ProtoMessage() {}
+
+func (x *ChallengeGetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[54]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeGetRequest.ProtoReflect.Descriptor instead.
+func (*ChallengeGetRequest) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *ChallengeGetRequest) GetChallengeId() string {
+	if x != nil {
+		return x.ChallengeId
+	}
+	return ""
+}
+
+func (x *ChallengeGetRequest) GetWithScores() bool {
+	if x != nil {
+		return x.WithScores
+	}
+	return false
+}
+
+// Several challenges the user has access to, resulting from a listing operation.
+type ChallengesList struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Zero or more challenges.
+	Challenges []*Challenge `protobuf:"bytes,1,rep,name=challenges,proto3" json:"challenges,omitempty"`
+}
+
+func (x *ChallengesList) Reset() {
+	*x = ChallengesList{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[55]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengesList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengesList) ProtoMessage() {}
+
+func (x *ChallengesList) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[55]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengesList.ProtoReflect.Descriptor instead.
+func (*ChallengesList) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{55}
+}
+
+func (x *ChallengesList) GetChallenges() []*Challenge {
+	if x != nil {
+		return x.Challenges
+	}
+	return nil
+}
+
+// A single participant entry to an event leaderboard.
+type ChallengeScore struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// User ID.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Username.
+	Username string `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	// Display name.
+	DisplayName string `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	// Avatar URL.
+	AvatarUrl string `protobuf:"bytes,4,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
+	// Time when the user joined the challenge leaderboard.
+	CreateTimeSec int64 `protobuf:"varint,5,opt,name=create_time_sec,json=createTimeSec,proto3" json:"create_time_sec,omitempty"`
+	// Time when the user last submitted a score.
+	UpdateTimeSec int64 `protobuf:"varint,6,opt,name=update_time_sec,json=updateTimeSec,proto3" json:"update_time_sec,omitempty"`
+	// Rank within the event leaderboard.
+	Rank int64 `protobuf:"varint,7,opt,name=rank,proto3" json:"rank,omitempty"`
+	// Score.
+	Score int64 `protobuf:"varint,8,opt,name=score,proto3" json:"score,omitempty"`
+	// Subscore.
+	Subscore int64 `protobuf:"varint,9,opt,name=subscore,proto3" json:"subscore,omitempty"`
+	// Number of score submissions.
+	NumScores int64 `protobuf:"varint,10,opt,name=num_scores,json=numScores,proto3" json:"num_scores,omitempty"`
+	// Metadata.
+	Metadata string `protobuf:"bytes,11,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	// The state of the user participation in the challenge.
+	State ChallengeState `protobuf:"varint,12,opt,name=state,proto3,enum=hiro.ChallengeState" json:"state,omitempty"`
+}
+
+func (x *ChallengeScore) Reset() {
+	*x = ChallengeScore{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[56]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeScore) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeScore) ProtoMessage() {}
+
+func (x *ChallengeScore) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[56]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeScore.ProtoReflect.Descriptor instead.
+func (*ChallengeScore) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{56}
+}
+
+func (x *ChallengeScore) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ChallengeScore) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *ChallengeScore) GetDisplayName() string {
+	if x != nil {
+		return x.DisplayName
+	}
+	return ""
+}
+
+func (x *ChallengeScore) GetAvatarUrl() string {
+	if x != nil {
+		return x.AvatarUrl
+	}
+	return ""
+}
+
+func (x *ChallengeScore) GetCreateTimeSec() int64 {
+	if x != nil {
+		return x.CreateTimeSec
+	}
+	return 0
+}
+
+func (x *ChallengeScore) GetUpdateTimeSec() int64 {
+	if x != nil {
+		return x.UpdateTimeSec
+	}
+	return 0
+}
+
+func (x *ChallengeScore) GetRank() int64 {
+	if x != nil {
+		return x.Rank
+	}
+	return 0
+}
+
+func (x *ChallengeScore) GetScore() int64 {
+	if x != nil {
+		return x.Score
+	}
+	return 0
+}
+
+func (x *ChallengeScore) GetSubscore() int64 {
+	if x != nil {
+		return x.Subscore
+	}
+	return 0
+}
+
+func (x *ChallengeScore) GetNumScores() int64 {
+	if x != nil {
+		return x.NumScores
+	}
+	return 0
+}
+
+func (x *ChallengeScore) GetMetadata() string {
+	if x != nil {
+		return x.Metadata
+	}
+	return ""
+}
+
+func (x *ChallengeScore) GetState() ChallengeState {
+	if x != nil {
+		return x.State
+	}
+	return ChallengeState_CHALLENGE_STATE_NONE
+}
+
+// The reward tiers for the challenge.
+type ChallengeRewardTier struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The maximum rank (inclusive).
+	RankMax int64 `protobuf:"varint,1,opt,name=rank_max,json=rankMax,proto3" json:"rank_max,omitempty"`
+	// The minimum rank (inclusive).
+	RankMin int64 `protobuf:"varint,2,opt,name=rank_min,json=rankMin,proto3" json:"rank_min,omitempty"`
+	// The available rewards for this range.
+	AvailableRewards *AvailableRewards `protobuf:"bytes,3,opt,name=available_rewards,json=availableRewards,proto3" json:"available_rewards,omitempty"`
+}
+
+func (x *ChallengeRewardTier) Reset() {
+	*x = ChallengeRewardTier{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[57]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeRewardTier) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeRewardTier) ProtoMessage() {}
+
+func (x *ChallengeRewardTier) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[57]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeRewardTier.ProtoReflect.Descriptor instead.
+func (*ChallengeRewardTier) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{57}
+}
+
+func (x *ChallengeRewardTier) GetRankMax() int64 {
+	if x != nil {
+		return x.RankMax
+	}
+	return 0
+}
+
+func (x *ChallengeRewardTier) GetRankMin() int64 {
+	if x != nil {
+		return x.RankMin
+	}
+	return 0
+}
+
+func (x *ChallengeRewardTier) GetAvailableRewards() *AvailableRewards {
+	if x != nil {
+		return x.AvailableRewards
+	}
+	return nil
+}
+
+// Get all available challenge templates.
+type ChallengeTemplates struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// All available auction templates, keyed by an unique identifier.
+	Templates map[string]*ChallengeTemplate `protobuf:"bytes,1,rep,name=templates,proto3" json:"templates,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (x *ChallengeTemplates) Reset() {
+	*x = ChallengeTemplates{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[58]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeTemplates) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeTemplates) ProtoMessage() {}
+
+func (x *ChallengeTemplates) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[58]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeTemplates.ProtoReflect.Descriptor instead.
+func (*ChallengeTemplates) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{58}
+}
+
+func (x *ChallengeTemplates) GetTemplates() map[string]*ChallengeTemplate {
+	if x != nil {
+		return x.Templates
+	}
+	return nil
+}
+
+// An individually usable challenge template.
+type ChallengeTemplate struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The possible reward tiers for this instance of the challenge.
+	RewardTiers []*ChallengeRewardTier `protobuf:"bytes,1,rep,name=reward_tiers,json=rewardTiers,proto3" json:"reward_tiers,omitempty"`
+	// The min and max players of the challenge.
+	Players *ChallengeMaxMinPlayers `protobuf:"bytes,2,opt,name=players,proto3" json:"players,omitempty"`
+	// The min and max duration that can be set for the challenge.
+	Duration *ChallengeMinMaxDuration `protobuf:"bytes,3,opt,name=duration,proto3" json:"duration,omitempty"`
+	// The maximum amount of delay before the challenge begins for participants.
+	StartDelayMax int64 `protobuf:"varint,4,opt,name=start_delay_max,json=startDelayMax,proto3" json:"start_delay_max,omitempty"`
+	// Whether the challenge is invite-only or not.
+	Open bool `protobuf:"varint,5,opt,name=open,proto3" json:"open,omitempty"`
+	// The maximum number of scores that can be submitted to the challenge.
+	MaxNumScores int64 `protobuf:"varint,6,opt,name=max_num_scores,json=maxNumScores,proto3" json:"max_num_scores,omitempty"`
+	// The ordering of the challenge scores.
+	Ascending bool `protobuf:"varint,7,opt,name=ascending,proto3" json:"ascending,omitempty"`
+	// The operator of the challenge score submission.
+	Operator string `protobuf:"bytes,8,opt,name=operator,proto3" json:"operator,omitempty"`
+}
+
+func (x *ChallengeTemplate) Reset() {
+	*x = ChallengeTemplate{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[59]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeTemplate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeTemplate) ProtoMessage() {}
+
+func (x *ChallengeTemplate) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[59]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeTemplate.ProtoReflect.Descriptor instead.
+func (*ChallengeTemplate) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{59}
+}
+
+func (x *ChallengeTemplate) GetRewardTiers() []*ChallengeRewardTier {
+	if x != nil {
+		return x.RewardTiers
+	}
+	return nil
+}
+
+func (x *ChallengeTemplate) GetPlayers() *ChallengeMaxMinPlayers {
+	if x != nil {
+		return x.Players
+	}
+	return nil
+}
+
+func (x *ChallengeTemplate) GetDuration() *ChallengeMinMaxDuration {
+	if x != nil {
+		return x.Duration
+	}
+	return nil
+}
+
+func (x *ChallengeTemplate) GetStartDelayMax() int64 {
+	if x != nil {
+		return x.StartDelayMax
+	}
+	return 0
+}
+
+func (x *ChallengeTemplate) GetOpen() bool {
+	if x != nil {
+		return x.Open
+	}
+	return false
+}
+
+func (x *ChallengeTemplate) GetMaxNumScores() int64 {
+	if x != nil {
+		return x.MaxNumScores
+	}
+	return 0
+}
+
+func (x *ChallengeTemplate) GetAscending() bool {
+	if x != nil {
+		return x.Ascending
+	}
+	return false
+}
+
+func (x *ChallengeTemplate) GetOperator() string {
+	if x != nil {
+		return x.Operator
+	}
+	return ""
+}
+
+type ChallengeMaxMinPlayers struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The minimum number of players that can participate in the challenge.
+	Min int64 `protobuf:"varint,1,opt,name=min,proto3" json:"min,omitempty"`
+	// The maximum number of players that can participate in the challenge.
+	Max int64 `protobuf:"varint,2,opt,name=max,proto3" json:"max,omitempty"`
+}
+
+func (x *ChallengeMaxMinPlayers) Reset() {
+	*x = ChallengeMaxMinPlayers{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[60]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeMaxMinPlayers) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeMaxMinPlayers) ProtoMessage() {}
+
+func (x *ChallengeMaxMinPlayers) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[60]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeMaxMinPlayers.ProtoReflect.Descriptor instead.
+func (*ChallengeMaxMinPlayers) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *ChallengeMaxMinPlayers) GetMin() int64 {
+	if x != nil {
+		return x.Min
+	}
+	return 0
+}
+
+func (x *ChallengeMaxMinPlayers) GetMax() int64 {
+	if x != nil {
+		return x.Max
+	}
+	return 0
+}
+
+type ChallengeMinMaxDuration struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The minimum duration of challenge.
+	MinSec int64 `protobuf:"varint,1,opt,name=min_sec,json=minSec,proto3" json:"min_sec,omitempty"`
+	// The maximum duration of challenge.
+	MaxSec int64 `protobuf:"varint,2,opt,name=max_sec,json=maxSec,proto3" json:"max_sec,omitempty"`
+}
+
+func (x *ChallengeMinMaxDuration) Reset() {
+	*x = ChallengeMinMaxDuration{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hiro_proto_msgTypes[61]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChallengeMinMaxDuration) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChallengeMinMaxDuration) ProtoMessage() {}
+
+func (x *ChallengeMinMaxDuration) ProtoReflect() protoreflect.Message {
+	mi := &file_hiro_proto_msgTypes[61]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChallengeMinMaxDuration.ProtoReflect.Descriptor instead.
+func (*ChallengeMinMaxDuration) Descriptor() ([]byte, []int) {
+	return file_hiro_proto_rawDescGZIP(), []int{61}
+}
+
+func (x *ChallengeMinMaxDuration) GetMinSec() int64 {
+	if x != nil {
+		return x.MinSec
+	}
+	return 0
+}
+
+func (x *ChallengeMinMaxDuration) GetMaxSec() int64 {
+	if x != nil {
+		return x.MaxSec
+	}
+	return 0
+}
+
 // Retrieve available event leaderboards.
 type EventLeaderboardList struct {
 	state         protoimpl.MessageState
@@ -4241,7 +5716,7 @@ type EventLeaderboardList struct {
 func (x *EventLeaderboardList) Reset() {
 	*x = EventLeaderboardList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[45]
+		mi := &file_hiro_proto_msgTypes[62]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4254,7 +5729,7 @@ func (x *EventLeaderboardList) String() string {
 func (*EventLeaderboardList) ProtoMessage() {}
 
 func (x *EventLeaderboardList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[45]
+	mi := &file_hiro_proto_msgTypes[62]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4267,7 +5742,7 @@ func (x *EventLeaderboardList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboardList.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{45}
+	return file_hiro_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *EventLeaderboardList) GetWithScores() bool {
@@ -4297,7 +5772,7 @@ type EventLeaderboardGet struct {
 func (x *EventLeaderboardGet) Reset() {
 	*x = EventLeaderboardGet{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[46]
+		mi := &file_hiro_proto_msgTypes[63]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4310,7 +5785,7 @@ func (x *EventLeaderboardGet) String() string {
 func (*EventLeaderboardGet) ProtoMessage() {}
 
 func (x *EventLeaderboardGet) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[46]
+	mi := &file_hiro_proto_msgTypes[63]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4323,7 +5798,7 @@ func (x *EventLeaderboardGet) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboardGet.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardGet) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{46}
+	return file_hiro_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *EventLeaderboardGet) GetId() string {
@@ -4352,7 +5827,7 @@ type EventLeaderboardUpdate struct {
 func (x *EventLeaderboardUpdate) Reset() {
 	*x = EventLeaderboardUpdate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[47]
+		mi := &file_hiro_proto_msgTypes[64]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4365,7 +5840,7 @@ func (x *EventLeaderboardUpdate) String() string {
 func (*EventLeaderboardUpdate) ProtoMessage() {}
 
 func (x *EventLeaderboardUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[47]
+	mi := &file_hiro_proto_msgTypes[64]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4378,7 +5853,7 @@ func (x *EventLeaderboardUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboardUpdate.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardUpdate) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{47}
+	return file_hiro_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *EventLeaderboardUpdate) GetId() string {
@@ -4422,7 +5897,7 @@ type EventLeaderboardClaim struct {
 func (x *EventLeaderboardClaim) Reset() {
 	*x = EventLeaderboardClaim{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[48]
+		mi := &file_hiro_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4435,7 +5910,7 @@ func (x *EventLeaderboardClaim) String() string {
 func (*EventLeaderboardClaim) ProtoMessage() {}
 
 func (x *EventLeaderboardClaim) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[48]
+	mi := &file_hiro_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4448,7 +5923,7 @@ func (x *EventLeaderboardClaim) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboardClaim.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardClaim) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{48}
+	return file_hiro_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *EventLeaderboardClaim) GetId() string {
@@ -4471,7 +5946,7 @@ type EventLeaderboardRoll struct {
 func (x *EventLeaderboardRoll) Reset() {
 	*x = EventLeaderboardRoll{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[49]
+		mi := &file_hiro_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4484,7 +5959,7 @@ func (x *EventLeaderboardRoll) String() string {
 func (*EventLeaderboardRoll) ProtoMessage() {}
 
 func (x *EventLeaderboardRoll) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[49]
+	mi := &file_hiro_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4497,7 +5972,7 @@ func (x *EventLeaderboardRoll) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboardRoll.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardRoll) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{49}
+	return file_hiro_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *EventLeaderboardRoll) GetId() string {
@@ -4540,7 +6015,7 @@ type EventLeaderboardScore struct {
 func (x *EventLeaderboardScore) Reset() {
 	*x = EventLeaderboardScore{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[50]
+		mi := &file_hiro_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4553,7 +6028,7 @@ func (x *EventLeaderboardScore) String() string {
 func (*EventLeaderboardScore) ProtoMessage() {}
 
 func (x *EventLeaderboardScore) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[50]
+	mi := &file_hiro_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4566,7 +6041,7 @@ func (x *EventLeaderboardScore) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboardScore.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardScore) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{50}
+	return file_hiro_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *EventLeaderboardScore) GetId() string {
@@ -4667,7 +6142,7 @@ type EventLeaderboardRewardTier struct {
 func (x *EventLeaderboardRewardTier) Reset() {
 	*x = EventLeaderboardRewardTier{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[51]
+		mi := &file_hiro_proto_msgTypes[68]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4680,7 +6155,7 @@ func (x *EventLeaderboardRewardTier) String() string {
 func (*EventLeaderboardRewardTier) ProtoMessage() {}
 
 func (x *EventLeaderboardRewardTier) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[51]
+	mi := &file_hiro_proto_msgTypes[68]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4693,7 +6168,7 @@ func (x *EventLeaderboardRewardTier) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboardRewardTier.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardRewardTier) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{51}
+	return file_hiro_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *EventLeaderboardRewardTier) GetName() string {
@@ -4744,7 +6219,7 @@ type EventLeaderboardRewardTiers struct {
 func (x *EventLeaderboardRewardTiers) Reset() {
 	*x = EventLeaderboardRewardTiers{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[52]
+		mi := &file_hiro_proto_msgTypes[69]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4757,7 +6232,7 @@ func (x *EventLeaderboardRewardTiers) String() string {
 func (*EventLeaderboardRewardTiers) ProtoMessage() {}
 
 func (x *EventLeaderboardRewardTiers) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[52]
+	mi := &file_hiro_proto_msgTypes[69]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4770,7 +6245,7 @@ func (x *EventLeaderboardRewardTiers) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboardRewardTiers.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardRewardTiers) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{52}
+	return file_hiro_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *EventLeaderboardRewardTiers) GetRewardTiers() []*EventLeaderboardRewardTier {
@@ -4797,7 +6272,7 @@ type EventLeaderboardChangeZone struct {
 func (x *EventLeaderboardChangeZone) Reset() {
 	*x = EventLeaderboardChangeZone{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[53]
+		mi := &file_hiro_proto_msgTypes[70]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4810,7 +6285,7 @@ func (x *EventLeaderboardChangeZone) String() string {
 func (*EventLeaderboardChangeZone) ProtoMessage() {}
 
 func (x *EventLeaderboardChangeZone) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[53]
+	mi := &file_hiro_proto_msgTypes[70]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4823,7 +6298,7 @@ func (x *EventLeaderboardChangeZone) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboardChangeZone.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardChangeZone) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{53}
+	return file_hiro_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *EventLeaderboardChangeZone) GetPromotion() float64 {
@@ -4912,7 +6387,7 @@ type EventLeaderboard struct {
 func (x *EventLeaderboard) Reset() {
 	*x = EventLeaderboard{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[54]
+		mi := &file_hiro_proto_msgTypes[71]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4925,7 +6400,7 @@ func (x *EventLeaderboard) String() string {
 func (*EventLeaderboard) ProtoMessage() {}
 
 func (x *EventLeaderboard) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[54]
+	mi := &file_hiro_proto_msgTypes[71]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4938,7 +6413,7 @@ func (x *EventLeaderboard) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboard.ProtoReflect.Descriptor instead.
 func (*EventLeaderboard) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{54}
+	return file_hiro_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *EventLeaderboard) GetId() string {
@@ -5143,7 +6618,7 @@ type EventLeaderboards struct {
 func (x *EventLeaderboards) Reset() {
 	*x = EventLeaderboards{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[55]
+		mi := &file_hiro_proto_msgTypes[72]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5156,7 +6631,7 @@ func (x *EventLeaderboards) String() string {
 func (*EventLeaderboards) ProtoMessage() {}
 
 func (x *EventLeaderboards) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[55]
+	mi := &file_hiro_proto_msgTypes[72]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5169,7 +6644,7 @@ func (x *EventLeaderboards) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboards.ProtoReflect.Descriptor instead.
 func (*EventLeaderboards) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{55}
+	return file_hiro_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *EventLeaderboards) GetEventLeaderboards() []*EventLeaderboard {
@@ -5193,7 +6668,7 @@ type EventLeaderboardDebugFillRequest struct {
 func (x *EventLeaderboardDebugFillRequest) Reset() {
 	*x = EventLeaderboardDebugFillRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[56]
+		mi := &file_hiro_proto_msgTypes[73]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5206,7 +6681,7 @@ func (x *EventLeaderboardDebugFillRequest) String() string {
 func (*EventLeaderboardDebugFillRequest) ProtoMessage() {}
 
 func (x *EventLeaderboardDebugFillRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[56]
+	mi := &file_hiro_proto_msgTypes[73]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5219,7 +6694,7 @@ func (x *EventLeaderboardDebugFillRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventLeaderboardDebugFillRequest.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardDebugFillRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{56}
+	return file_hiro_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *EventLeaderboardDebugFillRequest) GetId() string {
@@ -5259,7 +6734,7 @@ type EventLeaderboardDebugRandomScoresRequest struct {
 func (x *EventLeaderboardDebugRandomScoresRequest) Reset() {
 	*x = EventLeaderboardDebugRandomScoresRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[57]
+		mi := &file_hiro_proto_msgTypes[74]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5272,7 +6747,7 @@ func (x *EventLeaderboardDebugRandomScoresRequest) String() string {
 func (*EventLeaderboardDebugRandomScoresRequest) ProtoMessage() {}
 
 func (x *EventLeaderboardDebugRandomScoresRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[57]
+	mi := &file_hiro_proto_msgTypes[74]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5285,7 +6760,7 @@ func (x *EventLeaderboardDebugRandomScoresRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use EventLeaderboardDebugRandomScoresRequest.ProtoReflect.Descriptor instead.
 func (*EventLeaderboardDebugRandomScoresRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{57}
+	return file_hiro_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *EventLeaderboardDebugRandomScoresRequest) GetId() string {
@@ -5347,7 +6822,7 @@ type EconomyDonationContributor struct {
 func (x *EconomyDonationContributor) Reset() {
 	*x = EconomyDonationContributor{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[58]
+		mi := &file_hiro_proto_msgTypes[75]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5360,7 +6835,7 @@ func (x *EconomyDonationContributor) String() string {
 func (*EconomyDonationContributor) ProtoMessage() {}
 
 func (x *EconomyDonationContributor) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[58]
+	mi := &file_hiro_proto_msgTypes[75]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5373,7 +6848,7 @@ func (x *EconomyDonationContributor) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyDonationContributor.ProtoReflect.Descriptor instead.
 func (*EconomyDonationContributor) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{58}
+	return file_hiro_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *EconomyDonationContributor) GetUserId() string {
@@ -5438,7 +6913,7 @@ type EconomyDonation struct {
 func (x *EconomyDonation) Reset() {
 	*x = EconomyDonation{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[59]
+		mi := &file_hiro_proto_msgTypes[76]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5451,7 +6926,7 @@ func (x *EconomyDonation) String() string {
 func (*EconomyDonation) ProtoMessage() {}
 
 func (x *EconomyDonation) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[59]
+	mi := &file_hiro_proto_msgTypes[76]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5464,7 +6939,7 @@ func (x *EconomyDonation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyDonation.ProtoReflect.Descriptor instead.
 func (*EconomyDonation) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{59}
+	return file_hiro_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *EconomyDonation) GetUserId() string {
@@ -5587,7 +7062,7 @@ type EconomyDonationAck struct {
 func (x *EconomyDonationAck) Reset() {
 	*x = EconomyDonationAck{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[60]
+		mi := &file_hiro_proto_msgTypes[77]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5600,7 +7075,7 @@ func (x *EconomyDonationAck) String() string {
 func (*EconomyDonationAck) ProtoMessage() {}
 
 func (x *EconomyDonationAck) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[60]
+	mi := &file_hiro_proto_msgTypes[77]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5613,7 +7088,7 @@ func (x *EconomyDonationAck) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyDonationAck.ProtoReflect.Descriptor instead.
 func (*EconomyDonationAck) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{60}
+	return file_hiro_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *EconomyDonationAck) GetCreated() bool {
@@ -5643,7 +7118,7 @@ type EconomyDonationsList struct {
 func (x *EconomyDonationsList) Reset() {
 	*x = EconomyDonationsList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[61]
+		mi := &file_hiro_proto_msgTypes[78]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5656,7 +7131,7 @@ func (x *EconomyDonationsList) String() string {
 func (*EconomyDonationsList) ProtoMessage() {}
 
 func (x *EconomyDonationsList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[61]
+	mi := &file_hiro_proto_msgTypes[78]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5669,7 +7144,7 @@ func (x *EconomyDonationsList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyDonationsList.ProtoReflect.Descriptor instead.
 func (*EconomyDonationsList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{61}
+	return file_hiro_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *EconomyDonationsList) GetDonations() []*EconomyDonation {
@@ -5692,7 +7167,7 @@ type EconomyDonationClaimRequestDetails struct {
 func (x *EconomyDonationClaimRequestDetails) Reset() {
 	*x = EconomyDonationClaimRequestDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[62]
+		mi := &file_hiro_proto_msgTypes[79]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5705,7 +7180,7 @@ func (x *EconomyDonationClaimRequestDetails) String() string {
 func (*EconomyDonationClaimRequestDetails) ProtoMessage() {}
 
 func (x *EconomyDonationClaimRequestDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[62]
+	mi := &file_hiro_proto_msgTypes[79]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5718,7 +7193,7 @@ func (x *EconomyDonationClaimRequestDetails) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use EconomyDonationClaimRequestDetails.ProtoReflect.Descriptor instead.
 func (*EconomyDonationClaimRequestDetails) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{62}
+	return file_hiro_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *EconomyDonationClaimRequestDetails) GetDonors() map[string]int64 {
@@ -5743,7 +7218,7 @@ type EconomyDonationClaimRequest struct {
 func (x *EconomyDonationClaimRequest) Reset() {
 	*x = EconomyDonationClaimRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[63]
+		mi := &file_hiro_proto_msgTypes[80]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5756,7 +7231,7 @@ func (x *EconomyDonationClaimRequest) String() string {
 func (*EconomyDonationClaimRequest) ProtoMessage() {}
 
 func (x *EconomyDonationClaimRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[63]
+	mi := &file_hiro_proto_msgTypes[80]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5769,7 +7244,7 @@ func (x *EconomyDonationClaimRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyDonationClaimRequest.ProtoReflect.Descriptor instead.
 func (*EconomyDonationClaimRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{63}
+	return file_hiro_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *EconomyDonationClaimRequest) GetDonationIds() []string {
@@ -5801,7 +7276,7 @@ type EconomyDonationClaimRewards struct {
 func (x *EconomyDonationClaimRewards) Reset() {
 	*x = EconomyDonationClaimRewards{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[64]
+		mi := &file_hiro_proto_msgTypes[81]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5814,7 +7289,7 @@ func (x *EconomyDonationClaimRewards) String() string {
 func (*EconomyDonationClaimRewards) ProtoMessage() {}
 
 func (x *EconomyDonationClaimRewards) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[64]
+	mi := &file_hiro_proto_msgTypes[81]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5827,7 +7302,7 @@ func (x *EconomyDonationClaimRewards) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyDonationClaimRewards.ProtoReflect.Descriptor instead.
 func (*EconomyDonationClaimRewards) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{64}
+	return file_hiro_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *EconomyDonationClaimRewards) GetDonations() *EconomyDonationsList {
@@ -5859,7 +7334,7 @@ type EconomyDonationGiveRequest struct {
 func (x *EconomyDonationGiveRequest) Reset() {
 	*x = EconomyDonationGiveRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[65]
+		mi := &file_hiro_proto_msgTypes[82]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5872,7 +7347,7 @@ func (x *EconomyDonationGiveRequest) String() string {
 func (*EconomyDonationGiveRequest) ProtoMessage() {}
 
 func (x *EconomyDonationGiveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[65]
+	mi := &file_hiro_proto_msgTypes[82]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5885,7 +7360,7 @@ func (x *EconomyDonationGiveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyDonationGiveRequest.ProtoReflect.Descriptor instead.
 func (*EconomyDonationGiveRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{65}
+	return file_hiro_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *EconomyDonationGiveRequest) GetUserId() string {
@@ -5915,7 +7390,7 @@ type EconomyDonationGetRequest struct {
 func (x *EconomyDonationGetRequest) Reset() {
 	*x = EconomyDonationGetRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[66]
+		mi := &file_hiro_proto_msgTypes[83]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5928,7 +7403,7 @@ func (x *EconomyDonationGetRequest) String() string {
 func (*EconomyDonationGetRequest) ProtoMessage() {}
 
 func (x *EconomyDonationGetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[66]
+	mi := &file_hiro_proto_msgTypes[83]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5941,7 +7416,7 @@ func (x *EconomyDonationGetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyDonationGetRequest.ProtoReflect.Descriptor instead.
 func (*EconomyDonationGetRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{66}
+	return file_hiro_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *EconomyDonationGetRequest) GetIds() []string {
@@ -5964,7 +7439,7 @@ type EconomyDonationRequest struct {
 func (x *EconomyDonationRequest) Reset() {
 	*x = EconomyDonationRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[67]
+		mi := &file_hiro_proto_msgTypes[84]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5977,7 +7452,7 @@ func (x *EconomyDonationRequest) String() string {
 func (*EconomyDonationRequest) ProtoMessage() {}
 
 func (x *EconomyDonationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[67]
+	mi := &file_hiro_proto_msgTypes[84]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5990,7 +7465,7 @@ func (x *EconomyDonationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyDonationRequest.ProtoReflect.Descriptor instead.
 func (*EconomyDonationRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{67}
+	return file_hiro_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *EconomyDonationRequest) GetDonationId() string {
@@ -6013,7 +7488,7 @@ type EconomyDonationsByUserList struct {
 func (x *EconomyDonationsByUserList) Reset() {
 	*x = EconomyDonationsByUserList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[68]
+		mi := &file_hiro_proto_msgTypes[85]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6026,7 +7501,7 @@ func (x *EconomyDonationsByUserList) String() string {
 func (*EconomyDonationsByUserList) ProtoMessage() {}
 
 func (x *EconomyDonationsByUserList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[68]
+	mi := &file_hiro_proto_msgTypes[85]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6039,7 +7514,7 @@ func (x *EconomyDonationsByUserList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyDonationsByUserList.ProtoReflect.Descriptor instead.
 func (*EconomyDonationsByUserList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{68}
+	return file_hiro_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *EconomyDonationsByUserList) GetUserDonations() map[string]*EconomyDonationsList {
@@ -6064,7 +7539,7 @@ type EconomyListStoreItemCost struct {
 func (x *EconomyListStoreItemCost) Reset() {
 	*x = EconomyListStoreItemCost{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[69]
+		mi := &file_hiro_proto_msgTypes[86]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6077,7 +7552,7 @@ func (x *EconomyListStoreItemCost) String() string {
 func (*EconomyListStoreItemCost) ProtoMessage() {}
 
 func (x *EconomyListStoreItemCost) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[69]
+	mi := &file_hiro_proto_msgTypes[86]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6090,7 +7565,7 @@ func (x *EconomyListStoreItemCost) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyListStoreItemCost.ProtoReflect.Descriptor instead.
 func (*EconomyListStoreItemCost) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{69}
+	return file_hiro_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *EconomyListStoreItemCost) GetCurrencies() map[string]int64 {
@@ -6134,7 +7609,7 @@ type EconomyListStoreItem struct {
 func (x *EconomyListStoreItem) Reset() {
 	*x = EconomyListStoreItem{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[70]
+		mi := &file_hiro_proto_msgTypes[87]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6147,7 +7622,7 @@ func (x *EconomyListStoreItem) String() string {
 func (*EconomyListStoreItem) ProtoMessage() {}
 
 func (x *EconomyListStoreItem) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[70]
+	mi := &file_hiro_proto_msgTypes[87]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6160,7 +7635,7 @@ func (x *EconomyListStoreItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyListStoreItem.ProtoReflect.Descriptor instead.
 func (*EconomyListStoreItem) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{70}
+	return file_hiro_proto_rawDescGZIP(), []int{87}
 }
 
 func (x *EconomyListStoreItem) GetCategory() string {
@@ -6238,7 +7713,7 @@ type EconomyListPlacement struct {
 func (x *EconomyListPlacement) Reset() {
 	*x = EconomyListPlacement{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[71]
+		mi := &file_hiro_proto_msgTypes[88]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6251,7 +7726,7 @@ func (x *EconomyListPlacement) String() string {
 func (*EconomyListPlacement) ProtoMessage() {}
 
 func (x *EconomyListPlacement) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[71]
+	mi := &file_hiro_proto_msgTypes[88]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6264,7 +7739,7 @@ func (x *EconomyListPlacement) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyListPlacement.ProtoReflect.Descriptor instead.
 func (*EconomyListPlacement) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{71}
+	return file_hiro_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *EconomyListPlacement) GetId() string {
@@ -6316,7 +7791,7 @@ type EconomyList struct {
 func (x *EconomyList) Reset() {
 	*x = EconomyList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[72]
+		mi := &file_hiro_proto_msgTypes[89]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6329,7 +7804,7 @@ func (x *EconomyList) String() string {
 func (*EconomyList) ProtoMessage() {}
 
 func (x *EconomyList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[72]
+	mi := &file_hiro_proto_msgTypes[89]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6342,7 +7817,7 @@ func (x *EconomyList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyList.ProtoReflect.Descriptor instead.
 func (*EconomyList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{72}
+	return file_hiro_proto_rawDescGZIP(), []int{89}
 }
 
 func (x *EconomyList) GetStoreItems() []*EconomyListStoreItem {
@@ -6421,7 +7896,7 @@ type InventoryItem struct {
 func (x *InventoryItem) Reset() {
 	*x = InventoryItem{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[73]
+		mi := &file_hiro_proto_msgTypes[90]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6434,7 +7909,7 @@ func (x *InventoryItem) String() string {
 func (*InventoryItem) ProtoMessage() {}
 
 func (x *InventoryItem) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[73]
+	mi := &file_hiro_proto_msgTypes[90]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6447,7 +7922,7 @@ func (x *InventoryItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InventoryItem.ProtoReflect.Descriptor instead.
 func (*InventoryItem) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{73}
+	return file_hiro_proto_rawDescGZIP(), []int{90}
 }
 
 func (x *InventoryItem) GetId() string {
@@ -6568,7 +8043,7 @@ type InventoryListRequest struct {
 func (x *InventoryListRequest) Reset() {
 	*x = InventoryListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[74]
+		mi := &file_hiro_proto_msgTypes[91]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6581,7 +8056,7 @@ func (x *InventoryListRequest) String() string {
 func (*InventoryListRequest) ProtoMessage() {}
 
 func (x *InventoryListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[74]
+	mi := &file_hiro_proto_msgTypes[91]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6594,7 +8069,7 @@ func (x *InventoryListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InventoryListRequest.ProtoReflect.Descriptor instead.
 func (*InventoryListRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{74}
+	return file_hiro_proto_rawDescGZIP(), []int{91}
 }
 
 func (x *InventoryListRequest) GetItemCategory() string {
@@ -6617,7 +8092,7 @@ type InventoryGrantRequest struct {
 func (x *InventoryGrantRequest) Reset() {
 	*x = InventoryGrantRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[75]
+		mi := &file_hiro_proto_msgTypes[92]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6630,7 +8105,7 @@ func (x *InventoryGrantRequest) String() string {
 func (*InventoryGrantRequest) ProtoMessage() {}
 
 func (x *InventoryGrantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[75]
+	mi := &file_hiro_proto_msgTypes[92]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6643,7 +8118,7 @@ func (x *InventoryGrantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InventoryGrantRequest.ProtoReflect.Descriptor instead.
 func (*InventoryGrantRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{75}
+	return file_hiro_proto_rawDescGZIP(), []int{92}
 }
 
 func (x *InventoryGrantRequest) GetItems() map[string]int64 {
@@ -6668,7 +8143,7 @@ type InventoryUpdateItemProperties struct {
 func (x *InventoryUpdateItemProperties) Reset() {
 	*x = InventoryUpdateItemProperties{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[76]
+		mi := &file_hiro_proto_msgTypes[93]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6681,7 +8156,7 @@ func (x *InventoryUpdateItemProperties) String() string {
 func (*InventoryUpdateItemProperties) ProtoMessage() {}
 
 func (x *InventoryUpdateItemProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[76]
+	mi := &file_hiro_proto_msgTypes[93]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6694,7 +8169,7 @@ func (x *InventoryUpdateItemProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InventoryUpdateItemProperties.ProtoReflect.Descriptor instead.
 func (*InventoryUpdateItemProperties) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{76}
+	return file_hiro_proto_rawDescGZIP(), []int{93}
 }
 
 func (x *InventoryUpdateItemProperties) GetStringProperties() map[string]string {
@@ -6724,7 +8199,7 @@ type InventoryUpdateItemsRequest struct {
 func (x *InventoryUpdateItemsRequest) Reset() {
 	*x = InventoryUpdateItemsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[77]
+		mi := &file_hiro_proto_msgTypes[94]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6737,7 +8212,7 @@ func (x *InventoryUpdateItemsRequest) String() string {
 func (*InventoryUpdateItemsRequest) ProtoMessage() {}
 
 func (x *InventoryUpdateItemsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[77]
+	mi := &file_hiro_proto_msgTypes[94]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6750,7 +8225,7 @@ func (x *InventoryUpdateItemsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InventoryUpdateItemsRequest.ProtoReflect.Descriptor instead.
 func (*InventoryUpdateItemsRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{77}
+	return file_hiro_proto_rawDescGZIP(), []int{94}
 }
 
 func (x *InventoryUpdateItemsRequest) GetItemUpdates() map[string]*InventoryUpdateItemProperties {
@@ -6773,7 +8248,7 @@ type Inventory struct {
 func (x *Inventory) Reset() {
 	*x = Inventory{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[78]
+		mi := &file_hiro_proto_msgTypes[95]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6786,7 +8261,7 @@ func (x *Inventory) String() string {
 func (*Inventory) ProtoMessage() {}
 
 func (x *Inventory) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[78]
+	mi := &file_hiro_proto_msgTypes[95]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6799,7 +8274,7 @@ func (x *Inventory) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Inventory.ProtoReflect.Descriptor instead.
 func (*Inventory) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{78}
+	return file_hiro_proto_rawDescGZIP(), []int{95}
 }
 
 func (x *Inventory) GetItems() map[string]*InventoryItem {
@@ -6826,7 +8301,7 @@ type InventoryConsumeRequest struct {
 func (x *InventoryConsumeRequest) Reset() {
 	*x = InventoryConsumeRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[79]
+		mi := &file_hiro_proto_msgTypes[96]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6839,7 +8314,7 @@ func (x *InventoryConsumeRequest) String() string {
 func (*InventoryConsumeRequest) ProtoMessage() {}
 
 func (x *InventoryConsumeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[79]
+	mi := &file_hiro_proto_msgTypes[96]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6852,7 +8327,7 @@ func (x *InventoryConsumeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InventoryConsumeRequest.ProtoReflect.Descriptor instead.
 func (*InventoryConsumeRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{79}
+	return file_hiro_proto_rawDescGZIP(), []int{96}
 }
 
 func (x *InventoryConsumeRequest) GetItems() map[string]int64 {
@@ -6893,7 +8368,7 @@ type InventoryConsumeRewards struct {
 func (x *InventoryConsumeRewards) Reset() {
 	*x = InventoryConsumeRewards{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[80]
+		mi := &file_hiro_proto_msgTypes[97]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6906,7 +8381,7 @@ func (x *InventoryConsumeRewards) String() string {
 func (*InventoryConsumeRewards) ProtoMessage() {}
 
 func (x *InventoryConsumeRewards) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[80]
+	mi := &file_hiro_proto_msgTypes[97]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6919,7 +8394,7 @@ func (x *InventoryConsumeRewards) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InventoryConsumeRewards.ProtoReflect.Descriptor instead.
 func (*InventoryConsumeRewards) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{80}
+	return file_hiro_proto_rawDescGZIP(), []int{97}
 }
 
 func (x *InventoryConsumeRewards) GetInventory() *Inventory {
@@ -6949,14 +8424,14 @@ type InventoryUpdateAck struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Update inventory data, if changed.
+	// Updated inventory data, if changed.
 	Inventory *Inventory `protobuf:"bytes,1,opt,name=inventory,proto3" json:"inventory,omitempty"`
 }
 
 func (x *InventoryUpdateAck) Reset() {
 	*x = InventoryUpdateAck{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[81]
+		mi := &file_hiro_proto_msgTypes[98]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6969,7 +8444,7 @@ func (x *InventoryUpdateAck) String() string {
 func (*InventoryUpdateAck) ProtoMessage() {}
 
 func (x *InventoryUpdateAck) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[81]
+	mi := &file_hiro_proto_msgTypes[98]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6982,7 +8457,7 @@ func (x *InventoryUpdateAck) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InventoryUpdateAck.ProtoReflect.Descriptor instead.
 func (*InventoryUpdateAck) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{81}
+	return file_hiro_proto_rawDescGZIP(), []int{98}
 }
 
 func (x *InventoryUpdateAck) GetInventory() *Inventory {
@@ -7005,7 +8480,7 @@ type InventoryList struct {
 func (x *InventoryList) Reset() {
 	*x = InventoryList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[82]
+		mi := &file_hiro_proto_msgTypes[99]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7018,7 +8493,7 @@ func (x *InventoryList) String() string {
 func (*InventoryList) ProtoMessage() {}
 
 func (x *InventoryList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[82]
+	mi := &file_hiro_proto_msgTypes[99]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7031,7 +8506,7 @@ func (x *InventoryList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InventoryList.ProtoReflect.Descriptor instead.
 func (*InventoryList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{82}
+	return file_hiro_proto_rawDescGZIP(), []int{99}
 }
 
 func (x *InventoryList) GetItems() map[string]*InventoryItem {
@@ -7054,7 +8529,7 @@ type AuctionBidAmount struct {
 func (x *AuctionBidAmount) Reset() {
 	*x = AuctionBidAmount{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[83]
+		mi := &file_hiro_proto_msgTypes[100]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7067,7 +8542,7 @@ func (x *AuctionBidAmount) String() string {
 func (*AuctionBidAmount) ProtoMessage() {}
 
 func (x *AuctionBidAmount) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[83]
+	mi := &file_hiro_proto_msgTypes[100]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7080,7 +8555,7 @@ func (x *AuctionBidAmount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionBidAmount.ProtoReflect.Descriptor instead.
 func (*AuctionBidAmount) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{83}
+	return file_hiro_proto_rawDescGZIP(), []int{100}
 }
 
 func (x *AuctionBidAmount) GetCurrencies() map[string]int64 {
@@ -7105,7 +8580,7 @@ type AuctionFee struct {
 func (x *AuctionFee) Reset() {
 	*x = AuctionFee{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[84]
+		mi := &file_hiro_proto_msgTypes[101]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7118,7 +8593,7 @@ func (x *AuctionFee) String() string {
 func (*AuctionFee) ProtoMessage() {}
 
 func (x *AuctionFee) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[84]
+	mi := &file_hiro_proto_msgTypes[101]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7131,7 +8606,7 @@ func (x *AuctionFee) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionFee.ProtoReflect.Descriptor instead.
 func (*AuctionFee) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{84}
+	return file_hiro_proto_rawDescGZIP(), []int{101}
 }
 
 func (x *AuctionFee) GetPercentage() float64 {
@@ -7165,7 +8640,7 @@ type AuctionTemplateConditionListingCost struct {
 func (x *AuctionTemplateConditionListingCost) Reset() {
 	*x = AuctionTemplateConditionListingCost{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[85]
+		mi := &file_hiro_proto_msgTypes[102]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7178,7 +8653,7 @@ func (x *AuctionTemplateConditionListingCost) String() string {
 func (*AuctionTemplateConditionListingCost) ProtoMessage() {}
 
 func (x *AuctionTemplateConditionListingCost) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[85]
+	mi := &file_hiro_proto_msgTypes[102]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7191,7 +8666,7 @@ func (x *AuctionTemplateConditionListingCost) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use AuctionTemplateConditionListingCost.ProtoReflect.Descriptor instead.
 func (*AuctionTemplateConditionListingCost) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{85}
+	return file_hiro_proto_rawDescGZIP(), []int{102}
 }
 
 func (x *AuctionTemplateConditionListingCost) GetCurrencies() map[string]int64 {
@@ -7230,7 +8705,7 @@ type AuctionTemplateConditionBidIncrement struct {
 func (x *AuctionTemplateConditionBidIncrement) Reset() {
 	*x = AuctionTemplateConditionBidIncrement{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[86]
+		mi := &file_hiro_proto_msgTypes[103]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7243,7 +8718,7 @@ func (x *AuctionTemplateConditionBidIncrement) String() string {
 func (*AuctionTemplateConditionBidIncrement) ProtoMessage() {}
 
 func (x *AuctionTemplateConditionBidIncrement) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[86]
+	mi := &file_hiro_proto_msgTypes[103]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7256,7 +8731,7 @@ func (x *AuctionTemplateConditionBidIncrement) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use AuctionTemplateConditionBidIncrement.ProtoReflect.Descriptor instead.
 func (*AuctionTemplateConditionBidIncrement) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{86}
+	return file_hiro_proto_rawDescGZIP(), []int{103}
 }
 
 func (x *AuctionTemplateConditionBidIncrement) GetPercentage() float64 {
@@ -7300,7 +8775,7 @@ type AuctionTemplateCondition struct {
 func (x *AuctionTemplateCondition) Reset() {
 	*x = AuctionTemplateCondition{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[87]
+		mi := &file_hiro_proto_msgTypes[104]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7313,7 +8788,7 @@ func (x *AuctionTemplateCondition) String() string {
 func (*AuctionTemplateCondition) ProtoMessage() {}
 
 func (x *AuctionTemplateCondition) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[87]
+	mi := &file_hiro_proto_msgTypes[104]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7326,7 +8801,7 @@ func (x *AuctionTemplateCondition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionTemplateCondition.ProtoReflect.Descriptor instead.
 func (*AuctionTemplateCondition) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{87}
+	return file_hiro_proto_rawDescGZIP(), []int{104}
 }
 
 func (x *AuctionTemplateCondition) GetDurationSec() int64 {
@@ -7404,7 +8879,7 @@ type AuctionTemplate struct {
 func (x *AuctionTemplate) Reset() {
 	*x = AuctionTemplate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[88]
+		mi := &file_hiro_proto_msgTypes[105]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7417,7 +8892,7 @@ func (x *AuctionTemplate) String() string {
 func (*AuctionTemplate) ProtoMessage() {}
 
 func (x *AuctionTemplate) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[88]
+	mi := &file_hiro_proto_msgTypes[105]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7430,7 +8905,7 @@ func (x *AuctionTemplate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionTemplate.ProtoReflect.Descriptor instead.
 func (*AuctionTemplate) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{88}
+	return file_hiro_proto_rawDescGZIP(), []int{105}
 }
 
 func (x *AuctionTemplate) GetItems() []string {
@@ -7474,7 +8949,7 @@ type AuctionTemplates struct {
 func (x *AuctionTemplates) Reset() {
 	*x = AuctionTemplates{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[89]
+		mi := &file_hiro_proto_msgTypes[106]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7487,7 +8962,7 @@ func (x *AuctionTemplates) String() string {
 func (*AuctionTemplates) ProtoMessage() {}
 
 func (x *AuctionTemplates) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[89]
+	mi := &file_hiro_proto_msgTypes[106]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7500,7 +8975,7 @@ func (x *AuctionTemplates) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionTemplates.ProtoReflect.Descriptor instead.
 func (*AuctionTemplates) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{89}
+	return file_hiro_proto_rawDescGZIP(), []int{106}
 }
 
 func (x *AuctionTemplates) GetTemplates() map[string]*AuctionTemplate {
@@ -7523,7 +8998,7 @@ type AuctionReward struct {
 func (x *AuctionReward) Reset() {
 	*x = AuctionReward{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[90]
+		mi := &file_hiro_proto_msgTypes[107]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7536,7 +9011,7 @@ func (x *AuctionReward) String() string {
 func (*AuctionReward) ProtoMessage() {}
 
 func (x *AuctionReward) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[90]
+	mi := &file_hiro_proto_msgTypes[107]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7549,7 +9024,7 @@ func (x *AuctionReward) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionReward.ProtoReflect.Descriptor instead.
 func (*AuctionReward) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{90}
+	return file_hiro_proto_rawDescGZIP(), []int{107}
 }
 
 func (x *AuctionReward) GetItems() []*InventoryItem {
@@ -7576,7 +9051,7 @@ type AuctionBid struct {
 func (x *AuctionBid) Reset() {
 	*x = AuctionBid{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[91]
+		mi := &file_hiro_proto_msgTypes[108]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7589,7 +9064,7 @@ func (x *AuctionBid) String() string {
 func (*AuctionBid) ProtoMessage() {}
 
 func (x *AuctionBid) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[91]
+	mi := &file_hiro_proto_msgTypes[108]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7602,7 +9077,7 @@ func (x *AuctionBid) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionBid.ProtoReflect.Descriptor instead.
 func (*AuctionBid) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{91}
+	return file_hiro_proto_rawDescGZIP(), []int{108}
 }
 
 func (x *AuctionBid) GetUserId() string {
@@ -7697,7 +9172,7 @@ type Auction struct {
 func (x *Auction) Reset() {
 	*x = Auction{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[92]
+		mi := &file_hiro_proto_msgTypes[109]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7710,7 +9185,7 @@ func (x *Auction) String() string {
 func (*Auction) ProtoMessage() {}
 
 func (x *Auction) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[92]
+	mi := &file_hiro_proto_msgTypes[109]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7723,7 +9198,7 @@ func (x *Auction) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Auction.ProtoReflect.Descriptor instead.
 func (*Auction) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{92}
+	return file_hiro_proto_rawDescGZIP(), []int{109}
 }
 
 func (x *Auction) GetId() string {
@@ -7965,7 +9440,7 @@ type AuctionNotificationBid struct {
 func (x *AuctionNotificationBid) Reset() {
 	*x = AuctionNotificationBid{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[93]
+		mi := &file_hiro_proto_msgTypes[110]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7978,7 +9453,7 @@ func (x *AuctionNotificationBid) String() string {
 func (*AuctionNotificationBid) ProtoMessage() {}
 
 func (x *AuctionNotificationBid) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[93]
+	mi := &file_hiro_proto_msgTypes[110]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7991,7 +9466,7 @@ func (x *AuctionNotificationBid) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionNotificationBid.ProtoReflect.Descriptor instead.
 func (*AuctionNotificationBid) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{93}
+	return file_hiro_proto_rawDescGZIP(), []int{110}
 }
 
 func (x *AuctionNotificationBid) GetId() string {
@@ -8072,7 +9547,7 @@ type StreamEnvelope struct {
 func (x *StreamEnvelope) Reset() {
 	*x = StreamEnvelope{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[94]
+		mi := &file_hiro_proto_msgTypes[111]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8085,7 +9560,7 @@ func (x *StreamEnvelope) String() string {
 func (*StreamEnvelope) ProtoMessage() {}
 
 func (x *StreamEnvelope) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[94]
+	mi := &file_hiro_proto_msgTypes[111]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8098,7 +9573,7 @@ func (x *StreamEnvelope) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamEnvelope.ProtoReflect.Descriptor instead.
 func (*StreamEnvelope) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{94}
+	return file_hiro_proto_rawDescGZIP(), []int{111}
 }
 
 func (m *StreamEnvelope) GetMessage() isStreamEnvelope_Message {
@@ -8140,7 +9615,7 @@ type AuctionClaimBid struct {
 func (x *AuctionClaimBid) Reset() {
 	*x = AuctionClaimBid{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[95]
+		mi := &file_hiro_proto_msgTypes[112]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8153,7 +9628,7 @@ func (x *AuctionClaimBid) String() string {
 func (*AuctionClaimBid) ProtoMessage() {}
 
 func (x *AuctionClaimBid) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[95]
+	mi := &file_hiro_proto_msgTypes[112]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8166,7 +9641,7 @@ func (x *AuctionClaimBid) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionClaimBid.ProtoReflect.Descriptor instead.
 func (*AuctionClaimBid) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{95}
+	return file_hiro_proto_rawDescGZIP(), []int{112}
 }
 
 func (x *AuctionClaimBid) GetAuction() *Auction {
@@ -8202,7 +9677,7 @@ type AuctionClaimCreated struct {
 func (x *AuctionClaimCreated) Reset() {
 	*x = AuctionClaimCreated{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[96]
+		mi := &file_hiro_proto_msgTypes[113]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8215,7 +9690,7 @@ func (x *AuctionClaimCreated) String() string {
 func (*AuctionClaimCreated) ProtoMessage() {}
 
 func (x *AuctionClaimCreated) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[96]
+	mi := &file_hiro_proto_msgTypes[113]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8228,7 +9703,7 @@ func (x *AuctionClaimCreated) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionClaimCreated.ProtoReflect.Descriptor instead.
 func (*AuctionClaimCreated) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{96}
+	return file_hiro_proto_rawDescGZIP(), []int{113}
 }
 
 func (x *AuctionClaimCreated) GetAuction() *Auction {
@@ -8274,7 +9749,7 @@ type AuctionCancel struct {
 func (x *AuctionCancel) Reset() {
 	*x = AuctionCancel{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[97]
+		mi := &file_hiro_proto_msgTypes[114]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8287,7 +9762,7 @@ func (x *AuctionCancel) String() string {
 func (*AuctionCancel) ProtoMessage() {}
 
 func (x *AuctionCancel) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[97]
+	mi := &file_hiro_proto_msgTypes[114]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8300,7 +9775,7 @@ func (x *AuctionCancel) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionCancel.ProtoReflect.Descriptor instead.
 func (*AuctionCancel) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{97}
+	return file_hiro_proto_rawDescGZIP(), []int{114}
 }
 
 func (x *AuctionCancel) GetAuction() *Auction {
@@ -8332,7 +9807,7 @@ type AuctionList struct {
 func (x *AuctionList) Reset() {
 	*x = AuctionList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[98]
+		mi := &file_hiro_proto_msgTypes[115]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8345,7 +9820,7 @@ func (x *AuctionList) String() string {
 func (*AuctionList) ProtoMessage() {}
 
 func (x *AuctionList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[98]
+	mi := &file_hiro_proto_msgTypes[115]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8358,7 +9833,7 @@ func (x *AuctionList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionList.ProtoReflect.Descriptor instead.
 func (*AuctionList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{98}
+	return file_hiro_proto_rawDescGZIP(), []int{115}
 }
 
 func (x *AuctionList) GetAuctions() []*Auction {
@@ -8394,7 +9869,7 @@ type AuctionListRequest struct {
 func (x *AuctionListRequest) Reset() {
 	*x = AuctionListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[99]
+		mi := &file_hiro_proto_msgTypes[116]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8407,7 +9882,7 @@ func (x *AuctionListRequest) String() string {
 func (*AuctionListRequest) ProtoMessage() {}
 
 func (x *AuctionListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[99]
+	mi := &file_hiro_proto_msgTypes[116]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8420,7 +9895,7 @@ func (x *AuctionListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionListRequest.ProtoReflect.Descriptor instead.
 func (*AuctionListRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{99}
+	return file_hiro_proto_rawDescGZIP(), []int{116}
 }
 
 func (x *AuctionListRequest) GetQuery() string {
@@ -8468,7 +9943,7 @@ type AuctionBidRequest struct {
 func (x *AuctionBidRequest) Reset() {
 	*x = AuctionBidRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[100]
+		mi := &file_hiro_proto_msgTypes[117]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8481,7 +9956,7 @@ func (x *AuctionBidRequest) String() string {
 func (*AuctionBidRequest) ProtoMessage() {}
 
 func (x *AuctionBidRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[100]
+	mi := &file_hiro_proto_msgTypes[117]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8494,7 +9969,7 @@ func (x *AuctionBidRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionBidRequest.ProtoReflect.Descriptor instead.
 func (*AuctionBidRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{100}
+	return file_hiro_proto_rawDescGZIP(), []int{117}
 }
 
 func (x *AuctionBidRequest) GetId() string {
@@ -8531,7 +10006,7 @@ type AuctionClaimBidRequest struct {
 func (x *AuctionClaimBidRequest) Reset() {
 	*x = AuctionClaimBidRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[101]
+		mi := &file_hiro_proto_msgTypes[118]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8544,7 +10019,7 @@ func (x *AuctionClaimBidRequest) String() string {
 func (*AuctionClaimBidRequest) ProtoMessage() {}
 
 func (x *AuctionClaimBidRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[101]
+	mi := &file_hiro_proto_msgTypes[118]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8557,7 +10032,7 @@ func (x *AuctionClaimBidRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionClaimBidRequest.ProtoReflect.Descriptor instead.
 func (*AuctionClaimBidRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{101}
+	return file_hiro_proto_rawDescGZIP(), []int{118}
 }
 
 func (x *AuctionClaimBidRequest) GetId() string {
@@ -8580,7 +10055,7 @@ type AuctionClaimCreatedRequest struct {
 func (x *AuctionClaimCreatedRequest) Reset() {
 	*x = AuctionClaimCreatedRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[102]
+		mi := &file_hiro_proto_msgTypes[119]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8593,7 +10068,7 @@ func (x *AuctionClaimCreatedRequest) String() string {
 func (*AuctionClaimCreatedRequest) ProtoMessage() {}
 
 func (x *AuctionClaimCreatedRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[102]
+	mi := &file_hiro_proto_msgTypes[119]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8606,7 +10081,7 @@ func (x *AuctionClaimCreatedRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionClaimCreatedRequest.ProtoReflect.Descriptor instead.
 func (*AuctionClaimCreatedRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{102}
+	return file_hiro_proto_rawDescGZIP(), []int{119}
 }
 
 func (x *AuctionClaimCreatedRequest) GetId() string {
@@ -8629,7 +10104,7 @@ type AuctionCancelRequest struct {
 func (x *AuctionCancelRequest) Reset() {
 	*x = AuctionCancelRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[103]
+		mi := &file_hiro_proto_msgTypes[120]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8642,7 +10117,7 @@ func (x *AuctionCancelRequest) String() string {
 func (*AuctionCancelRequest) ProtoMessage() {}
 
 func (x *AuctionCancelRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[103]
+	mi := &file_hiro_proto_msgTypes[120]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8655,7 +10130,7 @@ func (x *AuctionCancelRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionCancelRequest.ProtoReflect.Descriptor instead.
 func (*AuctionCancelRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{103}
+	return file_hiro_proto_rawDescGZIP(), []int{120}
 }
 
 func (x *AuctionCancelRequest) GetId() string {
@@ -8684,7 +10159,7 @@ type AuctionCreateRequest struct {
 func (x *AuctionCreateRequest) Reset() {
 	*x = AuctionCreateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[104]
+		mi := &file_hiro_proto_msgTypes[121]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8697,7 +10172,7 @@ func (x *AuctionCreateRequest) String() string {
 func (*AuctionCreateRequest) ProtoMessage() {}
 
 func (x *AuctionCreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[104]
+	mi := &file_hiro_proto_msgTypes[121]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8710,7 +10185,7 @@ func (x *AuctionCreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionCreateRequest.ProtoReflect.Descriptor instead.
 func (*AuctionCreateRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{104}
+	return file_hiro_proto_rawDescGZIP(), []int{121}
 }
 
 func (x *AuctionCreateRequest) GetTemplateId() string {
@@ -8756,7 +10231,7 @@ type AuctionListBidsRequest struct {
 func (x *AuctionListBidsRequest) Reset() {
 	*x = AuctionListBidsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[105]
+		mi := &file_hiro_proto_msgTypes[122]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8769,7 +10244,7 @@ func (x *AuctionListBidsRequest) String() string {
 func (*AuctionListBidsRequest) ProtoMessage() {}
 
 func (x *AuctionListBidsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[105]
+	mi := &file_hiro_proto_msgTypes[122]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8782,7 +10257,7 @@ func (x *AuctionListBidsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionListBidsRequest.ProtoReflect.Descriptor instead.
 func (*AuctionListBidsRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{105}
+	return file_hiro_proto_rawDescGZIP(), []int{122}
 }
 
 func (x *AuctionListBidsRequest) GetLimit() int64 {
@@ -8814,7 +10289,7 @@ type AuctionListCreatedRequest struct {
 func (x *AuctionListCreatedRequest) Reset() {
 	*x = AuctionListCreatedRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[106]
+		mi := &file_hiro_proto_msgTypes[123]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8827,7 +10302,7 @@ func (x *AuctionListCreatedRequest) String() string {
 func (*AuctionListCreatedRequest) ProtoMessage() {}
 
 func (x *AuctionListCreatedRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[106]
+	mi := &file_hiro_proto_msgTypes[123]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8840,7 +10315,7 @@ func (x *AuctionListCreatedRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionListCreatedRequest.ProtoReflect.Descriptor instead.
 func (*AuctionListCreatedRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{106}
+	return file_hiro_proto_rawDescGZIP(), []int{123}
 }
 
 func (x *AuctionListCreatedRequest) GetLimit() int64 {
@@ -8870,7 +10345,7 @@ type AuctionsFollowRequest struct {
 func (x *AuctionsFollowRequest) Reset() {
 	*x = AuctionsFollowRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[107]
+		mi := &file_hiro_proto_msgTypes[124]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8883,7 +10358,7 @@ func (x *AuctionsFollowRequest) String() string {
 func (*AuctionsFollowRequest) ProtoMessage() {}
 
 func (x *AuctionsFollowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[107]
+	mi := &file_hiro_proto_msgTypes[124]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8896,7 +10371,7 @@ func (x *AuctionsFollowRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuctionsFollowRequest.ProtoReflect.Descriptor instead.
 func (*AuctionsFollowRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{107}
+	return file_hiro_proto_rawDescGZIP(), []int{124}
 }
 
 func (x *AuctionsFollowRequest) GetIds() []string {
@@ -8919,7 +10394,7 @@ type EconomyListRequest struct {
 func (x *EconomyListRequest) Reset() {
 	*x = EconomyListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[108]
+		mi := &file_hiro_proto_msgTypes[125]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8932,7 +10407,7 @@ func (x *EconomyListRequest) String() string {
 func (*EconomyListRequest) ProtoMessage() {}
 
 func (x *EconomyListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[108]
+	mi := &file_hiro_proto_msgTypes[125]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8945,7 +10420,7 @@ func (x *EconomyListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyListRequest.ProtoReflect.Descriptor instead.
 func (*EconomyListRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{108}
+	return file_hiro_proto_rawDescGZIP(), []int{125}
 }
 
 func (x *EconomyListRequest) GetStoreType() EconomyStoreType {
@@ -8972,7 +10447,7 @@ type EconomyGrantRequest struct {
 func (x *EconomyGrantRequest) Reset() {
 	*x = EconomyGrantRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[109]
+		mi := &file_hiro_proto_msgTypes[126]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8985,7 +10460,7 @@ func (x *EconomyGrantRequest) String() string {
 func (*EconomyGrantRequest) ProtoMessage() {}
 
 func (x *EconomyGrantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[109]
+	mi := &file_hiro_proto_msgTypes[126]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8998,7 +10473,7 @@ func (x *EconomyGrantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyGrantRequest.ProtoReflect.Descriptor instead.
 func (*EconomyGrantRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{109}
+	return file_hiro_proto_rawDescGZIP(), []int{126}
 }
 
 func (x *EconomyGrantRequest) GetCurrencies() map[string]int64 {
@@ -9039,7 +10514,7 @@ type EconomyPurchaseIntentRequest struct {
 func (x *EconomyPurchaseIntentRequest) Reset() {
 	*x = EconomyPurchaseIntentRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[110]
+		mi := &file_hiro_proto_msgTypes[127]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9052,7 +10527,7 @@ func (x *EconomyPurchaseIntentRequest) String() string {
 func (*EconomyPurchaseIntentRequest) ProtoMessage() {}
 
 func (x *EconomyPurchaseIntentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[110]
+	mi := &file_hiro_proto_msgTypes[127]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9065,7 +10540,7 @@ func (x *EconomyPurchaseIntentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyPurchaseIntentRequest.ProtoReflect.Descriptor instead.
 func (*EconomyPurchaseIntentRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{110}
+	return file_hiro_proto_rawDescGZIP(), []int{127}
 }
 
 func (x *EconomyPurchaseIntentRequest) GetItemId() string {
@@ -9106,7 +10581,7 @@ type EconomyPurchaseRequest struct {
 func (x *EconomyPurchaseRequest) Reset() {
 	*x = EconomyPurchaseRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[111]
+		mi := &file_hiro_proto_msgTypes[128]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9119,7 +10594,7 @@ func (x *EconomyPurchaseRequest) String() string {
 func (*EconomyPurchaseRequest) ProtoMessage() {}
 
 func (x *EconomyPurchaseRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[111]
+	mi := &file_hiro_proto_msgTypes[128]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9132,7 +10607,7 @@ func (x *EconomyPurchaseRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyPurchaseRequest.ProtoReflect.Descriptor instead.
 func (*EconomyPurchaseRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{111}
+	return file_hiro_proto_rawDescGZIP(), []int{128}
 }
 
 func (x *EconomyPurchaseRequest) GetItemId() string {
@@ -9171,7 +10646,7 @@ type EconomyPurchaseRestoreRequest struct {
 func (x *EconomyPurchaseRestoreRequest) Reset() {
 	*x = EconomyPurchaseRestoreRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[112]
+		mi := &file_hiro_proto_msgTypes[129]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9184,7 +10659,7 @@ func (x *EconomyPurchaseRestoreRequest) String() string {
 func (*EconomyPurchaseRestoreRequest) ProtoMessage() {}
 
 func (x *EconomyPurchaseRestoreRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[112]
+	mi := &file_hiro_proto_msgTypes[129]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9197,7 +10672,7 @@ func (x *EconomyPurchaseRestoreRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyPurchaseRestoreRequest.ProtoReflect.Descriptor instead.
 func (*EconomyPurchaseRestoreRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{112}
+	return file_hiro_proto_rawDescGZIP(), []int{129}
 }
 
 func (x *EconomyPurchaseRestoreRequest) GetStoreType() EconomyStoreType {
@@ -9231,7 +10706,7 @@ type EconomyPlacementStatusRequest struct {
 func (x *EconomyPlacementStatusRequest) Reset() {
 	*x = EconomyPlacementStatusRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[113]
+		mi := &file_hiro_proto_msgTypes[130]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9244,7 +10719,7 @@ func (x *EconomyPlacementStatusRequest) String() string {
 func (*EconomyPlacementStatusRequest) ProtoMessage() {}
 
 func (x *EconomyPlacementStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[113]
+	mi := &file_hiro_proto_msgTypes[130]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9257,7 +10732,7 @@ func (x *EconomyPlacementStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyPlacementStatusRequest.ProtoReflect.Descriptor instead.
 func (*EconomyPlacementStatusRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{113}
+	return file_hiro_proto_rawDescGZIP(), []int{130}
 }
 
 func (x *EconomyPlacementStatusRequest) GetRewardId() string {
@@ -9296,7 +10771,7 @@ type EconomyPlacementStartRequest struct {
 func (x *EconomyPlacementStartRequest) Reset() {
 	*x = EconomyPlacementStartRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[114]
+		mi := &file_hiro_proto_msgTypes[131]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9309,7 +10784,7 @@ func (x *EconomyPlacementStartRequest) String() string {
 func (*EconomyPlacementStartRequest) ProtoMessage() {}
 
 func (x *EconomyPlacementStartRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[114]
+	mi := &file_hiro_proto_msgTypes[131]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9322,7 +10797,7 @@ func (x *EconomyPlacementStartRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyPlacementStartRequest.ProtoReflect.Descriptor instead.
 func (*EconomyPlacementStartRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{114}
+	return file_hiro_proto_rawDescGZIP(), []int{131}
 }
 
 func (x *EconomyPlacementStartRequest) GetPlacementId() string {
@@ -9364,7 +10839,7 @@ type EconomyPlacementStatus struct {
 func (x *EconomyPlacementStatus) Reset() {
 	*x = EconomyPlacementStatus{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[115]
+		mi := &file_hiro_proto_msgTypes[132]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9377,7 +10852,7 @@ func (x *EconomyPlacementStatus) String() string {
 func (*EconomyPlacementStatus) ProtoMessage() {}
 
 func (x *EconomyPlacementStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[115]
+	mi := &file_hiro_proto_msgTypes[132]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9390,7 +10865,7 @@ func (x *EconomyPlacementStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyPlacementStatus.ProtoReflect.Descriptor instead.
 func (*EconomyPlacementStatus) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{115}
+	return file_hiro_proto_rawDescGZIP(), []int{132}
 }
 
 func (x *EconomyPlacementStatus) GetRewardId() string {
@@ -9466,7 +10941,7 @@ type EconomyUpdateAck struct {
 func (x *EconomyUpdateAck) Reset() {
 	*x = EconomyUpdateAck{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[116]
+		mi := &file_hiro_proto_msgTypes[133]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9479,7 +10954,7 @@ func (x *EconomyUpdateAck) String() string {
 func (*EconomyUpdateAck) ProtoMessage() {}
 
 func (x *EconomyUpdateAck) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[116]
+	mi := &file_hiro_proto_msgTypes[133]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9492,7 +10967,7 @@ func (x *EconomyUpdateAck) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyUpdateAck.ProtoReflect.Descriptor instead.
 func (*EconomyUpdateAck) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{116}
+	return file_hiro_proto_rawDescGZIP(), []int{133}
 }
 
 func (x *EconomyUpdateAck) GetWallet() map[string]int64 {
@@ -9552,7 +11027,7 @@ type EconomyPurchaseAck struct {
 func (x *EconomyPurchaseAck) Reset() {
 	*x = EconomyPurchaseAck{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[117]
+		mi := &file_hiro_proto_msgTypes[134]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9565,7 +11040,7 @@ func (x *EconomyPurchaseAck) String() string {
 func (*EconomyPurchaseAck) ProtoMessage() {}
 
 func (x *EconomyPurchaseAck) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[117]
+	mi := &file_hiro_proto_msgTypes[134]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9578,7 +11053,7 @@ func (x *EconomyPurchaseAck) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EconomyPurchaseAck.ProtoReflect.Descriptor instead.
 func (*EconomyPurchaseAck) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{117}
+	return file_hiro_proto_rawDescGZIP(), []int{134}
 }
 
 func (x *EconomyPurchaseAck) GetWallet() map[string]int64 {
@@ -9628,7 +11103,7 @@ type EnergyModifier struct {
 func (x *EnergyModifier) Reset() {
 	*x = EnergyModifier{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[118]
+		mi := &file_hiro_proto_msgTypes[135]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9641,7 +11116,7 @@ func (x *EnergyModifier) String() string {
 func (*EnergyModifier) ProtoMessage() {}
 
 func (x *EnergyModifier) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[118]
+	mi := &file_hiro_proto_msgTypes[135]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9654,7 +11129,7 @@ func (x *EnergyModifier) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnergyModifier.ProtoReflect.Descriptor instead.
 func (*EnergyModifier) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{118}
+	return file_hiro_proto_rawDescGZIP(), []int{135}
 }
 
 func (x *EnergyModifier) GetOperator() string {
@@ -9720,7 +11195,7 @@ type Energy struct {
 func (x *Energy) Reset() {
 	*x = Energy{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[119]
+		mi := &file_hiro_proto_msgTypes[136]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9733,7 +11208,7 @@ func (x *Energy) String() string {
 func (*Energy) ProtoMessage() {}
 
 func (x *Energy) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[119]
+	mi := &file_hiro_proto_msgTypes[136]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9746,7 +11221,7 @@ func (x *Energy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Energy.ProtoReflect.Descriptor instead.
 func (*Energy) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{119}
+	return file_hiro_proto_rawDescGZIP(), []int{136}
 }
 
 func (x *Energy) GetId() string {
@@ -9846,7 +11321,7 @@ type EnergyList struct {
 func (x *EnergyList) Reset() {
 	*x = EnergyList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[120]
+		mi := &file_hiro_proto_msgTypes[137]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9859,7 +11334,7 @@ func (x *EnergyList) String() string {
 func (*EnergyList) ProtoMessage() {}
 
 func (x *EnergyList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[120]
+	mi := &file_hiro_proto_msgTypes[137]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9872,7 +11347,7 @@ func (x *EnergyList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnergyList.ProtoReflect.Descriptor instead.
 func (*EnergyList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{120}
+	return file_hiro_proto_rawDescGZIP(), []int{137}
 }
 
 func (x *EnergyList) GetEnergies() map[string]*Energy {
@@ -9895,7 +11370,7 @@ type EnergySpendRequest struct {
 func (x *EnergySpendRequest) Reset() {
 	*x = EnergySpendRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[121]
+		mi := &file_hiro_proto_msgTypes[138]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9908,7 +11383,7 @@ func (x *EnergySpendRequest) String() string {
 func (*EnergySpendRequest) ProtoMessage() {}
 
 func (x *EnergySpendRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[121]
+	mi := &file_hiro_proto_msgTypes[138]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9921,7 +11396,7 @@ func (x *EnergySpendRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnergySpendRequest.ProtoReflect.Descriptor instead.
 func (*EnergySpendRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{121}
+	return file_hiro_proto_rawDescGZIP(), []int{138}
 }
 
 func (x *EnergySpendRequest) GetAmounts() map[string]int32 {
@@ -9946,7 +11421,7 @@ type EnergySpendReward struct {
 func (x *EnergySpendReward) Reset() {
 	*x = EnergySpendReward{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[122]
+		mi := &file_hiro_proto_msgTypes[139]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9959,7 +11434,7 @@ func (x *EnergySpendReward) String() string {
 func (*EnergySpendReward) ProtoMessage() {}
 
 func (x *EnergySpendReward) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[122]
+	mi := &file_hiro_proto_msgTypes[139]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9972,7 +11447,7 @@ func (x *EnergySpendReward) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnergySpendReward.ProtoReflect.Descriptor instead.
 func (*EnergySpendReward) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{122}
+	return file_hiro_proto_rawDescGZIP(), []int{139}
 }
 
 func (x *EnergySpendReward) GetEnergies() *EnergyList {
@@ -10002,7 +11477,7 @@ type EnergyGrantRequest struct {
 func (x *EnergyGrantRequest) Reset() {
 	*x = EnergyGrantRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[123]
+		mi := &file_hiro_proto_msgTypes[140]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10015,7 +11490,7 @@ func (x *EnergyGrantRequest) String() string {
 func (*EnergyGrantRequest) ProtoMessage() {}
 
 func (x *EnergyGrantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[123]
+	mi := &file_hiro_proto_msgTypes[140]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10028,7 +11503,7 @@ func (x *EnergyGrantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnergyGrantRequest.ProtoReflect.Descriptor instead.
 func (*EnergyGrantRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{123}
+	return file_hiro_proto_rawDescGZIP(), []int{140}
 }
 
 func (x *EnergyGrantRequest) GetAmounts() map[string]int32 {
@@ -10061,7 +11536,7 @@ type LeaderboardConfig struct {
 func (x *LeaderboardConfig) Reset() {
 	*x = LeaderboardConfig{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[124]
+		mi := &file_hiro_proto_msgTypes[141]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10074,7 +11549,7 @@ func (x *LeaderboardConfig) String() string {
 func (*LeaderboardConfig) ProtoMessage() {}
 
 func (x *LeaderboardConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[124]
+	mi := &file_hiro_proto_msgTypes[141]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10087,7 +11562,7 @@ func (x *LeaderboardConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LeaderboardConfig.ProtoReflect.Descriptor instead.
 func (*LeaderboardConfig) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{124}
+	return file_hiro_proto_rawDescGZIP(), []int{141}
 }
 
 func (x *LeaderboardConfig) GetId() string {
@@ -10145,7 +11620,7 @@ type LeaderboardConfigList struct {
 func (x *LeaderboardConfigList) Reset() {
 	*x = LeaderboardConfigList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[125]
+		mi := &file_hiro_proto_msgTypes[142]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10158,7 +11633,7 @@ func (x *LeaderboardConfigList) String() string {
 func (*LeaderboardConfigList) ProtoMessage() {}
 
 func (x *LeaderboardConfigList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[125]
+	mi := &file_hiro_proto_msgTypes[142]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10171,7 +11646,7 @@ func (x *LeaderboardConfigList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LeaderboardConfigList.ProtoReflect.Descriptor instead.
 func (*LeaderboardConfigList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{125}
+	return file_hiro_proto_rawDescGZIP(), []int{142}
 }
 
 func (x *LeaderboardConfigList) GetLeaderboardConfigs() []*LeaderboardConfig {
@@ -10206,7 +11681,7 @@ type Tutorial struct {
 func (x *Tutorial) Reset() {
 	*x = Tutorial{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[126]
+		mi := &file_hiro_proto_msgTypes[143]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10219,7 +11694,7 @@ func (x *Tutorial) String() string {
 func (*Tutorial) ProtoMessage() {}
 
 func (x *Tutorial) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[126]
+	mi := &file_hiro_proto_msgTypes[143]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10232,7 +11707,7 @@ func (x *Tutorial) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Tutorial.ProtoReflect.Descriptor instead.
 func (*Tutorial) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{126}
+	return file_hiro_proto_rawDescGZIP(), []int{143}
 }
 
 func (x *Tutorial) GetId() string {
@@ -10297,7 +11772,7 @@ type TutorialList struct {
 func (x *TutorialList) Reset() {
 	*x = TutorialList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[127]
+		mi := &file_hiro_proto_msgTypes[144]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10310,7 +11785,7 @@ func (x *TutorialList) String() string {
 func (*TutorialList) ProtoMessage() {}
 
 func (x *TutorialList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[127]
+	mi := &file_hiro_proto_msgTypes[144]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10323,7 +11798,7 @@ func (x *TutorialList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TutorialList.ProtoReflect.Descriptor instead.
 func (*TutorialList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{127}
+	return file_hiro_proto_rawDescGZIP(), []int{144}
 }
 
 func (x *TutorialList) GetTutorials() map[string]*Tutorial {
@@ -10346,7 +11821,7 @@ type TutorialAcceptRequest struct {
 func (x *TutorialAcceptRequest) Reset() {
 	*x = TutorialAcceptRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[128]
+		mi := &file_hiro_proto_msgTypes[145]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10359,7 +11834,7 @@ func (x *TutorialAcceptRequest) String() string {
 func (*TutorialAcceptRequest) ProtoMessage() {}
 
 func (x *TutorialAcceptRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[128]
+	mi := &file_hiro_proto_msgTypes[145]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10372,7 +11847,7 @@ func (x *TutorialAcceptRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TutorialAcceptRequest.ProtoReflect.Descriptor instead.
 func (*TutorialAcceptRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{128}
+	return file_hiro_proto_rawDescGZIP(), []int{145}
 }
 
 func (x *TutorialAcceptRequest) GetId() string {
@@ -10395,7 +11870,7 @@ type TutorialDeclineRequest struct {
 func (x *TutorialDeclineRequest) Reset() {
 	*x = TutorialDeclineRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[129]
+		mi := &file_hiro_proto_msgTypes[146]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10408,7 +11883,7 @@ func (x *TutorialDeclineRequest) String() string {
 func (*TutorialDeclineRequest) ProtoMessage() {}
 
 func (x *TutorialDeclineRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[129]
+	mi := &file_hiro_proto_msgTypes[146]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10421,7 +11896,7 @@ func (x *TutorialDeclineRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TutorialDeclineRequest.ProtoReflect.Descriptor instead.
 func (*TutorialDeclineRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{129}
+	return file_hiro_proto_rawDescGZIP(), []int{146}
 }
 
 func (x *TutorialDeclineRequest) GetId() string {
@@ -10444,7 +11919,7 @@ type TutorialAbandonRequest struct {
 func (x *TutorialAbandonRequest) Reset() {
 	*x = TutorialAbandonRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[130]
+		mi := &file_hiro_proto_msgTypes[147]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10457,7 +11932,7 @@ func (x *TutorialAbandonRequest) String() string {
 func (*TutorialAbandonRequest) ProtoMessage() {}
 
 func (x *TutorialAbandonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[130]
+	mi := &file_hiro_proto_msgTypes[147]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10470,7 +11945,7 @@ func (x *TutorialAbandonRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TutorialAbandonRequest.ProtoReflect.Descriptor instead.
 func (*TutorialAbandonRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{130}
+	return file_hiro_proto_rawDescGZIP(), []int{147}
 }
 
 func (x *TutorialAbandonRequest) GetId() string {
@@ -10495,7 +11970,7 @@ type TutorialUpdateRequest struct {
 func (x *TutorialUpdateRequest) Reset() {
 	*x = TutorialUpdateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[131]
+		mi := &file_hiro_proto_msgTypes[148]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10508,7 +11983,7 @@ func (x *TutorialUpdateRequest) String() string {
 func (*TutorialUpdateRequest) ProtoMessage() {}
 
 func (x *TutorialUpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[131]
+	mi := &file_hiro_proto_msgTypes[148]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10521,7 +11996,7 @@ func (x *TutorialUpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TutorialUpdateRequest.ProtoReflect.Descriptor instead.
 func (*TutorialUpdateRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{131}
+	return file_hiro_proto_rawDescGZIP(), []int{148}
 }
 
 func (x *TutorialUpdateRequest) GetId() string {
@@ -10551,7 +12026,7 @@ type TutorialResetRequest struct {
 func (x *TutorialResetRequest) Reset() {
 	*x = TutorialResetRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[132]
+		mi := &file_hiro_proto_msgTypes[149]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10564,7 +12039,7 @@ func (x *TutorialResetRequest) String() string {
 func (*TutorialResetRequest) ProtoMessage() {}
 
 func (x *TutorialResetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[132]
+	mi := &file_hiro_proto_msgTypes[149]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10577,7 +12052,7 @@ func (x *TutorialResetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TutorialResetRequest.ProtoReflect.Descriptor instead.
 func (*TutorialResetRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{132}
+	return file_hiro_proto_rawDescGZIP(), []int{149}
 }
 
 func (x *TutorialResetRequest) GetIds() []string {
@@ -10602,7 +12077,7 @@ type RateAppRequest struct {
 func (x *RateAppRequest) Reset() {
 	*x = RateAppRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[133]
+		mi := &file_hiro_proto_msgTypes[150]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10615,7 +12090,7 @@ func (x *RateAppRequest) String() string {
 func (*RateAppRequest) ProtoMessage() {}
 
 func (x *RateAppRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[133]
+	mi := &file_hiro_proto_msgTypes[150]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10628,7 +12103,7 @@ func (x *RateAppRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RateAppRequest.ProtoReflect.Descriptor instead.
 func (*RateAppRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{133}
+	return file_hiro_proto_rawDescGZIP(), []int{150}
 }
 
 func (x *RateAppRequest) GetScore() uint32 {
@@ -10682,7 +12157,7 @@ type Team struct {
 func (x *Team) Reset() {
 	*x = Team{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[134]
+		mi := &file_hiro_proto_msgTypes[151]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10695,7 +12170,7 @@ func (x *Team) String() string {
 func (*Team) ProtoMessage() {}
 
 func (x *Team) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[134]
+	mi := &file_hiro_proto_msgTypes[151]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10708,7 +12183,7 @@ func (x *Team) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Team.ProtoReflect.Descriptor instead.
 func (*Team) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{134}
+	return file_hiro_proto_rawDescGZIP(), []int{151}
 }
 
 func (x *Team) GetId() string {
@@ -10825,7 +12300,7 @@ type TeamCreateRequest struct {
 func (x *TeamCreateRequest) Reset() {
 	*x = TeamCreateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[135]
+		mi := &file_hiro_proto_msgTypes[152]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10838,7 +12313,7 @@ func (x *TeamCreateRequest) String() string {
 func (*TeamCreateRequest) ProtoMessage() {}
 
 func (x *TeamCreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[135]
+	mi := &file_hiro_proto_msgTypes[152]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10851,7 +12326,7 @@ func (x *TeamCreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeamCreateRequest.ProtoReflect.Descriptor instead.
 func (*TeamCreateRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{135}
+	return file_hiro_proto_rawDescGZIP(), []int{152}
 }
 
 func (x *TeamCreateRequest) GetName() string {
@@ -10913,7 +12388,7 @@ type TeamListRequest struct {
 func (x *TeamListRequest) Reset() {
 	*x = TeamListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[136]
+		mi := &file_hiro_proto_msgTypes[153]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10926,7 +12401,7 @@ func (x *TeamListRequest) String() string {
 func (*TeamListRequest) ProtoMessage() {}
 
 func (x *TeamListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[136]
+	mi := &file_hiro_proto_msgTypes[153]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10939,7 +12414,7 @@ func (x *TeamListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeamListRequest.ProtoReflect.Descriptor instead.
 func (*TeamListRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{136}
+	return file_hiro_proto_rawDescGZIP(), []int{153}
 }
 
 func (x *TeamListRequest) GetCursor() string {
@@ -10978,7 +12453,7 @@ type TeamList struct {
 func (x *TeamList) Reset() {
 	*x = TeamList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[137]
+		mi := &file_hiro_proto_msgTypes[154]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10991,7 +12466,7 @@ func (x *TeamList) String() string {
 func (*TeamList) ProtoMessage() {}
 
 func (x *TeamList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[137]
+	mi := &file_hiro_proto_msgTypes[154]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11004,7 +12479,7 @@ func (x *TeamList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeamList.ProtoReflect.Descriptor instead.
 func (*TeamList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{137}
+	return file_hiro_proto_rawDescGZIP(), []int{154}
 }
 
 func (x *TeamList) GetTeams() []*Team {
@@ -11038,7 +12513,7 @@ type TeamSearchRequest struct {
 func (x *TeamSearchRequest) Reset() {
 	*x = TeamSearchRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[138]
+		mi := &file_hiro_proto_msgTypes[155]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11051,7 +12526,7 @@ func (x *TeamSearchRequest) String() string {
 func (*TeamSearchRequest) ProtoMessage() {}
 
 func (x *TeamSearchRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[138]
+	mi := &file_hiro_proto_msgTypes[155]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11064,7 +12539,7 @@ func (x *TeamSearchRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeamSearchRequest.ProtoReflect.Descriptor instead.
 func (*TeamSearchRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{138}
+	return file_hiro_proto_rawDescGZIP(), []int{155}
 }
 
 func (x *TeamSearchRequest) GetInput() string {
@@ -11103,7 +12578,7 @@ type TeamWriteChatMessageRequest struct {
 func (x *TeamWriteChatMessageRequest) Reset() {
 	*x = TeamWriteChatMessageRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[139]
+		mi := &file_hiro_proto_msgTypes[156]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11116,7 +12591,7 @@ func (x *TeamWriteChatMessageRequest) String() string {
 func (*TeamWriteChatMessageRequest) ProtoMessage() {}
 
 func (x *TeamWriteChatMessageRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[139]
+	mi := &file_hiro_proto_msgTypes[156]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11129,7 +12604,7 @@ func (x *TeamWriteChatMessageRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeamWriteChatMessageRequest.ProtoReflect.Descriptor instead.
 func (*TeamWriteChatMessageRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{139}
+	return file_hiro_proto_rawDescGZIP(), []int{156}
 }
 
 func (x *TeamWriteChatMessageRequest) GetId() string {
@@ -11161,7 +12636,7 @@ type UnlockableCost struct {
 func (x *UnlockableCost) Reset() {
 	*x = UnlockableCost{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[140]
+		mi := &file_hiro_proto_msgTypes[157]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11174,7 +12649,7 @@ func (x *UnlockableCost) String() string {
 func (*UnlockableCost) ProtoMessage() {}
 
 func (x *UnlockableCost) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[140]
+	mi := &file_hiro_proto_msgTypes[157]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11187,7 +12662,7 @@ func (x *UnlockableCost) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnlockableCost.ProtoReflect.Descriptor instead.
 func (*UnlockableCost) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{140}
+	return file_hiro_proto_rawDescGZIP(), []int{157}
 }
 
 func (x *UnlockableCost) GetItems() map[string]int64 {
@@ -11247,7 +12722,7 @@ type Unlockable struct {
 func (x *Unlockable) Reset() {
 	*x = Unlockable{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[141]
+		mi := &file_hiro_proto_msgTypes[158]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11260,7 +12735,7 @@ func (x *Unlockable) String() string {
 func (*Unlockable) ProtoMessage() {}
 
 func (x *Unlockable) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[141]
+	mi := &file_hiro_proto_msgTypes[158]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11273,7 +12748,7 @@ func (x *Unlockable) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Unlockable.ProtoReflect.Descriptor instead.
 func (*Unlockable) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{141}
+	return file_hiro_proto_rawDescGZIP(), []int{158}
 }
 
 func (x *Unlockable) GetId() string {
@@ -11403,7 +12878,7 @@ type UnlockableSlotCost struct {
 func (x *UnlockableSlotCost) Reset() {
 	*x = UnlockableSlotCost{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[142]
+		mi := &file_hiro_proto_msgTypes[159]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11416,7 +12891,7 @@ func (x *UnlockableSlotCost) String() string {
 func (*UnlockableSlotCost) ProtoMessage() {}
 
 func (x *UnlockableSlotCost) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[142]
+	mi := &file_hiro_proto_msgTypes[159]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11429,7 +12904,7 @@ func (x *UnlockableSlotCost) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnlockableSlotCost.ProtoReflect.Descriptor instead.
 func (*UnlockableSlotCost) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{142}
+	return file_hiro_proto_rawDescGZIP(), []int{159}
 }
 
 func (x *UnlockableSlotCost) GetItems() map[string]int64 {
@@ -11475,7 +12950,7 @@ type UnlockablesList struct {
 func (x *UnlockablesList) Reset() {
 	*x = UnlockablesList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[143]
+		mi := &file_hiro_proto_msgTypes[160]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11488,7 +12963,7 @@ func (x *UnlockablesList) String() string {
 func (*UnlockablesList) ProtoMessage() {}
 
 func (x *UnlockablesList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[143]
+	mi := &file_hiro_proto_msgTypes[160]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11501,7 +12976,7 @@ func (x *UnlockablesList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnlockablesList.ProtoReflect.Descriptor instead.
 func (*UnlockablesList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{143}
+	return file_hiro_proto_rawDescGZIP(), []int{160}
 }
 
 func (x *UnlockablesList) GetUnlockables() []*Unlockable {
@@ -11584,7 +13059,7 @@ type UnlockablesReward struct {
 func (x *UnlockablesReward) Reset() {
 	*x = UnlockablesReward{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[144]
+		mi := &file_hiro_proto_msgTypes[161]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11597,7 +13072,7 @@ func (x *UnlockablesReward) String() string {
 func (*UnlockablesReward) ProtoMessage() {}
 
 func (x *UnlockablesReward) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[144]
+	mi := &file_hiro_proto_msgTypes[161]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11610,7 +13085,7 @@ func (x *UnlockablesReward) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnlockablesReward.ProtoReflect.Descriptor instead.
 func (*UnlockablesReward) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{144}
+	return file_hiro_proto_rawDescGZIP(), []int{161}
 }
 
 func (x *UnlockablesReward) GetUnlockables() *UnlockablesList {
@@ -11647,7 +13122,7 @@ type UnlockablesRequest struct {
 func (x *UnlockablesRequest) Reset() {
 	*x = UnlockablesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[145]
+		mi := &file_hiro_proto_msgTypes[162]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11660,7 +13135,7 @@ func (x *UnlockablesRequest) String() string {
 func (*UnlockablesRequest) ProtoMessage() {}
 
 func (x *UnlockablesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[145]
+	mi := &file_hiro_proto_msgTypes[162]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11673,7 +13148,7 @@ func (x *UnlockablesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnlockablesRequest.ProtoReflect.Descriptor instead.
 func (*UnlockablesRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{145}
+	return file_hiro_proto_rawDescGZIP(), []int{162}
 }
 
 func (x *UnlockablesRequest) GetInstanceId() string {
@@ -11696,7 +13171,7 @@ type UnlockablesQueueAddRequest struct {
 func (x *UnlockablesQueueAddRequest) Reset() {
 	*x = UnlockablesQueueAddRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[146]
+		mi := &file_hiro_proto_msgTypes[163]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11709,7 +13184,7 @@ func (x *UnlockablesQueueAddRequest) String() string {
 func (*UnlockablesQueueAddRequest) ProtoMessage() {}
 
 func (x *UnlockablesQueueAddRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[146]
+	mi := &file_hiro_proto_msgTypes[163]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11722,7 +13197,7 @@ func (x *UnlockablesQueueAddRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnlockablesQueueAddRequest.ProtoReflect.Descriptor instead.
 func (*UnlockablesQueueAddRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{146}
+	return file_hiro_proto_rawDescGZIP(), []int{163}
 }
 
 func (x *UnlockablesQueueAddRequest) GetInstanceIds() []string {
@@ -11745,7 +13220,7 @@ type UnlockablesQueueRemoveRequest struct {
 func (x *UnlockablesQueueRemoveRequest) Reset() {
 	*x = UnlockablesQueueRemoveRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[147]
+		mi := &file_hiro_proto_msgTypes[164]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11758,7 +13233,7 @@ func (x *UnlockablesQueueRemoveRequest) String() string {
 func (*UnlockablesQueueRemoveRequest) ProtoMessage() {}
 
 func (x *UnlockablesQueueRemoveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[147]
+	mi := &file_hiro_proto_msgTypes[164]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11771,7 +13246,7 @@ func (x *UnlockablesQueueRemoveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnlockablesQueueRemoveRequest.ProtoReflect.Descriptor instead.
 func (*UnlockablesQueueRemoveRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{147}
+	return file_hiro_proto_rawDescGZIP(), []int{164}
 }
 
 func (x *UnlockablesQueueRemoveRequest) GetInstanceIds() []string {
@@ -11794,7 +13269,7 @@ type UnlockablesQueueSetRequest struct {
 func (x *UnlockablesQueueSetRequest) Reset() {
 	*x = UnlockablesQueueSetRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[148]
+		mi := &file_hiro_proto_msgTypes[165]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11807,7 +13282,7 @@ func (x *UnlockablesQueueSetRequest) String() string {
 func (*UnlockablesQueueSetRequest) ProtoMessage() {}
 
 func (x *UnlockablesQueueSetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[148]
+	mi := &file_hiro_proto_msgTypes[165]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11820,7 +13295,7 @@ func (x *UnlockablesQueueSetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnlockablesQueueSetRequest.ProtoReflect.Descriptor instead.
 func (*UnlockablesQueueSetRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{148}
+	return file_hiro_proto_rawDescGZIP(), []int{165}
 }
 
 func (x *UnlockablesQueueSetRequest) GetInstanceIds() []string {
@@ -11873,7 +13348,7 @@ type SubAchievement struct {
 func (x *SubAchievement) Reset() {
 	*x = SubAchievement{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[149]
+		mi := &file_hiro_proto_msgTypes[166]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11886,7 +13361,7 @@ func (x *SubAchievement) String() string {
 func (*SubAchievement) ProtoMessage() {}
 
 func (x *SubAchievement) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[149]
+	mi := &file_hiro_proto_msgTypes[166]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11899,7 +13374,7 @@ func (x *SubAchievement) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubAchievement.ProtoReflect.Descriptor instead.
 func (*SubAchievement) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{149}
+	return file_hiro_proto_rawDescGZIP(), []int{166}
 }
 
 func (x *SubAchievement) GetCategory() string {
@@ -12071,7 +13546,7 @@ type Achievement struct {
 func (x *Achievement) Reset() {
 	*x = Achievement{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[150]
+		mi := &file_hiro_proto_msgTypes[167]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -12084,7 +13559,7 @@ func (x *Achievement) String() string {
 func (*Achievement) ProtoMessage() {}
 
 func (x *Achievement) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[150]
+	mi := &file_hiro_proto_msgTypes[167]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12097,7 +13572,7 @@ func (x *Achievement) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Achievement.ProtoReflect.Descriptor instead.
 func (*Achievement) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{150}
+	return file_hiro_proto_rawDescGZIP(), []int{167}
 }
 
 func (x *Achievement) GetCategory() string {
@@ -12276,7 +13751,7 @@ type AchievementList struct {
 func (x *AchievementList) Reset() {
 	*x = AchievementList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[151]
+		mi := &file_hiro_proto_msgTypes[168]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -12289,7 +13764,7 @@ func (x *AchievementList) String() string {
 func (*AchievementList) ProtoMessage() {}
 
 func (x *AchievementList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[151]
+	mi := &file_hiro_proto_msgTypes[168]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12302,7 +13777,7 @@ func (x *AchievementList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AchievementList.ProtoReflect.Descriptor instead.
 func (*AchievementList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{151}
+	return file_hiro_proto_rawDescGZIP(), []int{168}
 }
 
 func (x *AchievementList) GetAchievements() map[string]*Achievement {
@@ -12334,7 +13809,7 @@ type AchievementsClaimRequest struct {
 func (x *AchievementsClaimRequest) Reset() {
 	*x = AchievementsClaimRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[152]
+		mi := &file_hiro_proto_msgTypes[169]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -12347,7 +13822,7 @@ func (x *AchievementsClaimRequest) String() string {
 func (*AchievementsClaimRequest) ProtoMessage() {}
 
 func (x *AchievementsClaimRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[152]
+	mi := &file_hiro_proto_msgTypes[169]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12360,7 +13835,7 @@ func (x *AchievementsClaimRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AchievementsClaimRequest.ProtoReflect.Descriptor instead.
 func (*AchievementsClaimRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{152}
+	return file_hiro_proto_rawDescGZIP(), []int{169}
 }
 
 func (x *AchievementsClaimRequest) GetIds() []string {
@@ -12387,7 +13862,7 @@ type AchievementsGetRequest struct {
 func (x *AchievementsGetRequest) Reset() {
 	*x = AchievementsGetRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[153]
+		mi := &file_hiro_proto_msgTypes[170]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -12400,7 +13875,7 @@ func (x *AchievementsGetRequest) String() string {
 func (*AchievementsGetRequest) ProtoMessage() {}
 
 func (x *AchievementsGetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[153]
+	mi := &file_hiro_proto_msgTypes[170]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12413,7 +13888,7 @@ func (x *AchievementsGetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AchievementsGetRequest.ProtoReflect.Descriptor instead.
 func (*AchievementsGetRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{153}
+	return file_hiro_proto_rawDescGZIP(), []int{170}
 }
 
 // A response when an achievements update is acknowledged by the server.
@@ -12431,7 +13906,7 @@ type AchievementsUpdateAck struct {
 func (x *AchievementsUpdateAck) Reset() {
 	*x = AchievementsUpdateAck{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[154]
+		mi := &file_hiro_proto_msgTypes[171]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -12444,7 +13919,7 @@ func (x *AchievementsUpdateAck) String() string {
 func (*AchievementsUpdateAck) ProtoMessage() {}
 
 func (x *AchievementsUpdateAck) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[154]
+	mi := &file_hiro_proto_msgTypes[171]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12457,7 +13932,7 @@ func (x *AchievementsUpdateAck) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AchievementsUpdateAck.ProtoReflect.Descriptor instead.
 func (*AchievementsUpdateAck) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{154}
+	return file_hiro_proto_rawDescGZIP(), []int{171}
 }
 
 func (x *AchievementsUpdateAck) GetAchievements() map[string]*Achievement {
@@ -12491,7 +13966,7 @@ type AchievementsUpdateRequest struct {
 func (x *AchievementsUpdateRequest) Reset() {
 	*x = AchievementsUpdateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[155]
+		mi := &file_hiro_proto_msgTypes[172]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -12504,7 +13979,7 @@ func (x *AchievementsUpdateRequest) String() string {
 func (*AchievementsUpdateRequest) ProtoMessage() {}
 
 func (x *AchievementsUpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[155]
+	mi := &file_hiro_proto_msgTypes[172]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12517,7 +13992,7 @@ func (x *AchievementsUpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AchievementsUpdateRequest.ProtoReflect.Descriptor instead.
 func (*AchievementsUpdateRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{155}
+	return file_hiro_proto_rawDescGZIP(), []int{172}
 }
 
 func (x *AchievementsUpdateRequest) GetIds() []string {
@@ -12558,7 +14033,7 @@ type StreakAvailableReward struct {
 func (x *StreakAvailableReward) Reset() {
 	*x = StreakAvailableReward{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[156]
+		mi := &file_hiro_proto_msgTypes[173]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -12571,7 +14046,7 @@ func (x *StreakAvailableReward) String() string {
 func (*StreakAvailableReward) ProtoMessage() {}
 
 func (x *StreakAvailableReward) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[156]
+	mi := &file_hiro_proto_msgTypes[173]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12584,7 +14059,7 @@ func (x *StreakAvailableReward) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreakAvailableReward.ProtoReflect.Descriptor instead.
 func (*StreakAvailableReward) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{156}
+	return file_hiro_proto_rawDescGZIP(), []int{173}
 }
 
 func (x *StreakAvailableReward) GetCountMin() int64 {
@@ -12627,7 +14102,7 @@ type StreakReward struct {
 func (x *StreakReward) Reset() {
 	*x = StreakReward{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[157]
+		mi := &file_hiro_proto_msgTypes[174]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -12640,7 +14115,7 @@ func (x *StreakReward) String() string {
 func (*StreakReward) ProtoMessage() {}
 
 func (x *StreakReward) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[157]
+	mi := &file_hiro_proto_msgTypes[174]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12653,7 +14128,7 @@ func (x *StreakReward) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreakReward.ProtoReflect.Descriptor instead.
 func (*StreakReward) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{157}
+	return file_hiro_proto_rawDescGZIP(), []int{174}
 }
 
 func (x *StreakReward) GetCountMin() int64 {
@@ -12741,7 +14216,7 @@ type Streak struct {
 func (x *Streak) Reset() {
 	*x = Streak{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[158]
+		mi := &file_hiro_proto_msgTypes[175]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -12754,7 +14229,7 @@ func (x *Streak) String() string {
 func (*Streak) ProtoMessage() {}
 
 func (x *Streak) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[158]
+	mi := &file_hiro_proto_msgTypes[175]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12767,7 +14242,7 @@ func (x *Streak) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Streak.ProtoReflect.Descriptor instead.
 func (*Streak) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{158}
+	return file_hiro_proto_rawDescGZIP(), []int{175}
 }
 
 func (x *Streak) GetId() string {
@@ -12944,7 +14419,7 @@ type StreaksList struct {
 func (x *StreaksList) Reset() {
 	*x = StreaksList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[159]
+		mi := &file_hiro_proto_msgTypes[176]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -12957,7 +14432,7 @@ func (x *StreaksList) String() string {
 func (*StreaksList) ProtoMessage() {}
 
 func (x *StreaksList) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[159]
+	mi := &file_hiro_proto_msgTypes[176]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12970,7 +14445,7 @@ func (x *StreaksList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreaksList.ProtoReflect.Descriptor instead.
 func (*StreaksList) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{159}
+	return file_hiro_proto_rawDescGZIP(), []int{176}
 }
 
 func (x *StreaksList) GetStreaks() map[string]*Streak {
@@ -12993,7 +14468,7 @@ type StreaksUpdateRequest struct {
 func (x *StreaksUpdateRequest) Reset() {
 	*x = StreaksUpdateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[160]
+		mi := &file_hiro_proto_msgTypes[177]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13006,7 +14481,7 @@ func (x *StreaksUpdateRequest) String() string {
 func (*StreaksUpdateRequest) ProtoMessage() {}
 
 func (x *StreaksUpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[160]
+	mi := &file_hiro_proto_msgTypes[177]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13019,7 +14494,7 @@ func (x *StreaksUpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreaksUpdateRequest.ProtoReflect.Descriptor instead.
 func (*StreaksUpdateRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{160}
+	return file_hiro_proto_rawDescGZIP(), []int{177}
 }
 
 func (x *StreaksUpdateRequest) GetUpdates() map[string]int64 {
@@ -13042,7 +14517,7 @@ type StreaksClaimRequest struct {
 func (x *StreaksClaimRequest) Reset() {
 	*x = StreaksClaimRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[161]
+		mi := &file_hiro_proto_msgTypes[178]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13055,7 +14530,7 @@ func (x *StreaksClaimRequest) String() string {
 func (*StreaksClaimRequest) ProtoMessage() {}
 
 func (x *StreaksClaimRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[161]
+	mi := &file_hiro_proto_msgTypes[178]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13068,7 +14543,7 @@ func (x *StreaksClaimRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreaksClaimRequest.ProtoReflect.Descriptor instead.
 func (*StreaksClaimRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{161}
+	return file_hiro_proto_rawDescGZIP(), []int{178}
 }
 
 func (x *StreaksClaimRequest) GetIds() []string {
@@ -13091,7 +14566,7 @@ type StreaksResetRequest struct {
 func (x *StreaksResetRequest) Reset() {
 	*x = StreaksResetRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[162]
+		mi := &file_hiro_proto_msgTypes[179]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13104,7 +14579,7 @@ func (x *StreaksResetRequest) String() string {
 func (*StreaksResetRequest) ProtoMessage() {}
 
 func (x *StreaksResetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[162]
+	mi := &file_hiro_proto_msgTypes[179]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13117,7 +14592,7 @@ func (x *StreaksResetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreaksResetRequest.ProtoReflect.Descriptor instead.
 func (*StreaksResetRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{162}
+	return file_hiro_proto_rawDescGZIP(), []int{179}
 }
 
 func (x *StreaksResetRequest) GetIds() []string {
@@ -13146,7 +14621,7 @@ type SyncInventoryItem struct {
 func (x *SyncInventoryItem) Reset() {
 	*x = SyncInventoryItem{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[163]
+		mi := &file_hiro_proto_msgTypes[180]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13159,7 +14634,7 @@ func (x *SyncInventoryItem) String() string {
 func (*SyncInventoryItem) ProtoMessage() {}
 
 func (x *SyncInventoryItem) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[163]
+	mi := &file_hiro_proto_msgTypes[180]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13172,7 +14647,7 @@ func (x *SyncInventoryItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncInventoryItem.ProtoReflect.Descriptor instead.
 func (*SyncInventoryItem) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{163}
+	return file_hiro_proto_rawDescGZIP(), []int{180}
 }
 
 func (x *SyncInventoryItem) GetItemId() string {
@@ -13216,7 +14691,7 @@ type SyncInventory struct {
 func (x *SyncInventory) Reset() {
 	*x = SyncInventory{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[164]
+		mi := &file_hiro_proto_msgTypes[181]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13229,7 +14704,7 @@ func (x *SyncInventory) String() string {
 func (*SyncInventory) ProtoMessage() {}
 
 func (x *SyncInventory) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[164]
+	mi := &file_hiro_proto_msgTypes[181]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13242,7 +14717,7 @@ func (x *SyncInventory) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncInventory.ProtoReflect.Descriptor instead.
 func (*SyncInventory) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{164}
+	return file_hiro_proto_rawDescGZIP(), []int{181}
 }
 
 func (x *SyncInventory) GetItems() map[string]*SyncInventoryItem {
@@ -13267,7 +14742,7 @@ type SyncEconomy struct {
 func (x *SyncEconomy) Reset() {
 	*x = SyncEconomy{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[165]
+		mi := &file_hiro_proto_msgTypes[182]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13280,7 +14755,7 @@ func (x *SyncEconomy) String() string {
 func (*SyncEconomy) ProtoMessage() {}
 
 func (x *SyncEconomy) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[165]
+	mi := &file_hiro_proto_msgTypes[182]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13293,7 +14768,7 @@ func (x *SyncEconomy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncEconomy.ProtoReflect.Descriptor instead.
 func (*SyncEconomy) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{165}
+	return file_hiro_proto_rawDescGZIP(), []int{182}
 }
 
 func (x *SyncEconomy) GetCurrencies() map[string]int64 {
@@ -13331,7 +14806,7 @@ type SyncAchievementsUpdate struct {
 func (x *SyncAchievementsUpdate) Reset() {
 	*x = SyncAchievementsUpdate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[166]
+		mi := &file_hiro_proto_msgTypes[183]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13344,7 +14819,7 @@ func (x *SyncAchievementsUpdate) String() string {
 func (*SyncAchievementsUpdate) ProtoMessage() {}
 
 func (x *SyncAchievementsUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[166]
+	mi := &file_hiro_proto_msgTypes[183]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13357,7 +14832,7 @@ func (x *SyncAchievementsUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncAchievementsUpdate.ProtoReflect.Descriptor instead.
 func (*SyncAchievementsUpdate) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{166}
+	return file_hiro_proto_rawDescGZIP(), []int{183}
 }
 
 func (x *SyncAchievementsUpdate) GetCount() int64 {
@@ -13408,7 +14883,7 @@ type SyncAchievements struct {
 func (x *SyncAchievements) Reset() {
 	*x = SyncAchievements{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[167]
+		mi := &file_hiro_proto_msgTypes[184]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13421,7 +14896,7 @@ func (x *SyncAchievements) String() string {
 func (*SyncAchievements) ProtoMessage() {}
 
 func (x *SyncAchievements) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[167]
+	mi := &file_hiro_proto_msgTypes[184]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13434,7 +14909,7 @@ func (x *SyncAchievements) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncAchievements.ProtoReflect.Descriptor instead.
 func (*SyncAchievements) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{167}
+	return file_hiro_proto_rawDescGZIP(), []int{184}
 }
 
 func (x *SyncAchievements) GetAchievements() map[string]*SyncAchievementsUpdate {
@@ -13459,7 +14934,7 @@ type SyncEnergyState struct {
 func (x *SyncEnergyState) Reset() {
 	*x = SyncEnergyState{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[168]
+		mi := &file_hiro_proto_msgTypes[185]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13472,7 +14947,7 @@ func (x *SyncEnergyState) String() string {
 func (*SyncEnergyState) ProtoMessage() {}
 
 func (x *SyncEnergyState) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[168]
+	mi := &file_hiro_proto_msgTypes[185]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13485,7 +14960,7 @@ func (x *SyncEnergyState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncEnergyState.ProtoReflect.Descriptor instead.
 func (*SyncEnergyState) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{168}
+	return file_hiro_proto_rawDescGZIP(), []int{185}
 }
 
 func (x *SyncEnergyState) GetCount() int64 {
@@ -13517,7 +14992,7 @@ type SyncEnergy struct {
 func (x *SyncEnergy) Reset() {
 	*x = SyncEnergy{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[169]
+		mi := &file_hiro_proto_msgTypes[186]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13530,7 +15005,7 @@ func (x *SyncEnergy) String() string {
 func (*SyncEnergy) ProtoMessage() {}
 
 func (x *SyncEnergy) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[169]
+	mi := &file_hiro_proto_msgTypes[186]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13543,7 +15018,7 @@ func (x *SyncEnergy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncEnergy.ProtoReflect.Descriptor instead.
 func (*SyncEnergy) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{169}
+	return file_hiro_proto_rawDescGZIP(), []int{186}
 }
 
 func (x *SyncEnergy) GetEnergies() map[string]*SyncEnergyState {
@@ -13577,7 +15052,7 @@ type SyncEventLeaderboardUpdate struct {
 func (x *SyncEventLeaderboardUpdate) Reset() {
 	*x = SyncEventLeaderboardUpdate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[170]
+		mi := &file_hiro_proto_msgTypes[187]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13590,7 +15065,7 @@ func (x *SyncEventLeaderboardUpdate) String() string {
 func (*SyncEventLeaderboardUpdate) ProtoMessage() {}
 
 func (x *SyncEventLeaderboardUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[170]
+	mi := &file_hiro_proto_msgTypes[187]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13603,7 +15078,7 @@ func (x *SyncEventLeaderboardUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncEventLeaderboardUpdate.ProtoReflect.Descriptor instead.
 func (*SyncEventLeaderboardUpdate) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{170}
+	return file_hiro_proto_rawDescGZIP(), []int{187}
 }
 
 func (x *SyncEventLeaderboardUpdate) GetScore() int64 {
@@ -13640,7 +15115,7 @@ type SyncEventLeaderboards struct {
 func (x *SyncEventLeaderboards) Reset() {
 	*x = SyncEventLeaderboards{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[171]
+		mi := &file_hiro_proto_msgTypes[188]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13653,7 +15128,7 @@ func (x *SyncEventLeaderboards) String() string {
 func (*SyncEventLeaderboards) ProtoMessage() {}
 
 func (x *SyncEventLeaderboards) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[171]
+	mi := &file_hiro_proto_msgTypes[188]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13666,7 +15141,7 @@ func (x *SyncEventLeaderboards) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncEventLeaderboards.ProtoReflect.Descriptor instead.
 func (*SyncEventLeaderboards) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{171}
+	return file_hiro_proto_rawDescGZIP(), []int{188}
 }
 
 func (x *SyncEventLeaderboards) GetEventLeaderboards() map[string]*SyncEventLeaderboardUpdate {
@@ -13695,7 +15170,7 @@ type SyncProgressionUpdate struct {
 func (x *SyncProgressionUpdate) Reset() {
 	*x = SyncProgressionUpdate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[172]
+		mi := &file_hiro_proto_msgTypes[189]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13708,7 +15183,7 @@ func (x *SyncProgressionUpdate) String() string {
 func (*SyncProgressionUpdate) ProtoMessage() {}
 
 func (x *SyncProgressionUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[172]
+	mi := &file_hiro_proto_msgTypes[189]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13721,7 +15196,7 @@ func (x *SyncProgressionUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncProgressionUpdate.ProtoReflect.Descriptor instead.
 func (*SyncProgressionUpdate) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{172}
+	return file_hiro_proto_rawDescGZIP(), []int{189}
 }
 
 func (x *SyncProgressionUpdate) GetCounts() map[string]int64 {
@@ -13765,7 +15240,7 @@ type SyncProgressions struct {
 func (x *SyncProgressions) Reset() {
 	*x = SyncProgressions{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[173]
+		mi := &file_hiro_proto_msgTypes[190]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13778,7 +15253,7 @@ func (x *SyncProgressions) String() string {
 func (*SyncProgressions) ProtoMessage() {}
 
 func (x *SyncProgressions) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[173]
+	mi := &file_hiro_proto_msgTypes[190]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13791,7 +15266,7 @@ func (x *SyncProgressions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncProgressions.ProtoReflect.Descriptor instead.
 func (*SyncProgressions) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{173}
+	return file_hiro_proto_rawDescGZIP(), []int{190}
 }
 
 func (x *SyncProgressions) GetProgressions() map[string]*SyncProgressionUpdate {
@@ -13820,7 +15295,7 @@ type SyncTutorials struct {
 func (x *SyncTutorials) Reset() {
 	*x = SyncTutorials{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[174]
+		mi := &file_hiro_proto_msgTypes[191]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13833,7 +15308,7 @@ func (x *SyncTutorials) String() string {
 func (*SyncTutorials) ProtoMessage() {}
 
 func (x *SyncTutorials) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[174]
+	mi := &file_hiro_proto_msgTypes[191]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13846,7 +15321,7 @@ func (x *SyncTutorials) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncTutorials.ProtoReflect.Descriptor instead.
 func (*SyncTutorials) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{174}
+	return file_hiro_proto_rawDescGZIP(), []int{191}
 }
 
 func (x *SyncTutorials) GetAccepts() []string {
@@ -13896,7 +15371,7 @@ type SyncUnlockableUpdate struct {
 func (x *SyncUnlockableUpdate) Reset() {
 	*x = SyncUnlockableUpdate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[175]
+		mi := &file_hiro_proto_msgTypes[192]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13909,7 +15384,7 @@ func (x *SyncUnlockableUpdate) String() string {
 func (*SyncUnlockableUpdate) ProtoMessage() {}
 
 func (x *SyncUnlockableUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[175]
+	mi := &file_hiro_proto_msgTypes[192]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13922,7 +15397,7 @@ func (x *SyncUnlockableUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncUnlockableUpdate.ProtoReflect.Descriptor instead.
 func (*SyncUnlockableUpdate) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{175}
+	return file_hiro_proto_rawDescGZIP(), []int{192}
 }
 
 func (x *SyncUnlockableUpdate) GetUnlockableId() string {
@@ -13968,7 +15443,7 @@ type SyncUnlockables struct {
 func (x *SyncUnlockables) Reset() {
 	*x = SyncUnlockables{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[176]
+		mi := &file_hiro_proto_msgTypes[193]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -13981,7 +15456,7 @@ func (x *SyncUnlockables) String() string {
 func (*SyncUnlockables) ProtoMessage() {}
 
 func (x *SyncUnlockables) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[176]
+	mi := &file_hiro_proto_msgTypes[193]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13994,7 +15469,7 @@ func (x *SyncUnlockables) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncUnlockables.ProtoReflect.Descriptor instead.
 func (*SyncUnlockables) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{176}
+	return file_hiro_proto_rawDescGZIP(), []int{193}
 }
 
 func (x *SyncUnlockables) GetRemoves() []string {
@@ -14036,7 +15511,7 @@ type SyncStreakUpdate struct {
 func (x *SyncStreakUpdate) Reset() {
 	*x = SyncStreakUpdate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[177]
+		mi := &file_hiro_proto_msgTypes[194]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14049,7 +15524,7 @@ func (x *SyncStreakUpdate) String() string {
 func (*SyncStreakUpdate) ProtoMessage() {}
 
 func (x *SyncStreakUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[177]
+	mi := &file_hiro_proto_msgTypes[194]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14062,7 +15537,7 @@ func (x *SyncStreakUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncStreakUpdate.ProtoReflect.Descriptor instead.
 func (*SyncStreakUpdate) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{177}
+	return file_hiro_proto_rawDescGZIP(), []int{194}
 }
 
 func (x *SyncStreakUpdate) GetCount() int64 {
@@ -14129,7 +15604,7 @@ type SyncStreaks struct {
 func (x *SyncStreaks) Reset() {
 	*x = SyncStreaks{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[178]
+		mi := &file_hiro_proto_msgTypes[195]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14142,7 +15617,7 @@ func (x *SyncStreaks) String() string {
 func (*SyncStreaks) ProtoMessage() {}
 
 func (x *SyncStreaks) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[178]
+	mi := &file_hiro_proto_msgTypes[195]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14155,7 +15630,7 @@ func (x *SyncStreaks) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncStreaks.ProtoReflect.Descriptor instead.
 func (*SyncStreaks) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{178}
+	return file_hiro_proto_rawDescGZIP(), []int{195}
 }
 
 func (x *SyncStreaks) GetResets() []string {
@@ -14203,7 +15678,7 @@ type SyncRequest struct {
 func (x *SyncRequest) Reset() {
 	*x = SyncRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[179]
+		mi := &file_hiro_proto_msgTypes[196]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14216,7 +15691,7 @@ func (x *SyncRequest) String() string {
 func (*SyncRequest) ProtoMessage() {}
 
 func (x *SyncRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[179]
+	mi := &file_hiro_proto_msgTypes[196]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14229,7 +15704,7 @@ func (x *SyncRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncRequest.ProtoReflect.Descriptor instead.
 func (*SyncRequest) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{179}
+	return file_hiro_proto_rawDescGZIP(), []int{196}
 }
 
 func (x *SyncRequest) GetInventory() *SyncInventory {
@@ -14338,7 +15813,7 @@ type SyncResponse struct {
 func (x *SyncResponse) Reset() {
 	*x = SyncResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hiro_proto_msgTypes[180]
+		mi := &file_hiro_proto_msgTypes[197]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14351,7 +15826,7 @@ func (x *SyncResponse) String() string {
 func (*SyncResponse) ProtoMessage() {}
 
 func (x *SyncResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hiro_proto_msgTypes[180]
+	mi := &file_hiro_proto_msgTypes[197]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14364,7 +15839,7 @@ func (x *SyncResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncResponse.ProtoReflect.Descriptor instead.
 func (*SyncResponse) Descriptor() ([]byte, []int) {
-	return file_hiro_proto_rawDescGZIP(), []int{180}
+	return file_hiro_proto_rawDescGZIP(), []int{197}
 }
 
 func (x *SyncResponse) GetWallet() map[string]int64 {
@@ -15182,7 +16657,219 @@ var file_hiro_proto_rawDesc = []byte{
 	0x64, 0x65, 0x22, 0x34, 0x0a, 0x1e, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x52,
 	0x65, 0x63, 0x69, 0x70, 0x69, 0x65, 0x6e, 0x74, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22, 0x57, 0x0a, 0x14, 0x45, 0x76, 0x65, 0x6e,
+	0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22, 0x86, 0x04, 0x0a, 0x16, 0x43, 0x68, 0x61,
+	0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61,
+	0x74, 0x65, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64,
+	0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x6e,
+	0x76, 0x69, 0x74, 0x65, 0x65, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6e,
+	0x76, 0x69, 0x74, 0x65, 0x65, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6f, 0x70, 0x65, 0x6e, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x08, 0x52, 0x04, 0x6f, 0x70, 0x65, 0x6e, 0x12, 0x1d, 0x0a, 0x0a, 0x6d, 0x61,
+	0x78, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09,
+	0x6d, 0x61, 0x78, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x12, 0x6b, 0x0a, 0x15, 0x61, 0x64, 0x64,
+	0x69, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x5f, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x69,
+	0x65, 0x73, 0x18, 0x07, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x36, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e,
+	0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x41, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x61,
+	0x6c, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x69, 0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79,
+	0x52, 0x14, 0x61, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x50, 0x72, 0x6f, 0x70,
+	0x65, 0x72, 0x74, 0x69, 0x65, 0x73, 0x12, 0x26, 0x0a, 0x0f, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f,
+	0x64, 0x65, 0x6c, 0x61, 0x79, 0x5f, 0x73, 0x65, 0x63, 0x18, 0x08, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x0d, 0x73, 0x74, 0x61, 0x72, 0x74, 0x44, 0x65, 0x6c, 0x61, 0x79, 0x53, 0x65, 0x63, 0x12, 0x21,
+	0x0a, 0x0c, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x63, 0x18, 0x09,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65,
+	0x63, 0x12, 0x29, 0x0a, 0x10, 0x6d, 0x61, 0x78, 0x5f, 0x70, 0x61, 0x72, 0x74, 0x69, 0x63, 0x69,
+	0x70, 0x61, 0x6e, 0x74, 0x73, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0f, 0x6d, 0x61, 0x78,
+	0x50, 0x61, 0x72, 0x74, 0x69, 0x63, 0x69, 0x70, 0x61, 0x6e, 0x74, 0x73, 0x12, 0x1a, 0x0a, 0x08,
+	0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
+	0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x1a, 0x47, 0x0a, 0x19, 0x41, 0x64, 0x64, 0x69,
+	0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x69, 0x65, 0x73,
+	0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38,
+	0x01, 0x22, 0x39, 0x0a, 0x14, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x4a, 0x6f,
+	0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x68, 0x61,
+	0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0b, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x49, 0x64, 0x22, 0x3a, 0x0a, 0x15,
+	0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e,
+	0x67, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x68, 0x61,
+	0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x49, 0x64, 0x22, 0x3a, 0x0a, 0x15, 0x43, 0x68, 0x61, 0x6c,
+	0x6c, 0x65, 0x6e, 0x67, 0x65, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e,
+	0x67, 0x65, 0x49, 0x64, 0x22, 0x5e, 0x0a, 0x16, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67,
+	0x65, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12,
+	0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61,
+	0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x12, 0x14,
+	0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x6c,
+	0x69, 0x6d, 0x69, 0x74, 0x22, 0x57, 0x0a, 0x16, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67,
+	0x65, 0x49, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21,
+	0x0a, 0x0c, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x49,
+	0x64, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x65, 0x73, 0x18, 0x02, 0x20,
+	0x03, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x65, 0x73, 0x22, 0x8e, 0x01,
+	0x0a, 0x1b, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x53, 0x75, 0x62, 0x6d, 0x69,
+	0x74, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a,
+	0x0c, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x49, 0x64,
+	0x12, 0x14, 0x0a, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x75, 0x62, 0x73, 0x63, 0x6f,
+	0x72, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x73, 0x75, 0x62, 0x73, 0x63, 0x6f,
+	0x72, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0x8c,
+	0x07, 0x0a, 0x09, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x12, 0x0e, 0x0a, 0x02,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x1c, 0x0a, 0x09, 0x61, 0x73, 0x63, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x61, 0x73, 0x63, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67,
+	0x12, 0x1a, 0x0a, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x24, 0x0a, 0x0e,
+	0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x5f, 0x73, 0x65, 0x63, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x53,
+	0x65, 0x63, 0x12, 0x24, 0x0a, 0x0e, 0x63, 0x6c, 0x61, 0x69, 0x6d, 0x5f, 0x74, 0x69, 0x6d, 0x65,
+	0x5f, 0x73, 0x65, 0x63, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x63, 0x6c, 0x61, 0x69,
+	0x6d, 0x54, 0x69, 0x6d, 0x65, 0x53, 0x65, 0x63, 0x12, 0x20, 0x0a, 0x0c, 0x65, 0x6e, 0x64, 0x5f,
+	0x74, 0x69, 0x6d, 0x65, 0x5f, 0x73, 0x65, 0x63, 0x18, 0x08, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0a,
+	0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x53, 0x65, 0x63, 0x12, 0x3c, 0x0a, 0x0c, 0x72, 0x65,
+	0x77, 0x61, 0x72, 0x64, 0x5f, 0x74, 0x69, 0x65, 0x72, 0x73, 0x18, 0x09, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x19, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67,
+	0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x54, 0x69, 0x65, 0x72, 0x52, 0x0b, 0x72, 0x65, 0x77,
+	0x61, 0x72, 0x64, 0x54, 0x69, 0x65, 0x72, 0x73, 0x12, 0x43, 0x0a, 0x11, 0x61, 0x76, 0x61, 0x69,
+	0x6c, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x18, 0x0a, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x41, 0x76, 0x61, 0x69, 0x6c,
+	0x61, 0x62, 0x6c, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x52, 0x10, 0x61, 0x76, 0x61,
+	0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x12, 0x5e, 0x0a,
+	0x15, 0x61, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x5f, 0x70, 0x72, 0x6f, 0x70,
+	0x65, 0x72, 0x74, 0x69, 0x65, 0x73, 0x18, 0x0b, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x29, 0x2e, 0x68,
+	0x69, 0x72, 0x6f, 0x2e, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x2e, 0x41, 0x64,
+	0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x69,
+	0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x14, 0x61, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f,
+	0x6e, 0x61, 0x6c, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x69, 0x65, 0x73, 0x12, 0x12, 0x0a,
+	0x04, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x73, 0x69, 0x7a,
+	0x65, 0x12, 0x19, 0x0a, 0x08, 0x6d, 0x61, 0x78, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x0d, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x07, 0x6d, 0x61, 0x78, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x22, 0x0a, 0x0d,
+	0x6d, 0x61, 0x78, 0x5f, 0x6e, 0x75, 0x6d, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x0e, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x0b, 0x6d, 0x61, 0x78, 0x4e, 0x75, 0x6d, 0x53, 0x63, 0x6f, 0x72, 0x65,
+	0x12, 0x2c, 0x0a, 0x06, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x18, 0x0f, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x14, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67,
+	0x65, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x06, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x12, 0x1b,
+	0x0a, 0x09, 0x69, 0x73, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x18, 0x10, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x08, 0x69, 0x73, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x12, 0x28, 0x0a, 0x10, 0x63,
+	0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x5f, 0x73, 0x65, 0x63, 0x18,
+	0x11, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x54, 0x69,
+	0x6d, 0x65, 0x53, 0x65, 0x63, 0x12, 0x1b, 0x0a, 0x09, 0x63, 0x61, 0x6e, 0x5f, 0x63, 0x6c, 0x61,
+	0x69, 0x6d, 0x18, 0x13, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x63, 0x61, 0x6e, 0x43, 0x6c, 0x61,
+	0x69, 0x6d, 0x12, 0x2a, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x14, 0x20, 0x01, 0x28,
+	0x0e, 0x32, 0x14, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e,
+	0x67, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x24,
+	0x0a, 0x06, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x18, 0x15, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0c,
+	0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x52, 0x06, 0x72, 0x65,
+	0x77, 0x61, 0x72, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79,
+	0x18, 0x16, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79,
+	0x12, 0x12, 0x0a, 0x04, 0x6f, 0x70, 0x65, 0x6e, 0x18, 0x17, 0x20, 0x01, 0x28, 0x08, 0x52, 0x04,
+	0x6f, 0x70, 0x65, 0x6e, 0x1a, 0x47, 0x0a, 0x19, 0x41, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e,
+	0x61, 0x6c, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x69, 0x65, 0x73, 0x45, 0x6e, 0x74, 0x72,
+	0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
+	0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x57, 0x0a,
+	0x14, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72,
+	0x69, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0a, 0x63, 0x61, 0x74, 0x65, 0x67,
+	0x6f, 0x72, 0x69, 0x65, 0x73, 0x12, 0x1f, 0x0a, 0x0b, 0x77, 0x69, 0x74, 0x68, 0x5f, 0x73, 0x63,
+	0x6f, 0x72, 0x65, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x77, 0x69, 0x74, 0x68,
+	0x53, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x22, 0x59, 0x0a, 0x13, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65,
+	0x6e, 0x67, 0x65, 0x47, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a,
+	0x0c, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x49, 0x64,
+	0x12, 0x1f, 0x0a, 0x0b, 0x77, 0x69, 0x74, 0x68, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x77, 0x69, 0x74, 0x68, 0x53, 0x63, 0x6f, 0x72, 0x65,
+	0x73, 0x22, 0x41, 0x0a, 0x0e, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x73, 0x4c,
+	0x69, 0x73, 0x74, 0x12, 0x2f, 0x0a, 0x0a, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x43,
+	0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x52, 0x0a, 0x63, 0x68, 0x61, 0x6c, 0x6c, 0x65,
+	0x6e, 0x67, 0x65, 0x73, 0x22, 0xfb, 0x02, 0x0a, 0x0e, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e,
+	0x67, 0x65, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x6e,
+	0x61, 0x6d, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x5f, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x69, 0x73, 0x70, 0x6c,
+	0x61, 0x79, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x61, 0x76, 0x61, 0x74, 0x61, 0x72,
+	0x5f, 0x75, 0x72, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x61, 0x76, 0x61, 0x74,
+	0x61, 0x72, 0x55, 0x72, 0x6c, 0x12, 0x26, 0x0a, 0x0f, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x5f,
+	0x74, 0x69, 0x6d, 0x65, 0x5f, 0x73, 0x65, 0x63, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d,
+	0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x53, 0x65, 0x63, 0x12, 0x26, 0x0a,
+	0x0f, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x5f, 0x73, 0x65, 0x63,
+	0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69,
+	0x6d, 0x65, 0x53, 0x65, 0x63, 0x12, 0x12, 0x0a, 0x04, 0x72, 0x61, 0x6e, 0x6b, 0x18, 0x07, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x04, 0x72, 0x61, 0x6e, 0x6b, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x63, 0x6f,
+	0x72, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x12,
+	0x1a, 0x0a, 0x08, 0x73, 0x75, 0x62, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x08, 0x73, 0x75, 0x62, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x6e,
+	0x75, 0x6d, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x09, 0x6e, 0x75, 0x6d, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x6d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x2a, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18,
+	0x0c, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x14, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x43, 0x68, 0x61,
+	0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x05, 0x73, 0x74, 0x61,
+	0x74, 0x65, 0x22, 0x90, 0x01, 0x0a, 0x13, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65,
+	0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x54, 0x69, 0x65, 0x72, 0x12, 0x19, 0x0a, 0x08, 0x72, 0x61,
+	0x6e, 0x6b, 0x5f, 0x6d, 0x61, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x72, 0x61,
+	0x6e, 0x6b, 0x4d, 0x61, 0x78, 0x12, 0x19, 0x0a, 0x08, 0x72, 0x61, 0x6e, 0x6b, 0x5f, 0x6d, 0x69,
+	0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x72, 0x61, 0x6e, 0x6b, 0x4d, 0x69, 0x6e,
+	0x12, 0x43, 0x0a, 0x11, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x72, 0x65,
+	0x77, 0x61, 0x72, 0x64, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x69,
+	0x72, 0x6f, 0x2e, 0x41, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x52, 0x65, 0x77, 0x61,
+	0x72, 0x64, 0x73, 0x52, 0x10, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x52, 0x65,
+	0x77, 0x61, 0x72, 0x64, 0x73, 0x22, 0xb2, 0x01, 0x0a, 0x12, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65,
+	0x6e, 0x67, 0x65, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x73, 0x12, 0x45, 0x0a, 0x09,
+	0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x27, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65,
+	0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x73, 0x2e, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61,
+	0x74, 0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x09, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61,
+	0x74, 0x65, 0x73, 0x1a, 0x55, 0x0a, 0x0e, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x73,
+	0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x2d, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x43, 0x68,
+	0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x52,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0xe0, 0x02, 0x0a, 0x11, 0x43,
+	0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65,
+	0x12, 0x3c, 0x0a, 0x0c, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x5f, 0x74, 0x69, 0x65, 0x72, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x43, 0x68,
+	0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x54, 0x69, 0x65,
+	0x72, 0x52, 0x0b, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x54, 0x69, 0x65, 0x72, 0x73, 0x12, 0x36,
+	0x0a, 0x07, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1c, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65,
+	0x4d, 0x61, 0x78, 0x4d, 0x69, 0x6e, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x73, 0x52, 0x07, 0x70,
+	0x6c, 0x61, 0x79, 0x65, 0x72, 0x73, 0x12, 0x39, 0x0a, 0x08, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x68, 0x69, 0x72, 0x6f, 0x2e,
+	0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x4d, 0x69, 0x6e, 0x4d, 0x61, 0x78, 0x44,
+	0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x08, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x12, 0x26, 0x0a, 0x0f, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x64, 0x65, 0x6c, 0x61, 0x79,
+	0x5f, 0x6d, 0x61, 0x78, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x73, 0x74, 0x61, 0x72,
+	0x74, 0x44, 0x65, 0x6c, 0x61, 0x79, 0x4d, 0x61, 0x78, 0x12, 0x12, 0x0a, 0x04, 0x6f, 0x70, 0x65,
+	0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x04, 0x6f, 0x70, 0x65, 0x6e, 0x12, 0x24, 0x0a,
+	0x0e, 0x6d, 0x61, 0x78, 0x5f, 0x6e, 0x75, 0x6d, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x6d, 0x61, 0x78, 0x4e, 0x75, 0x6d, 0x53, 0x63, 0x6f,
+	0x72, 0x65, 0x73, 0x12, 0x1c, 0x0a, 0x09, 0x61, 0x73, 0x63, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67,
+	0x18, 0x07, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x61, 0x73, 0x63, 0x65, 0x6e, 0x64, 0x69, 0x6e,
+	0x67, 0x12, 0x1a, 0x0a, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x08, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x3c, 0x0a,
+	0x16, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x4d, 0x61, 0x78, 0x4d, 0x69, 0x6e,
+	0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x73, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x69, 0x6e, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x03, 0x6d, 0x69, 0x6e, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x61, 0x78,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x03, 0x6d, 0x61, 0x78, 0x22, 0x4b, 0x0a, 0x17, 0x43,
+	0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x4d, 0x69, 0x6e, 0x4d, 0x61, 0x78, 0x44, 0x75,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x17, 0x0a, 0x07, 0x6d, 0x69, 0x6e, 0x5f, 0x73, 0x65,
+	0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x6d, 0x69, 0x6e, 0x53, 0x65, 0x63, 0x12,
+	0x17, 0x0a, 0x07, 0x6d, 0x61, 0x78, 0x5f, 0x73, 0x65, 0x63, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x06, 0x6d, 0x61, 0x78, 0x53, 0x65, 0x63, 0x22, 0x57, 0x0a, 0x14, 0x45, 0x76, 0x65, 0x6e,
 	0x74, 0x4c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x62, 0x6f, 0x61, 0x72, 0x64, 0x4c, 0x69, 0x73, 0x74,
 	0x12, 0x1f, 0x0a, 0x0b, 0x77, 0x69, 0x74, 0x68, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x77, 0x69, 0x74, 0x68, 0x53, 0x63, 0x6f, 0x72, 0x65,
@@ -17102,7 +18789,7 @@ var file_hiro_proto_rawDesc = []byte{
 	0x0b, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03,
 	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14,
 	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x76,
-	0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x2a, 0xc0, 0x2c, 0x0a, 0x05, 0x52, 0x70, 0x63,
+	0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x2a, 0xe6, 0x31, 0x0a, 0x05, 0x52, 0x70, 0x63,
 	0x49, 0x64, 0x12, 0x16, 0x0a, 0x12, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x55, 0x4e, 0x53,
 	0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x42, 0x0a, 0x15, 0x52, 0x50,
 	0x43, 0x5f, 0x49, 0x44, 0x5f, 0x49, 0x4e, 0x56, 0x45, 0x4e, 0x54, 0x4f, 0x52, 0x59, 0x5f, 0x4c,
@@ -17451,109 +19138,163 @@ var file_hiro_proto_rawDesc = []byte{
 	0x44, 0x5f, 0x53, 0x54, 0x52, 0x45, 0x41, 0x4b, 0x53, 0x5f, 0x52, 0x45, 0x53, 0x45, 0x54, 0x10,
 	0x4e, 0x1a, 0x24, 0xc2, 0x3e, 0x13, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6b, 0x73, 0x52, 0x65, 0x73,
 	0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xca, 0x3e, 0x0b, 0x53, 0x74, 0x72, 0x65,
-	0x61, 0x6b, 0x73, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x25, 0x0a, 0x20, 0x52, 0x50, 0x43, 0x5f, 0x49,
-	0x44, 0x5f, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x50, 0x4c, 0x41, 0x43, 0x45, 0x4d,
-	0x45, 0x4e, 0x54, 0x5f, 0x53, 0x55, 0x43, 0x43, 0x45, 0x53, 0x53, 0x10, 0xe9, 0x07, 0x12, 0x22,
-	0x0a, 0x1d, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59,
-	0x5f, 0x50, 0x4c, 0x41, 0x43, 0x45, 0x4d, 0x45, 0x4e, 0x54, 0x5f, 0x46, 0x41, 0x49, 0x4c, 0x10,
-	0xea, 0x07, 0x12, 0x27, 0x0a, 0x22, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x53, 0x54, 0x4f,
-	0x52, 0x41, 0x47, 0x45, 0x5f, 0x50, 0x45, 0x52, 0x53, 0x4f, 0x4e, 0x41, 0x4c, 0x49, 0x5a, 0x45,
-	0x52, 0x5f, 0x55, 0x50, 0x4c, 0x4f, 0x41, 0x44, 0x10, 0xeb, 0x07, 0x2a, 0xb6, 0x01, 0x0a, 0x0b,
-	0x52, 0x70, 0x63, 0x53, 0x6f, 0x63, 0x6b, 0x65, 0x74, 0x49, 0x64, 0x12, 0x1d, 0x0a, 0x19, 0x52,
-	0x50, 0x43, 0x5f, 0x53, 0x4f, 0x43, 0x4b, 0x45, 0x54, 0x5f, 0x49, 0x44, 0x5f, 0x55, 0x4e, 0x53,
-	0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x48, 0x0a, 0x1d, 0x52, 0x50,
+	0x61, 0x6b, 0x73, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x3d, 0x0a, 0x1f, 0x52, 0x50, 0x43, 0x5f, 0x49,
+	0x44, 0x5f, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47, 0x45, 0x53, 0x5f, 0x47, 0x45, 0x54,
+	0x5f, 0x54, 0x45, 0x4d, 0x50, 0x4c, 0x41, 0x54, 0x45, 0x53, 0x10, 0x51, 0x1a, 0x18, 0xc2, 0x3e,
+	0x00, 0xca, 0x3e, 0x12, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x54, 0x65, 0x6d,
+	0x70, 0x6c, 0x61, 0x74, 0x65, 0x73, 0x12, 0x3c, 0x0a, 0x14, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44,
+	0x5f, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47, 0x45, 0x5f, 0x47, 0x45, 0x54, 0x10, 0x52,
+	0x1a, 0x22, 0xc2, 0x3e, 0x13, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x47, 0x65,
+	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xca, 0x3e, 0x09, 0x43, 0x68, 0x61, 0x6c, 0x6c,
+	0x65, 0x6e, 0x67, 0x65, 0x12, 0x43, 0x0a, 0x15, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x43,
+	0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47, 0x45, 0x5f, 0x4c, 0x49, 0x53, 0x54, 0x10, 0x53, 0x1a,
+	0x28, 0xc2, 0x3e, 0x14, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x4c, 0x69, 0x73,
+	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xca, 0x3e, 0x0e, 0x43, 0x68, 0x61, 0x6c, 0x6c,
+	0x65, 0x6e, 0x67, 0x65, 0x73, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x42, 0x0a, 0x17, 0x52, 0x50, 0x43,
+	0x5f, 0x49, 0x44, 0x5f, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47, 0x45, 0x5f, 0x43, 0x52,
+	0x45, 0x41, 0x54, 0x45, 0x10, 0x54, 0x1a, 0x25, 0xc2, 0x3e, 0x16, 0x43, 0x68, 0x61, 0x6c, 0x6c,
+	0x65, 0x6e, 0x67, 0x65, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0xca, 0x3e, 0x09, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x12, 0x3e, 0x0a,
+	0x15, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47,
+	0x45, 0x5f, 0x4a, 0x4f, 0x49, 0x4e, 0x10, 0x55, 0x1a, 0x23, 0xc2, 0x3e, 0x14, 0x43, 0x68, 0x61,
+	0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x4a, 0x6f, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0xca, 0x3e, 0x09, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x12, 0x40, 0x0a,
+	0x16, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47,
+	0x45, 0x5f, 0x4c, 0x45, 0x41, 0x56, 0x45, 0x10, 0x56, 0x1a, 0x24, 0xc2, 0x3e, 0x15, 0x43, 0x68,
+	0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0xca, 0x3e, 0x09, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x12,
+	0x4d, 0x0a, 0x1d, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45,
+	0x4e, 0x47, 0x45, 0x5f, 0x53, 0x55, 0x42, 0x4d, 0x49, 0x54, 0x5f, 0x53, 0x43, 0x4f, 0x52, 0x45,
+	0x10, 0x57, 0x1a, 0x2a, 0xc2, 0x3e, 0x1b, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65,
+	0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0xca, 0x3e, 0x09, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x12, 0x40,
+	0x0a, 0x16, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e,
+	0x47, 0x45, 0x5f, 0x43, 0x4c, 0x41, 0x49, 0x4d, 0x10, 0x58, 0x1a, 0x24, 0xc2, 0x3e, 0x15, 0x43,
+	0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0xca, 0x3e, 0x09, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65,
+	0x12, 0x47, 0x0a, 0x17, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x43, 0x48, 0x41, 0x4c, 0x4c,
+	0x45, 0x4e, 0x47, 0x45, 0x5f, 0x53, 0x45, 0x41, 0x52, 0x43, 0x48, 0x10, 0x59, 0x1a, 0x2a, 0xc2,
+	0x3e, 0x16, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x53, 0x65, 0x61, 0x72, 0x63,
+	0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xca, 0x3e, 0x0e, 0x43, 0x68, 0x61, 0x6c, 0x6c,
+	0x65, 0x6e, 0x67, 0x65, 0x73, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x42, 0x0a, 0x17, 0x52, 0x50, 0x43,
+	0x5f, 0x49, 0x44, 0x5f, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47, 0x45, 0x5f, 0x49, 0x4e,
+	0x56, 0x49, 0x54, 0x45, 0x10, 0x5a, 0x1a, 0x25, 0xc2, 0x3e, 0x16, 0x43, 0x68, 0x61, 0x6c, 0x6c,
+	0x65, 0x6e, 0x67, 0x65, 0x49, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0xca, 0x3e, 0x09, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x12, 0x25, 0x0a,
+	0x20, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f,
+	0x50, 0x4c, 0x41, 0x43, 0x45, 0x4d, 0x45, 0x4e, 0x54, 0x5f, 0x53, 0x55, 0x43, 0x43, 0x45, 0x53,
+	0x53, 0x10, 0xe9, 0x07, 0x12, 0x22, 0x0a, 0x1d, 0x52, 0x50, 0x43, 0x5f, 0x49, 0x44, 0x5f, 0x45,
+	0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x50, 0x4c, 0x41, 0x43, 0x45, 0x4d, 0x45, 0x4e, 0x54,
+	0x5f, 0x46, 0x41, 0x49, 0x4c, 0x10, 0xea, 0x07, 0x12, 0x27, 0x0a, 0x22, 0x52, 0x50, 0x43, 0x5f,
+	0x49, 0x44, 0x5f, 0x53, 0x54, 0x4f, 0x52, 0x41, 0x47, 0x45, 0x5f, 0x50, 0x45, 0x52, 0x53, 0x4f,
+	0x4e, 0x41, 0x4c, 0x49, 0x5a, 0x45, 0x52, 0x5f, 0x55, 0x50, 0x4c, 0x4f, 0x41, 0x44, 0x10, 0xeb,
+	0x07, 0x2a, 0xb6, 0x01, 0x0a, 0x0b, 0x52, 0x70, 0x63, 0x53, 0x6f, 0x63, 0x6b, 0x65, 0x74, 0x49,
+	0x64, 0x12, 0x1d, 0x0a, 0x19, 0x52, 0x50, 0x43, 0x5f, 0x53, 0x4f, 0x43, 0x4b, 0x45, 0x54, 0x5f,
+	0x49, 0x44, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00,
+	0x12, 0x48, 0x0a, 0x1d, 0x52, 0x50, 0x43, 0x5f, 0x53, 0x4f, 0x43, 0x4b, 0x45, 0x54, 0x5f, 0x49,
+	0x44, 0x5f, 0x41, 0x55, 0x43, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x46, 0x4f, 0x4c, 0x4c, 0x4f,
+	0x57, 0x10, 0x01, 0x1a, 0x25, 0xc2, 0x3e, 0x14, 0x41, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x46,
+	0x6f, 0x6c, 0x6c, 0x6f, 0x77, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xca, 0x3e, 0x0b, 0x41,
+	0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x3e, 0x0a, 0x1a, 0x52, 0x50,
 	0x43, 0x5f, 0x53, 0x4f, 0x43, 0x4b, 0x45, 0x54, 0x5f, 0x49, 0x44, 0x5f, 0x41, 0x55, 0x43, 0x54,
-	0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x46, 0x4f, 0x4c, 0x4c, 0x4f, 0x57, 0x10, 0x01, 0x1a, 0x25, 0xc2,
-	0x3e, 0x14, 0x41, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x6c, 0x6c, 0x6f, 0x77, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xca, 0x3e, 0x0b, 0x41, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x4c, 0x69, 0x73, 0x74, 0x12, 0x3e, 0x0a, 0x1a, 0x52, 0x50, 0x43, 0x5f, 0x53, 0x4f, 0x43, 0x4b,
-	0x45, 0x54, 0x5f, 0x49, 0x44, 0x5f, 0x41, 0x55, 0x43, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x42,
-	0x49, 0x44, 0x10, 0x02, 0x1a, 0x1e, 0xc2, 0x3e, 0x11, 0x41, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xca, 0x3e, 0x07, 0x41, 0x75, 0x63,
-	0x74, 0x69, 0x6f, 0x6e, 0x2a, 0x85, 0x02, 0x0a, 0x20, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73,
-	0x73, 0x69, 0x6f, 0x6e, 0x50, 0x72, 0x65, 0x63, 0x6f, 0x6e, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x32, 0x0a, 0x2e, 0x50, 0x52, 0x4f,
-	0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x50, 0x52, 0x45, 0x43, 0x4f, 0x4e, 0x44,
-	0x49, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f,
-	0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x2a, 0x0a,
-	0x26, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x50, 0x52, 0x45,
-	0x43, 0x4f, 0x4e, 0x44, 0x49, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41,
-	0x54, 0x4f, 0x52, 0x5f, 0x41, 0x4e, 0x44, 0x10, 0x01, 0x12, 0x29, 0x0a, 0x25, 0x50, 0x52, 0x4f,
-	0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x50, 0x52, 0x45, 0x43, 0x4f, 0x4e, 0x44,
-	0x49, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f,
-	0x4f, 0x52, 0x10, 0x02, 0x12, 0x2a, 0x0a, 0x26, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53,
-	0x49, 0x4f, 0x4e, 0x5f, 0x50, 0x52, 0x45, 0x43, 0x4f, 0x4e, 0x44, 0x49, 0x54, 0x49, 0x4f, 0x4e,
-	0x53, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x58, 0x4f, 0x52, 0x10, 0x03,
-	0x12, 0x2a, 0x0a, 0x26, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f,
-	0x50, 0x52, 0x45, 0x43, 0x4f, 0x4e, 0x44, 0x49, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x4f, 0x50,
-	0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4e, 0x4f, 0x54, 0x10, 0x04, 0x2a, 0xb1, 0x01, 0x0a,
-	0x15, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x44, 0x65, 0x6c, 0x74,
-	0x61, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x27, 0x0a, 0x23, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45,
-	0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x44, 0x45, 0x4c, 0x54, 0x41, 0x5f, 0x53, 0x54, 0x41, 0x54,
-	0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12,
-	0x25, 0x0a, 0x21, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x44,
-	0x45, 0x4c, 0x54, 0x41, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x55, 0x4e, 0x43, 0x48, 0x41,
-	0x4e, 0x47, 0x45, 0x44, 0x10, 0x01, 0x12, 0x24, 0x0a, 0x20, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45,
-	0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x44, 0x45, 0x4c, 0x54, 0x41, 0x5f, 0x53, 0x54, 0x41, 0x54,
-	0x45, 0x5f, 0x55, 0x4e, 0x4c, 0x4f, 0x43, 0x4b, 0x45, 0x44, 0x10, 0x02, 0x12, 0x22, 0x0a, 0x1e,
+	0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x42, 0x49, 0x44, 0x10, 0x02, 0x1a, 0x1e, 0xc2, 0x3e, 0x11, 0x41,
+	0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0xca, 0x3e, 0x07, 0x41, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2a, 0x85, 0x02, 0x0a, 0x20, 0x50,
+	0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x50, 0x72, 0x65, 0x63, 0x6f, 0x6e,
+	0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12,
+	0x32, 0x0a, 0x2e, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x50,
+	0x52, 0x45, 0x43, 0x4f, 0x4e, 0x44, 0x49, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x4f, 0x50, 0x45,
+	0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45,
+	0x44, 0x10, 0x00, 0x12, 0x2a, 0x0a, 0x26, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x49,
+	0x4f, 0x4e, 0x5f, 0x50, 0x52, 0x45, 0x43, 0x4f, 0x4e, 0x44, 0x49, 0x54, 0x49, 0x4f, 0x4e, 0x53,
+	0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x41, 0x4e, 0x44, 0x10, 0x01, 0x12,
+	0x29, 0x0a, 0x25, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x50,
+	0x52, 0x45, 0x43, 0x4f, 0x4e, 0x44, 0x49, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x4f, 0x50, 0x45,
+	0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4f, 0x52, 0x10, 0x02, 0x12, 0x2a, 0x0a, 0x26, 0x50, 0x52,
+	0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x50, 0x52, 0x45, 0x43, 0x4f, 0x4e,
+	0x44, 0x49, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52,
+	0x5f, 0x58, 0x4f, 0x52, 0x10, 0x03, 0x12, 0x2a, 0x0a, 0x26, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45,
+	0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x50, 0x52, 0x45, 0x43, 0x4f, 0x4e, 0x44, 0x49, 0x54, 0x49,
+	0x4f, 0x4e, 0x53, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4e, 0x4f, 0x54,
+	0x10, 0x04, 0x2a, 0xb1, 0x01, 0x0a, 0x15, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x69,
+	0x6f, 0x6e, 0x44, 0x65, 0x6c, 0x74, 0x61, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x27, 0x0a, 0x23,
 	0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x44, 0x45, 0x4c, 0x54,
-	0x41, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x4c, 0x4f, 0x43, 0x4b, 0x45, 0x44, 0x10, 0x03,
-	0x2a, 0xb4, 0x01, 0x0a, 0x12, 0x53, 0x74, 0x61, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f,
-	0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x24, 0x0a, 0x20, 0x53, 0x54, 0x41, 0x54, 0x5f,
-	0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f,
-	0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x1c, 0x0a,
-	0x18, 0x53, 0x54, 0x41, 0x54, 0x5f, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x5f, 0x4f, 0x50, 0x45,
-	0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x53, 0x45, 0x54, 0x10, 0x01, 0x12, 0x1e, 0x0a, 0x1a, 0x53,
-	0x54, 0x41, 0x54, 0x5f, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41,
-	0x54, 0x4f, 0x52, 0x5f, 0x44, 0x45, 0x4c, 0x54, 0x41, 0x10, 0x02, 0x12, 0x1c, 0x0a, 0x18, 0x53,
-	0x54, 0x41, 0x54, 0x5f, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41,
-	0x54, 0x4f, 0x52, 0x5f, 0x4d, 0x49, 0x4e, 0x10, 0x03, 0x12, 0x1c, 0x0a, 0x18, 0x53, 0x54, 0x41,
-	0x54, 0x5f, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f,
-	0x52, 0x5f, 0x4d, 0x41, 0x58, 0x10, 0x04, 0x2a, 0xc3, 0x01, 0x0a, 0x10, 0x45, 0x63, 0x6f, 0x6e,
-	0x6f, 0x6d, 0x79, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x22, 0x0a, 0x1e,
-	0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x53, 0x54, 0x4f, 0x52, 0x45, 0x5f, 0x54, 0x59,
-	0x50, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00,
-	0x12, 0x25, 0x0a, 0x21, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x53, 0x54, 0x4f, 0x52,
-	0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x41, 0x50, 0x50, 0x4c, 0x45, 0x5f, 0x41, 0x50, 0x50,
-	0x53, 0x54, 0x4f, 0x52, 0x45, 0x10, 0x01, 0x12, 0x22, 0x0a, 0x1e, 0x45, 0x43, 0x4f, 0x4e, 0x4f,
-	0x4d, 0x59, 0x5f, 0x53, 0x54, 0x4f, 0x52, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x47, 0x4f,
-	0x4f, 0x47, 0x4c, 0x45, 0x5f, 0x50, 0x4c, 0x41, 0x59, 0x10, 0x02, 0x12, 0x20, 0x0a, 0x1c, 0x45,
-	0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x53, 0x54, 0x4f, 0x52, 0x45, 0x5f, 0x54, 0x59, 0x50,
-	0x45, 0x5f, 0x46, 0x42, 0x49, 0x4e, 0x53, 0x54, 0x41, 0x4e, 0x54, 0x10, 0x03, 0x12, 0x1e, 0x0a,
-	0x1a, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x53, 0x54, 0x4f, 0x52, 0x45, 0x5f, 0x54,
-	0x59, 0x50, 0x45, 0x5f, 0x44, 0x49, 0x53, 0x43, 0x4f, 0x52, 0x44, 0x10, 0x04, 0x2a, 0x4a, 0x0a,
-	0x0d, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1e,
-	0x0a, 0x1a, 0x49, 0x4e, 0x43, 0x45, 0x4e, 0x54, 0x49, 0x56, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45,
-	0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x19,
-	0x0a, 0x15, 0x49, 0x4e, 0x43, 0x45, 0x4e, 0x54, 0x49, 0x56, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45,
-	0x5f, 0x49, 0x4e, 0x56, 0x49, 0x54, 0x45, 0x10, 0x01, 0x2a, 0xbe, 0x01, 0x0a, 0x0d, 0x54, 0x75,
-	0x74, 0x6f, 0x72, 0x69, 0x61, 0x6c, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x17, 0x0a, 0x13, 0x54,
-	0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x4e, 0x4f,
-	0x4e, 0x45, 0x10, 0x00, 0x12, 0x1b, 0x0a, 0x17, 0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c,
-	0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x41, 0x43, 0x43, 0x45, 0x50, 0x54, 0x45, 0x44, 0x10,
-	0x01, 0x12, 0x1b, 0x0a, 0x17, 0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c, 0x5f, 0x53, 0x54,
-	0x41, 0x54, 0x45, 0x5f, 0x44, 0x45, 0x43, 0x4c, 0x49, 0x4e, 0x45, 0x44, 0x10, 0x02, 0x12, 0x1e,
-	0x0a, 0x1a, 0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45,
-	0x5f, 0x49, 0x4e, 0x5f, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x10, 0x03, 0x12, 0x1c,
-	0x0a, 0x18, 0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45,
-	0x5f, 0x43, 0x4f, 0x4d, 0x50, 0x4c, 0x45, 0x54, 0x45, 0x44, 0x10, 0x04, 0x12, 0x1c, 0x0a, 0x18,
-	0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x41,
-	0x42, 0x41, 0x4e, 0x44, 0x4f, 0x4e, 0x45, 0x44, 0x10, 0x05, 0x3a, 0x3b, 0x0a, 0x05, 0x69, 0x6e,
-	0x70, 0x75, 0x74, 0x12, 0x21, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6e, 0x75, 0x6d, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x4f,
-	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0xe8, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x69,
-	0x6e, 0x70, 0x75, 0x74, 0x88, 0x01, 0x01, 0x3a, 0x3d, 0x0a, 0x06, 0x6f, 0x75, 0x74, 0x70, 0x75,
-	0x74, 0x12, 0x21, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x62, 0x75, 0x66, 0x2e, 0x45, 0x6e, 0x75, 0x6d, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x4f, 0x70, 0x74,
-	0x69, 0x6f, 0x6e, 0x73, 0x18, 0xe9, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6f, 0x75, 0x74,
-	0x70, 0x75, 0x74, 0x88, 0x01, 0x01, 0x42, 0x61, 0x0a, 0x08, 0x63, 0x6f, 0x6d, 0x2e, 0x68, 0x69,
-	0x72, 0x6f, 0x42, 0x09, 0x48, 0x69, 0x72, 0x6f, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
-	0x1a, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x65, 0x72, 0x6f,
-	0x69, 0x63, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x68, 0x69, 0x72, 0x6f, 0xa2, 0x02, 0x03, 0x48, 0x58,
-	0x58, 0xaa, 0x02, 0x04, 0x48, 0x69, 0x72, 0x6f, 0xca, 0x02, 0x04, 0x48, 0x69, 0x72, 0x6f, 0xe2,
-	0x02, 0x10, 0x48, 0x69, 0x72, 0x6f, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0xea, 0x02, 0x04, 0x48, 0x69, 0x72, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x41, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46,
+	0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x25, 0x0a, 0x21, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53,
+	0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x44, 0x45, 0x4c, 0x54, 0x41, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45,
+	0x5f, 0x55, 0x4e, 0x43, 0x48, 0x41, 0x4e, 0x47, 0x45, 0x44, 0x10, 0x01, 0x12, 0x24, 0x0a, 0x20,
+	0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x44, 0x45, 0x4c, 0x54,
+	0x41, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x55, 0x4e, 0x4c, 0x4f, 0x43, 0x4b, 0x45, 0x44,
+	0x10, 0x02, 0x12, 0x22, 0x0a, 0x1e, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x49, 0x4f,
+	0x4e, 0x5f, 0x44, 0x45, 0x4c, 0x54, 0x41, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x4c, 0x4f,
+	0x43, 0x4b, 0x45, 0x44, 0x10, 0x03, 0x2a, 0xb4, 0x01, 0x0a, 0x12, 0x53, 0x74, 0x61, 0x74, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x24, 0x0a,
+	0x20, 0x53, 0x54, 0x41, 0x54, 0x5f, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x5f, 0x4f, 0x50, 0x45,
+	0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45,
+	0x44, 0x10, 0x00, 0x12, 0x1c, 0x0a, 0x18, 0x53, 0x54, 0x41, 0x54, 0x5f, 0x55, 0x50, 0x44, 0x41,
+	0x54, 0x45, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x53, 0x45, 0x54, 0x10,
+	0x01, 0x12, 0x1e, 0x0a, 0x1a, 0x53, 0x54, 0x41, 0x54, 0x5f, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45,
+	0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x44, 0x45, 0x4c, 0x54, 0x41, 0x10,
+	0x02, 0x12, 0x1c, 0x0a, 0x18, 0x53, 0x54, 0x41, 0x54, 0x5f, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45,
+	0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4d, 0x49, 0x4e, 0x10, 0x03, 0x12,
+	0x1c, 0x0a, 0x18, 0x53, 0x54, 0x41, 0x54, 0x5f, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x5f, 0x4f,
+	0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4d, 0x41, 0x58, 0x10, 0x04, 0x2a, 0xc3, 0x01,
+	0x0a, 0x10, 0x45, 0x63, 0x6f, 0x6e, 0x6f, 0x6d, 0x79, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x54, 0x79,
+	0x70, 0x65, 0x12, 0x22, 0x0a, 0x1e, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x53, 0x54,
+	0x4f, 0x52, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49,
+	0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x25, 0x0a, 0x21, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d,
+	0x59, 0x5f, 0x53, 0x54, 0x4f, 0x52, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x41, 0x50, 0x50,
+	0x4c, 0x45, 0x5f, 0x41, 0x50, 0x50, 0x53, 0x54, 0x4f, 0x52, 0x45, 0x10, 0x01, 0x12, 0x22, 0x0a,
+	0x1e, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x53, 0x54, 0x4f, 0x52, 0x45, 0x5f, 0x54,
+	0x59, 0x50, 0x45, 0x5f, 0x47, 0x4f, 0x4f, 0x47, 0x4c, 0x45, 0x5f, 0x50, 0x4c, 0x41, 0x59, 0x10,
+	0x02, 0x12, 0x20, 0x0a, 0x1c, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x53, 0x54, 0x4f,
+	0x52, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x46, 0x42, 0x49, 0x4e, 0x53, 0x54, 0x41, 0x4e,
+	0x54, 0x10, 0x03, 0x12, 0x1e, 0x0a, 0x1a, 0x45, 0x43, 0x4f, 0x4e, 0x4f, 0x4d, 0x59, 0x5f, 0x53,
+	0x54, 0x4f, 0x52, 0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x44, 0x49, 0x53, 0x43, 0x4f, 0x52,
+	0x44, 0x10, 0x04, 0x2a, 0x4a, 0x0a, 0x0d, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65,
+	0x54, 0x79, 0x70, 0x65, 0x12, 0x1e, 0x0a, 0x1a, 0x49, 0x4e, 0x43, 0x45, 0x4e, 0x54, 0x49, 0x56,
+	0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49,
+	0x45, 0x44, 0x10, 0x00, 0x12, 0x19, 0x0a, 0x15, 0x49, 0x4e, 0x43, 0x45, 0x4e, 0x54, 0x49, 0x56,
+	0x45, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x49, 0x4e, 0x56, 0x49, 0x54, 0x45, 0x10, 0x01, 0x2a,
+	0xb8, 0x01, 0x0a, 0x0e, 0x43, 0x68, 0x61, 0x6c, 0x6c, 0x65, 0x6e, 0x67, 0x65, 0x53, 0x74, 0x61,
+	0x74, 0x65, 0x12, 0x18, 0x0a, 0x14, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47, 0x45, 0x5f,
+	0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x4e, 0x4f, 0x4e, 0x45, 0x10, 0x00, 0x12, 0x1b, 0x0a, 0x17,
+	0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47, 0x45, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f,
+	0x49, 0x4e, 0x56, 0x49, 0x54, 0x45, 0x44, 0x10, 0x01, 0x12, 0x1a, 0x0a, 0x16, 0x43, 0x48, 0x41,
+	0x4c, 0x4c, 0x45, 0x4e, 0x47, 0x45, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x4a, 0x4f, 0x49,
+	0x4e, 0x45, 0x44, 0x10, 0x02, 0x12, 0x1b, 0x0a, 0x17, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e,
+	0x47, 0x45, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x43, 0x4c, 0x41, 0x49, 0x4d, 0x45, 0x44,
+	0x10, 0x03, 0x12, 0x1c, 0x0a, 0x18, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47, 0x45, 0x5f,
+	0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x44, 0x45, 0x43, 0x4c, 0x49, 0x4e, 0x45, 0x44, 0x10, 0x04,
+	0x12, 0x18, 0x0a, 0x14, 0x43, 0x48, 0x41, 0x4c, 0x4c, 0x45, 0x4e, 0x47, 0x45, 0x5f, 0x53, 0x54,
+	0x41, 0x54, 0x45, 0x5f, 0x4c, 0x45, 0x46, 0x54, 0x10, 0x05, 0x2a, 0xbe, 0x01, 0x0a, 0x0d, 0x54,
+	0x75, 0x74, 0x6f, 0x72, 0x69, 0x61, 0x6c, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x17, 0x0a, 0x13,
+	0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x4e,
+	0x4f, 0x4e, 0x45, 0x10, 0x00, 0x12, 0x1b, 0x0a, 0x17, 0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41,
+	0x4c, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x41, 0x43, 0x43, 0x45, 0x50, 0x54, 0x45, 0x44,
+	0x10, 0x01, 0x12, 0x1b, 0x0a, 0x17, 0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c, 0x5f, 0x53,
+	0x54, 0x41, 0x54, 0x45, 0x5f, 0x44, 0x45, 0x43, 0x4c, 0x49, 0x4e, 0x45, 0x44, 0x10, 0x02, 0x12,
+	0x1e, 0x0a, 0x1a, 0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c, 0x5f, 0x53, 0x54, 0x41, 0x54,
+	0x45, 0x5f, 0x49, 0x4e, 0x5f, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x10, 0x03, 0x12,
+	0x1c, 0x0a, 0x18, 0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c, 0x5f, 0x53, 0x54, 0x41, 0x54,
+	0x45, 0x5f, 0x43, 0x4f, 0x4d, 0x50, 0x4c, 0x45, 0x54, 0x45, 0x44, 0x10, 0x04, 0x12, 0x1c, 0x0a,
+	0x18, 0x54, 0x55, 0x54, 0x4f, 0x52, 0x49, 0x41, 0x4c, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f,
+	0x41, 0x42, 0x41, 0x4e, 0x44, 0x4f, 0x4e, 0x45, 0x44, 0x10, 0x05, 0x3a, 0x3b, 0x0a, 0x05, 0x69,
+	0x6e, 0x70, 0x75, 0x74, 0x12, 0x21, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6e, 0x75, 0x6d, 0x56, 0x61, 0x6c, 0x75, 0x65,
+	0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0xe8, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x69, 0x6e, 0x70, 0x75, 0x74, 0x88, 0x01, 0x01, 0x3a, 0x3d, 0x0a, 0x06, 0x6f, 0x75, 0x74, 0x70,
+	0x75, 0x74, 0x12, 0x21, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6e, 0x75, 0x6d, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x4f, 0x70,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0xe9, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6f, 0x75,
+	0x74, 0x70, 0x75, 0x74, 0x88, 0x01, 0x01, 0x42, 0x61, 0x0a, 0x08, 0x63, 0x6f, 0x6d, 0x2e, 0x68,
+	0x69, 0x72, 0x6f, 0x42, 0x09, 0x48, 0x69, 0x72, 0x6f, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
+	0x5a, 0x1a, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x65, 0x72,
+	0x6f, 0x69, 0x63, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x68, 0x69, 0x72, 0x6f, 0xa2, 0x02, 0x03, 0x48,
+	0x58, 0x58, 0xaa, 0x02, 0x04, 0x48, 0x69, 0x72, 0x6f, 0xca, 0x02, 0x04, 0x48, 0x69, 0x72, 0x6f,
+	0xe2, 0x02, 0x10, 0x48, 0x69, 0x72, 0x6f, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0xea, 0x02, 0x04, 0x48, 0x69, 0x72, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -17568,8 +19309,8 @@ func file_hiro_proto_rawDescGZIP() []byte {
 	return file_hiro_proto_rawDescData
 }
 
-var file_hiro_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
-var file_hiro_proto_msgTypes = make([]protoimpl.MessageInfo, 285)
+var file_hiro_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
+var file_hiro_proto_msgTypes = make([]protoimpl.MessageInfo, 305)
 var file_hiro_proto_goTypes = []any{
 	(RpcId)(0),                                       // 0: hiro.RpcId
 	(RpcSocketId)(0),                                 // 1: hiro.RpcSocketId
@@ -17578,602 +19319,638 @@ var file_hiro_proto_goTypes = []any{
 	(StatUpdateOperator)(0),                          // 4: hiro.StatUpdateOperator
 	(EconomyStoreType)(0),                            // 5: hiro.EconomyStoreType
 	(IncentiveType)(0),                               // 6: hiro.IncentiveType
-	(TutorialState)(0),                               // 7: hiro.TutorialState
-	(*ProgressionCost)(nil),                          // 8: hiro.ProgressionCost
-	(*ProgressionPreconditions)(nil),                 // 9: hiro.ProgressionPreconditions
-	(*ProgressionPreconditionsBlock)(nil),            // 10: hiro.ProgressionPreconditionsBlock
-	(*Progression)(nil),                              // 11: hiro.Progression
-	(*ProgressionDelta)(nil),                         // 12: hiro.ProgressionDelta
-	(*ProgressionList)(nil),                          // 13: hiro.ProgressionList
-	(*ProgressionGetRequest)(nil),                    // 14: hiro.ProgressionGetRequest
-	(*ProgressionPurchaseRequest)(nil),               // 15: hiro.ProgressionPurchaseRequest
-	(*ProgressionUpdateRequest)(nil),                 // 16: hiro.ProgressionUpdateRequest
-	(*ProgressionResetRequest)(nil),                  // 17: hiro.ProgressionResetRequest
-	(*StatUpdate)(nil),                               // 18: hiro.StatUpdate
-	(*StatUpdateRequest)(nil),                        // 19: hiro.StatUpdateRequest
-	(*Stat)(nil),                                     // 20: hiro.Stat
-	(*StatList)(nil),                                 // 21: hiro.StatList
-	(*ChannelMessageAck)(nil),                        // 22: hiro.ChannelMessageAck
-	(*DevicePrefsRequest)(nil),                       // 23: hiro.DevicePrefsRequest
-	(*RewardInventoryItem)(nil),                      // 24: hiro.RewardInventoryItem
-	(*RewardEnergyModifier)(nil),                     // 25: hiro.RewardEnergyModifier
-	(*RewardModifier)(nil),                           // 26: hiro.RewardModifier
-	(*ActiveRewardModifier)(nil),                     // 27: hiro.ActiveRewardModifier
-	(*Reward)(nil),                                   // 28: hiro.Reward
-	(*RewardList)(nil),                               // 29: hiro.RewardList
-	(*RewardRangeInt32)(nil),                         // 30: hiro.RewardRangeInt32
-	(*RewardRangeInt64)(nil),                         // 31: hiro.RewardRangeInt64
-	(*RewardRangeUInt64)(nil),                        // 32: hiro.RewardRangeUInt64
-	(*RewardRangeDouble)(nil),                        // 33: hiro.RewardRangeDouble
-	(*AvailableRewardsStringPropertyOption)(nil),     // 34: hiro.AvailableRewardsStringPropertyOption
-	(*AvailableRewardsStringProperty)(nil),           // 35: hiro.AvailableRewardsStringProperty
-	(*AvailableRewardsItem)(nil),                     // 36: hiro.AvailableRewardsItem
-	(*AvailableRewardsItemSet)(nil),                  // 37: hiro.AvailableRewardsItemSet
-	(*AvailableRewardsCurrency)(nil),                 // 38: hiro.AvailableRewardsCurrency
-	(*AvailableRewardsEnergy)(nil),                   // 39: hiro.AvailableRewardsEnergy
-	(*AvailableRewardsEnergyModifier)(nil),           // 40: hiro.AvailableRewardsEnergyModifier
-	(*AvailableRewardsRewardModifier)(nil),           // 41: hiro.AvailableRewardsRewardModifier
-	(*AvailableRewardsContents)(nil),                 // 42: hiro.AvailableRewardsContents
-	(*AvailableRewards)(nil),                         // 43: hiro.AvailableRewards
-	(*IncentiveClaim)(nil),                           // 44: hiro.IncentiveClaim
-	(*Incentive)(nil),                                // 45: hiro.Incentive
-	(*IncentiveList)(nil),                            // 46: hiro.IncentiveList
-	(*IncentiveInfo)(nil),                            // 47: hiro.IncentiveInfo
-	(*IncentiveSenderCreateRequest)(nil),             // 48: hiro.IncentiveSenderCreateRequest
-	(*IncentiveSenderDeleteRequest)(nil),             // 49: hiro.IncentiveSenderDeleteRequest
-	(*IncentiveSenderClaimRequest)(nil),              // 50: hiro.IncentiveSenderClaimRequest
-	(*IncentiveRecipientGetRequest)(nil),             // 51: hiro.IncentiveRecipientGetRequest
-	(*IncentiveRecipientClaimRequest)(nil),           // 52: hiro.IncentiveRecipientClaimRequest
-	(*EventLeaderboardList)(nil),                     // 53: hiro.EventLeaderboardList
-	(*EventLeaderboardGet)(nil),                      // 54: hiro.EventLeaderboardGet
-	(*EventLeaderboardUpdate)(nil),                   // 55: hiro.EventLeaderboardUpdate
-	(*EventLeaderboardClaim)(nil),                    // 56: hiro.EventLeaderboardClaim
-	(*EventLeaderboardRoll)(nil),                     // 57: hiro.EventLeaderboardRoll
-	(*EventLeaderboardScore)(nil),                    // 58: hiro.EventLeaderboardScore
-	(*EventLeaderboardRewardTier)(nil),               // 59: hiro.EventLeaderboardRewardTier
-	(*EventLeaderboardRewardTiers)(nil),              // 60: hiro.EventLeaderboardRewardTiers
-	(*EventLeaderboardChangeZone)(nil),               // 61: hiro.EventLeaderboardChangeZone
-	(*EventLeaderboard)(nil),                         // 62: hiro.EventLeaderboard
-	(*EventLeaderboards)(nil),                        // 63: hiro.EventLeaderboards
-	(*EventLeaderboardDebugFillRequest)(nil),         // 64: hiro.EventLeaderboardDebugFillRequest
-	(*EventLeaderboardDebugRandomScoresRequest)(nil), // 65: hiro.EventLeaderboardDebugRandomScoresRequest
-	(*EconomyDonationContributor)(nil),               // 66: hiro.EconomyDonationContributor
-	(*EconomyDonation)(nil),                          // 67: hiro.EconomyDonation
-	(*EconomyDonationAck)(nil),                       // 68: hiro.EconomyDonationAck
-	(*EconomyDonationsList)(nil),                     // 69: hiro.EconomyDonationsList
-	(*EconomyDonationClaimRequestDetails)(nil),       // 70: hiro.EconomyDonationClaimRequestDetails
-	(*EconomyDonationClaimRequest)(nil),              // 71: hiro.EconomyDonationClaimRequest
-	(*EconomyDonationClaimRewards)(nil),              // 72: hiro.EconomyDonationClaimRewards
-	(*EconomyDonationGiveRequest)(nil),               // 73: hiro.EconomyDonationGiveRequest
-	(*EconomyDonationGetRequest)(nil),                // 74: hiro.EconomyDonationGetRequest
-	(*EconomyDonationRequest)(nil),                   // 75: hiro.EconomyDonationRequest
-	(*EconomyDonationsByUserList)(nil),               // 76: hiro.EconomyDonationsByUserList
-	(*EconomyListStoreItemCost)(nil),                 // 77: hiro.EconomyListStoreItemCost
-	(*EconomyListStoreItem)(nil),                     // 78: hiro.EconomyListStoreItem
-	(*EconomyListPlacement)(nil),                     // 79: hiro.EconomyListPlacement
-	(*EconomyList)(nil),                              // 80: hiro.EconomyList
-	(*InventoryItem)(nil),                            // 81: hiro.InventoryItem
-	(*InventoryListRequest)(nil),                     // 82: hiro.InventoryListRequest
-	(*InventoryGrantRequest)(nil),                    // 83: hiro.InventoryGrantRequest
-	(*InventoryUpdateItemProperties)(nil),            // 84: hiro.InventoryUpdateItemProperties
-	(*InventoryUpdateItemsRequest)(nil),              // 85: hiro.InventoryUpdateItemsRequest
-	(*Inventory)(nil),                                // 86: hiro.Inventory
-	(*InventoryConsumeRequest)(nil),                  // 87: hiro.InventoryConsumeRequest
-	(*InventoryConsumeRewards)(nil),                  // 88: hiro.InventoryConsumeRewards
-	(*InventoryUpdateAck)(nil),                       // 89: hiro.InventoryUpdateAck
-	(*InventoryList)(nil),                            // 90: hiro.InventoryList
-	(*AuctionBidAmount)(nil),                         // 91: hiro.AuctionBidAmount
-	(*AuctionFee)(nil),                               // 92: hiro.AuctionFee
-	(*AuctionTemplateConditionListingCost)(nil),      // 93: hiro.AuctionTemplateConditionListingCost
-	(*AuctionTemplateConditionBidIncrement)(nil),     // 94: hiro.AuctionTemplateConditionBidIncrement
-	(*AuctionTemplateCondition)(nil),                 // 95: hiro.AuctionTemplateCondition
-	(*AuctionTemplate)(nil),                          // 96: hiro.AuctionTemplate
-	(*AuctionTemplates)(nil),                         // 97: hiro.AuctionTemplates
-	(*AuctionReward)(nil),                            // 98: hiro.AuctionReward
-	(*AuctionBid)(nil),                               // 99: hiro.AuctionBid
-	(*Auction)(nil),                                  // 100: hiro.Auction
-	(*AuctionNotificationBid)(nil),                   // 101: hiro.AuctionNotificationBid
-	(*StreamEnvelope)(nil),                           // 102: hiro.StreamEnvelope
-	(*AuctionClaimBid)(nil),                          // 103: hiro.AuctionClaimBid
-	(*AuctionClaimCreated)(nil),                      // 104: hiro.AuctionClaimCreated
-	(*AuctionCancel)(nil),                            // 105: hiro.AuctionCancel
-	(*AuctionList)(nil),                              // 106: hiro.AuctionList
-	(*AuctionListRequest)(nil),                       // 107: hiro.AuctionListRequest
-	(*AuctionBidRequest)(nil),                        // 108: hiro.AuctionBidRequest
-	(*AuctionClaimBidRequest)(nil),                   // 109: hiro.AuctionClaimBidRequest
-	(*AuctionClaimCreatedRequest)(nil),               // 110: hiro.AuctionClaimCreatedRequest
-	(*AuctionCancelRequest)(nil),                     // 111: hiro.AuctionCancelRequest
-	(*AuctionCreateRequest)(nil),                     // 112: hiro.AuctionCreateRequest
-	(*AuctionListBidsRequest)(nil),                   // 113: hiro.AuctionListBidsRequest
-	(*AuctionListCreatedRequest)(nil),                // 114: hiro.AuctionListCreatedRequest
-	(*AuctionsFollowRequest)(nil),                    // 115: hiro.AuctionsFollowRequest
-	(*EconomyListRequest)(nil),                       // 116: hiro.EconomyListRequest
-	(*EconomyGrantRequest)(nil),                      // 117: hiro.EconomyGrantRequest
-	(*EconomyPurchaseIntentRequest)(nil),             // 118: hiro.EconomyPurchaseIntentRequest
-	(*EconomyPurchaseRequest)(nil),                   // 119: hiro.EconomyPurchaseRequest
-	(*EconomyPurchaseRestoreRequest)(nil),            // 120: hiro.EconomyPurchaseRestoreRequest
-	(*EconomyPlacementStatusRequest)(nil),            // 121: hiro.EconomyPlacementStatusRequest
-	(*EconomyPlacementStartRequest)(nil),             // 122: hiro.EconomyPlacementStartRequest
-	(*EconomyPlacementStatus)(nil),                   // 123: hiro.EconomyPlacementStatus
-	(*EconomyUpdateAck)(nil),                         // 124: hiro.EconomyUpdateAck
-	(*EconomyPurchaseAck)(nil),                       // 125: hiro.EconomyPurchaseAck
-	(*EnergyModifier)(nil),                           // 126: hiro.EnergyModifier
-	(*Energy)(nil),                                   // 127: hiro.Energy
-	(*EnergyList)(nil),                               // 128: hiro.EnergyList
-	(*EnergySpendRequest)(nil),                       // 129: hiro.EnergySpendRequest
-	(*EnergySpendReward)(nil),                        // 130: hiro.EnergySpendReward
-	(*EnergyGrantRequest)(nil),                       // 131: hiro.EnergyGrantRequest
-	(*LeaderboardConfig)(nil),                        // 132: hiro.LeaderboardConfig
-	(*LeaderboardConfigList)(nil),                    // 133: hiro.LeaderboardConfigList
-	(*Tutorial)(nil),                                 // 134: hiro.Tutorial
-	(*TutorialList)(nil),                             // 135: hiro.TutorialList
-	(*TutorialAcceptRequest)(nil),                    // 136: hiro.TutorialAcceptRequest
-	(*TutorialDeclineRequest)(nil),                   // 137: hiro.TutorialDeclineRequest
-	(*TutorialAbandonRequest)(nil),                   // 138: hiro.TutorialAbandonRequest
-	(*TutorialUpdateRequest)(nil),                    // 139: hiro.TutorialUpdateRequest
-	(*TutorialResetRequest)(nil),                     // 140: hiro.TutorialResetRequest
-	(*RateAppRequest)(nil),                           // 141: hiro.RateAppRequest
-	(*Team)(nil),                                     // 142: hiro.Team
-	(*TeamCreateRequest)(nil),                        // 143: hiro.TeamCreateRequest
-	(*TeamListRequest)(nil),                          // 144: hiro.TeamListRequest
-	(*TeamList)(nil),                                 // 145: hiro.TeamList
-	(*TeamSearchRequest)(nil),                        // 146: hiro.TeamSearchRequest
-	(*TeamWriteChatMessageRequest)(nil),              // 147: hiro.TeamWriteChatMessageRequest
-	(*UnlockableCost)(nil),                           // 148: hiro.UnlockableCost
-	(*Unlockable)(nil),                               // 149: hiro.Unlockable
-	(*UnlockableSlotCost)(nil),                       // 150: hiro.UnlockableSlotCost
-	(*UnlockablesList)(nil),                          // 151: hiro.UnlockablesList
-	(*UnlockablesReward)(nil),                        // 152: hiro.UnlockablesReward
-	(*UnlockablesRequest)(nil),                       // 153: hiro.UnlockablesRequest
-	(*UnlockablesQueueAddRequest)(nil),               // 154: hiro.UnlockablesQueueAddRequest
-	(*UnlockablesQueueRemoveRequest)(nil),            // 155: hiro.UnlockablesQueueRemoveRequest
-	(*UnlockablesQueueSetRequest)(nil),               // 156: hiro.UnlockablesQueueSetRequest
-	(*SubAchievement)(nil),                           // 157: hiro.SubAchievement
-	(*Achievement)(nil),                              // 158: hiro.Achievement
-	(*AchievementList)(nil),                          // 159: hiro.AchievementList
-	(*AchievementsClaimRequest)(nil),                 // 160: hiro.AchievementsClaimRequest
-	(*AchievementsGetRequest)(nil),                   // 161: hiro.AchievementsGetRequest
-	(*AchievementsUpdateAck)(nil),                    // 162: hiro.AchievementsUpdateAck
-	(*AchievementsUpdateRequest)(nil),                // 163: hiro.AchievementsUpdateRequest
-	(*StreakAvailableReward)(nil),                    // 164: hiro.StreakAvailableReward
-	(*StreakReward)(nil),                             // 165: hiro.StreakReward
-	(*Streak)(nil),                                   // 166: hiro.Streak
-	(*StreaksList)(nil),                              // 167: hiro.StreaksList
-	(*StreaksUpdateRequest)(nil),                     // 168: hiro.StreaksUpdateRequest
-	(*StreaksClaimRequest)(nil),                      // 169: hiro.StreaksClaimRequest
-	(*StreaksResetRequest)(nil),                      // 170: hiro.StreaksResetRequest
-	(*SyncInventoryItem)(nil),                        // 171: hiro.SyncInventoryItem
-	(*SyncInventory)(nil),                            // 172: hiro.SyncInventory
-	(*SyncEconomy)(nil),                              // 173: hiro.SyncEconomy
-	(*SyncAchievementsUpdate)(nil),                   // 174: hiro.SyncAchievementsUpdate
-	(*SyncAchievements)(nil),                         // 175: hiro.SyncAchievements
-	(*SyncEnergyState)(nil),                          // 176: hiro.SyncEnergyState
-	(*SyncEnergy)(nil),                               // 177: hiro.SyncEnergy
-	(*SyncEventLeaderboardUpdate)(nil),               // 178: hiro.SyncEventLeaderboardUpdate
-	(*SyncEventLeaderboards)(nil),                    // 179: hiro.SyncEventLeaderboards
-	(*SyncProgressionUpdate)(nil),                    // 180: hiro.SyncProgressionUpdate
-	(*SyncProgressions)(nil),                         // 181: hiro.SyncProgressions
-	(*SyncTutorials)(nil),                            // 182: hiro.SyncTutorials
-	(*SyncUnlockableUpdate)(nil),                     // 183: hiro.SyncUnlockableUpdate
-	(*SyncUnlockables)(nil),                          // 184: hiro.SyncUnlockables
-	(*SyncStreakUpdate)(nil),                         // 185: hiro.SyncStreakUpdate
-	(*SyncStreaks)(nil),                              // 186: hiro.SyncStreaks
-	(*SyncRequest)(nil),                              // 187: hiro.SyncRequest
-	(*SyncResponse)(nil),                             // 188: hiro.SyncResponse
-	nil,                                              // 189: hiro.ProgressionCost.ItemsEntry
-	nil,                                              // 190: hiro.ProgressionCost.CurrenciesEntry
-	nil,                                              // 191: hiro.ProgressionPreconditions.CountsEntry
-	nil,                                              // 192: hiro.ProgressionPreconditions.ItemsMinEntry
-	nil,                                              // 193: hiro.ProgressionPreconditions.ItemsMaxEntry
-	nil,                                              // 194: hiro.ProgressionPreconditions.StatsMinEntry
-	nil,                                              // 195: hiro.ProgressionPreconditions.StatsMaxEntry
-	nil,                                              // 196: hiro.ProgressionPreconditions.EnergyMinEntry
-	nil,                                              // 197: hiro.ProgressionPreconditions.EnergyMaxEntry
-	nil,                                              // 198: hiro.ProgressionPreconditions.CurrencyMinEntry
-	nil,                                              // 199: hiro.ProgressionPreconditions.CurrencyMaxEntry
-	nil,                                              // 200: hiro.Progression.CountsEntry
-	nil,                                              // 201: hiro.Progression.AdditionalPropertiesEntry
-	nil,                                              // 202: hiro.ProgressionDelta.CountsEntry
-	nil,                                              // 203: hiro.ProgressionList.ProgressionsEntry
-	nil,                                              // 204: hiro.ProgressionList.DeltasEntry
-	nil,                                              // 205: hiro.ProgressionGetRequest.ProgressionsEntry
-	nil,                                              // 206: hiro.ProgressionUpdateRequest.CountsEntry
-	nil,                                              // 207: hiro.StatList.PublicEntry
-	nil,                                              // 208: hiro.StatList.PrivateEntry
-	nil,                                              // 209: hiro.DevicePrefsRequest.PreferencesEntry
-	nil,                                              // 210: hiro.RewardInventoryItem.StringPropertiesEntry
-	nil,                                              // 211: hiro.RewardInventoryItem.NumericPropertiesEntry
-	nil,                                              // 212: hiro.Reward.ItemsEntry
-	nil,                                              // 213: hiro.Reward.CurrenciesEntry
-	nil,                                              // 214: hiro.Reward.EnergiesEntry
-	nil,                                              // 215: hiro.Reward.ItemInstancesEntry
-	nil,                                              // 216: hiro.AvailableRewardsStringProperty.OptionsEntry
-	nil,                                              // 217: hiro.AvailableRewardsItem.NumericPropertiesEntry
-	nil,                                              // 218: hiro.AvailableRewardsItem.StringPropertiesEntry
-	nil,                                              // 219: hiro.AvailableRewardsContents.ItemsEntry
-	nil,                                              // 220: hiro.AvailableRewardsContents.CurrenciesEntry
-	nil,                                              // 221: hiro.AvailableRewardsContents.EnergiesEntry
-	nil,                                              // 222: hiro.Incentive.ClaimsEntry
-	nil,                                              // 223: hiro.EventLeaderboard.RewardTiersEntry
-	nil,                                              // 224: hiro.EventLeaderboard.ChangeZonesEntry
-	nil,                                              // 225: hiro.EventLeaderboard.AdditionalPropertiesEntry
-	nil,                                              // 226: hiro.EconomyDonation.AdditionalPropertiesEntry
-	nil,                                              // 227: hiro.EconomyDonationClaimRequestDetails.DonorsEntry
-	nil,                                              // 228: hiro.EconomyDonationClaimRequest.DonationsEntry
-	nil,                                              // 229: hiro.EconomyDonationClaimRewards.ClaimedRewardsEntry
-	nil,                                              // 230: hiro.EconomyDonationsByUserList.UserDonationsEntry
-	nil,                                              // 231: hiro.EconomyListStoreItemCost.CurrenciesEntry
-	nil,                                              // 232: hiro.EconomyListStoreItem.AdditionalPropertiesEntry
-	nil,                                              // 233: hiro.EconomyListPlacement.AdditionalPropertiesEntry
-	nil,                                              // 234: hiro.EconomyList.DonationsEntry
-	nil,                                              // 235: hiro.InventoryItem.StringPropertiesEntry
-	nil,                                              // 236: hiro.InventoryItem.NumericPropertiesEntry
-	nil,                                              // 237: hiro.InventoryGrantRequest.ItemsEntry
-	nil,                                              // 238: hiro.InventoryUpdateItemProperties.StringPropertiesEntry
-	nil,                                              // 239: hiro.InventoryUpdateItemProperties.NumericPropertiesEntry
-	nil,                                              // 240: hiro.InventoryUpdateItemsRequest.ItemUpdatesEntry
-	nil,                                              // 241: hiro.Inventory.ItemsEntry
-	nil,                                              // 242: hiro.InventoryConsumeRequest.ItemsEntry
-	nil,                                              // 243: hiro.InventoryConsumeRequest.InstancesEntry
-	nil,                                              // 244: hiro.InventoryConsumeRewards.RewardsEntry
-	nil,                                              // 245: hiro.InventoryConsumeRewards.InstanceRewardsEntry
-	nil,                                              // 246: hiro.InventoryList.ItemsEntry
-	nil,                                              // 247: hiro.AuctionBidAmount.CurrenciesEntry
-	nil,                                              // 248: hiro.AuctionTemplateConditionListingCost.CurrenciesEntry
-	nil,                                              // 249: hiro.AuctionTemplateConditionListingCost.ItemsEntry
-	nil,                                              // 250: hiro.AuctionTemplateConditionListingCost.EnergiesEntry
-	nil,                                              // 251: hiro.AuctionTemplate.ConditionsEntry
-	nil,                                              // 252: hiro.AuctionTemplates.TemplatesEntry
-	nil,                                              // 253: hiro.EconomyGrantRequest.CurrenciesEntry
-	nil,                                              // 254: hiro.EconomyGrantRequest.ItemsEntry
-	nil,                                              // 255: hiro.EconomyPlacementStartRequest.MetadataEntry
-	nil,                                              // 256: hiro.EconomyPlacementStatus.MetadataEntry
-	nil,                                              // 257: hiro.EconomyUpdateAck.WalletEntry
-	nil,                                              // 258: hiro.EconomyPurchaseAck.WalletEntry
-	nil,                                              // 259: hiro.Energy.AdditionalPropertiesEntry
-	nil,                                              // 260: hiro.EnergyList.EnergiesEntry
-	nil,                                              // 261: hiro.EnergySpendRequest.AmountsEntry
-	nil,                                              // 262: hiro.EnergyGrantRequest.AmountsEntry
-	nil,                                              // 263: hiro.Tutorial.AdditionalPropertiesEntry
-	nil,                                              // 264: hiro.TutorialList.TutorialsEntry
-	nil,                                              // 265: hiro.UnlockableCost.ItemsEntry
-	nil,                                              // 266: hiro.UnlockableCost.CurrenciesEntry
-	nil,                                              // 267: hiro.Unlockable.AdditionalPropertiesEntry
-	nil,                                              // 268: hiro.UnlockableSlotCost.ItemsEntry
-	nil,                                              // 269: hiro.UnlockableSlotCost.CurrenciesEntry
-	nil,                                              // 270: hiro.SubAchievement.AdditionalPropertiesEntry
-	nil,                                              // 271: hiro.Achievement.SubAchievementsEntry
-	nil,                                              // 272: hiro.Achievement.AdditionalPropertiesEntry
-	nil,                                              // 273: hiro.AchievementList.AchievementsEntry
-	nil,                                              // 274: hiro.AchievementList.RepeatAchievementsEntry
-	nil,                                              // 275: hiro.AchievementsUpdateAck.AchievementsEntry
-	nil,                                              // 276: hiro.AchievementsUpdateAck.RepeatAchievementsEntry
-	nil,                                              // 277: hiro.AchievementsUpdateRequest.AchievementsEntry
-	nil,                                              // 278: hiro.StreaksList.StreaksEntry
-	nil,                                              // 279: hiro.StreaksUpdateRequest.UpdatesEntry
-	nil,                                              // 280: hiro.SyncInventoryItem.StringPropertiesEntry
-	nil,                                              // 281: hiro.SyncInventoryItem.NumericPropertiesEntry
-	nil,                                              // 282: hiro.SyncInventory.ItemsEntry
-	nil,                                              // 283: hiro.SyncEconomy.CurrenciesEntry
-	nil,                                              // 284: hiro.SyncAchievements.AchievementsEntry
-	nil,                                              // 285: hiro.SyncEnergy.EnergiesEntry
-	nil,                                              // 286: hiro.SyncEventLeaderboards.EventLeaderboardsEntry
-	nil,                                              // 287: hiro.SyncProgressionUpdate.CountsEntry
-	nil,                                              // 288: hiro.SyncProgressions.ProgressionsEntry
-	nil,                                              // 289: hiro.SyncTutorials.UpdatesEntry
-	nil,                                              // 290: hiro.SyncUnlockables.UpdatesEntry
-	nil,                                              // 291: hiro.SyncStreaks.UpdatesEntry
-	nil,                                              // 292: hiro.SyncResponse.WalletEntry
-	(*structpb.Struct)(nil),                          // 293: google.protobuf.Struct
-	(*wrapperspb.Int32Value)(nil),                    // 294: google.protobuf.Int32Value
-	(*descriptorpb.EnumValueOptions)(nil),            // 295: google.protobuf.EnumValueOptions
+	(ChallengeState)(0),                              // 7: hiro.ChallengeState
+	(TutorialState)(0),                               // 8: hiro.TutorialState
+	(*ProgressionCost)(nil),                          // 9: hiro.ProgressionCost
+	(*ProgressionPreconditions)(nil),                 // 10: hiro.ProgressionPreconditions
+	(*ProgressionPreconditionsBlock)(nil),            // 11: hiro.ProgressionPreconditionsBlock
+	(*Progression)(nil),                              // 12: hiro.Progression
+	(*ProgressionDelta)(nil),                         // 13: hiro.ProgressionDelta
+	(*ProgressionList)(nil),                          // 14: hiro.ProgressionList
+	(*ProgressionGetRequest)(nil),                    // 15: hiro.ProgressionGetRequest
+	(*ProgressionPurchaseRequest)(nil),               // 16: hiro.ProgressionPurchaseRequest
+	(*ProgressionUpdateRequest)(nil),                 // 17: hiro.ProgressionUpdateRequest
+	(*ProgressionResetRequest)(nil),                  // 18: hiro.ProgressionResetRequest
+	(*StatUpdate)(nil),                               // 19: hiro.StatUpdate
+	(*StatUpdateRequest)(nil),                        // 20: hiro.StatUpdateRequest
+	(*Stat)(nil),                                     // 21: hiro.Stat
+	(*StatList)(nil),                                 // 22: hiro.StatList
+	(*ChannelMessageAck)(nil),                        // 23: hiro.ChannelMessageAck
+	(*DevicePrefsRequest)(nil),                       // 24: hiro.DevicePrefsRequest
+	(*RewardInventoryItem)(nil),                      // 25: hiro.RewardInventoryItem
+	(*RewardEnergyModifier)(nil),                     // 26: hiro.RewardEnergyModifier
+	(*RewardModifier)(nil),                           // 27: hiro.RewardModifier
+	(*ActiveRewardModifier)(nil),                     // 28: hiro.ActiveRewardModifier
+	(*Reward)(nil),                                   // 29: hiro.Reward
+	(*RewardList)(nil),                               // 30: hiro.RewardList
+	(*RewardRangeInt32)(nil),                         // 31: hiro.RewardRangeInt32
+	(*RewardRangeInt64)(nil),                         // 32: hiro.RewardRangeInt64
+	(*RewardRangeUInt64)(nil),                        // 33: hiro.RewardRangeUInt64
+	(*RewardRangeDouble)(nil),                        // 34: hiro.RewardRangeDouble
+	(*AvailableRewardsStringPropertyOption)(nil),     // 35: hiro.AvailableRewardsStringPropertyOption
+	(*AvailableRewardsStringProperty)(nil),           // 36: hiro.AvailableRewardsStringProperty
+	(*AvailableRewardsItem)(nil),                     // 37: hiro.AvailableRewardsItem
+	(*AvailableRewardsItemSet)(nil),                  // 38: hiro.AvailableRewardsItemSet
+	(*AvailableRewardsCurrency)(nil),                 // 39: hiro.AvailableRewardsCurrency
+	(*AvailableRewardsEnergy)(nil),                   // 40: hiro.AvailableRewardsEnergy
+	(*AvailableRewardsEnergyModifier)(nil),           // 41: hiro.AvailableRewardsEnergyModifier
+	(*AvailableRewardsRewardModifier)(nil),           // 42: hiro.AvailableRewardsRewardModifier
+	(*AvailableRewardsContents)(nil),                 // 43: hiro.AvailableRewardsContents
+	(*AvailableRewards)(nil),                         // 44: hiro.AvailableRewards
+	(*IncentiveClaim)(nil),                           // 45: hiro.IncentiveClaim
+	(*Incentive)(nil),                                // 46: hiro.Incentive
+	(*IncentiveList)(nil),                            // 47: hiro.IncentiveList
+	(*IncentiveInfo)(nil),                            // 48: hiro.IncentiveInfo
+	(*IncentiveSenderCreateRequest)(nil),             // 49: hiro.IncentiveSenderCreateRequest
+	(*IncentiveSenderDeleteRequest)(nil),             // 50: hiro.IncentiveSenderDeleteRequest
+	(*IncentiveSenderClaimRequest)(nil),              // 51: hiro.IncentiveSenderClaimRequest
+	(*IncentiveRecipientGetRequest)(nil),             // 52: hiro.IncentiveRecipientGetRequest
+	(*IncentiveRecipientClaimRequest)(nil),           // 53: hiro.IncentiveRecipientClaimRequest
+	(*ChallengeCreateRequest)(nil),                   // 54: hiro.ChallengeCreateRequest
+	(*ChallengeJoinRequest)(nil),                     // 55: hiro.ChallengeJoinRequest
+	(*ChallengeLeaveRequest)(nil),                    // 56: hiro.ChallengeLeaveRequest
+	(*ChallengeClaimRequest)(nil),                    // 57: hiro.ChallengeClaimRequest
+	(*ChallengeSearchRequest)(nil),                   // 58: hiro.ChallengeSearchRequest
+	(*ChallengeInviteRequest)(nil),                   // 59: hiro.ChallengeInviteRequest
+	(*ChallengeSubmitScoreRequest)(nil),              // 60: hiro.ChallengeSubmitScoreRequest
+	(*Challenge)(nil),                                // 61: hiro.Challenge
+	(*ChallengeListRequest)(nil),                     // 62: hiro.ChallengeListRequest
+	(*ChallengeGetRequest)(nil),                      // 63: hiro.ChallengeGetRequest
+	(*ChallengesList)(nil),                           // 64: hiro.ChallengesList
+	(*ChallengeScore)(nil),                           // 65: hiro.ChallengeScore
+	(*ChallengeRewardTier)(nil),                      // 66: hiro.ChallengeRewardTier
+	(*ChallengeTemplates)(nil),                       // 67: hiro.ChallengeTemplates
+	(*ChallengeTemplate)(nil),                        // 68: hiro.ChallengeTemplate
+	(*ChallengeMaxMinPlayers)(nil),                   // 69: hiro.ChallengeMaxMinPlayers
+	(*ChallengeMinMaxDuration)(nil),                  // 70: hiro.ChallengeMinMaxDuration
+	(*EventLeaderboardList)(nil),                     // 71: hiro.EventLeaderboardList
+	(*EventLeaderboardGet)(nil),                      // 72: hiro.EventLeaderboardGet
+	(*EventLeaderboardUpdate)(nil),                   // 73: hiro.EventLeaderboardUpdate
+	(*EventLeaderboardClaim)(nil),                    // 74: hiro.EventLeaderboardClaim
+	(*EventLeaderboardRoll)(nil),                     // 75: hiro.EventLeaderboardRoll
+	(*EventLeaderboardScore)(nil),                    // 76: hiro.EventLeaderboardScore
+	(*EventLeaderboardRewardTier)(nil),               // 77: hiro.EventLeaderboardRewardTier
+	(*EventLeaderboardRewardTiers)(nil),              // 78: hiro.EventLeaderboardRewardTiers
+	(*EventLeaderboardChangeZone)(nil),               // 79: hiro.EventLeaderboardChangeZone
+	(*EventLeaderboard)(nil),                         // 80: hiro.EventLeaderboard
+	(*EventLeaderboards)(nil),                        // 81: hiro.EventLeaderboards
+	(*EventLeaderboardDebugFillRequest)(nil),         // 82: hiro.EventLeaderboardDebugFillRequest
+	(*EventLeaderboardDebugRandomScoresRequest)(nil), // 83: hiro.EventLeaderboardDebugRandomScoresRequest
+	(*EconomyDonationContributor)(nil),               // 84: hiro.EconomyDonationContributor
+	(*EconomyDonation)(nil),                          // 85: hiro.EconomyDonation
+	(*EconomyDonationAck)(nil),                       // 86: hiro.EconomyDonationAck
+	(*EconomyDonationsList)(nil),                     // 87: hiro.EconomyDonationsList
+	(*EconomyDonationClaimRequestDetails)(nil),       // 88: hiro.EconomyDonationClaimRequestDetails
+	(*EconomyDonationClaimRequest)(nil),              // 89: hiro.EconomyDonationClaimRequest
+	(*EconomyDonationClaimRewards)(nil),              // 90: hiro.EconomyDonationClaimRewards
+	(*EconomyDonationGiveRequest)(nil),               // 91: hiro.EconomyDonationGiveRequest
+	(*EconomyDonationGetRequest)(nil),                // 92: hiro.EconomyDonationGetRequest
+	(*EconomyDonationRequest)(nil),                   // 93: hiro.EconomyDonationRequest
+	(*EconomyDonationsByUserList)(nil),               // 94: hiro.EconomyDonationsByUserList
+	(*EconomyListStoreItemCost)(nil),                 // 95: hiro.EconomyListStoreItemCost
+	(*EconomyListStoreItem)(nil),                     // 96: hiro.EconomyListStoreItem
+	(*EconomyListPlacement)(nil),                     // 97: hiro.EconomyListPlacement
+	(*EconomyList)(nil),                              // 98: hiro.EconomyList
+	(*InventoryItem)(nil),                            // 99: hiro.InventoryItem
+	(*InventoryListRequest)(nil),                     // 100: hiro.InventoryListRequest
+	(*InventoryGrantRequest)(nil),                    // 101: hiro.InventoryGrantRequest
+	(*InventoryUpdateItemProperties)(nil),            // 102: hiro.InventoryUpdateItemProperties
+	(*InventoryUpdateItemsRequest)(nil),              // 103: hiro.InventoryUpdateItemsRequest
+	(*Inventory)(nil),                                // 104: hiro.Inventory
+	(*InventoryConsumeRequest)(nil),                  // 105: hiro.InventoryConsumeRequest
+	(*InventoryConsumeRewards)(nil),                  // 106: hiro.InventoryConsumeRewards
+	(*InventoryUpdateAck)(nil),                       // 107: hiro.InventoryUpdateAck
+	(*InventoryList)(nil),                            // 108: hiro.InventoryList
+	(*AuctionBidAmount)(nil),                         // 109: hiro.AuctionBidAmount
+	(*AuctionFee)(nil),                               // 110: hiro.AuctionFee
+	(*AuctionTemplateConditionListingCost)(nil),      // 111: hiro.AuctionTemplateConditionListingCost
+	(*AuctionTemplateConditionBidIncrement)(nil),     // 112: hiro.AuctionTemplateConditionBidIncrement
+	(*AuctionTemplateCondition)(nil),                 // 113: hiro.AuctionTemplateCondition
+	(*AuctionTemplate)(nil),                          // 114: hiro.AuctionTemplate
+	(*AuctionTemplates)(nil),                         // 115: hiro.AuctionTemplates
+	(*AuctionReward)(nil),                            // 116: hiro.AuctionReward
+	(*AuctionBid)(nil),                               // 117: hiro.AuctionBid
+	(*Auction)(nil),                                  // 118: hiro.Auction
+	(*AuctionNotificationBid)(nil),                   // 119: hiro.AuctionNotificationBid
+	(*StreamEnvelope)(nil),                           // 120: hiro.StreamEnvelope
+	(*AuctionClaimBid)(nil),                          // 121: hiro.AuctionClaimBid
+	(*AuctionClaimCreated)(nil),                      // 122: hiro.AuctionClaimCreated
+	(*AuctionCancel)(nil),                            // 123: hiro.AuctionCancel
+	(*AuctionList)(nil),                              // 124: hiro.AuctionList
+	(*AuctionListRequest)(nil),                       // 125: hiro.AuctionListRequest
+	(*AuctionBidRequest)(nil),                        // 126: hiro.AuctionBidRequest
+	(*AuctionClaimBidRequest)(nil),                   // 127: hiro.AuctionClaimBidRequest
+	(*AuctionClaimCreatedRequest)(nil),               // 128: hiro.AuctionClaimCreatedRequest
+	(*AuctionCancelRequest)(nil),                     // 129: hiro.AuctionCancelRequest
+	(*AuctionCreateRequest)(nil),                     // 130: hiro.AuctionCreateRequest
+	(*AuctionListBidsRequest)(nil),                   // 131: hiro.AuctionListBidsRequest
+	(*AuctionListCreatedRequest)(nil),                // 132: hiro.AuctionListCreatedRequest
+	(*AuctionsFollowRequest)(nil),                    // 133: hiro.AuctionsFollowRequest
+	(*EconomyListRequest)(nil),                       // 134: hiro.EconomyListRequest
+	(*EconomyGrantRequest)(nil),                      // 135: hiro.EconomyGrantRequest
+	(*EconomyPurchaseIntentRequest)(nil),             // 136: hiro.EconomyPurchaseIntentRequest
+	(*EconomyPurchaseRequest)(nil),                   // 137: hiro.EconomyPurchaseRequest
+	(*EconomyPurchaseRestoreRequest)(nil),            // 138: hiro.EconomyPurchaseRestoreRequest
+	(*EconomyPlacementStatusRequest)(nil),            // 139: hiro.EconomyPlacementStatusRequest
+	(*EconomyPlacementStartRequest)(nil),             // 140: hiro.EconomyPlacementStartRequest
+	(*EconomyPlacementStatus)(nil),                   // 141: hiro.EconomyPlacementStatus
+	(*EconomyUpdateAck)(nil),                         // 142: hiro.EconomyUpdateAck
+	(*EconomyPurchaseAck)(nil),                       // 143: hiro.EconomyPurchaseAck
+	(*EnergyModifier)(nil),                           // 144: hiro.EnergyModifier
+	(*Energy)(nil),                                   // 145: hiro.Energy
+	(*EnergyList)(nil),                               // 146: hiro.EnergyList
+	(*EnergySpendRequest)(nil),                       // 147: hiro.EnergySpendRequest
+	(*EnergySpendReward)(nil),                        // 148: hiro.EnergySpendReward
+	(*EnergyGrantRequest)(nil),                       // 149: hiro.EnergyGrantRequest
+	(*LeaderboardConfig)(nil),                        // 150: hiro.LeaderboardConfig
+	(*LeaderboardConfigList)(nil),                    // 151: hiro.LeaderboardConfigList
+	(*Tutorial)(nil),                                 // 152: hiro.Tutorial
+	(*TutorialList)(nil),                             // 153: hiro.TutorialList
+	(*TutorialAcceptRequest)(nil),                    // 154: hiro.TutorialAcceptRequest
+	(*TutorialDeclineRequest)(nil),                   // 155: hiro.TutorialDeclineRequest
+	(*TutorialAbandonRequest)(nil),                   // 156: hiro.TutorialAbandonRequest
+	(*TutorialUpdateRequest)(nil),                    // 157: hiro.TutorialUpdateRequest
+	(*TutorialResetRequest)(nil),                     // 158: hiro.TutorialResetRequest
+	(*RateAppRequest)(nil),                           // 159: hiro.RateAppRequest
+	(*Team)(nil),                                     // 160: hiro.Team
+	(*TeamCreateRequest)(nil),                        // 161: hiro.TeamCreateRequest
+	(*TeamListRequest)(nil),                          // 162: hiro.TeamListRequest
+	(*TeamList)(nil),                                 // 163: hiro.TeamList
+	(*TeamSearchRequest)(nil),                        // 164: hiro.TeamSearchRequest
+	(*TeamWriteChatMessageRequest)(nil),              // 165: hiro.TeamWriteChatMessageRequest
+	(*UnlockableCost)(nil),                           // 166: hiro.UnlockableCost
+	(*Unlockable)(nil),                               // 167: hiro.Unlockable
+	(*UnlockableSlotCost)(nil),                       // 168: hiro.UnlockableSlotCost
+	(*UnlockablesList)(nil),                          // 169: hiro.UnlockablesList
+	(*UnlockablesReward)(nil),                        // 170: hiro.UnlockablesReward
+	(*UnlockablesRequest)(nil),                       // 171: hiro.UnlockablesRequest
+	(*UnlockablesQueueAddRequest)(nil),               // 172: hiro.UnlockablesQueueAddRequest
+	(*UnlockablesQueueRemoveRequest)(nil),            // 173: hiro.UnlockablesQueueRemoveRequest
+	(*UnlockablesQueueSetRequest)(nil),               // 174: hiro.UnlockablesQueueSetRequest
+	(*SubAchievement)(nil),                           // 175: hiro.SubAchievement
+	(*Achievement)(nil),                              // 176: hiro.Achievement
+	(*AchievementList)(nil),                          // 177: hiro.AchievementList
+	(*AchievementsClaimRequest)(nil),                 // 178: hiro.AchievementsClaimRequest
+	(*AchievementsGetRequest)(nil),                   // 179: hiro.AchievementsGetRequest
+	(*AchievementsUpdateAck)(nil),                    // 180: hiro.AchievementsUpdateAck
+	(*AchievementsUpdateRequest)(nil),                // 181: hiro.AchievementsUpdateRequest
+	(*StreakAvailableReward)(nil),                    // 182: hiro.StreakAvailableReward
+	(*StreakReward)(nil),                             // 183: hiro.StreakReward
+	(*Streak)(nil),                                   // 184: hiro.Streak
+	(*StreaksList)(nil),                              // 185: hiro.StreaksList
+	(*StreaksUpdateRequest)(nil),                     // 186: hiro.StreaksUpdateRequest
+	(*StreaksClaimRequest)(nil),                      // 187: hiro.StreaksClaimRequest
+	(*StreaksResetRequest)(nil),                      // 188: hiro.StreaksResetRequest
+	(*SyncInventoryItem)(nil),                        // 189: hiro.SyncInventoryItem
+	(*SyncInventory)(nil),                            // 190: hiro.SyncInventory
+	(*SyncEconomy)(nil),                              // 191: hiro.SyncEconomy
+	(*SyncAchievementsUpdate)(nil),                   // 192: hiro.SyncAchievementsUpdate
+	(*SyncAchievements)(nil),                         // 193: hiro.SyncAchievements
+	(*SyncEnergyState)(nil),                          // 194: hiro.SyncEnergyState
+	(*SyncEnergy)(nil),                               // 195: hiro.SyncEnergy
+	(*SyncEventLeaderboardUpdate)(nil),               // 196: hiro.SyncEventLeaderboardUpdate
+	(*SyncEventLeaderboards)(nil),                    // 197: hiro.SyncEventLeaderboards
+	(*SyncProgressionUpdate)(nil),                    // 198: hiro.SyncProgressionUpdate
+	(*SyncProgressions)(nil),                         // 199: hiro.SyncProgressions
+	(*SyncTutorials)(nil),                            // 200: hiro.SyncTutorials
+	(*SyncUnlockableUpdate)(nil),                     // 201: hiro.SyncUnlockableUpdate
+	(*SyncUnlockables)(nil),                          // 202: hiro.SyncUnlockables
+	(*SyncStreakUpdate)(nil),                         // 203: hiro.SyncStreakUpdate
+	(*SyncStreaks)(nil),                              // 204: hiro.SyncStreaks
+	(*SyncRequest)(nil),                              // 205: hiro.SyncRequest
+	(*SyncResponse)(nil),                             // 206: hiro.SyncResponse
+	nil,                                              // 207: hiro.ProgressionCost.ItemsEntry
+	nil,                                              // 208: hiro.ProgressionCost.CurrenciesEntry
+	nil,                                              // 209: hiro.ProgressionPreconditions.CountsEntry
+	nil,                                              // 210: hiro.ProgressionPreconditions.ItemsMinEntry
+	nil,                                              // 211: hiro.ProgressionPreconditions.ItemsMaxEntry
+	nil,                                              // 212: hiro.ProgressionPreconditions.StatsMinEntry
+	nil,                                              // 213: hiro.ProgressionPreconditions.StatsMaxEntry
+	nil,                                              // 214: hiro.ProgressionPreconditions.EnergyMinEntry
+	nil,                                              // 215: hiro.ProgressionPreconditions.EnergyMaxEntry
+	nil,                                              // 216: hiro.ProgressionPreconditions.CurrencyMinEntry
+	nil,                                              // 217: hiro.ProgressionPreconditions.CurrencyMaxEntry
+	nil,                                              // 218: hiro.Progression.CountsEntry
+	nil,                                              // 219: hiro.Progression.AdditionalPropertiesEntry
+	nil,                                              // 220: hiro.ProgressionDelta.CountsEntry
+	nil,                                              // 221: hiro.ProgressionList.ProgressionsEntry
+	nil,                                              // 222: hiro.ProgressionList.DeltasEntry
+	nil,                                              // 223: hiro.ProgressionGetRequest.ProgressionsEntry
+	nil,                                              // 224: hiro.ProgressionUpdateRequest.CountsEntry
+	nil,                                              // 225: hiro.StatList.PublicEntry
+	nil,                                              // 226: hiro.StatList.PrivateEntry
+	nil,                                              // 227: hiro.DevicePrefsRequest.PreferencesEntry
+	nil,                                              // 228: hiro.RewardInventoryItem.StringPropertiesEntry
+	nil,                                              // 229: hiro.RewardInventoryItem.NumericPropertiesEntry
+	nil,                                              // 230: hiro.Reward.ItemsEntry
+	nil,                                              // 231: hiro.Reward.CurrenciesEntry
+	nil,                                              // 232: hiro.Reward.EnergiesEntry
+	nil,                                              // 233: hiro.Reward.ItemInstancesEntry
+	nil,                                              // 234: hiro.AvailableRewardsStringProperty.OptionsEntry
+	nil,                                              // 235: hiro.AvailableRewardsItem.NumericPropertiesEntry
+	nil,                                              // 236: hiro.AvailableRewardsItem.StringPropertiesEntry
+	nil,                                              // 237: hiro.AvailableRewardsContents.ItemsEntry
+	nil,                                              // 238: hiro.AvailableRewardsContents.CurrenciesEntry
+	nil,                                              // 239: hiro.AvailableRewardsContents.EnergiesEntry
+	nil,                                              // 240: hiro.Incentive.ClaimsEntry
+	nil,                                              // 241: hiro.ChallengeCreateRequest.AdditionalPropertiesEntry
+	nil,                                              // 242: hiro.Challenge.AdditionalPropertiesEntry
+	nil,                                              // 243: hiro.ChallengeTemplates.TemplatesEntry
+	nil,                                              // 244: hiro.EventLeaderboard.RewardTiersEntry
+	nil,                                              // 245: hiro.EventLeaderboard.ChangeZonesEntry
+	nil,                                              // 246: hiro.EventLeaderboard.AdditionalPropertiesEntry
+	nil,                                              // 247: hiro.EconomyDonation.AdditionalPropertiesEntry
+	nil,                                              // 248: hiro.EconomyDonationClaimRequestDetails.DonorsEntry
+	nil,                                              // 249: hiro.EconomyDonationClaimRequest.DonationsEntry
+	nil,                                              // 250: hiro.EconomyDonationClaimRewards.ClaimedRewardsEntry
+	nil,                                              // 251: hiro.EconomyDonationsByUserList.UserDonationsEntry
+	nil,                                              // 252: hiro.EconomyListStoreItemCost.CurrenciesEntry
+	nil,                                              // 253: hiro.EconomyListStoreItem.AdditionalPropertiesEntry
+	nil,                                              // 254: hiro.EconomyListPlacement.AdditionalPropertiesEntry
+	nil,                                              // 255: hiro.EconomyList.DonationsEntry
+	nil,                                              // 256: hiro.InventoryItem.StringPropertiesEntry
+	nil,                                              // 257: hiro.InventoryItem.NumericPropertiesEntry
+	nil,                                              // 258: hiro.InventoryGrantRequest.ItemsEntry
+	nil,                                              // 259: hiro.InventoryUpdateItemProperties.StringPropertiesEntry
+	nil,                                              // 260: hiro.InventoryUpdateItemProperties.NumericPropertiesEntry
+	nil,                                              // 261: hiro.InventoryUpdateItemsRequest.ItemUpdatesEntry
+	nil,                                              // 262: hiro.Inventory.ItemsEntry
+	nil,                                              // 263: hiro.InventoryConsumeRequest.ItemsEntry
+	nil,                                              // 264: hiro.InventoryConsumeRequest.InstancesEntry
+	nil,                                              // 265: hiro.InventoryConsumeRewards.RewardsEntry
+	nil,                                              // 266: hiro.InventoryConsumeRewards.InstanceRewardsEntry
+	nil,                                              // 267: hiro.InventoryList.ItemsEntry
+	nil,                                              // 268: hiro.AuctionBidAmount.CurrenciesEntry
+	nil,                                              // 269: hiro.AuctionTemplateConditionListingCost.CurrenciesEntry
+	nil,                                              // 270: hiro.AuctionTemplateConditionListingCost.ItemsEntry
+	nil,                                              // 271: hiro.AuctionTemplateConditionListingCost.EnergiesEntry
+	nil,                                              // 272: hiro.AuctionTemplate.ConditionsEntry
+	nil,                                              // 273: hiro.AuctionTemplates.TemplatesEntry
+	nil,                                              // 274: hiro.EconomyGrantRequest.CurrenciesEntry
+	nil,                                              // 275: hiro.EconomyGrantRequest.ItemsEntry
+	nil,                                              // 276: hiro.EconomyPlacementStartRequest.MetadataEntry
+	nil,                                              // 277: hiro.EconomyPlacementStatus.MetadataEntry
+	nil,                                              // 278: hiro.EconomyUpdateAck.WalletEntry
+	nil,                                              // 279: hiro.EconomyPurchaseAck.WalletEntry
+	nil,                                              // 280: hiro.Energy.AdditionalPropertiesEntry
+	nil,                                              // 281: hiro.EnergyList.EnergiesEntry
+	nil,                                              // 282: hiro.EnergySpendRequest.AmountsEntry
+	nil,                                              // 283: hiro.EnergyGrantRequest.AmountsEntry
+	nil,                                              // 284: hiro.Tutorial.AdditionalPropertiesEntry
+	nil,                                              // 285: hiro.TutorialList.TutorialsEntry
+	nil,                                              // 286: hiro.UnlockableCost.ItemsEntry
+	nil,                                              // 287: hiro.UnlockableCost.CurrenciesEntry
+	nil,                                              // 288: hiro.Unlockable.AdditionalPropertiesEntry
+	nil,                                              // 289: hiro.UnlockableSlotCost.ItemsEntry
+	nil,                                              // 290: hiro.UnlockableSlotCost.CurrenciesEntry
+	nil,                                              // 291: hiro.SubAchievement.AdditionalPropertiesEntry
+	nil,                                              // 292: hiro.Achievement.SubAchievementsEntry
+	nil,                                              // 293: hiro.Achievement.AdditionalPropertiesEntry
+	nil,                                              // 294: hiro.AchievementList.AchievementsEntry
+	nil,                                              // 295: hiro.AchievementList.RepeatAchievementsEntry
+	nil,                                              // 296: hiro.AchievementsUpdateAck.AchievementsEntry
+	nil,                                              // 297: hiro.AchievementsUpdateAck.RepeatAchievementsEntry
+	nil,                                              // 298: hiro.AchievementsUpdateRequest.AchievementsEntry
+	nil,                                              // 299: hiro.StreaksList.StreaksEntry
+	nil,                                              // 300: hiro.StreaksUpdateRequest.UpdatesEntry
+	nil,                                              // 301: hiro.SyncInventoryItem.StringPropertiesEntry
+	nil,                                              // 302: hiro.SyncInventoryItem.NumericPropertiesEntry
+	nil,                                              // 303: hiro.SyncInventory.ItemsEntry
+	nil,                                              // 304: hiro.SyncEconomy.CurrenciesEntry
+	nil,                                              // 305: hiro.SyncAchievements.AchievementsEntry
+	nil,                                              // 306: hiro.SyncEnergy.EnergiesEntry
+	nil,                                              // 307: hiro.SyncEventLeaderboards.EventLeaderboardsEntry
+	nil,                                              // 308: hiro.SyncProgressionUpdate.CountsEntry
+	nil,                                              // 309: hiro.SyncProgressions.ProgressionsEntry
+	nil,                                              // 310: hiro.SyncTutorials.UpdatesEntry
+	nil,                                              // 311: hiro.SyncUnlockables.UpdatesEntry
+	nil,                                              // 312: hiro.SyncStreaks.UpdatesEntry
+	nil,                                              // 313: hiro.SyncResponse.WalletEntry
+	(*structpb.Struct)(nil),                          // 314: google.protobuf.Struct
+	(*wrapperspb.Int32Value)(nil),                    // 315: google.protobuf.Int32Value
+	(*descriptorpb.EnumValueOptions)(nil),            // 316: google.protobuf.EnumValueOptions
 }
 var file_hiro_proto_depIdxs = []int32{
-	189, // 0: hiro.ProgressionCost.items:type_name -> hiro.ProgressionCost.ItemsEntry
-	190, // 1: hiro.ProgressionCost.currencies:type_name -> hiro.ProgressionCost.CurrenciesEntry
-	191, // 2: hiro.ProgressionPreconditions.counts:type_name -> hiro.ProgressionPreconditions.CountsEntry
-	8,   // 3: hiro.ProgressionPreconditions.cost:type_name -> hiro.ProgressionCost
-	192, // 4: hiro.ProgressionPreconditions.items_min:type_name -> hiro.ProgressionPreconditions.ItemsMinEntry
-	193, // 5: hiro.ProgressionPreconditions.items_max:type_name -> hiro.ProgressionPreconditions.ItemsMaxEntry
-	194, // 6: hiro.ProgressionPreconditions.stats_min:type_name -> hiro.ProgressionPreconditions.StatsMinEntry
-	195, // 7: hiro.ProgressionPreconditions.stats_max:type_name -> hiro.ProgressionPreconditions.StatsMaxEntry
-	196, // 8: hiro.ProgressionPreconditions.energy_min:type_name -> hiro.ProgressionPreconditions.EnergyMinEntry
-	197, // 9: hiro.ProgressionPreconditions.energy_max:type_name -> hiro.ProgressionPreconditions.EnergyMaxEntry
-	198, // 10: hiro.ProgressionPreconditions.currency_min:type_name -> hiro.ProgressionPreconditions.CurrencyMinEntry
-	199, // 11: hiro.ProgressionPreconditions.currency_max:type_name -> hiro.ProgressionPreconditions.CurrencyMaxEntry
-	9,   // 12: hiro.ProgressionPreconditionsBlock.direct:type_name -> hiro.ProgressionPreconditions
+	207, // 0: hiro.ProgressionCost.items:type_name -> hiro.ProgressionCost.ItemsEntry
+	208, // 1: hiro.ProgressionCost.currencies:type_name -> hiro.ProgressionCost.CurrenciesEntry
+	209, // 2: hiro.ProgressionPreconditions.counts:type_name -> hiro.ProgressionPreconditions.CountsEntry
+	9,   // 3: hiro.ProgressionPreconditions.cost:type_name -> hiro.ProgressionCost
+	210, // 4: hiro.ProgressionPreconditions.items_min:type_name -> hiro.ProgressionPreconditions.ItemsMinEntry
+	211, // 5: hiro.ProgressionPreconditions.items_max:type_name -> hiro.ProgressionPreconditions.ItemsMaxEntry
+	212, // 6: hiro.ProgressionPreconditions.stats_min:type_name -> hiro.ProgressionPreconditions.StatsMinEntry
+	213, // 7: hiro.ProgressionPreconditions.stats_max:type_name -> hiro.ProgressionPreconditions.StatsMaxEntry
+	214, // 8: hiro.ProgressionPreconditions.energy_min:type_name -> hiro.ProgressionPreconditions.EnergyMinEntry
+	215, // 9: hiro.ProgressionPreconditions.energy_max:type_name -> hiro.ProgressionPreconditions.EnergyMaxEntry
+	216, // 10: hiro.ProgressionPreconditions.currency_min:type_name -> hiro.ProgressionPreconditions.CurrencyMinEntry
+	217, // 11: hiro.ProgressionPreconditions.currency_max:type_name -> hiro.ProgressionPreconditions.CurrencyMaxEntry
+	10,  // 12: hiro.ProgressionPreconditionsBlock.direct:type_name -> hiro.ProgressionPreconditions
 	2,   // 13: hiro.ProgressionPreconditionsBlock.operator:type_name -> hiro.ProgressionPreconditionsOperator
-	10,  // 14: hiro.ProgressionPreconditionsBlock.nested:type_name -> hiro.ProgressionPreconditionsBlock
-	200, // 15: hiro.Progression.counts:type_name -> hiro.Progression.CountsEntry
-	201, // 16: hiro.Progression.additional_properties:type_name -> hiro.Progression.AdditionalPropertiesEntry
-	10,  // 17: hiro.Progression.preconditions:type_name -> hiro.ProgressionPreconditionsBlock
-	10,  // 18: hiro.Progression.unmet_preconditions:type_name -> hiro.ProgressionPreconditionsBlock
+	11,  // 14: hiro.ProgressionPreconditionsBlock.nested:type_name -> hiro.ProgressionPreconditionsBlock
+	218, // 15: hiro.Progression.counts:type_name -> hiro.Progression.CountsEntry
+	219, // 16: hiro.Progression.additional_properties:type_name -> hiro.Progression.AdditionalPropertiesEntry
+	11,  // 17: hiro.Progression.preconditions:type_name -> hiro.ProgressionPreconditionsBlock
+	11,  // 18: hiro.Progression.unmet_preconditions:type_name -> hiro.ProgressionPreconditionsBlock
 	3,   // 19: hiro.ProgressionDelta.state:type_name -> hiro.ProgressionDeltaState
-	202, // 20: hiro.ProgressionDelta.counts:type_name -> hiro.ProgressionDelta.CountsEntry
-	10,  // 21: hiro.ProgressionDelta.preconditions:type_name -> hiro.ProgressionPreconditionsBlock
-	203, // 22: hiro.ProgressionList.progressions:type_name -> hiro.ProgressionList.ProgressionsEntry
-	204, // 23: hiro.ProgressionList.deltas:type_name -> hiro.ProgressionList.DeltasEntry
-	205, // 24: hiro.ProgressionGetRequest.progressions:type_name -> hiro.ProgressionGetRequest.ProgressionsEntry
-	206, // 25: hiro.ProgressionUpdateRequest.counts:type_name -> hiro.ProgressionUpdateRequest.CountsEntry
+	220, // 20: hiro.ProgressionDelta.counts:type_name -> hiro.ProgressionDelta.CountsEntry
+	11,  // 21: hiro.ProgressionDelta.preconditions:type_name -> hiro.ProgressionPreconditionsBlock
+	221, // 22: hiro.ProgressionList.progressions:type_name -> hiro.ProgressionList.ProgressionsEntry
+	222, // 23: hiro.ProgressionList.deltas:type_name -> hiro.ProgressionList.DeltasEntry
+	223, // 24: hiro.ProgressionGetRequest.progressions:type_name -> hiro.ProgressionGetRequest.ProgressionsEntry
+	224, // 25: hiro.ProgressionUpdateRequest.counts:type_name -> hiro.ProgressionUpdateRequest.CountsEntry
 	4,   // 26: hiro.StatUpdate.operator:type_name -> hiro.StatUpdateOperator
-	18,  // 27: hiro.StatUpdateRequest.public:type_name -> hiro.StatUpdate
-	18,  // 28: hiro.StatUpdateRequest.private:type_name -> hiro.StatUpdate
-	293, // 29: hiro.Stat.additional_properties:type_name -> google.protobuf.Struct
-	207, // 30: hiro.StatList.public:type_name -> hiro.StatList.PublicEntry
-	208, // 31: hiro.StatList.private:type_name -> hiro.StatList.PrivateEntry
-	209, // 32: hiro.DevicePrefsRequest.preferences:type_name -> hiro.DevicePrefsRequest.PreferencesEntry
-	210, // 33: hiro.RewardInventoryItem.string_properties:type_name -> hiro.RewardInventoryItem.StringPropertiesEntry
-	211, // 34: hiro.RewardInventoryItem.numeric_properties:type_name -> hiro.RewardInventoryItem.NumericPropertiesEntry
-	212, // 35: hiro.Reward.items:type_name -> hiro.Reward.ItemsEntry
-	213, // 36: hiro.Reward.currencies:type_name -> hiro.Reward.CurrenciesEntry
-	214, // 37: hiro.Reward.energies:type_name -> hiro.Reward.EnergiesEntry
-	25,  // 38: hiro.Reward.energy_modifiers:type_name -> hiro.RewardEnergyModifier
-	26,  // 39: hiro.Reward.reward_modifiers:type_name -> hiro.RewardModifier
-	215, // 40: hiro.Reward.item_instances:type_name -> hiro.Reward.ItemInstancesEntry
-	28,  // 41: hiro.RewardList.rewards:type_name -> hiro.Reward
-	216, // 42: hiro.AvailableRewardsStringProperty.options:type_name -> hiro.AvailableRewardsStringProperty.OptionsEntry
-	31,  // 43: hiro.AvailableRewardsItem.count:type_name -> hiro.RewardRangeInt64
-	217, // 44: hiro.AvailableRewardsItem.numeric_properties:type_name -> hiro.AvailableRewardsItem.NumericPropertiesEntry
-	218, // 45: hiro.AvailableRewardsItem.string_properties:type_name -> hiro.AvailableRewardsItem.StringPropertiesEntry
-	31,  // 46: hiro.AvailableRewardsItemSet.count:type_name -> hiro.RewardRangeInt64
-	31,  // 47: hiro.AvailableRewardsCurrency.count:type_name -> hiro.RewardRangeInt64
-	30,  // 48: hiro.AvailableRewardsEnergy.count:type_name -> hiro.RewardRangeInt32
-	31,  // 49: hiro.AvailableRewardsEnergyModifier.value:type_name -> hiro.RewardRangeInt64
-	32,  // 50: hiro.AvailableRewardsEnergyModifier.duration_sec:type_name -> hiro.RewardRangeUInt64
-	31,  // 51: hiro.AvailableRewardsRewardModifier.value:type_name -> hiro.RewardRangeInt64
-	32,  // 52: hiro.AvailableRewardsRewardModifier.duration_sec:type_name -> hiro.RewardRangeUInt64
-	219, // 53: hiro.AvailableRewardsContents.items:type_name -> hiro.AvailableRewardsContents.ItemsEntry
-	37,  // 54: hiro.AvailableRewardsContents.item_sets:type_name -> hiro.AvailableRewardsItemSet
-	220, // 55: hiro.AvailableRewardsContents.currencies:type_name -> hiro.AvailableRewardsContents.CurrenciesEntry
-	221, // 56: hiro.AvailableRewardsContents.energies:type_name -> hiro.AvailableRewardsContents.EnergiesEntry
-	40,  // 57: hiro.AvailableRewardsContents.energy_modifiers:type_name -> hiro.AvailableRewardsEnergyModifier
-	41,  // 58: hiro.AvailableRewardsContents.reward_modifiers:type_name -> hiro.AvailableRewardsRewardModifier
-	42,  // 59: hiro.AvailableRewards.guaranteed:type_name -> hiro.AvailableRewardsContents
-	42,  // 60: hiro.AvailableRewards.weighted:type_name -> hiro.AvailableRewardsContents
-	28,  // 61: hiro.IncentiveClaim.reward:type_name -> hiro.Reward
+	19,  // 27: hiro.StatUpdateRequest.public:type_name -> hiro.StatUpdate
+	19,  // 28: hiro.StatUpdateRequest.private:type_name -> hiro.StatUpdate
+	314, // 29: hiro.Stat.additional_properties:type_name -> google.protobuf.Struct
+	225, // 30: hiro.StatList.public:type_name -> hiro.StatList.PublicEntry
+	226, // 31: hiro.StatList.private:type_name -> hiro.StatList.PrivateEntry
+	227, // 32: hiro.DevicePrefsRequest.preferences:type_name -> hiro.DevicePrefsRequest.PreferencesEntry
+	228, // 33: hiro.RewardInventoryItem.string_properties:type_name -> hiro.RewardInventoryItem.StringPropertiesEntry
+	229, // 34: hiro.RewardInventoryItem.numeric_properties:type_name -> hiro.RewardInventoryItem.NumericPropertiesEntry
+	230, // 35: hiro.Reward.items:type_name -> hiro.Reward.ItemsEntry
+	231, // 36: hiro.Reward.currencies:type_name -> hiro.Reward.CurrenciesEntry
+	232, // 37: hiro.Reward.energies:type_name -> hiro.Reward.EnergiesEntry
+	26,  // 38: hiro.Reward.energy_modifiers:type_name -> hiro.RewardEnergyModifier
+	27,  // 39: hiro.Reward.reward_modifiers:type_name -> hiro.RewardModifier
+	233, // 40: hiro.Reward.item_instances:type_name -> hiro.Reward.ItemInstancesEntry
+	29,  // 41: hiro.RewardList.rewards:type_name -> hiro.Reward
+	234, // 42: hiro.AvailableRewardsStringProperty.options:type_name -> hiro.AvailableRewardsStringProperty.OptionsEntry
+	32,  // 43: hiro.AvailableRewardsItem.count:type_name -> hiro.RewardRangeInt64
+	235, // 44: hiro.AvailableRewardsItem.numeric_properties:type_name -> hiro.AvailableRewardsItem.NumericPropertiesEntry
+	236, // 45: hiro.AvailableRewardsItem.string_properties:type_name -> hiro.AvailableRewardsItem.StringPropertiesEntry
+	32,  // 46: hiro.AvailableRewardsItemSet.count:type_name -> hiro.RewardRangeInt64
+	32,  // 47: hiro.AvailableRewardsCurrency.count:type_name -> hiro.RewardRangeInt64
+	31,  // 48: hiro.AvailableRewardsEnergy.count:type_name -> hiro.RewardRangeInt32
+	32,  // 49: hiro.AvailableRewardsEnergyModifier.value:type_name -> hiro.RewardRangeInt64
+	33,  // 50: hiro.AvailableRewardsEnergyModifier.duration_sec:type_name -> hiro.RewardRangeUInt64
+	32,  // 51: hiro.AvailableRewardsRewardModifier.value:type_name -> hiro.RewardRangeInt64
+	33,  // 52: hiro.AvailableRewardsRewardModifier.duration_sec:type_name -> hiro.RewardRangeUInt64
+	237, // 53: hiro.AvailableRewardsContents.items:type_name -> hiro.AvailableRewardsContents.ItemsEntry
+	38,  // 54: hiro.AvailableRewardsContents.item_sets:type_name -> hiro.AvailableRewardsItemSet
+	238, // 55: hiro.AvailableRewardsContents.currencies:type_name -> hiro.AvailableRewardsContents.CurrenciesEntry
+	239, // 56: hiro.AvailableRewardsContents.energies:type_name -> hiro.AvailableRewardsContents.EnergiesEntry
+	41,  // 57: hiro.AvailableRewardsContents.energy_modifiers:type_name -> hiro.AvailableRewardsEnergyModifier
+	42,  // 58: hiro.AvailableRewardsContents.reward_modifiers:type_name -> hiro.AvailableRewardsRewardModifier
+	43,  // 59: hiro.AvailableRewards.guaranteed:type_name -> hiro.AvailableRewardsContents
+	43,  // 60: hiro.AvailableRewards.weighted:type_name -> hiro.AvailableRewardsContents
+	29,  // 61: hiro.IncentiveClaim.reward:type_name -> hiro.Reward
 	6,   // 62: hiro.Incentive.type:type_name -> hiro.IncentiveType
-	43,  // 63: hiro.Incentive.recipient_rewards:type_name -> hiro.AvailableRewards
-	43,  // 64: hiro.Incentive.sender_rewards:type_name -> hiro.AvailableRewards
-	28,  // 65: hiro.Incentive.rewards:type_name -> hiro.Reward
-	222, // 66: hiro.Incentive.claims:type_name -> hiro.Incentive.ClaimsEntry
-	293, // 67: hiro.Incentive.additional_properties:type_name -> google.protobuf.Struct
-	45,  // 68: hiro.IncentiveList.incentives:type_name -> hiro.Incentive
+	44,  // 63: hiro.Incentive.recipient_rewards:type_name -> hiro.AvailableRewards
+	44,  // 64: hiro.Incentive.sender_rewards:type_name -> hiro.AvailableRewards
+	29,  // 65: hiro.Incentive.rewards:type_name -> hiro.Reward
+	240, // 66: hiro.Incentive.claims:type_name -> hiro.Incentive.ClaimsEntry
+	314, // 67: hiro.Incentive.additional_properties:type_name -> google.protobuf.Struct
+	46,  // 68: hiro.IncentiveList.incentives:type_name -> hiro.Incentive
 	6,   // 69: hiro.IncentiveInfo.type:type_name -> hiro.IncentiveType
-	43,  // 70: hiro.IncentiveInfo.available_rewards:type_name -> hiro.AvailableRewards
-	28,  // 71: hiro.IncentiveInfo.reward:type_name -> hiro.Reward
-	43,  // 72: hiro.EventLeaderboardRewardTier.available_rewards:type_name -> hiro.AvailableRewards
-	59,  // 73: hiro.EventLeaderboardRewardTiers.reward_tiers:type_name -> hiro.EventLeaderboardRewardTier
-	43,  // 74: hiro.EventLeaderboard.available_rewards:type_name -> hiro.AvailableRewards
-	223, // 75: hiro.EventLeaderboard.reward_tiers:type_name -> hiro.EventLeaderboard.RewardTiersEntry
-	224, // 76: hiro.EventLeaderboard.change_zones:type_name -> hiro.EventLeaderboard.ChangeZonesEntry
-	28,  // 77: hiro.EventLeaderboard.reward:type_name -> hiro.Reward
-	225, // 78: hiro.EventLeaderboard.additional_properties:type_name -> hiro.EventLeaderboard.AdditionalPropertiesEntry
-	58,  // 79: hiro.EventLeaderboard.scores:type_name -> hiro.EventLeaderboardScore
-	293, // 80: hiro.EventLeaderboard.matchmaker_properties:type_name -> google.protobuf.Struct
-	62,  // 81: hiro.EventLeaderboards.event_leaderboards:type_name -> hiro.EventLeaderboard
-	294, // 82: hiro.EventLeaderboardDebugRandomScoresRequest.operator:type_name -> google.protobuf.Int32Value
-	43,  // 83: hiro.EconomyDonation.recipient_available_rewards:type_name -> hiro.AvailableRewards
-	66,  // 84: hiro.EconomyDonation.contributors:type_name -> hiro.EconomyDonationContributor
-	43,  // 85: hiro.EconomyDonation.contributor_available_rewards:type_name -> hiro.AvailableRewards
-	28,  // 86: hiro.EconomyDonation.recipient_rewards:type_name -> hiro.Reward
-	226, // 87: hiro.EconomyDonation.additional_properties:type_name -> hiro.EconomyDonation.AdditionalPropertiesEntry
-	67,  // 88: hiro.EconomyDonationAck.donation:type_name -> hiro.EconomyDonation
-	67,  // 89: hiro.EconomyDonationsList.donations:type_name -> hiro.EconomyDonation
-	227, // 90: hiro.EconomyDonationClaimRequestDetails.donors:type_name -> hiro.EconomyDonationClaimRequestDetails.DonorsEntry
-	228, // 91: hiro.EconomyDonationClaimRequest.donations:type_name -> hiro.EconomyDonationClaimRequest.DonationsEntry
-	69,  // 92: hiro.EconomyDonationClaimRewards.donations:type_name -> hiro.EconomyDonationsList
-	229, // 93: hiro.EconomyDonationClaimRewards.claimed_rewards:type_name -> hiro.EconomyDonationClaimRewards.ClaimedRewardsEntry
-	230, // 94: hiro.EconomyDonationsByUserList.user_donations:type_name -> hiro.EconomyDonationsByUserList.UserDonationsEntry
-	231, // 95: hiro.EconomyListStoreItemCost.currencies:type_name -> hiro.EconomyListStoreItemCost.CurrenciesEntry
-	77,  // 96: hiro.EconomyListStoreItem.cost:type_name -> hiro.EconomyListStoreItemCost
-	43,  // 97: hiro.EconomyListStoreItem.available_rewards:type_name -> hiro.AvailableRewards
-	232, // 98: hiro.EconomyListStoreItem.additional_properties:type_name -> hiro.EconomyListStoreItem.AdditionalPropertiesEntry
-	28,  // 99: hiro.EconomyListPlacement.reward:type_name -> hiro.Reward
-	43,  // 100: hiro.EconomyListPlacement.available_rewards:type_name -> hiro.AvailableRewards
-	233, // 101: hiro.EconomyListPlacement.additional_properties:type_name -> hiro.EconomyListPlacement.AdditionalPropertiesEntry
-	78,  // 102: hiro.EconomyList.store_items:type_name -> hiro.EconomyListStoreItem
-	79,  // 103: hiro.EconomyList.placements:type_name -> hiro.EconomyListPlacement
-	234, // 104: hiro.EconomyList.donations:type_name -> hiro.EconomyList.DonationsEntry
-	27,  // 105: hiro.EconomyList.active_reward_modifiers:type_name -> hiro.ActiveRewardModifier
-	43,  // 106: hiro.InventoryItem.consume_available_rewards:type_name -> hiro.AvailableRewards
-	235, // 107: hiro.InventoryItem.string_properties:type_name -> hiro.InventoryItem.StringPropertiesEntry
-	236, // 108: hiro.InventoryItem.numeric_properties:type_name -> hiro.InventoryItem.NumericPropertiesEntry
-	237, // 109: hiro.InventoryGrantRequest.items:type_name -> hiro.InventoryGrantRequest.ItemsEntry
-	238, // 110: hiro.InventoryUpdateItemProperties.string_properties:type_name -> hiro.InventoryUpdateItemProperties.StringPropertiesEntry
-	239, // 111: hiro.InventoryUpdateItemProperties.numeric_properties:type_name -> hiro.InventoryUpdateItemProperties.NumericPropertiesEntry
-	240, // 112: hiro.InventoryUpdateItemsRequest.item_updates:type_name -> hiro.InventoryUpdateItemsRequest.ItemUpdatesEntry
-	241, // 113: hiro.Inventory.items:type_name -> hiro.Inventory.ItemsEntry
-	242, // 114: hiro.InventoryConsumeRequest.items:type_name -> hiro.InventoryConsumeRequest.ItemsEntry
-	243, // 115: hiro.InventoryConsumeRequest.instances:type_name -> hiro.InventoryConsumeRequest.InstancesEntry
-	86,  // 116: hiro.InventoryConsumeRewards.inventory:type_name -> hiro.Inventory
-	244, // 117: hiro.InventoryConsumeRewards.rewards:type_name -> hiro.InventoryConsumeRewards.RewardsEntry
-	245, // 118: hiro.InventoryConsumeRewards.instance_rewards:type_name -> hiro.InventoryConsumeRewards.InstanceRewardsEntry
-	86,  // 119: hiro.InventoryUpdateAck.inventory:type_name -> hiro.Inventory
-	246, // 120: hiro.InventoryList.items:type_name -> hiro.InventoryList.ItemsEntry
-	247, // 121: hiro.AuctionBidAmount.currencies:type_name -> hiro.AuctionBidAmount.CurrenciesEntry
-	91,  // 122: hiro.AuctionFee.fixed:type_name -> hiro.AuctionBidAmount
-	248, // 123: hiro.AuctionTemplateConditionListingCost.currencies:type_name -> hiro.AuctionTemplateConditionListingCost.CurrenciesEntry
-	249, // 124: hiro.AuctionTemplateConditionListingCost.items:type_name -> hiro.AuctionTemplateConditionListingCost.ItemsEntry
-	250, // 125: hiro.AuctionTemplateConditionListingCost.energies:type_name -> hiro.AuctionTemplateConditionListingCost.EnergiesEntry
-	91,  // 126: hiro.AuctionTemplateConditionBidIncrement.fixed:type_name -> hiro.AuctionBidAmount
-	93,  // 127: hiro.AuctionTemplateCondition.listing_cost:type_name -> hiro.AuctionTemplateConditionListingCost
-	91,  // 128: hiro.AuctionTemplateCondition.bid_start:type_name -> hiro.AuctionBidAmount
-	94,  // 129: hiro.AuctionTemplateCondition.bid_increment:type_name -> hiro.AuctionTemplateConditionBidIncrement
-	92,  // 130: hiro.AuctionTemplateCondition.fee:type_name -> hiro.AuctionFee
-	251, // 131: hiro.AuctionTemplate.conditions:type_name -> hiro.AuctionTemplate.ConditionsEntry
-	252, // 132: hiro.AuctionTemplates.templates:type_name -> hiro.AuctionTemplates.TemplatesEntry
-	81,  // 133: hiro.AuctionReward.items:type_name -> hiro.InventoryItem
-	91,  // 134: hiro.AuctionBid.bid:type_name -> hiro.AuctionBidAmount
-	98,  // 135: hiro.Auction.reward:type_name -> hiro.AuctionReward
-	92,  // 136: hiro.Auction.fee:type_name -> hiro.AuctionFee
-	99,  // 137: hiro.Auction.bid:type_name -> hiro.AuctionBid
-	91,  // 138: hiro.Auction.bid_next:type_name -> hiro.AuctionBidAmount
-	99,  // 139: hiro.Auction.bid_first:type_name -> hiro.AuctionBid
-	99,  // 140: hiro.Auction.bid_history:type_name -> hiro.AuctionBid
-	99,  // 141: hiro.AuctionNotificationBid.bid:type_name -> hiro.AuctionBid
-	91,  // 142: hiro.AuctionNotificationBid.bid_next:type_name -> hiro.AuctionBidAmount
-	101, // 143: hiro.StreamEnvelope.auction_bid:type_name -> hiro.AuctionNotificationBid
-	100, // 144: hiro.AuctionClaimBid.auction:type_name -> hiro.Auction
-	98,  // 145: hiro.AuctionClaimBid.reward:type_name -> hiro.AuctionReward
-	100, // 146: hiro.AuctionClaimCreated.auction:type_name -> hiro.Auction
-	91,  // 147: hiro.AuctionClaimCreated.reward:type_name -> hiro.AuctionBidAmount
-	91,  // 148: hiro.AuctionClaimCreated.fee:type_name -> hiro.AuctionBidAmount
-	81,  // 149: hiro.AuctionClaimCreated.returned_items:type_name -> hiro.InventoryItem
-	100, // 150: hiro.AuctionCancel.auction:type_name -> hiro.Auction
-	98,  // 151: hiro.AuctionCancel.reward:type_name -> hiro.AuctionReward
-	100, // 152: hiro.AuctionList.auctions:type_name -> hiro.Auction
-	91,  // 153: hiro.AuctionBidRequest.bid:type_name -> hiro.AuctionBidAmount
-	5,   // 154: hiro.EconomyListRequest.store_type:type_name -> hiro.EconomyStoreType
-	253, // 155: hiro.EconomyGrantRequest.currencies:type_name -> hiro.EconomyGrantRequest.CurrenciesEntry
-	26,  // 156: hiro.EconomyGrantRequest.reward_modifiers:type_name -> hiro.RewardModifier
-	254, // 157: hiro.EconomyGrantRequest.items:type_name -> hiro.EconomyGrantRequest.ItemsEntry
-	5,   // 158: hiro.EconomyPurchaseIntentRequest.store_type:type_name -> hiro.EconomyStoreType
-	5,   // 159: hiro.EconomyPurchaseRequest.store_type:type_name -> hiro.EconomyStoreType
-	5,   // 160: hiro.EconomyPurchaseRestoreRequest.store_type:type_name -> hiro.EconomyStoreType
-	255, // 161: hiro.EconomyPlacementStartRequest.metadata:type_name -> hiro.EconomyPlacementStartRequest.MetadataEntry
-	28,  // 162: hiro.EconomyPlacementStatus.reward:type_name -> hiro.Reward
-	256, // 163: hiro.EconomyPlacementStatus.metadata:type_name -> hiro.EconomyPlacementStatus.MetadataEntry
-	257, // 164: hiro.EconomyUpdateAck.wallet:type_name -> hiro.EconomyUpdateAck.WalletEntry
-	86,  // 165: hiro.EconomyUpdateAck.inventory:type_name -> hiro.Inventory
-	28,  // 166: hiro.EconomyUpdateAck.reward:type_name -> hiro.Reward
-	27,  // 167: hiro.EconomyUpdateAck.active_reward_modifiers:type_name -> hiro.ActiveRewardModifier
-	258, // 168: hiro.EconomyPurchaseAck.wallet:type_name -> hiro.EconomyPurchaseAck.WalletEntry
-	86,  // 169: hiro.EconomyPurchaseAck.inventory:type_name -> hiro.Inventory
-	28,  // 170: hiro.EconomyPurchaseAck.reward:type_name -> hiro.Reward
-	126, // 171: hiro.Energy.modifiers:type_name -> hiro.EnergyModifier
-	43,  // 172: hiro.Energy.available_rewards:type_name -> hiro.AvailableRewards
-	259, // 173: hiro.Energy.additional_properties:type_name -> hiro.Energy.AdditionalPropertiesEntry
-	260, // 174: hiro.EnergyList.energies:type_name -> hiro.EnergyList.EnergiesEntry
-	261, // 175: hiro.EnergySpendRequest.amounts:type_name -> hiro.EnergySpendRequest.AmountsEntry
-	128, // 176: hiro.EnergySpendReward.energies:type_name -> hiro.EnergyList
-	28,  // 177: hiro.EnergySpendReward.reward:type_name -> hiro.Reward
-	262, // 178: hiro.EnergyGrantRequest.amounts:type_name -> hiro.EnergyGrantRequest.AmountsEntry
-	132, // 179: hiro.LeaderboardConfigList.leaderboard_configs:type_name -> hiro.LeaderboardConfig
-	7,   // 180: hiro.Tutorial.state:type_name -> hiro.TutorialState
-	263, // 181: hiro.Tutorial.additional_properties:type_name -> hiro.Tutorial.AdditionalPropertiesEntry
-	264, // 182: hiro.TutorialList.tutorials:type_name -> hiro.TutorialList.TutorialsEntry
-	142, // 183: hiro.TeamList.teams:type_name -> hiro.Team
-	265, // 184: hiro.UnlockableCost.items:type_name -> hiro.UnlockableCost.ItemsEntry
-	266, // 185: hiro.UnlockableCost.currencies:type_name -> hiro.UnlockableCost.CurrenciesEntry
-	148, // 186: hiro.Unlockable.start_cost:type_name -> hiro.UnlockableCost
-	148, // 187: hiro.Unlockable.cost:type_name -> hiro.UnlockableCost
-	28,  // 188: hiro.Unlockable.reward:type_name -> hiro.Reward
-	43,  // 189: hiro.Unlockable.available_rewards:type_name -> hiro.AvailableRewards
-	267, // 190: hiro.Unlockable.additional_properties:type_name -> hiro.Unlockable.AdditionalPropertiesEntry
-	268, // 191: hiro.UnlockableSlotCost.items:type_name -> hiro.UnlockableSlotCost.ItemsEntry
-	269, // 192: hiro.UnlockableSlotCost.currencies:type_name -> hiro.UnlockableSlotCost.CurrenciesEntry
-	149, // 193: hiro.UnlockablesList.unlockables:type_name -> hiro.Unlockable
-	149, // 194: hiro.UnlockablesList.overflow:type_name -> hiro.Unlockable
-	150, // 195: hiro.UnlockablesList.slot_cost:type_name -> hiro.UnlockableSlotCost
-	151, // 196: hiro.UnlockablesReward.unlockables:type_name -> hiro.UnlockablesList
-	28,  // 197: hiro.UnlockablesReward.reward:type_name -> hiro.Reward
-	43,  // 198: hiro.UnlockablesReward.available_rewards:type_name -> hiro.AvailableRewards
-	28,  // 199: hiro.SubAchievement.reward:type_name -> hiro.Reward
-	43,  // 200: hiro.SubAchievement.available_rewards:type_name -> hiro.AvailableRewards
-	270, // 201: hiro.SubAchievement.additional_properties:type_name -> hiro.SubAchievement.AdditionalPropertiesEntry
-	43,  // 202: hiro.Achievement.available_rewards:type_name -> hiro.AvailableRewards
-	28,  // 203: hiro.Achievement.reward:type_name -> hiro.Reward
-	43,  // 204: hiro.Achievement.available_total_reward:type_name -> hiro.AvailableRewards
-	28,  // 205: hiro.Achievement.total_reward:type_name -> hiro.Reward
-	271, // 206: hiro.Achievement.sub_achievements:type_name -> hiro.Achievement.SubAchievementsEntry
-	272, // 207: hiro.Achievement.additional_properties:type_name -> hiro.Achievement.AdditionalPropertiesEntry
-	273, // 208: hiro.AchievementList.achievements:type_name -> hiro.AchievementList.AchievementsEntry
-	274, // 209: hiro.AchievementList.repeat_achievements:type_name -> hiro.AchievementList.RepeatAchievementsEntry
-	275, // 210: hiro.AchievementsUpdateAck.achievements:type_name -> hiro.AchievementsUpdateAck.AchievementsEntry
-	276, // 211: hiro.AchievementsUpdateAck.repeat_achievements:type_name -> hiro.AchievementsUpdateAck.RepeatAchievementsEntry
-	277, // 212: hiro.AchievementsUpdateRequest.achievements:type_name -> hiro.AchievementsUpdateRequest.AchievementsEntry
-	43,  // 213: hiro.StreakAvailableReward.reward:type_name -> hiro.AvailableRewards
-	28,  // 214: hiro.StreakReward.reward:type_name -> hiro.Reward
-	164, // 215: hiro.Streak.rewards:type_name -> hiro.StreakAvailableReward
-	164, // 216: hiro.Streak.available_rewards:type_name -> hiro.StreakAvailableReward
-	165, // 217: hiro.Streak.claimed_rewards:type_name -> hiro.StreakReward
-	278, // 218: hiro.StreaksList.streaks:type_name -> hiro.StreaksList.StreaksEntry
-	279, // 219: hiro.StreaksUpdateRequest.updates:type_name -> hiro.StreaksUpdateRequest.UpdatesEntry
-	280, // 220: hiro.SyncInventoryItem.string_properties:type_name -> hiro.SyncInventoryItem.StringPropertiesEntry
-	281, // 221: hiro.SyncInventoryItem.numeric_properties:type_name -> hiro.SyncInventoryItem.NumericPropertiesEntry
-	282, // 222: hiro.SyncInventory.items:type_name -> hiro.SyncInventory.ItemsEntry
-	283, // 223: hiro.SyncEconomy.currencies:type_name -> hiro.SyncEconomy.CurrenciesEntry
-	27,  // 224: hiro.SyncEconomy.modifiers:type_name -> hiro.ActiveRewardModifier
-	284, // 225: hiro.SyncAchievements.achievements:type_name -> hiro.SyncAchievements.AchievementsEntry
-	285, // 226: hiro.SyncEnergy.energies:type_name -> hiro.SyncEnergy.EnergiesEntry
-	126, // 227: hiro.SyncEnergy.modifiers:type_name -> hiro.EnergyModifier
-	286, // 228: hiro.SyncEventLeaderboards.event_leaderboards:type_name -> hiro.SyncEventLeaderboards.EventLeaderboardsEntry
-	287, // 229: hiro.SyncProgressionUpdate.counts:type_name -> hiro.SyncProgressionUpdate.CountsEntry
-	8,   // 230: hiro.SyncProgressionUpdate.cost:type_name -> hiro.ProgressionCost
-	288, // 231: hiro.SyncProgressions.progressions:type_name -> hiro.SyncProgressions.ProgressionsEntry
-	289, // 232: hiro.SyncTutorials.updates:type_name -> hiro.SyncTutorials.UpdatesEntry
-	290, // 233: hiro.SyncUnlockables.updates:type_name -> hiro.SyncUnlockables.UpdatesEntry
-	165, // 234: hiro.SyncStreakUpdate.claimed_rewards:type_name -> hiro.StreakReward
-	291, // 235: hiro.SyncStreaks.updates:type_name -> hiro.SyncStreaks.UpdatesEntry
-	172, // 236: hiro.SyncRequest.inventory:type_name -> hiro.SyncInventory
-	173, // 237: hiro.SyncRequest.economy:type_name -> hiro.SyncEconomy
-	175, // 238: hiro.SyncRequest.achievements:type_name -> hiro.SyncAchievements
-	177, // 239: hiro.SyncRequest.energy:type_name -> hiro.SyncEnergy
-	179, // 240: hiro.SyncRequest.event_leaderboards:type_name -> hiro.SyncEventLeaderboards
-	181, // 241: hiro.SyncRequest.progressions:type_name -> hiro.SyncProgressions
-	19,  // 242: hiro.SyncRequest.stats:type_name -> hiro.StatUpdateRequest
-	182, // 243: hiro.SyncRequest.tutorials:type_name -> hiro.SyncTutorials
-	184, // 244: hiro.SyncRequest.unlockables:type_name -> hiro.SyncUnlockables
-	186, // 245: hiro.SyncRequest.streaks:type_name -> hiro.SyncStreaks
-	292, // 246: hiro.SyncResponse.wallet:type_name -> hiro.SyncResponse.WalletEntry
-	86,  // 247: hiro.SyncResponse.inventory:type_name -> hiro.Inventory
-	159, // 248: hiro.SyncResponse.achievements:type_name -> hiro.AchievementList
-	128, // 249: hiro.SyncResponse.energy:type_name -> hiro.EnergyList
-	62,  // 250: hiro.SyncResponse.event_leaderboards:type_name -> hiro.EventLeaderboard
-	13,  // 251: hiro.SyncResponse.progressions:type_name -> hiro.ProgressionList
-	21,  // 252: hiro.SyncResponse.stats:type_name -> hiro.StatList
-	135, // 253: hiro.SyncResponse.tutorials:type_name -> hiro.TutorialList
-	151, // 254: hiro.SyncResponse.unlockables:type_name -> hiro.UnlockablesList
-	27,  // 255: hiro.SyncResponse.active_reward_modifiers:type_name -> hiro.ActiveRewardModifier
-	167, // 256: hiro.SyncResponse.streaks:type_name -> hiro.StreaksList
-	11,  // 257: hiro.ProgressionList.ProgressionsEntry.value:type_name -> hiro.Progression
-	12,  // 258: hiro.ProgressionList.DeltasEntry.value:type_name -> hiro.ProgressionDelta
-	11,  // 259: hiro.ProgressionGetRequest.ProgressionsEntry.value:type_name -> hiro.Progression
-	20,  // 260: hiro.StatList.PublicEntry.value:type_name -> hiro.Stat
-	20,  // 261: hiro.StatList.PrivateEntry.value:type_name -> hiro.Stat
-	24,  // 262: hiro.Reward.ItemInstancesEntry.value:type_name -> hiro.RewardInventoryItem
-	34,  // 263: hiro.AvailableRewardsStringProperty.OptionsEntry.value:type_name -> hiro.AvailableRewardsStringPropertyOption
-	33,  // 264: hiro.AvailableRewardsItem.NumericPropertiesEntry.value:type_name -> hiro.RewardRangeDouble
-	35,  // 265: hiro.AvailableRewardsItem.StringPropertiesEntry.value:type_name -> hiro.AvailableRewardsStringProperty
-	36,  // 266: hiro.AvailableRewardsContents.ItemsEntry.value:type_name -> hiro.AvailableRewardsItem
-	38,  // 267: hiro.AvailableRewardsContents.CurrenciesEntry.value:type_name -> hiro.AvailableRewardsCurrency
-	39,  // 268: hiro.AvailableRewardsContents.EnergiesEntry.value:type_name -> hiro.AvailableRewardsEnergy
-	44,  // 269: hiro.Incentive.ClaimsEntry.value:type_name -> hiro.IncentiveClaim
-	60,  // 270: hiro.EventLeaderboard.RewardTiersEntry.value:type_name -> hiro.EventLeaderboardRewardTiers
-	61,  // 271: hiro.EventLeaderboard.ChangeZonesEntry.value:type_name -> hiro.EventLeaderboardChangeZone
-	70,  // 272: hiro.EconomyDonationClaimRequest.DonationsEntry.value:type_name -> hiro.EconomyDonationClaimRequestDetails
-	29,  // 273: hiro.EconomyDonationClaimRewards.ClaimedRewardsEntry.value:type_name -> hiro.RewardList
-	69,  // 274: hiro.EconomyDonationsByUserList.UserDonationsEntry.value:type_name -> hiro.EconomyDonationsList
-	67,  // 275: hiro.EconomyList.DonationsEntry.value:type_name -> hiro.EconomyDonation
-	84,  // 276: hiro.InventoryUpdateItemsRequest.ItemUpdatesEntry.value:type_name -> hiro.InventoryUpdateItemProperties
-	81,  // 277: hiro.Inventory.ItemsEntry.value:type_name -> hiro.InventoryItem
-	29,  // 278: hiro.InventoryConsumeRewards.RewardsEntry.value:type_name -> hiro.RewardList
-	29,  // 279: hiro.InventoryConsumeRewards.InstanceRewardsEntry.value:type_name -> hiro.RewardList
-	81,  // 280: hiro.InventoryList.ItemsEntry.value:type_name -> hiro.InventoryItem
-	95,  // 281: hiro.AuctionTemplate.ConditionsEntry.value:type_name -> hiro.AuctionTemplateCondition
-	96,  // 282: hiro.AuctionTemplates.TemplatesEntry.value:type_name -> hiro.AuctionTemplate
-	127, // 283: hiro.EnergyList.EnergiesEntry.value:type_name -> hiro.Energy
-	134, // 284: hiro.TutorialList.TutorialsEntry.value:type_name -> hiro.Tutorial
-	157, // 285: hiro.Achievement.SubAchievementsEntry.value:type_name -> hiro.SubAchievement
-	158, // 286: hiro.AchievementList.AchievementsEntry.value:type_name -> hiro.Achievement
-	158, // 287: hiro.AchievementList.RepeatAchievementsEntry.value:type_name -> hiro.Achievement
-	158, // 288: hiro.AchievementsUpdateAck.AchievementsEntry.value:type_name -> hiro.Achievement
-	158, // 289: hiro.AchievementsUpdateAck.RepeatAchievementsEntry.value:type_name -> hiro.Achievement
-	166, // 290: hiro.StreaksList.StreaksEntry.value:type_name -> hiro.Streak
-	171, // 291: hiro.SyncInventory.ItemsEntry.value:type_name -> hiro.SyncInventoryItem
-	174, // 292: hiro.SyncAchievements.AchievementsEntry.value:type_name -> hiro.SyncAchievementsUpdate
-	176, // 293: hiro.SyncEnergy.EnergiesEntry.value:type_name -> hiro.SyncEnergyState
-	178, // 294: hiro.SyncEventLeaderboards.EventLeaderboardsEntry.value:type_name -> hiro.SyncEventLeaderboardUpdate
-	180, // 295: hiro.SyncProgressions.ProgressionsEntry.value:type_name -> hiro.SyncProgressionUpdate
-	183, // 296: hiro.SyncUnlockables.UpdatesEntry.value:type_name -> hiro.SyncUnlockableUpdate
-	185, // 297: hiro.SyncStreaks.UpdatesEntry.value:type_name -> hiro.SyncStreakUpdate
-	295, // 298: hiro.input:extendee -> google.protobuf.EnumValueOptions
-	295, // 299: hiro.output:extendee -> google.protobuf.EnumValueOptions
-	300, // [300:300] is the sub-list for method output_type
-	300, // [300:300] is the sub-list for method input_type
-	300, // [300:300] is the sub-list for extension type_name
-	298, // [298:300] is the sub-list for extension extendee
-	0,   // [0:298] is the sub-list for field type_name
+	44,  // 70: hiro.IncentiveInfo.available_rewards:type_name -> hiro.AvailableRewards
+	29,  // 71: hiro.IncentiveInfo.reward:type_name -> hiro.Reward
+	241, // 72: hiro.ChallengeCreateRequest.additional_properties:type_name -> hiro.ChallengeCreateRequest.AdditionalPropertiesEntry
+	66,  // 73: hiro.Challenge.reward_tiers:type_name -> hiro.ChallengeRewardTier
+	44,  // 74: hiro.Challenge.available_rewards:type_name -> hiro.AvailableRewards
+	242, // 75: hiro.Challenge.additional_properties:type_name -> hiro.Challenge.AdditionalPropertiesEntry
+	65,  // 76: hiro.Challenge.scores:type_name -> hiro.ChallengeScore
+	7,   // 77: hiro.Challenge.state:type_name -> hiro.ChallengeState
+	29,  // 78: hiro.Challenge.reward:type_name -> hiro.Reward
+	61,  // 79: hiro.ChallengesList.challenges:type_name -> hiro.Challenge
+	7,   // 80: hiro.ChallengeScore.state:type_name -> hiro.ChallengeState
+	44,  // 81: hiro.ChallengeRewardTier.available_rewards:type_name -> hiro.AvailableRewards
+	243, // 82: hiro.ChallengeTemplates.templates:type_name -> hiro.ChallengeTemplates.TemplatesEntry
+	66,  // 83: hiro.ChallengeTemplate.reward_tiers:type_name -> hiro.ChallengeRewardTier
+	69,  // 84: hiro.ChallengeTemplate.players:type_name -> hiro.ChallengeMaxMinPlayers
+	70,  // 85: hiro.ChallengeTemplate.duration:type_name -> hiro.ChallengeMinMaxDuration
+	44,  // 86: hiro.EventLeaderboardRewardTier.available_rewards:type_name -> hiro.AvailableRewards
+	77,  // 87: hiro.EventLeaderboardRewardTiers.reward_tiers:type_name -> hiro.EventLeaderboardRewardTier
+	44,  // 88: hiro.EventLeaderboard.available_rewards:type_name -> hiro.AvailableRewards
+	244, // 89: hiro.EventLeaderboard.reward_tiers:type_name -> hiro.EventLeaderboard.RewardTiersEntry
+	245, // 90: hiro.EventLeaderboard.change_zones:type_name -> hiro.EventLeaderboard.ChangeZonesEntry
+	29,  // 91: hiro.EventLeaderboard.reward:type_name -> hiro.Reward
+	246, // 92: hiro.EventLeaderboard.additional_properties:type_name -> hiro.EventLeaderboard.AdditionalPropertiesEntry
+	76,  // 93: hiro.EventLeaderboard.scores:type_name -> hiro.EventLeaderboardScore
+	314, // 94: hiro.EventLeaderboard.matchmaker_properties:type_name -> google.protobuf.Struct
+	80,  // 95: hiro.EventLeaderboards.event_leaderboards:type_name -> hiro.EventLeaderboard
+	315, // 96: hiro.EventLeaderboardDebugRandomScoresRequest.operator:type_name -> google.protobuf.Int32Value
+	44,  // 97: hiro.EconomyDonation.recipient_available_rewards:type_name -> hiro.AvailableRewards
+	84,  // 98: hiro.EconomyDonation.contributors:type_name -> hiro.EconomyDonationContributor
+	44,  // 99: hiro.EconomyDonation.contributor_available_rewards:type_name -> hiro.AvailableRewards
+	29,  // 100: hiro.EconomyDonation.recipient_rewards:type_name -> hiro.Reward
+	247, // 101: hiro.EconomyDonation.additional_properties:type_name -> hiro.EconomyDonation.AdditionalPropertiesEntry
+	85,  // 102: hiro.EconomyDonationAck.donation:type_name -> hiro.EconomyDonation
+	85,  // 103: hiro.EconomyDonationsList.donations:type_name -> hiro.EconomyDonation
+	248, // 104: hiro.EconomyDonationClaimRequestDetails.donors:type_name -> hiro.EconomyDonationClaimRequestDetails.DonorsEntry
+	249, // 105: hiro.EconomyDonationClaimRequest.donations:type_name -> hiro.EconomyDonationClaimRequest.DonationsEntry
+	87,  // 106: hiro.EconomyDonationClaimRewards.donations:type_name -> hiro.EconomyDonationsList
+	250, // 107: hiro.EconomyDonationClaimRewards.claimed_rewards:type_name -> hiro.EconomyDonationClaimRewards.ClaimedRewardsEntry
+	251, // 108: hiro.EconomyDonationsByUserList.user_donations:type_name -> hiro.EconomyDonationsByUserList.UserDonationsEntry
+	252, // 109: hiro.EconomyListStoreItemCost.currencies:type_name -> hiro.EconomyListStoreItemCost.CurrenciesEntry
+	95,  // 110: hiro.EconomyListStoreItem.cost:type_name -> hiro.EconomyListStoreItemCost
+	44,  // 111: hiro.EconomyListStoreItem.available_rewards:type_name -> hiro.AvailableRewards
+	253, // 112: hiro.EconomyListStoreItem.additional_properties:type_name -> hiro.EconomyListStoreItem.AdditionalPropertiesEntry
+	29,  // 113: hiro.EconomyListPlacement.reward:type_name -> hiro.Reward
+	44,  // 114: hiro.EconomyListPlacement.available_rewards:type_name -> hiro.AvailableRewards
+	254, // 115: hiro.EconomyListPlacement.additional_properties:type_name -> hiro.EconomyListPlacement.AdditionalPropertiesEntry
+	96,  // 116: hiro.EconomyList.store_items:type_name -> hiro.EconomyListStoreItem
+	97,  // 117: hiro.EconomyList.placements:type_name -> hiro.EconomyListPlacement
+	255, // 118: hiro.EconomyList.donations:type_name -> hiro.EconomyList.DonationsEntry
+	28,  // 119: hiro.EconomyList.active_reward_modifiers:type_name -> hiro.ActiveRewardModifier
+	44,  // 120: hiro.InventoryItem.consume_available_rewards:type_name -> hiro.AvailableRewards
+	256, // 121: hiro.InventoryItem.string_properties:type_name -> hiro.InventoryItem.StringPropertiesEntry
+	257, // 122: hiro.InventoryItem.numeric_properties:type_name -> hiro.InventoryItem.NumericPropertiesEntry
+	258, // 123: hiro.InventoryGrantRequest.items:type_name -> hiro.InventoryGrantRequest.ItemsEntry
+	259, // 124: hiro.InventoryUpdateItemProperties.string_properties:type_name -> hiro.InventoryUpdateItemProperties.StringPropertiesEntry
+	260, // 125: hiro.InventoryUpdateItemProperties.numeric_properties:type_name -> hiro.InventoryUpdateItemProperties.NumericPropertiesEntry
+	261, // 126: hiro.InventoryUpdateItemsRequest.item_updates:type_name -> hiro.InventoryUpdateItemsRequest.ItemUpdatesEntry
+	262, // 127: hiro.Inventory.items:type_name -> hiro.Inventory.ItemsEntry
+	263, // 128: hiro.InventoryConsumeRequest.items:type_name -> hiro.InventoryConsumeRequest.ItemsEntry
+	264, // 129: hiro.InventoryConsumeRequest.instances:type_name -> hiro.InventoryConsumeRequest.InstancesEntry
+	104, // 130: hiro.InventoryConsumeRewards.inventory:type_name -> hiro.Inventory
+	265, // 131: hiro.InventoryConsumeRewards.rewards:type_name -> hiro.InventoryConsumeRewards.RewardsEntry
+	266, // 132: hiro.InventoryConsumeRewards.instance_rewards:type_name -> hiro.InventoryConsumeRewards.InstanceRewardsEntry
+	104, // 133: hiro.InventoryUpdateAck.inventory:type_name -> hiro.Inventory
+	267, // 134: hiro.InventoryList.items:type_name -> hiro.InventoryList.ItemsEntry
+	268, // 135: hiro.AuctionBidAmount.currencies:type_name -> hiro.AuctionBidAmount.CurrenciesEntry
+	109, // 136: hiro.AuctionFee.fixed:type_name -> hiro.AuctionBidAmount
+	269, // 137: hiro.AuctionTemplateConditionListingCost.currencies:type_name -> hiro.AuctionTemplateConditionListingCost.CurrenciesEntry
+	270, // 138: hiro.AuctionTemplateConditionListingCost.items:type_name -> hiro.AuctionTemplateConditionListingCost.ItemsEntry
+	271, // 139: hiro.AuctionTemplateConditionListingCost.energies:type_name -> hiro.AuctionTemplateConditionListingCost.EnergiesEntry
+	109, // 140: hiro.AuctionTemplateConditionBidIncrement.fixed:type_name -> hiro.AuctionBidAmount
+	111, // 141: hiro.AuctionTemplateCondition.listing_cost:type_name -> hiro.AuctionTemplateConditionListingCost
+	109, // 142: hiro.AuctionTemplateCondition.bid_start:type_name -> hiro.AuctionBidAmount
+	112, // 143: hiro.AuctionTemplateCondition.bid_increment:type_name -> hiro.AuctionTemplateConditionBidIncrement
+	110, // 144: hiro.AuctionTemplateCondition.fee:type_name -> hiro.AuctionFee
+	272, // 145: hiro.AuctionTemplate.conditions:type_name -> hiro.AuctionTemplate.ConditionsEntry
+	273, // 146: hiro.AuctionTemplates.templates:type_name -> hiro.AuctionTemplates.TemplatesEntry
+	99,  // 147: hiro.AuctionReward.items:type_name -> hiro.InventoryItem
+	109, // 148: hiro.AuctionBid.bid:type_name -> hiro.AuctionBidAmount
+	116, // 149: hiro.Auction.reward:type_name -> hiro.AuctionReward
+	110, // 150: hiro.Auction.fee:type_name -> hiro.AuctionFee
+	117, // 151: hiro.Auction.bid:type_name -> hiro.AuctionBid
+	109, // 152: hiro.Auction.bid_next:type_name -> hiro.AuctionBidAmount
+	117, // 153: hiro.Auction.bid_first:type_name -> hiro.AuctionBid
+	117, // 154: hiro.Auction.bid_history:type_name -> hiro.AuctionBid
+	117, // 155: hiro.AuctionNotificationBid.bid:type_name -> hiro.AuctionBid
+	109, // 156: hiro.AuctionNotificationBid.bid_next:type_name -> hiro.AuctionBidAmount
+	119, // 157: hiro.StreamEnvelope.auction_bid:type_name -> hiro.AuctionNotificationBid
+	118, // 158: hiro.AuctionClaimBid.auction:type_name -> hiro.Auction
+	116, // 159: hiro.AuctionClaimBid.reward:type_name -> hiro.AuctionReward
+	118, // 160: hiro.AuctionClaimCreated.auction:type_name -> hiro.Auction
+	109, // 161: hiro.AuctionClaimCreated.reward:type_name -> hiro.AuctionBidAmount
+	109, // 162: hiro.AuctionClaimCreated.fee:type_name -> hiro.AuctionBidAmount
+	99,  // 163: hiro.AuctionClaimCreated.returned_items:type_name -> hiro.InventoryItem
+	118, // 164: hiro.AuctionCancel.auction:type_name -> hiro.Auction
+	116, // 165: hiro.AuctionCancel.reward:type_name -> hiro.AuctionReward
+	118, // 166: hiro.AuctionList.auctions:type_name -> hiro.Auction
+	109, // 167: hiro.AuctionBidRequest.bid:type_name -> hiro.AuctionBidAmount
+	5,   // 168: hiro.EconomyListRequest.store_type:type_name -> hiro.EconomyStoreType
+	274, // 169: hiro.EconomyGrantRequest.currencies:type_name -> hiro.EconomyGrantRequest.CurrenciesEntry
+	27,  // 170: hiro.EconomyGrantRequest.reward_modifiers:type_name -> hiro.RewardModifier
+	275, // 171: hiro.EconomyGrantRequest.items:type_name -> hiro.EconomyGrantRequest.ItemsEntry
+	5,   // 172: hiro.EconomyPurchaseIntentRequest.store_type:type_name -> hiro.EconomyStoreType
+	5,   // 173: hiro.EconomyPurchaseRequest.store_type:type_name -> hiro.EconomyStoreType
+	5,   // 174: hiro.EconomyPurchaseRestoreRequest.store_type:type_name -> hiro.EconomyStoreType
+	276, // 175: hiro.EconomyPlacementStartRequest.metadata:type_name -> hiro.EconomyPlacementStartRequest.MetadataEntry
+	29,  // 176: hiro.EconomyPlacementStatus.reward:type_name -> hiro.Reward
+	277, // 177: hiro.EconomyPlacementStatus.metadata:type_name -> hiro.EconomyPlacementStatus.MetadataEntry
+	278, // 178: hiro.EconomyUpdateAck.wallet:type_name -> hiro.EconomyUpdateAck.WalletEntry
+	104, // 179: hiro.EconomyUpdateAck.inventory:type_name -> hiro.Inventory
+	29,  // 180: hiro.EconomyUpdateAck.reward:type_name -> hiro.Reward
+	28,  // 181: hiro.EconomyUpdateAck.active_reward_modifiers:type_name -> hiro.ActiveRewardModifier
+	279, // 182: hiro.EconomyPurchaseAck.wallet:type_name -> hiro.EconomyPurchaseAck.WalletEntry
+	104, // 183: hiro.EconomyPurchaseAck.inventory:type_name -> hiro.Inventory
+	29,  // 184: hiro.EconomyPurchaseAck.reward:type_name -> hiro.Reward
+	144, // 185: hiro.Energy.modifiers:type_name -> hiro.EnergyModifier
+	44,  // 186: hiro.Energy.available_rewards:type_name -> hiro.AvailableRewards
+	280, // 187: hiro.Energy.additional_properties:type_name -> hiro.Energy.AdditionalPropertiesEntry
+	281, // 188: hiro.EnergyList.energies:type_name -> hiro.EnergyList.EnergiesEntry
+	282, // 189: hiro.EnergySpendRequest.amounts:type_name -> hiro.EnergySpendRequest.AmountsEntry
+	146, // 190: hiro.EnergySpendReward.energies:type_name -> hiro.EnergyList
+	29,  // 191: hiro.EnergySpendReward.reward:type_name -> hiro.Reward
+	283, // 192: hiro.EnergyGrantRequest.amounts:type_name -> hiro.EnergyGrantRequest.AmountsEntry
+	150, // 193: hiro.LeaderboardConfigList.leaderboard_configs:type_name -> hiro.LeaderboardConfig
+	8,   // 194: hiro.Tutorial.state:type_name -> hiro.TutorialState
+	284, // 195: hiro.Tutorial.additional_properties:type_name -> hiro.Tutorial.AdditionalPropertiesEntry
+	285, // 196: hiro.TutorialList.tutorials:type_name -> hiro.TutorialList.TutorialsEntry
+	160, // 197: hiro.TeamList.teams:type_name -> hiro.Team
+	286, // 198: hiro.UnlockableCost.items:type_name -> hiro.UnlockableCost.ItemsEntry
+	287, // 199: hiro.UnlockableCost.currencies:type_name -> hiro.UnlockableCost.CurrenciesEntry
+	166, // 200: hiro.Unlockable.start_cost:type_name -> hiro.UnlockableCost
+	166, // 201: hiro.Unlockable.cost:type_name -> hiro.UnlockableCost
+	29,  // 202: hiro.Unlockable.reward:type_name -> hiro.Reward
+	44,  // 203: hiro.Unlockable.available_rewards:type_name -> hiro.AvailableRewards
+	288, // 204: hiro.Unlockable.additional_properties:type_name -> hiro.Unlockable.AdditionalPropertiesEntry
+	289, // 205: hiro.UnlockableSlotCost.items:type_name -> hiro.UnlockableSlotCost.ItemsEntry
+	290, // 206: hiro.UnlockableSlotCost.currencies:type_name -> hiro.UnlockableSlotCost.CurrenciesEntry
+	167, // 207: hiro.UnlockablesList.unlockables:type_name -> hiro.Unlockable
+	167, // 208: hiro.UnlockablesList.overflow:type_name -> hiro.Unlockable
+	168, // 209: hiro.UnlockablesList.slot_cost:type_name -> hiro.UnlockableSlotCost
+	169, // 210: hiro.UnlockablesReward.unlockables:type_name -> hiro.UnlockablesList
+	29,  // 211: hiro.UnlockablesReward.reward:type_name -> hiro.Reward
+	44,  // 212: hiro.UnlockablesReward.available_rewards:type_name -> hiro.AvailableRewards
+	29,  // 213: hiro.SubAchievement.reward:type_name -> hiro.Reward
+	44,  // 214: hiro.SubAchievement.available_rewards:type_name -> hiro.AvailableRewards
+	291, // 215: hiro.SubAchievement.additional_properties:type_name -> hiro.SubAchievement.AdditionalPropertiesEntry
+	44,  // 216: hiro.Achievement.available_rewards:type_name -> hiro.AvailableRewards
+	29,  // 217: hiro.Achievement.reward:type_name -> hiro.Reward
+	44,  // 218: hiro.Achievement.available_total_reward:type_name -> hiro.AvailableRewards
+	29,  // 219: hiro.Achievement.total_reward:type_name -> hiro.Reward
+	292, // 220: hiro.Achievement.sub_achievements:type_name -> hiro.Achievement.SubAchievementsEntry
+	293, // 221: hiro.Achievement.additional_properties:type_name -> hiro.Achievement.AdditionalPropertiesEntry
+	294, // 222: hiro.AchievementList.achievements:type_name -> hiro.AchievementList.AchievementsEntry
+	295, // 223: hiro.AchievementList.repeat_achievements:type_name -> hiro.AchievementList.RepeatAchievementsEntry
+	296, // 224: hiro.AchievementsUpdateAck.achievements:type_name -> hiro.AchievementsUpdateAck.AchievementsEntry
+	297, // 225: hiro.AchievementsUpdateAck.repeat_achievements:type_name -> hiro.AchievementsUpdateAck.RepeatAchievementsEntry
+	298, // 226: hiro.AchievementsUpdateRequest.achievements:type_name -> hiro.AchievementsUpdateRequest.AchievementsEntry
+	44,  // 227: hiro.StreakAvailableReward.reward:type_name -> hiro.AvailableRewards
+	29,  // 228: hiro.StreakReward.reward:type_name -> hiro.Reward
+	182, // 229: hiro.Streak.rewards:type_name -> hiro.StreakAvailableReward
+	182, // 230: hiro.Streak.available_rewards:type_name -> hiro.StreakAvailableReward
+	183, // 231: hiro.Streak.claimed_rewards:type_name -> hiro.StreakReward
+	299, // 232: hiro.StreaksList.streaks:type_name -> hiro.StreaksList.StreaksEntry
+	300, // 233: hiro.StreaksUpdateRequest.updates:type_name -> hiro.StreaksUpdateRequest.UpdatesEntry
+	301, // 234: hiro.SyncInventoryItem.string_properties:type_name -> hiro.SyncInventoryItem.StringPropertiesEntry
+	302, // 235: hiro.SyncInventoryItem.numeric_properties:type_name -> hiro.SyncInventoryItem.NumericPropertiesEntry
+	303, // 236: hiro.SyncInventory.items:type_name -> hiro.SyncInventory.ItemsEntry
+	304, // 237: hiro.SyncEconomy.currencies:type_name -> hiro.SyncEconomy.CurrenciesEntry
+	28,  // 238: hiro.SyncEconomy.modifiers:type_name -> hiro.ActiveRewardModifier
+	305, // 239: hiro.SyncAchievements.achievements:type_name -> hiro.SyncAchievements.AchievementsEntry
+	306, // 240: hiro.SyncEnergy.energies:type_name -> hiro.SyncEnergy.EnergiesEntry
+	144, // 241: hiro.SyncEnergy.modifiers:type_name -> hiro.EnergyModifier
+	307, // 242: hiro.SyncEventLeaderboards.event_leaderboards:type_name -> hiro.SyncEventLeaderboards.EventLeaderboardsEntry
+	308, // 243: hiro.SyncProgressionUpdate.counts:type_name -> hiro.SyncProgressionUpdate.CountsEntry
+	9,   // 244: hiro.SyncProgressionUpdate.cost:type_name -> hiro.ProgressionCost
+	309, // 245: hiro.SyncProgressions.progressions:type_name -> hiro.SyncProgressions.ProgressionsEntry
+	310, // 246: hiro.SyncTutorials.updates:type_name -> hiro.SyncTutorials.UpdatesEntry
+	311, // 247: hiro.SyncUnlockables.updates:type_name -> hiro.SyncUnlockables.UpdatesEntry
+	183, // 248: hiro.SyncStreakUpdate.claimed_rewards:type_name -> hiro.StreakReward
+	312, // 249: hiro.SyncStreaks.updates:type_name -> hiro.SyncStreaks.UpdatesEntry
+	190, // 250: hiro.SyncRequest.inventory:type_name -> hiro.SyncInventory
+	191, // 251: hiro.SyncRequest.economy:type_name -> hiro.SyncEconomy
+	193, // 252: hiro.SyncRequest.achievements:type_name -> hiro.SyncAchievements
+	195, // 253: hiro.SyncRequest.energy:type_name -> hiro.SyncEnergy
+	197, // 254: hiro.SyncRequest.event_leaderboards:type_name -> hiro.SyncEventLeaderboards
+	199, // 255: hiro.SyncRequest.progressions:type_name -> hiro.SyncProgressions
+	20,  // 256: hiro.SyncRequest.stats:type_name -> hiro.StatUpdateRequest
+	200, // 257: hiro.SyncRequest.tutorials:type_name -> hiro.SyncTutorials
+	202, // 258: hiro.SyncRequest.unlockables:type_name -> hiro.SyncUnlockables
+	204, // 259: hiro.SyncRequest.streaks:type_name -> hiro.SyncStreaks
+	313, // 260: hiro.SyncResponse.wallet:type_name -> hiro.SyncResponse.WalletEntry
+	104, // 261: hiro.SyncResponse.inventory:type_name -> hiro.Inventory
+	177, // 262: hiro.SyncResponse.achievements:type_name -> hiro.AchievementList
+	146, // 263: hiro.SyncResponse.energy:type_name -> hiro.EnergyList
+	80,  // 264: hiro.SyncResponse.event_leaderboards:type_name -> hiro.EventLeaderboard
+	14,  // 265: hiro.SyncResponse.progressions:type_name -> hiro.ProgressionList
+	22,  // 266: hiro.SyncResponse.stats:type_name -> hiro.StatList
+	153, // 267: hiro.SyncResponse.tutorials:type_name -> hiro.TutorialList
+	169, // 268: hiro.SyncResponse.unlockables:type_name -> hiro.UnlockablesList
+	28,  // 269: hiro.SyncResponse.active_reward_modifiers:type_name -> hiro.ActiveRewardModifier
+	185, // 270: hiro.SyncResponse.streaks:type_name -> hiro.StreaksList
+	12,  // 271: hiro.ProgressionList.ProgressionsEntry.value:type_name -> hiro.Progression
+	13,  // 272: hiro.ProgressionList.DeltasEntry.value:type_name -> hiro.ProgressionDelta
+	12,  // 273: hiro.ProgressionGetRequest.ProgressionsEntry.value:type_name -> hiro.Progression
+	21,  // 274: hiro.StatList.PublicEntry.value:type_name -> hiro.Stat
+	21,  // 275: hiro.StatList.PrivateEntry.value:type_name -> hiro.Stat
+	25,  // 276: hiro.Reward.ItemInstancesEntry.value:type_name -> hiro.RewardInventoryItem
+	35,  // 277: hiro.AvailableRewardsStringProperty.OptionsEntry.value:type_name -> hiro.AvailableRewardsStringPropertyOption
+	34,  // 278: hiro.AvailableRewardsItem.NumericPropertiesEntry.value:type_name -> hiro.RewardRangeDouble
+	36,  // 279: hiro.AvailableRewardsItem.StringPropertiesEntry.value:type_name -> hiro.AvailableRewardsStringProperty
+	37,  // 280: hiro.AvailableRewardsContents.ItemsEntry.value:type_name -> hiro.AvailableRewardsItem
+	39,  // 281: hiro.AvailableRewardsContents.CurrenciesEntry.value:type_name -> hiro.AvailableRewardsCurrency
+	40,  // 282: hiro.AvailableRewardsContents.EnergiesEntry.value:type_name -> hiro.AvailableRewardsEnergy
+	45,  // 283: hiro.Incentive.ClaimsEntry.value:type_name -> hiro.IncentiveClaim
+	68,  // 284: hiro.ChallengeTemplates.TemplatesEntry.value:type_name -> hiro.ChallengeTemplate
+	78,  // 285: hiro.EventLeaderboard.RewardTiersEntry.value:type_name -> hiro.EventLeaderboardRewardTiers
+	79,  // 286: hiro.EventLeaderboard.ChangeZonesEntry.value:type_name -> hiro.EventLeaderboardChangeZone
+	88,  // 287: hiro.EconomyDonationClaimRequest.DonationsEntry.value:type_name -> hiro.EconomyDonationClaimRequestDetails
+	30,  // 288: hiro.EconomyDonationClaimRewards.ClaimedRewardsEntry.value:type_name -> hiro.RewardList
+	87,  // 289: hiro.EconomyDonationsByUserList.UserDonationsEntry.value:type_name -> hiro.EconomyDonationsList
+	85,  // 290: hiro.EconomyList.DonationsEntry.value:type_name -> hiro.EconomyDonation
+	102, // 291: hiro.InventoryUpdateItemsRequest.ItemUpdatesEntry.value:type_name -> hiro.InventoryUpdateItemProperties
+	99,  // 292: hiro.Inventory.ItemsEntry.value:type_name -> hiro.InventoryItem
+	30,  // 293: hiro.InventoryConsumeRewards.RewardsEntry.value:type_name -> hiro.RewardList
+	30,  // 294: hiro.InventoryConsumeRewards.InstanceRewardsEntry.value:type_name -> hiro.RewardList
+	99,  // 295: hiro.InventoryList.ItemsEntry.value:type_name -> hiro.InventoryItem
+	113, // 296: hiro.AuctionTemplate.ConditionsEntry.value:type_name -> hiro.AuctionTemplateCondition
+	114, // 297: hiro.AuctionTemplates.TemplatesEntry.value:type_name -> hiro.AuctionTemplate
+	145, // 298: hiro.EnergyList.EnergiesEntry.value:type_name -> hiro.Energy
+	152, // 299: hiro.TutorialList.TutorialsEntry.value:type_name -> hiro.Tutorial
+	175, // 300: hiro.Achievement.SubAchievementsEntry.value:type_name -> hiro.SubAchievement
+	176, // 301: hiro.AchievementList.AchievementsEntry.value:type_name -> hiro.Achievement
+	176, // 302: hiro.AchievementList.RepeatAchievementsEntry.value:type_name -> hiro.Achievement
+	176, // 303: hiro.AchievementsUpdateAck.AchievementsEntry.value:type_name -> hiro.Achievement
+	176, // 304: hiro.AchievementsUpdateAck.RepeatAchievementsEntry.value:type_name -> hiro.Achievement
+	184, // 305: hiro.StreaksList.StreaksEntry.value:type_name -> hiro.Streak
+	189, // 306: hiro.SyncInventory.ItemsEntry.value:type_name -> hiro.SyncInventoryItem
+	192, // 307: hiro.SyncAchievements.AchievementsEntry.value:type_name -> hiro.SyncAchievementsUpdate
+	194, // 308: hiro.SyncEnergy.EnergiesEntry.value:type_name -> hiro.SyncEnergyState
+	196, // 309: hiro.SyncEventLeaderboards.EventLeaderboardsEntry.value:type_name -> hiro.SyncEventLeaderboardUpdate
+	198, // 310: hiro.SyncProgressions.ProgressionsEntry.value:type_name -> hiro.SyncProgressionUpdate
+	201, // 311: hiro.SyncUnlockables.UpdatesEntry.value:type_name -> hiro.SyncUnlockableUpdate
+	203, // 312: hiro.SyncStreaks.UpdatesEntry.value:type_name -> hiro.SyncStreakUpdate
+	316, // 313: hiro.input:extendee -> google.protobuf.EnumValueOptions
+	316, // 314: hiro.output:extendee -> google.protobuf.EnumValueOptions
+	315, // [315:315] is the sub-list for method output_type
+	315, // [315:315] is the sub-list for method input_type
+	315, // [315:315] is the sub-list for extension type_name
+	313, // [313:315] is the sub-list for extension extendee
+	0,   // [0:313] is the sub-list for field type_name
 }
 
 func init() { file_hiro_proto_init() }
@@ -18723,7 +20500,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[45].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardList); i {
+			switch v := v.(*ChallengeCreateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18735,7 +20512,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[46].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardGet); i {
+			switch v := v.(*ChallengeJoinRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18747,7 +20524,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[47].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardUpdate); i {
+			switch v := v.(*ChallengeLeaveRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18759,7 +20536,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[48].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardClaim); i {
+			switch v := v.(*ChallengeClaimRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18771,7 +20548,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[49].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardRoll); i {
+			switch v := v.(*ChallengeSearchRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18783,7 +20560,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[50].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardScore); i {
+			switch v := v.(*ChallengeInviteRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18795,7 +20572,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[51].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardRewardTier); i {
+			switch v := v.(*ChallengeSubmitScoreRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18807,7 +20584,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[52].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardRewardTiers); i {
+			switch v := v.(*Challenge); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18819,7 +20596,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[53].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardChangeZone); i {
+			switch v := v.(*ChallengeListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18831,7 +20608,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[54].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboard); i {
+			switch v := v.(*ChallengeGetRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18843,7 +20620,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[55].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboards); i {
+			switch v := v.(*ChallengesList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18855,7 +20632,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[56].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardDebugFillRequest); i {
+			switch v := v.(*ChallengeScore); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18867,7 +20644,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[57].Exporter = func(v any, i int) any {
-			switch v := v.(*EventLeaderboardDebugRandomScoresRequest); i {
+			switch v := v.(*ChallengeRewardTier); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18879,7 +20656,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[58].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonationContributor); i {
+			switch v := v.(*ChallengeTemplates); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18891,7 +20668,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[59].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonation); i {
+			switch v := v.(*ChallengeTemplate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18903,7 +20680,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[60].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonationAck); i {
+			switch v := v.(*ChallengeMaxMinPlayers); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18915,7 +20692,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[61].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonationsList); i {
+			switch v := v.(*ChallengeMinMaxDuration); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18927,7 +20704,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[62].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonationClaimRequestDetails); i {
+			switch v := v.(*EventLeaderboardList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18939,7 +20716,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[63].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonationClaimRequest); i {
+			switch v := v.(*EventLeaderboardGet); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18951,7 +20728,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[64].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonationClaimRewards); i {
+			switch v := v.(*EventLeaderboardUpdate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18963,7 +20740,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[65].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonationGiveRequest); i {
+			switch v := v.(*EventLeaderboardClaim); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18975,7 +20752,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[66].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonationGetRequest); i {
+			switch v := v.(*EventLeaderboardRoll); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18987,7 +20764,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[67].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonationRequest); i {
+			switch v := v.(*EventLeaderboardScore); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -18999,7 +20776,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[68].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyDonationsByUserList); i {
+			switch v := v.(*EventLeaderboardRewardTier); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19011,7 +20788,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[69].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyListStoreItemCost); i {
+			switch v := v.(*EventLeaderboardRewardTiers); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19023,7 +20800,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[70].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyListStoreItem); i {
+			switch v := v.(*EventLeaderboardChangeZone); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19035,7 +20812,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[71].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyListPlacement); i {
+			switch v := v.(*EventLeaderboard); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19047,7 +20824,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[72].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyList); i {
+			switch v := v.(*EventLeaderboards); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19059,7 +20836,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[73].Exporter = func(v any, i int) any {
-			switch v := v.(*InventoryItem); i {
+			switch v := v.(*EventLeaderboardDebugFillRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19071,7 +20848,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[74].Exporter = func(v any, i int) any {
-			switch v := v.(*InventoryListRequest); i {
+			switch v := v.(*EventLeaderboardDebugRandomScoresRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19083,7 +20860,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[75].Exporter = func(v any, i int) any {
-			switch v := v.(*InventoryGrantRequest); i {
+			switch v := v.(*EconomyDonationContributor); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19095,7 +20872,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[76].Exporter = func(v any, i int) any {
-			switch v := v.(*InventoryUpdateItemProperties); i {
+			switch v := v.(*EconomyDonation); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19107,7 +20884,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[77].Exporter = func(v any, i int) any {
-			switch v := v.(*InventoryUpdateItemsRequest); i {
+			switch v := v.(*EconomyDonationAck); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19119,7 +20896,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[78].Exporter = func(v any, i int) any {
-			switch v := v.(*Inventory); i {
+			switch v := v.(*EconomyDonationsList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19131,7 +20908,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[79].Exporter = func(v any, i int) any {
-			switch v := v.(*InventoryConsumeRequest); i {
+			switch v := v.(*EconomyDonationClaimRequestDetails); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19143,7 +20920,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[80].Exporter = func(v any, i int) any {
-			switch v := v.(*InventoryConsumeRewards); i {
+			switch v := v.(*EconomyDonationClaimRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19155,7 +20932,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[81].Exporter = func(v any, i int) any {
-			switch v := v.(*InventoryUpdateAck); i {
+			switch v := v.(*EconomyDonationClaimRewards); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19167,7 +20944,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[82].Exporter = func(v any, i int) any {
-			switch v := v.(*InventoryList); i {
+			switch v := v.(*EconomyDonationGiveRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19179,7 +20956,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[83].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionBidAmount); i {
+			switch v := v.(*EconomyDonationGetRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19191,7 +20968,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[84].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionFee); i {
+			switch v := v.(*EconomyDonationRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19203,7 +20980,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[85].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionTemplateConditionListingCost); i {
+			switch v := v.(*EconomyDonationsByUserList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19215,7 +20992,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[86].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionTemplateConditionBidIncrement); i {
+			switch v := v.(*EconomyListStoreItemCost); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19227,7 +21004,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[87].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionTemplateCondition); i {
+			switch v := v.(*EconomyListStoreItem); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19239,7 +21016,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[88].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionTemplate); i {
+			switch v := v.(*EconomyListPlacement); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19251,7 +21028,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[89].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionTemplates); i {
+			switch v := v.(*EconomyList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19263,7 +21040,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[90].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionReward); i {
+			switch v := v.(*InventoryItem); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19275,7 +21052,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[91].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionBid); i {
+			switch v := v.(*InventoryListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19287,7 +21064,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[92].Exporter = func(v any, i int) any {
-			switch v := v.(*Auction); i {
+			switch v := v.(*InventoryGrantRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19299,7 +21076,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[93].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionNotificationBid); i {
+			switch v := v.(*InventoryUpdateItemProperties); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19311,7 +21088,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[94].Exporter = func(v any, i int) any {
-			switch v := v.(*StreamEnvelope); i {
+			switch v := v.(*InventoryUpdateItemsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19323,7 +21100,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[95].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionClaimBid); i {
+			switch v := v.(*Inventory); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19335,7 +21112,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[96].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionClaimCreated); i {
+			switch v := v.(*InventoryConsumeRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19347,7 +21124,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[97].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionCancel); i {
+			switch v := v.(*InventoryConsumeRewards); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19359,7 +21136,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[98].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionList); i {
+			switch v := v.(*InventoryUpdateAck); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19371,7 +21148,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[99].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionListRequest); i {
+			switch v := v.(*InventoryList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19383,7 +21160,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[100].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionBidRequest); i {
+			switch v := v.(*AuctionBidAmount); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19395,7 +21172,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[101].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionClaimBidRequest); i {
+			switch v := v.(*AuctionFee); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19407,7 +21184,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[102].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionClaimCreatedRequest); i {
+			switch v := v.(*AuctionTemplateConditionListingCost); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19419,7 +21196,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[103].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionCancelRequest); i {
+			switch v := v.(*AuctionTemplateConditionBidIncrement); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19431,7 +21208,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[104].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionCreateRequest); i {
+			switch v := v.(*AuctionTemplateCondition); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19443,7 +21220,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[105].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionListBidsRequest); i {
+			switch v := v.(*AuctionTemplate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19455,7 +21232,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[106].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionListCreatedRequest); i {
+			switch v := v.(*AuctionTemplates); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19467,7 +21244,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[107].Exporter = func(v any, i int) any {
-			switch v := v.(*AuctionsFollowRequest); i {
+			switch v := v.(*AuctionReward); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19479,7 +21256,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[108].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyListRequest); i {
+			switch v := v.(*AuctionBid); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19491,7 +21268,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[109].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyGrantRequest); i {
+			switch v := v.(*Auction); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19503,7 +21280,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[110].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyPurchaseIntentRequest); i {
+			switch v := v.(*AuctionNotificationBid); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19515,7 +21292,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[111].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyPurchaseRequest); i {
+			switch v := v.(*StreamEnvelope); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19527,7 +21304,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[112].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyPurchaseRestoreRequest); i {
+			switch v := v.(*AuctionClaimBid); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19539,7 +21316,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[113].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyPlacementStatusRequest); i {
+			switch v := v.(*AuctionClaimCreated); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19551,7 +21328,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[114].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyPlacementStartRequest); i {
+			switch v := v.(*AuctionCancel); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19563,7 +21340,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[115].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyPlacementStatus); i {
+			switch v := v.(*AuctionList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19575,7 +21352,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[116].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyUpdateAck); i {
+			switch v := v.(*AuctionListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19587,7 +21364,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[117].Exporter = func(v any, i int) any {
-			switch v := v.(*EconomyPurchaseAck); i {
+			switch v := v.(*AuctionBidRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19599,7 +21376,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[118].Exporter = func(v any, i int) any {
-			switch v := v.(*EnergyModifier); i {
+			switch v := v.(*AuctionClaimBidRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19611,7 +21388,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[119].Exporter = func(v any, i int) any {
-			switch v := v.(*Energy); i {
+			switch v := v.(*AuctionClaimCreatedRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19623,7 +21400,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[120].Exporter = func(v any, i int) any {
-			switch v := v.(*EnergyList); i {
+			switch v := v.(*AuctionCancelRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19635,7 +21412,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[121].Exporter = func(v any, i int) any {
-			switch v := v.(*EnergySpendRequest); i {
+			switch v := v.(*AuctionCreateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19647,7 +21424,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[122].Exporter = func(v any, i int) any {
-			switch v := v.(*EnergySpendReward); i {
+			switch v := v.(*AuctionListBidsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19659,7 +21436,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[123].Exporter = func(v any, i int) any {
-			switch v := v.(*EnergyGrantRequest); i {
+			switch v := v.(*AuctionListCreatedRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19671,7 +21448,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[124].Exporter = func(v any, i int) any {
-			switch v := v.(*LeaderboardConfig); i {
+			switch v := v.(*AuctionsFollowRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19683,7 +21460,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[125].Exporter = func(v any, i int) any {
-			switch v := v.(*LeaderboardConfigList); i {
+			switch v := v.(*EconomyListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19695,7 +21472,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[126].Exporter = func(v any, i int) any {
-			switch v := v.(*Tutorial); i {
+			switch v := v.(*EconomyGrantRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19707,7 +21484,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[127].Exporter = func(v any, i int) any {
-			switch v := v.(*TutorialList); i {
+			switch v := v.(*EconomyPurchaseIntentRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19719,7 +21496,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[128].Exporter = func(v any, i int) any {
-			switch v := v.(*TutorialAcceptRequest); i {
+			switch v := v.(*EconomyPurchaseRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19731,7 +21508,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[129].Exporter = func(v any, i int) any {
-			switch v := v.(*TutorialDeclineRequest); i {
+			switch v := v.(*EconomyPurchaseRestoreRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19743,7 +21520,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[130].Exporter = func(v any, i int) any {
-			switch v := v.(*TutorialAbandonRequest); i {
+			switch v := v.(*EconomyPlacementStatusRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19755,7 +21532,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[131].Exporter = func(v any, i int) any {
-			switch v := v.(*TutorialUpdateRequest); i {
+			switch v := v.(*EconomyPlacementStartRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19767,7 +21544,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[132].Exporter = func(v any, i int) any {
-			switch v := v.(*TutorialResetRequest); i {
+			switch v := v.(*EconomyPlacementStatus); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19779,7 +21556,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[133].Exporter = func(v any, i int) any {
-			switch v := v.(*RateAppRequest); i {
+			switch v := v.(*EconomyUpdateAck); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19791,7 +21568,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[134].Exporter = func(v any, i int) any {
-			switch v := v.(*Team); i {
+			switch v := v.(*EconomyPurchaseAck); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19803,7 +21580,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[135].Exporter = func(v any, i int) any {
-			switch v := v.(*TeamCreateRequest); i {
+			switch v := v.(*EnergyModifier); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19815,7 +21592,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[136].Exporter = func(v any, i int) any {
-			switch v := v.(*TeamListRequest); i {
+			switch v := v.(*Energy); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19827,7 +21604,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[137].Exporter = func(v any, i int) any {
-			switch v := v.(*TeamList); i {
+			switch v := v.(*EnergyList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19839,7 +21616,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[138].Exporter = func(v any, i int) any {
-			switch v := v.(*TeamSearchRequest); i {
+			switch v := v.(*EnergySpendRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19851,7 +21628,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[139].Exporter = func(v any, i int) any {
-			switch v := v.(*TeamWriteChatMessageRequest); i {
+			switch v := v.(*EnergySpendReward); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19863,7 +21640,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[140].Exporter = func(v any, i int) any {
-			switch v := v.(*UnlockableCost); i {
+			switch v := v.(*EnergyGrantRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19875,7 +21652,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[141].Exporter = func(v any, i int) any {
-			switch v := v.(*Unlockable); i {
+			switch v := v.(*LeaderboardConfig); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19887,7 +21664,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[142].Exporter = func(v any, i int) any {
-			switch v := v.(*UnlockableSlotCost); i {
+			switch v := v.(*LeaderboardConfigList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19899,7 +21676,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[143].Exporter = func(v any, i int) any {
-			switch v := v.(*UnlockablesList); i {
+			switch v := v.(*Tutorial); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19911,7 +21688,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[144].Exporter = func(v any, i int) any {
-			switch v := v.(*UnlockablesReward); i {
+			switch v := v.(*TutorialList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19923,7 +21700,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[145].Exporter = func(v any, i int) any {
-			switch v := v.(*UnlockablesRequest); i {
+			switch v := v.(*TutorialAcceptRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19935,7 +21712,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[146].Exporter = func(v any, i int) any {
-			switch v := v.(*UnlockablesQueueAddRequest); i {
+			switch v := v.(*TutorialDeclineRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19947,7 +21724,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[147].Exporter = func(v any, i int) any {
-			switch v := v.(*UnlockablesQueueRemoveRequest); i {
+			switch v := v.(*TutorialAbandonRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19959,7 +21736,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[148].Exporter = func(v any, i int) any {
-			switch v := v.(*UnlockablesQueueSetRequest); i {
+			switch v := v.(*TutorialUpdateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19971,7 +21748,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[149].Exporter = func(v any, i int) any {
-			switch v := v.(*SubAchievement); i {
+			switch v := v.(*TutorialResetRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19983,7 +21760,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[150].Exporter = func(v any, i int) any {
-			switch v := v.(*Achievement); i {
+			switch v := v.(*RateAppRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -19995,7 +21772,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[151].Exporter = func(v any, i int) any {
-			switch v := v.(*AchievementList); i {
+			switch v := v.(*Team); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20007,7 +21784,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[152].Exporter = func(v any, i int) any {
-			switch v := v.(*AchievementsClaimRequest); i {
+			switch v := v.(*TeamCreateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20019,7 +21796,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[153].Exporter = func(v any, i int) any {
-			switch v := v.(*AchievementsGetRequest); i {
+			switch v := v.(*TeamListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20031,7 +21808,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[154].Exporter = func(v any, i int) any {
-			switch v := v.(*AchievementsUpdateAck); i {
+			switch v := v.(*TeamList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20043,7 +21820,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[155].Exporter = func(v any, i int) any {
-			switch v := v.(*AchievementsUpdateRequest); i {
+			switch v := v.(*TeamSearchRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20055,7 +21832,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[156].Exporter = func(v any, i int) any {
-			switch v := v.(*StreakAvailableReward); i {
+			switch v := v.(*TeamWriteChatMessageRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20067,7 +21844,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[157].Exporter = func(v any, i int) any {
-			switch v := v.(*StreakReward); i {
+			switch v := v.(*UnlockableCost); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20079,7 +21856,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[158].Exporter = func(v any, i int) any {
-			switch v := v.(*Streak); i {
+			switch v := v.(*Unlockable); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20091,7 +21868,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[159].Exporter = func(v any, i int) any {
-			switch v := v.(*StreaksList); i {
+			switch v := v.(*UnlockableSlotCost); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20103,7 +21880,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[160].Exporter = func(v any, i int) any {
-			switch v := v.(*StreaksUpdateRequest); i {
+			switch v := v.(*UnlockablesList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20115,7 +21892,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[161].Exporter = func(v any, i int) any {
-			switch v := v.(*StreaksClaimRequest); i {
+			switch v := v.(*UnlockablesReward); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20127,7 +21904,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[162].Exporter = func(v any, i int) any {
-			switch v := v.(*StreaksResetRequest); i {
+			switch v := v.(*UnlockablesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20139,7 +21916,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[163].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncInventoryItem); i {
+			switch v := v.(*UnlockablesQueueAddRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20151,7 +21928,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[164].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncInventory); i {
+			switch v := v.(*UnlockablesQueueRemoveRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20163,7 +21940,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[165].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncEconomy); i {
+			switch v := v.(*UnlockablesQueueSetRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20175,7 +21952,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[166].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncAchievementsUpdate); i {
+			switch v := v.(*SubAchievement); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20187,7 +21964,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[167].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncAchievements); i {
+			switch v := v.(*Achievement); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20199,7 +21976,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[168].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncEnergyState); i {
+			switch v := v.(*AchievementList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20211,7 +21988,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[169].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncEnergy); i {
+			switch v := v.(*AchievementsClaimRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20223,7 +22000,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[170].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncEventLeaderboardUpdate); i {
+			switch v := v.(*AchievementsGetRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20235,7 +22012,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[171].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncEventLeaderboards); i {
+			switch v := v.(*AchievementsUpdateAck); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20247,7 +22024,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[172].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncProgressionUpdate); i {
+			switch v := v.(*AchievementsUpdateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20259,7 +22036,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[173].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncProgressions); i {
+			switch v := v.(*StreakAvailableReward); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20271,7 +22048,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[174].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncTutorials); i {
+			switch v := v.(*StreakReward); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20283,7 +22060,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[175].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncUnlockableUpdate); i {
+			switch v := v.(*Streak); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20295,7 +22072,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[176].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncUnlockables); i {
+			switch v := v.(*StreaksList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20307,7 +22084,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[177].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncStreakUpdate); i {
+			switch v := v.(*StreaksUpdateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20319,7 +22096,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[178].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncStreaks); i {
+			switch v := v.(*StreaksClaimRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20331,7 +22108,7 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[179].Exporter = func(v any, i int) any {
-			switch v := v.(*SyncRequest); i {
+			switch v := v.(*StreaksResetRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20343,6 +22120,210 @@ func file_hiro_proto_init() {
 			}
 		}
 		file_hiro_proto_msgTypes[180].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncInventoryItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[181].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncInventory); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[182].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncEconomy); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[183].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncAchievementsUpdate); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[184].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncAchievements); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[185].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncEnergyState); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[186].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncEnergy); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[187].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncEventLeaderboardUpdate); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[188].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncEventLeaderboards); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[189].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncProgressionUpdate); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[190].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncProgressions); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[191].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncTutorials); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[192].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncUnlockableUpdate); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[193].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncUnlockables); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[194].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncStreakUpdate); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[195].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncStreaks); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[196].Exporter = func(v any, i int) any {
+			switch v := v.(*SyncRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hiro_proto_msgTypes[197].Exporter = func(v any, i int) any {
 			switch v := v.(*SyncResponse); i {
 			case 0:
 				return &v.state
@@ -20355,7 +22336,7 @@ func file_hiro_proto_init() {
 			}
 		}
 	}
-	file_hiro_proto_msgTypes[94].OneofWrappers = []any{
+	file_hiro_proto_msgTypes[111].OneofWrappers = []any{
 		(*StreamEnvelope_AuctionBid)(nil),
 	}
 	type x struct{}
@@ -20363,8 +22344,8 @@ func file_hiro_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hiro_proto_rawDesc,
-			NumEnums:      8,
-			NumMessages:   285,
+			NumEnums:      9,
+			NumMessages:   305,
 			NumExtensions: 2,
 			NumServices:   0,
 		},
