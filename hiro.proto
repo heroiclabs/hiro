@@ -1098,6 +1098,8 @@ message EventLeaderboardUpdate {
   int64 subscore = 3;
   // Metadata.
   string metadata = 4;
+  // Always update metadata.
+  bool always_update_metadata = 5;
 }
 
 // Claim the available reward for an event leaderboard by ID.
