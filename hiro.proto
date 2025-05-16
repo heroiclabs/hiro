@@ -205,7 +205,7 @@ enum RpcId {
 
   // List all available templates for challenges.
   RPC_ID_CHALLENGES_GET_TEMPLATES = 81 [(input) = "", (output) = "ChallengeTemplates"];
-  // Get a challange by id.
+  // Get a challenge by id.
   RPC_ID_CHALLENGE_GET = 82 [(input) = "ChallengeGetRequest", (output) = "Challenge"];
   // List all the user's challenges.
   RPC_ID_CHALLENGE_LIST = 83 [(input) = "ChallengeListRequest", (output) = "ChallengesList"];
@@ -1036,7 +1036,7 @@ message ChallengeRewardTier {
 
 // Get all available challenge templates.
 message ChallengeTemplates {
-  // All available auction templates, keyed by an unique identifier.
+  // All available challenges templates, keyed by a unique identifier.
   map<string, ChallengeTemplate> templates = 1;
 }
 
@@ -1053,7 +1053,7 @@ message ChallengeTemplate {
   // Whether the challenge is invite-only or not.
   bool open = 5;
   // The maximum number of scores that can be submitted to the challenge.
-  int64 max_num_scores = 6;
+  int64 max_num_score = 6;
   // The ordering of the challenge scores.
   bool ascending = 7;
   // The operator of the challenge score submission.
