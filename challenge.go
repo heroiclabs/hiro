@@ -66,7 +66,7 @@ type ChallengesSystem interface {
 	SubmitScore(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, challengeId string, score, subscore int64, metadata map[string]any) (challenge *Challenge, err error)
 
 	// Search allows to find open challenges that are not full.
-	Search(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, name, caregory string, limit int) ([]*Challenge, error)
+	Search(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, name, category string, limit int) ([]*Challenge, error)
 
 	// Claim claims a reward of a challenge, if any.
 	Claim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, challengeId string) (*Challenge, error)

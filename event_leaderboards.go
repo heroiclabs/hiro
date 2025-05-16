@@ -16,6 +16,7 @@ package hiro
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/heroiclabs/nakama-common/runtime"
 )
@@ -75,7 +76,7 @@ type EventLeaderboardsSystem interface {
 	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string, tier *int, matchmakerProperties map[string]interface{}) (eventLeaderboard *EventLeaderboard, err error)
 
 	// UpdateEventLeaderboard updates the user's score in the specified event leaderboard, and returns the user's updated cohort information.
-	UpdateEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, username, eventLeaderboardID string, score, subscore int64, metadata map[string]interface{}) (eventLeaderboard *EventLeaderboard, err error)
+	UpdateEventLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, username, eventLeaderboardID string, score, subscore int64, metadata map[string]interface{}, alwaysUpdateMetadata bool) (eventLeaderboard *EventLeaderboard, err error)
 
 	// ClaimEventLeaderboard claims the user's reward for the given event leaderboard.
 	ClaimEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) (eventLeaderboard *EventLeaderboard, err error)
