@@ -73,6 +73,13 @@ type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sq
 
 type CollectionResolverFn func(ctx context.Context, systemType SystemType, collection string) (string, error)
 
+type Credentials struct {
+	Token       string `json:"token,omitempty"`
+	Environment string `json:"environment,omitempty"`
+}
+
+type CredentialsSourceFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, storeType EconomyStoreType, userID string) (*Credentials, error)
+
 // Hiro provides a type which combines all gameplay systems.
 type Hiro interface {
 	// SetPersonalizer is deprecated in favor of AddPersonalizer function to compose a chain of configuration personalization.
@@ -80,6 +87,8 @@ type Hiro interface {
 	AddPersonalizer(personalizer Personalizer)
 
 	AddPublisher(publisher Publisher)
+
+	SetCredentialsSource(source CredentialsSourceFn)
 
 	SetAfterAuthenticate(fn AfterAuthenticateFn)
 
