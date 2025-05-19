@@ -88,7 +88,7 @@ type Hiro interface {
 
 	AddPublisher(publisher Publisher)
 
-	SetCredentialsSource(source CredentialsSourceFn)
+	SetCredentialsSource(fn CredentialsSourceFn)
 
 	SetAfterAuthenticate(fn AfterAuthenticateFn)
 

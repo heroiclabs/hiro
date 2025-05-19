@@ -23,19 +23,20 @@ import (
 )
 
 var (
-	ErrEconomyNoItem            = runtime.NewError("item not found", 3)                        // INVALID_ARGUMENT
-	ErrEconomyItemUnavailable   = runtime.NewError("item unavailable", 3)                      // INVALID_ARGUMENT
-	ErrEconomyNoSku             = runtime.NewError("sku not found", 3)                         // INVALID_ARGUMENT
-	ErrEconomySkuInvalid        = runtime.NewError("invalid sku", 3)                           // INVALID_ARGUMENT
-	ErrEconomyNotEnoughCurrency = runtime.NewError("not enough currency for purchase", 3)      // INVALID_ARGUMENT
-	ErrEconomyNotEnoughItem     = runtime.NewError("not enough item", 3)                       // INVALID_ARGUMENT
-	ErrEconomyReceiptInvalid    = runtime.NewError("invalid receipt", 3)                       // INVALID_ARGUMENT
-	ErrEconomyReceiptDuplicate  = runtime.NewError("duplicate receipt", 3)                     // INVALID_ARGUMENT
-	ErrEconomyReceiptMismatch   = runtime.NewError("mismatched product receipt", 3)            // INVALID_ARGUMENT
-	ErrEconomyNoPlacement       = runtime.NewError("placement not found", 3)                   // INVALID_ARGUMENT
-	ErrEconomyNoDonation        = runtime.NewError("donation not found", 3)                    // INVALID_ARGUMENT
-	ErrEconomyMaxDonation       = runtime.NewError("donation maximum contribution reached", 3) // INVALID_ARGUMENT
-	ErrEconomyClaimedDonation   = runtime.NewError("donation already claimed", 3)              // INVALID_ARGUMENT
+	ErrEconomyCredentialsMissing = runtime.NewError("credentials missing", 13)                  // INTERNAL
+	ErrEconomyNoItem             = runtime.NewError("item not found", 3)                        // INVALID_ARGUMENT
+	ErrEconomyItemUnavailable    = runtime.NewError("item unavailable", 3)                      // INVALID_ARGUMENT
+	ErrEconomyNoSku              = runtime.NewError("sku not found", 3)                         // INVALID_ARGUMENT
+	ErrEconomySkuInvalid         = runtime.NewError("invalid sku", 3)                           // INVALID_ARGUMENT
+	ErrEconomyNotEnoughCurrency  = runtime.NewError("not enough currency for purchase", 3)      // INVALID_ARGUMENT
+	ErrEconomyNotEnoughItem      = runtime.NewError("not enough item", 3)                       // INVALID_ARGUMENT
+	ErrEconomyReceiptInvalid     = runtime.NewError("invalid receipt", 3)                       // INVALID_ARGUMENT
+	ErrEconomyReceiptDuplicate   = runtime.NewError("duplicate receipt", 3)                     // INVALID_ARGUMENT
+	ErrEconomyReceiptMismatch    = runtime.NewError("mismatched product receipt", 3)            // INVALID_ARGUMENT
+	ErrEconomyNoPlacement        = runtime.NewError("placement not found", 3)                   // INVALID_ARGUMENT
+	ErrEconomyNoDonation         = runtime.NewError("donation not found", 3)                    // INVALID_ARGUMENT
+	ErrEconomyMaxDonation        = runtime.NewError("donation maximum contribution reached", 3) // INVALID_ARGUMENT
+	ErrEconomyClaimedDonation    = runtime.NewError("donation already claimed", 3)              // INVALID_ARGUMENT
 
 	ErrInventoryNotInitialized = runtime.NewError("inventory not initialized for batch", 13) // INTERNAL
 	ErrItemsNotConsumable      = runtime.NewError("items not consumable", 3)                 // INVALID_ARGUMENT
