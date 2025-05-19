@@ -5,6 +5,32 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.23.0] - 2025-05-19
+### Added
+- New gameplay system called Challenges for players to compete with each other on private leaderboards.
+- (Unreal) New [Blueprints](https://dev.epicgames.com/documentation/en-us/unreal-engine/blueprints-visual-scripting-in-unreal-engine) support for all Hiro features.
+- New Dart client for all Hiro features.
+
+### Changed
+- When a score with metadata is changed on an Event Leaderboard, its metadata can be excluded.
+- Use default values if Economy Reward ranges are unset in definition.
+- (Unreal) Optimize parse response with string iterators.
+- Update TypeScript client with all the latest Hiro features.
+- (Unity) Modernize analytics systems and default taxonomy.
+- (Unity) Achievement progress can be calculated Offline and synchronized to server.
+
+### Fixed
+- (Unreal) Resolve all warnings in code generated types with 5.4 or newer.
+- (Unity) When a player leaves a Team, update state to unset membership and other fields.
+- (Unity) When an Inventory Item is consumed while Offline correctly calculate delta changes.
+- Return updated Energy Modifiers as part of Economy Ack responses.
+- (CPP) Use "std::variant" to parse "google.protobuf.Struct" types.
+- (Unity) Correctly update view state of player Stats when back Online.
+- (Unity) Correctly update view state of player Inventory when back Online.
+- Do not store Inventory Item properties in storage which originate in Item definition.
+- (Unity) Return filtered Inventory codex if category field is set.
+- Reduce contention in Event Leaderboard entry participation to minimize retries.
+
 ## [1.22.0] - 2025-02-14
 ### Added
 - Add "claim_count" field to Streaks gameplay system.

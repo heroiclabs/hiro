@@ -1801,7 +1801,7 @@ paths:
   /rpc/RPC_ID_CHALLENGE_GET?unwrap:
     post:
       summary: CHALLENGE_GET
-      description: "Get a challange by id."
+      description: "Get a challenge by id."
       operationId: CHALLENGE_GET
       requestBody:
         required: true
@@ -2900,7 +2900,7 @@ components:
           format: int64
         open:
           type: boolean
-        max_num_scores:
+        max_num_score:
           type: integer
           format: int64
         ascending:
@@ -2952,6 +2952,8 @@ components:
           format: int64
         metadata:
           type: string
+        always_update_metadata:
+          type: boolean
     EventLeaderboardClaim:
       type: object
       properties:
