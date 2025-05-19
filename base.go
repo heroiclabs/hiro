@@ -73,6 +73,13 @@ type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sq
 
 type CollectionResolverFn func(ctx context.Context, systemType SystemType, collection string) (string, error)
 
+type Credentials struct {
+	Token       string `json:"token,omitempty"`
+	Environment string `json:"environment,omitempty"`
+}
+
+type CredentialsSourceFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, storeType EconomyStoreType, userID string) (*Credentials, error)
+
 // ActivityCalculator specifies a function used to resolve an activity score for some set of users.
 // Users not in the returned map are assumed to have an activity score of 0. Higher activity values
 // should generally be used to indicate more active users. Individual user activity scores may be
@@ -86,6 +93,8 @@ type Hiro interface {
 	AddPersonalizer(personalizer Personalizer)
 
 	AddPublisher(publisher Publisher)
+
+	SetCredentialsSource(source CredentialsSourceFn)
 
 	SetAfterAuthenticate(fn AfterAuthenticateFn)
 
