@@ -31,9 +31,11 @@ type TeamsConfig struct {
 	InitialMaxTeamSize int `json:"initial_max_team_size,omitempty"`
 	MaxTeamSize        int `json:"max_team_size,omitempty"`
 
-	Wallet    *TeamsWalletConfig    `json:"wallet,omitempty"`
-	Stats     *TeamsStatsConfig     `json:"stats,omitempty"`
-	Inventory *TeamsInventoryConfig `json:"inventory,omitempty"`
+	Wallet            *TeamsWalletConfig           `json:"wallet,omitempty"`
+	Stats             *TeamsStatsConfig            `json:"stats,omitempty"`
+	Inventory         *TeamsInventoryConfig        `json:"inventory,omitempty"`
+	Achievements      *TeamsAchievementsConfig     `json:"achievements,omitempty"`
+	EventLeaderboards *TeamEventLeaderboardsConfig `json:"event_leaderboards,omitempty"`
 }
 
 type TeamsWalletConfig struct {
@@ -51,6 +53,14 @@ type TeamsInventoryConfig struct {
 	ItemSets map[string]map[string]bool      `json:"-"` // Auto-computed when the config is read or personalized.
 
 	ConfigSource ConfigSource[*InventoryConfigItem] `json:"-"` // Not included in serialization, set dynamically.
+}
+
+type TeamsAchievementsConfig struct {
+	Achievements map[string]*AchievementsConfigAchievement `json:"achievements,omitempty"`
+}
+
+type TeamEventLeaderboardsConfig struct {
+	EventLeaderboards map[string]*EventLeaderboardsConfigLeaderboard `json:"event_leaderboards,omitempty"`
 }
 
 // A TeamsSystem is a gameplay system which wraps the groups system in Nakama server.
@@ -98,8 +108,54 @@ type TeamsSystem interface {
 
 	// SetInventoryConfigSource sets a custom additional config lookup function.
 	SetInventoryConfigSource(fn ConfigSource[*InventoryConfigItem])
+
+	// ClaimAchievements when one or more achievements whose progress has completed by their IDs.
+	ClaimAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, achievementIDs []string, claimTotal bool) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
+
+	// GetAchievements returns all achievements available to the user and progress on them.
+	GetAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
+
+	// UpdateAchievements updates progress on one or more achievements by the same amount.
+	UpdateAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, achievementUpdates map[string]int64) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
+
+	// SetOnAchievementReward sets a custom reward function which will run after an achievement's reward is rolled.
+	SetOnAchievementReward(fn OnReward[*AchievementsConfigAchievement])
+
+	// SetOnSubAchievementReward sets a custom reward function which will run after a sub-achievement's reward is rolled.
+	SetOnSubAchievementReward(fn OnReward[*AchievementsConfigSubAchievement])
+
+	// SetOnAchievementTotalReward sets a custom reward function which will run after an achievement's total reward is rolled.
+	SetOnAchievementTotalReward(fn OnReward[*AchievementsConfigAchievement])
+
+	// ListEventLeaderboard returns available event leaderboards for the team.
+	ListEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, withScores bool, categories []string) (eventLeaderboards []*EventLeaderboard, err error)
+
+	// GetEventLeaderboard returns a specified event leaderboard's cohort for the team.
+	GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string) (eventLeaderboard *EventLeaderboard, err error)
+
+	// RollEventLeaderboard places the team into a new cohort for the specified event leaderboard if possible.
+	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, tier *int, matchmakerProperties map[string]interface{}) (eventLeaderboard *EventLeaderboard, err error)
+
+	// UpdateEventLeaderboard updates the team's score in the specified event leaderboard, and returns the team's updated cohort information.
+	UpdateEventLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, username, eventLeaderboardID string, score, subscore int64, metadata map[string]interface{}, alwaysUpdateMetadata bool) (eventLeaderboard *EventLeaderboard, err error)
+
+	// ClaimEventLeaderboard claims the team's reward for the given event leaderboard.
+	ClaimEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string) (eventLeaderboard *EventLeaderboard, err error)
+
+	// SetOnEventLeaderboardsReward sets a custom reward function which will run after a team event leaderboard's reward is rolled.
+	SetOnEventLeaderboardsReward(fn OnReward[*EventLeaderboardsConfigLeaderboard])
+
+	// SetOnEventLeaderboardCohortSelection sets a custom function that can replace the cohort or opponent selection feature of team event leaderboards.
+	SetOnEventLeaderboardCohortSelection(fn OnTeamEventLeaderboardCohortSelection)
+
+	// DebugFill fills the user's current cohort with dummy teams for all remaining available slots.
+	DebugFill(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, targetCount int) (eventLeaderboard *EventLeaderboard, err error)
+
+	// DebugRandomScores assigns random scores to the participants of the team's current cohort, except to the team itself.
+	DebugRandomScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, scoreMin, scoreMax, subscoreMin, subscoreMax int64, operator *int) (eventLeaderboard *EventLeaderboard, err error)
 }
 
-// ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is
-// created or not.
+// ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is created or not.
 type ValidateCreateTeamFn func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamCreateRequest) *runtime.Error
+
+type OnTeamEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, storageIndex string, eventID string, config *EventLeaderboardsConfigLeaderboard, userID, teamID string, tier int, matchmakerProperties map[string]interface{}) (cohortID string, cohortUserIDs []string, newCohort *EventLeaderboardCohortConfig, err error)

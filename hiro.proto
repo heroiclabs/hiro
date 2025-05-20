@@ -124,6 +124,28 @@ enum RpcId {
   // Update the properties on one or more team inventory items accessible to the player.
   RPC_ID_TEAMS_INVENTORY_UPDATE = 99 [(input) = "TeamInventoryUpdateItemsRequest", (output) = "InventoryUpdateAck"];
 
+  // Claim one or more team achievements which have completed their progress.
+  RPC_ID_TEAMS_ACHIEVEMENTS_CLAIM = 100 [(input) = "TeamAchievementsClaimRequest", (output) = "AchievementsUpdateAck"];
+  // Get all team achievements with progress accumulated by the team.
+  RPC_ID_TEAMS_ACHIEVEMENTS_GET = 101 [(input) = "TeamAchievementsGetRequest", (output) = "AchievementList"];
+  // Update one or more team achievements with the same progress amount.
+  RPC_ID_TEAMS_ACHIEVEMENTS_UPDATE = 102 [(input) = "TeamAchievementsUpdateRequest", (output) = "AchievementsUpdateAck"];
+
+  // List available event leaderboards.
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_LIST = 103 [(input) = "TeamEventLeaderboardList", (output) = "TeamEventLeaderboards"];
+  // Get a specified event leaderboard defined for the game.
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_GET = 104 [(input) = "TeamEventLeaderboardGet", (output) = "TeamEventLeaderboard"];
+  // Update an event leaderboard record for a user.
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_UPDATE = 105 [(input) = "TeamEventLeaderboardUpdate", (output) = "TeamEventLeaderboard"];
+  // Claim an event leaderboard reward for a user.
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_CLAIM = 106 [(input) = "TeamEventLeaderboardClaim", (output) = "TeamEventLeaderboard"];
+  // Roll a new cohort for the specified event leaderboard.
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_ROLL = 107 [(input) = "TeamEventLeaderboardRoll", (output) = "TeamEventLeaderboard"];
+  // DEBUG. Fill an event leaderboard with random user IDs.
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_FILL = 108 [(input) = "TeamEventLeaderboardDebugFillRequest", (output) = "TeamEventLeaderboard"];
+  // DEBUG. Assign random scores within a given range to users within the caller's cohort, except for the caller themselves.
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES = 109 [(input) = "TeamEventLeaderboardDebugRandomScoresRequest", (output) = "TeamEventLeaderboard"];
+
   // Create a random unlockable to assign to a slot (or overflow) unless there are no slots.
   RPC_ID_UNLOCKABLES_CREATE = 30 [(input) = "", (output) = "UnlockablesList"];
   // Get the unlockables which are currently in progress for the player.
@@ -2609,6 +2631,225 @@ message TeamInventoryUpdateItemsRequest {
   string id = 1;
   // The item updates to action, keyed by item instance ID.
   map<string, InventoryUpdateItemProperties> item_updates = 2;
+}
+
+// Claim rewards with one or more team achievement on the server.
+message TeamAchievementsClaimRequest {
+  // Team identifier.
+  string id = 1;
+  // The set of team achievement IDs to claim.
+  repeated string ids = 2;
+  // Whether or not to claim the total reward as well, if available.
+  bool claim_total_reward = 3;
+}
+
+// Get achievements for a particular team.
+message TeamAchievementsGetRequest {
+  // Team identifier.
+  string id = 1;
+}
+
+// Update progress on one or more team achievements on the server.
+message TeamAchievementsUpdateRequest {
+  // Team identifier.
+  string id = 1;
+  // The set of achievement IDs to progress.
+  repeated string ids = 2;
+  // The amount of progress to increment on the achievements.
+  int64 amount = 3;
+  // Achievements with different amounts.
+  map<string, int64> achievements = 4;
+}
+
+// Retrieve available team event leaderboards.
+message TeamEventLeaderboardList {
+  // Team identifier.
+  string id = 1;
+  // Whether or not the response should include scores, defaults to false.
+  bool with_scores = 2;
+  // Optional filter of Event Leaderboard categories to list. If empty does not filter on category.
+  repeated string categories = 3;
+}
+
+// Find and retrieve a team event leaderboard by ID, automatically joining the event if necessary.
+message TeamEventLeaderboardGet {
+  // Team identifier.
+  string id = 1;
+  // Event leaderboard ID to get, and join if necessary/possible.
+  string event_leaderboard_id = 2;
+}
+
+// Submit a score to a team event leaderboard.
+message TeamEventLeaderboardUpdate {
+  // Team identifier.
+  string id = 1;
+  // Event leaderboard ID.
+  string event_leaderboard_id = 2;
+  // Score.
+  int64 score = 3;
+  // Subscore.
+  int64 subscore = 4;
+  // Metadata.
+  string metadata = 5;
+  // Skip updating metadata if score and subscore are unchanged.
+  bool skip_metadata = 6;
+}
+
+// Claim the available reward for a team event leaderboard by ID.
+message TeamEventLeaderboardClaim {
+  // Team identifier.
+  string id = 1;
+  // Event leaderboard ID to claim.
+  string event_leaderboard_id = 2;
+}
+
+// Roll a new cohort for the specified team event leaderboard.
+message TeamEventLeaderboardRoll {
+  // Team identifier.
+  string id = 1;
+  // Event leaderboard ID to roll.
+  string event_leaderboard_id = 2;
+}
+
+// A single participant entry to a team event leaderboard.
+message TeamEventLeaderboardScore {
+  // Team ID.
+  string id = 1;
+  // Name.
+  string name = 2;
+  // Avatar URL.
+  string avatar_url = 3;
+  // Time when the user joined the event leaderboard.
+  int64 create_time_sec = 4;
+  // Time when the user last submitted a score.
+  int64 update_time_sec = 5;
+  // Rank within the event leaderboard.
+  int64 rank = 6;
+  // Score.
+  int64 score = 7;
+  // Subscore.
+  int64 subscore = 8;
+  // Number of score submissions.
+  int64 num_scores = 9;
+  // Metadata.
+  string metadata = 10;
+}
+
+// Individual user contribution towards the score of a team in a team event leaderboard.
+message TeamEventLeaderboardContribution {
+  // User ID.
+  string id = 1;
+  // Username.
+  string username = 2;
+  // Display name.
+  string display_name = 3;
+  // Avatar URL.
+  string avatar_url = 4;
+  // Time when the user first submitted a score for this cohort.
+  int64 create_time_sec = 5;
+  // Time when the user last submitted a score fir this cohort.
+  int64 update_time_sec = 6;
+  // Aggregate score submitted by this user.
+  int64 score = 7;
+  // Aggregate subscore submitted by this user.
+  int64 subscore = 8;
+  // Number of score submissions from this user.
+  int64 num_scores = 9;
+  // Metadata for this user's most recent score update.
+  string metadata = 10;
+}
+
+// Details about a specific team event leaderboard.
+message TeamEventLeaderboard {
+  // Event leaderboard ID.
+  string id = 1;
+  // The name of the event leaderboard. May be an i18n code.
+  string name = 2;
+  // A description of the event leaderboard. May be an i18n code.
+  string description = 3;
+  // The category to group the event leaderboard together with others.
+  string category = 4;
+  // Score ordering.
+  bool ascending = 5;
+  // Score submission operator.
+  string operator = 6;
+  // The tier of this instance of the event leaderboard.
+  int32 tier = 7;
+  // Time when the event starts.
+  int64 start_time_sec = 8;
+  // Time when the event ends.
+  int64 end_time_sec = 9;
+  // Time when the event expires.
+  int64 expiry_time_sec = 10;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 11;
+  // The possible reward tiers for this instance of the event leaderboard, based on its current tier.
+  map<int32, EventLeaderboardRewardTiers> reward_tiers = 12;
+  // Per-tier promotion/demotion change zones, if configured.
+  map<int32, EventLeaderboardChangeZone> change_zones = 13;
+  // Claim time, if any.
+  int64 claim_time_sec = 14;
+  // The outcome (rolled) reward for the event leaderboard.
+  Reward reward = 15;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 16;
+  // Current participant count.
+  int64 count = 17;
+  // Maximum participant count.
+  int64 max_count = 18;
+  // Maximum number of score submissions per participant.
+  int64 max_num_score = 19;
+  // Participants and their scores.
+  repeated TeamEventLeaderboardScore scores = 20;
+  // Indicates if the event is still active, and scores can be submitted.
+  bool is_active = 21;
+  // Indicates if the event is over and its reward can be claimed.
+  bool can_claim = 22;
+  // Indicates if the event can be rolled to get a new set of opponents.
+  bool can_roll = 23;
+  // Extra matchmaker properties for this cohort.
+  google.protobuf.Struct matchmaker_properties = 24;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 25;
+  // Cohort ID the user belongs to for this active phase.
+  string cohort_id = 26;
+  // Backing ID for underlying score tracking.
+  string backing_id = 27;
+  // Contributions from team members towards the score.
+  repeated TeamEventLeaderboardContribution contributions = 28;
+}
+
+// Several team event leaderboards the team has access to, resulting from a listing operation.
+message TeamEventLeaderboards {
+  // Zero or more event leaderboards.
+  repeated TeamEventLeaderboard event_leaderboards = 1;
+}
+
+message TeamEventLeaderboardDebugFillRequest {
+  // Team identifier.
+  string id = 1;
+  // Event leaderboard ID to fill.
+  string event_leaderboard_id = 2;
+  // Optional target cohort size to fill to, otherwise fill to max cohort size.
+  int32 target_count = 3;
+}
+
+// DEBUG. Payload describing scores to set for a cohort's participants.
+message TeamEventLeaderboardDebugRandomScoresRequest {
+  // Team identifier.
+  string id = 1;
+  // Event leaderboard ID to update.
+  string event_leaderboard_id = 2;
+  // Minimum score, inclusive.
+  int64 min = 3;
+  // Maximum score, inclusive.
+  int64 max = 4;
+  // Optional operator to use when updating scores.
+  google.protobuf.Int32Value operator = 5;
+  // Minimum subscore, inclusive.
+  int64 subscore_min = 6;
+  // Maximum subscore, inclusive.
+  int64 subscore_max = 7;
 }
 
 // Sync operation for a single inventory item.
