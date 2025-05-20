@@ -576,6 +576,10 @@ enum EconomyStoreType {
   ECONOMY_STORE_TYPE_PSN = 5;
   // Xbox Store.
   ECONOMY_STORE_TYPE_XBOX = 6;
+  // Steam Store.
+  ECONOMY_STORE_TYPE_STEAM = 7;
+  // Epic Store.
+  ECONOMY_STORE_TYPE_EPIC = 8;
 }
 
 // Inventory item granted.
