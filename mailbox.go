@@ -16,7 +16,13 @@ package hiro
 
 import (
 	"context"
+
 	"github.com/heroiclabs/nakama-common/runtime"
+)
+
+var (
+	ErrMailboxEntryNotFound       = runtime.NewError("mailbox entry not found", 3)       // INVALID_ARGUMENT
+	ErrMailboxEntryAlreadyClaimed = runtime.NewError("mailbox entry already claimed", 3) // INVALID_ARGUMENT
 )
 
 type MailboxConfig struct {
@@ -28,15 +34,18 @@ type MailboxConfig struct {
 type MailboxSystem interface {
 	System
 
-	// List the reward mailbox, from most recent to oldest.
-	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, limit int, cursor string) (*MailboxList, error)
+	// List the reward mailbox.
+	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, limit int, cursor string) (mailboxList *MailboxList, err error)
 
 	// Claim a reward, and optionally remove it from the mailbox.
-	Claim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, id string, delete bool) (*MailboxEntry, error)
+	Claim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, id string, delete bool) (mailboxEntry *MailboxEntry, err error)
 
 	// Delete a reward from the mailbox, even if it is not yet claimed.
-	Delete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, id string) error
+	Delete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, ids []string) error
 
 	// Grant a reward to the user's mailbox.
-	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, reward *Reward) (*MailboxEntry, error)
+	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, reward *Reward) (mailboxEntry *MailboxEntry, err error)
+
+	// SetOnClaimReward sets a custom reward function which will run after a mailbox reward is rolled during claiming.
+	SetOnClaimReward(fn OnReward[*MailboxEntry])
 }
