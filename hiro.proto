@@ -104,47 +104,54 @@ enum RpcId {
   RPC_ID_TEAMS_WRITE_CHAT_MESSAGE = 29 [(input) = "TeamWriteChatMessageRequest", (output) = "ChannelMessageAck"];
 
   // Get a team's wallet.
-  RPC_ID_TEAMS_WALLET_GET = 91 [(input) = "TeamWalletGetRequest", (output) = "TeamWallet"];
+  RPC_ID_TEAMS_WALLET_GET = 94 [(input) = "TeamWalletGetRequest", (output) = "TeamWallet"];
   // Grant currencies to a team's wallet.
-  RPC_ID_TEAMS_WALLET_GRANT = 92 [(input) = "TeamWalletGrantRequest", (output) = "TeamWallet"];
+  RPC_ID_TEAMS_WALLET_GRANT = 95 [(input) = "TeamWalletGrantRequest", (output) = "TeamWallet"];
 
   // Get a team's stats.
-  RPC_ID_TEAMS_STATS_GET = 93 [(input) = "TeamStatListRequest", (output) = "StatList"];
+  RPC_ID_TEAMS_STATS_GET = 96 [(input) = "TeamStatListRequest", (output) = "StatList"];
   // Update a team's stats.
-  RPC_ID_TEAMS_STATS_UPDATE = 94 [(input) = "TeamStatUpdateRequest", (output) = "StatList"];
+  RPC_ID_TEAMS_STATS_UPDATE = 97 [(input) = "TeamStatUpdateRequest", (output) = "StatList"];
 
   // List all inventory items defined in the team codex.
-  RPC_ID_TEAMS_INVENTORY_LIST = 95 [(input) = "TeamInventoryListRequest", (output) = "InventoryList"];
+  RPC_ID_TEAMS_INVENTORY_LIST = 98 [(input) = "TeamInventoryListRequest", (output) = "InventoryList"];
   // List all inventory items owned by a team.
-  RPC_ID_TEAMS_INVENTORY_LIST_INVENTORY = 96 [(input) = "TeamInventoryListRequest", (output) = "InventoryList"];
+  RPC_ID_TEAMS_INVENTORY_LIST_INVENTORY = 99 [(input) = "TeamInventoryListRequest", (output) = "InventoryList"];
   // Consume one or more inventory items owned by a team.
-  RPC_ID_TEAMS_INVENTORY_CONSUME = 97 [(input) = "TeamInventoryConsumeRequest", (output) = "InventoryConsumeRewards"];
+  RPC_ID_TEAMS_INVENTORY_CONSUME = 100 [(input) = "TeamInventoryConsumeRequest", (output) = "InventoryConsumeRewards"];
   // Grant one or more inventory items to a team.
-  RPC_ID_TEAMS_INVENTORY_GRANT = 98 [(input) = "TeamInventoryGrantRequest", (output) = "InventoryUpdateAck"];
+  RPC_ID_TEAMS_INVENTORY_GRANT = 101 [(input) = "TeamInventoryGrantRequest", (output) = "InventoryUpdateAck"];
   // Update the properties on one or more team inventory items accessible to the player.
-  RPC_ID_TEAMS_INVENTORY_UPDATE = 99 [(input) = "TeamInventoryUpdateItemsRequest", (output) = "InventoryUpdateAck"];
+  RPC_ID_TEAMS_INVENTORY_UPDATE = 102 [(input) = "TeamInventoryUpdateItemsRequest", (output) = "InventoryUpdateAck"];
 
   // Claim one or more team achievements which have completed their progress.
-  RPC_ID_TEAMS_ACHIEVEMENTS_CLAIM = 100 [(input) = "TeamAchievementsClaimRequest", (output) = "AchievementsUpdateAck"];
+  RPC_ID_TEAMS_ACHIEVEMENTS_CLAIM = 103 [(input) = "TeamAchievementsClaimRequest", (output) = "AchievementsUpdateAck"];
   // Get all team achievements with progress accumulated by the team.
-  RPC_ID_TEAMS_ACHIEVEMENTS_GET = 101 [(input) = "TeamAchievementsGetRequest", (output) = "AchievementList"];
+  RPC_ID_TEAMS_ACHIEVEMENTS_GET = 104 [(input) = "TeamAchievementsGetRequest", (output) = "AchievementList"];
   // Update one or more team achievements with the same progress amount.
-  RPC_ID_TEAMS_ACHIEVEMENTS_UPDATE = 102 [(input) = "TeamAchievementsUpdateRequest", (output) = "AchievementsUpdateAck"];
+  RPC_ID_TEAMS_ACHIEVEMENTS_UPDATE = 105 [(input) = "TeamAchievementsUpdateRequest", (output) = "AchievementsUpdateAck"];
 
   // List available event leaderboards.
-  RPC_ID_TEAMS_EVENT_LEADERBOARD_LIST = 103 [(input) = "TeamEventLeaderboardList", (output) = "TeamEventLeaderboards"];
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_LIST = 106 [(input) = "TeamEventLeaderboardList", (output) = "TeamEventLeaderboards"];
   // Get a specified event leaderboard defined for the game.
-  RPC_ID_TEAMS_EVENT_LEADERBOARD_GET = 104 [(input) = "TeamEventLeaderboardGet", (output) = "TeamEventLeaderboard"];
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_GET = 107 [(input) = "TeamEventLeaderboardGet", (output) = "TeamEventLeaderboard"];
   // Update an event leaderboard record for a user.
-  RPC_ID_TEAMS_EVENT_LEADERBOARD_UPDATE = 105 [(input) = "TeamEventLeaderboardUpdate", (output) = "TeamEventLeaderboard"];
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_UPDATE = 108 [(input) = "TeamEventLeaderboardUpdate", (output) = "TeamEventLeaderboard"];
   // Claim an event leaderboard reward for a user.
-  RPC_ID_TEAMS_EVENT_LEADERBOARD_CLAIM = 106 [(input) = "TeamEventLeaderboardClaim", (output) = "TeamEventLeaderboard"];
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_CLAIM = 109 [(input) = "TeamEventLeaderboardClaim", (output) = "TeamEventLeaderboard"];
   // Roll a new cohort for the specified event leaderboard.
-  RPC_ID_TEAMS_EVENT_LEADERBOARD_ROLL = 107 [(input) = "TeamEventLeaderboardRoll", (output) = "TeamEventLeaderboard"];
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_ROLL = 110 [(input) = "TeamEventLeaderboardRoll", (output) = "TeamEventLeaderboard"];
   // DEBUG. Fill an event leaderboard with random user IDs.
-  RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_FILL = 108 [(input) = "TeamEventLeaderboardDebugFillRequest", (output) = "TeamEventLeaderboard"];
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_FILL = 111 [(input) = "TeamEventLeaderboardDebugFillRequest", (output) = "TeamEventLeaderboard"];
   // DEBUG. Assign random scores within a given range to users within the caller's cohort, except for the caller themselves.
-  RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES = 109 [(input) = "TeamEventLeaderboardDebugRandomScoresRequest", (output) = "TeamEventLeaderboard"];
+  RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES = 112 [(input) = "TeamEventLeaderboardDebugRandomScoresRequest", (output) = "TeamEventLeaderboard"];
+
+  // List rewards available in a team mailbox.
+  RPC_ID_TEAMS_MAILBOX_LIST = 113 [(input) = "TeamMailboxListRequest", (output) = "MailboxList"];
+  // Claim a reward from the team mailbox, and optionally delete it.
+  RPC_ID_TEAMS_MAILBOX_CLAIM = 114 [(input) = "TeamMailboxClaimRequest", (output) = "MailboxEntry"];
+  // Delete a reward from the team mailbox, even if it is not yet claimed.
+  RPC_ID_TEAMS_MAILBOX_DELETE = 115 [(input) = "TeamMailboxDeleteRequest", (output) = ""];
 
   // Create a random unlockable to assign to a slot (or overflow) unless there are no slots.
   RPC_ID_UNLOCKABLES_CREATE = 30 [(input) = "", (output) = "UnlockablesList"];
@@ -266,6 +273,13 @@ enum RpcId {
   RPC_ID_CHALLENGE_SEARCH = 89 [(input) = "ChallengeSearchRequest", (output) = "ChallengesList"];
   // Invite more users to an ongoing challenge.
   RPC_ID_CHALLENGE_INVITE = 90 [(input) = "ChallengeInviteRequest", (output) = "Challenge"];
+
+  // List rewards available in a mailbox.
+  RPC_ID_MAILBOX_LIST = 91 [(input) = "MailboxListRequest", (output) = "MailboxList"];
+  // Claim a reward from the mailbox, and optionally delete it.
+  RPC_ID_MAILBOX_CLAIM = 92 [(input) = "MailboxClaimRequest", (output) = "MailboxEntry"];
+  // Delete a reward from the mailbox, even if it is not yet claimed.
+  RPC_ID_MAILBOX_DELETE = 93 [(input) = "MailboxDeleteRequest", (output) = ""];
 
   //--- Server to server RPCs ---//
 
@@ -2557,6 +2571,54 @@ message StreaksResetRequest {
   repeated string ids = 1;
 }
 
+// A mailbox entry and associated reward information.
+message MailboxEntry {
+  // Unique identifier for this entry.
+  string id = 1;
+  // Reward associated with this entry.
+  AvailableRewards reward = 2;
+  // Create time in UTC seconds.
+  int64 create_time_sec = 3;
+  // Update time in UTC seconds.
+  int64 update_time_sec = 4;
+  // Expiry time in UTC seconds.
+  int64 expiry_time_sec = 5;
+  // Claim time in UTC seconds.
+  int64 claim_time_sec = 6;
+  // Indicator if the entry reward can be claimed.
+  bool can_claim = 7;
+}
+
+// A list of mailbox entries, with pagination information if applicable.
+message MailboxList {
+  // A list of mailbox entries for this mailbox.
+  repeated MailboxEntry entries = 1;
+  // Pagination cursor to fetch more results, or empty if there are no more.
+  string cursor = 2;
+}
+
+// Request to list mailbox entries.
+message MailboxListRequest {
+  // Maximum number of mailbox entries to return.
+  int64 limit = 1;
+  // Cursor to paginate from, if any.
+  string cursor = 2;
+}
+
+// Request to claim a mailbox entry, and optionally remove it at the same time.
+message MailboxClaimRequest {
+  // Identifier for the mailbox entry to claim.
+  string id = 1;
+  // If the entry should be deleted as part of the claim.
+  bool delete = 2;
+}
+
+// Request to delete a mailbox entry, even if it is not yet claimed.
+message MailboxDeleteRequest {
+  // Identifier for the mailbox entry to delete.
+  string id = 1;
+}
+
 // Request to fetch a team's wallet.
 message TeamWalletGetRequest {
   // The team identifier to fetch a wallet for.
@@ -2850,6 +2912,34 @@ message TeamEventLeaderboardDebugRandomScoresRequest {
   int64 subscore_min = 6;
   // Maximum subscore, inclusive.
   int64 subscore_max = 7;
+}
+
+// Request to list team mailbox entries.
+message TeamMailboxListRequest {
+  // Team identifier.
+  string id = 1;
+  // Maximum number of mailbox entries to return.
+  int64 limit = 2;
+  // Cursor to paginate from, if any.
+  string cursor = 3;
+}
+
+// Request to claim a team mailbox entry, and optionally remove it at the same time.
+message TeamMailboxClaimRequest {
+  // Team identifier.
+  string id = 1;
+  // Identifier for the mailbox entry to claim.
+  string entry_id = 2;
+  // If the entry should be deleted as part of the claim.
+  bool delete = 3;
+}
+
+// Request to delete a team mailbox entry, even if it is not yet claimed.
+message TeamMailboxDeleteRequest {
+  // Team identifier.
+  string id = 1;
+  // Identifier for the mailbox entry to delete.
+  string entry_id = 2;
 }
 
 // Sync operation for a single inventory item.

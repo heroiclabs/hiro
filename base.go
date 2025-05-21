@@ -102,6 +102,7 @@ type Hiro interface {
 	GetAuctionsSystem() AuctionsSystem
 	GetStreaksSystem() StreaksSystem
 	GetChallengesSystem() ChallengesSystem
+	GetMailboxSystem() MailboxSystem
 }
 
 // The SystemType identifies each of the gameplay systems.
@@ -125,6 +126,7 @@ const (
 	SystemTypeAuctions
 	SystemTypeStreaks
 	SystemTypeChallenges
+	SystemTypeMailbox
 )
 
 // Init initializes a Hiro type with the configurations provided.
@@ -371,6 +373,15 @@ func WithChallengesSystem(configFile string, register bool) SystemConfig {
 	}
 }
 
+// WithMailboxSystem configures a MailboxSystem type and optionally registers its RPCs with the game server.
+func WithMailboxSystem(configFile string, register bool) SystemConfig {
+	return &systemConfig{
+		systemType: SystemTypeMailbox,
+		configFile: configFile,
+		register:   register,
+	}
+}
+
 // UnregisterRpc clears the implementation of one or more RPCs registered in Nakama by Hiro gameplay systems with a
 // no-op version (http response 404). This is useful to remove individual RPCs which you do not want to be callable by
 // game clients:
@@ -403,6 +414,8 @@ func UnregisterDebugRpc(initializer runtime.Initializer) error {
 	ids := []RpcId{
 		RpcId_RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL,
 		RpcId_RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES,
+		RpcId_RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_FILL,
+		RpcId_RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES,
 	}
 	return UnregisterRpc(initializer, ids...)
 }
