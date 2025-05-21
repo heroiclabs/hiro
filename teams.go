@@ -31,12 +31,28 @@ type TeamsConfig struct {
 	InitialMaxTeamSize int `json:"initial_max_team_size,omitempty"`
 	MaxTeamSize        int `json:"max_team_size,omitempty"`
 
-	Wallet            *TeamsWalletConfig           `json:"wallet,omitempty"`
-	Stats             *TeamsStatsConfig            `json:"stats,omitempty"`
-	Inventory         *TeamsInventoryConfig        `json:"inventory,omitempty"`
-	Achievements      *TeamsAchievementsConfig     `json:"achievements,omitempty"`
-	EventLeaderboards *TeamEventLeaderboardsConfig `json:"event_leaderboards,omitempty"`
-	Mailbox           *TeamMailboxConfig           `json:"mailbox,omitempty"`
+	Wallet            *TeamsWalletConfig                     `json:"wallet,omitempty"`
+	StoreItems        map[string]*TeamEconomyConfigStoreItem `json:"store_items,omitempty"`
+	Stats             *TeamsStatsConfig                      `json:"stats,omitempty"`
+	Inventory         *TeamsInventoryConfig                  `json:"inventory,omitempty"`
+	Achievements      *TeamsAchievementsConfig               `json:"achievements,omitempty"`
+	EventLeaderboards *TeamEventLeaderboardsConfig           `json:"event_leaderboards,omitempty"`
+	Mailbox           *TeamMailboxConfig                     `json:"mailbox,omitempty"`
+}
+
+type TeamEconomyConfigStoreItem struct {
+	Category             string                          `json:"category,omitempty"`
+	Cost                 *TeamEconomyConfigStoreItemCost `json:"cost,omitempty"`
+	Description          string                          `json:"description,omitempty"`
+	Name                 string                          `json:"name,omitempty"`
+	Reward               *EconomyConfigReward            `json:"reward,omitempty"`
+	AdditionalProperties map[string]string               `json:"additional_properties,omitempty"`
+	Disabled             bool                            `json:"disabled,omitempty"`
+	Unavailable          bool                            `json:"unavailable,omitempty"`
+}
+
+type TeamEconomyConfigStoreItemCost struct {
+	Currencies map[string]int64 `json:"currencies,omitempty"`
 }
 
 type TeamsWalletConfig struct {
@@ -65,6 +81,8 @@ type TeamEventLeaderboardsConfig struct {
 }
 
 type TeamMailboxConfig struct {
+	MaxSize   int `json:"max_size,omitempty"`
+	ExpirySec int `json:"expiry_sec,omitempty"`
 }
 
 // A TeamsSystem is a gameplay system which wraps the groups system in Nakama server.
@@ -85,6 +103,15 @@ type TeamsSystem interface {
 
 	// UpdateMaxSize sets a new maximum team size for the selected team.
 	UpdateMaxSize(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID string, count int, delta bool) error
+
+	// StoreList will get the defined store items available to the team.
+	StoreList(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string) (storeItems map[string]*TeamEconomyConfigStoreItem, rewardModifiers []*ActiveRewardModifier, timestamp int64, err error)
+
+	// StorePurchase will validate a purchase and give the user ID the appropriate rewards.
+	StorePurchase(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, itemID string) (updatedWallet map[string]int64, updatedInventory *Inventory, reward *Reward, err error)
+
+	// SetOnPurchaseReward sets a custom reward function which will run after a team store item's reward is rolled.
+	SetOnPurchaseReward(fn OnReward[*TeamEconomyConfigStoreItem])
 
 	// WalletGet fetches the wallet for a specified team.
 	WalletGet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string) (*TeamWallet, error)
