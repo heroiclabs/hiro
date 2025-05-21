@@ -2581,7 +2581,7 @@ message MailboxEntry {
   // Unique identifier for this entry.
   string id = 1;
   // Reward associated with this entry.
-  AvailableRewards reward = 2;
+  Reward reward = 2;
   // Create time in UTC seconds.
   int64 create_time_sec = 3;
   // Update time in UTC seconds.
@@ -2620,8 +2620,8 @@ message MailboxClaimRequest {
 
 // Request to delete a mailbox entry, even if it is not yet claimed.
 message MailboxDeleteRequest {
-  // Identifier for the mailbox entry to delete.
-  string id = 1;
+  // Identifiers for the mailbox entries to delete.
+  repeated string ids = 1;
 }
 
 // Represents a request to retrieve available team store items.

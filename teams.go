@@ -186,16 +186,16 @@ type TeamsSystem interface {
 	DebugRandomScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, scoreMin, scoreMax, subscoreMin, subscoreMax int64, operator *int) (eventLeaderboard *TeamEventLeaderboard, err error)
 
 	// MailboxList lists the team reward mailbox, from most recent to oldest.
-	MailboxList(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, limit int, cursor string) (*MailboxList, error)
+	MailboxList(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, limit int, cursor string) (mailboxList *MailboxList, err error)
 
 	// MailboxClaim claims a reward and optionally removes it from the team mailbox.
-	MailboxClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, id string, delete bool) (*MailboxEntry, error)
+	MailboxClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, id string, delete bool) (mailboxEntry *MailboxEntry, err error)
 
 	// MailboxDelete deletes a reward from the team mailbox, even if it is not yet claimed.
-	MailboxDelete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, id string) error
+	MailboxDelete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, ids []string) error
 
 	// MailboxGrant grants a reward to the team's mailbox.
-	MailboxGrant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, reward *Reward) (*MailboxEntry, error)
+	MailboxGrant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, reward *Reward) (mailboxEntry *MailboxEntry, err error)
 }
 
 // ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is created or not.
