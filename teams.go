@@ -128,19 +128,19 @@ type TeamsSystem interface {
 	SetOnAchievementTotalReward(fn OnReward[*AchievementsConfigAchievement])
 
 	// ListEventLeaderboard returns available event leaderboards for the team.
-	ListEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, withScores bool, categories []string) (eventLeaderboards []*EventLeaderboard, err error)
+	ListEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, withScores bool, categories []string) (eventLeaderboards []*TeamEventLeaderboard, err error)
 
 	// GetEventLeaderboard returns a specified event leaderboard's cohort for the team.
-	GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string) (eventLeaderboard *EventLeaderboard, err error)
+	GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string) (eventLeaderboard *TeamEventLeaderboard, err error)
 
 	// RollEventLeaderboard places the team into a new cohort for the specified event leaderboard if possible.
-	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, tier *int, matchmakerProperties map[string]interface{}) (eventLeaderboard *EventLeaderboard, err error)
+	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, tier *int, matchmakerProperties map[string]interface{}) (eventLeaderboard *TeamEventLeaderboard, err error)
 
 	// UpdateEventLeaderboard updates the team's score in the specified event leaderboard, and returns the team's updated cohort information.
-	UpdateEventLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, username, eventLeaderboardID string, score, subscore int64, metadata map[string]interface{}, alwaysUpdateMetadata bool) (eventLeaderboard *EventLeaderboard, err error)
+	UpdateEventLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, username, eventLeaderboardID string, score, subscore int64, metadata map[string]interface{}, alwaysUpdateMetadata bool) (eventLeaderboard *TeamEventLeaderboard, err error)
 
 	// ClaimEventLeaderboard claims the team's reward for the given event leaderboard.
-	ClaimEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string) (eventLeaderboard *EventLeaderboard, err error)
+	ClaimEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string) (eventLeaderboard *TeamEventLeaderboard, err error)
 
 	// SetOnEventLeaderboardsReward sets a custom reward function which will run after a team event leaderboard's reward is rolled.
 	SetOnEventLeaderboardsReward(fn OnReward[*EventLeaderboardsConfigLeaderboard])
@@ -149,10 +149,10 @@ type TeamsSystem interface {
 	SetOnEventLeaderboardCohortSelection(fn OnTeamEventLeaderboardCohortSelection)
 
 	// DebugFill fills the user's current cohort with dummy teams for all remaining available slots.
-	DebugFill(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, targetCount int) (eventLeaderboard *EventLeaderboard, err error)
+	DebugFill(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, targetCount int) (eventLeaderboard *TeamEventLeaderboard, err error)
 
 	// DebugRandomScores assigns random scores to the participants of the team's current cohort, except to the team itself.
-	DebugRandomScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, scoreMin, scoreMax, subscoreMin, subscoreMax int64, operator *int) (eventLeaderboard *EventLeaderboard, err error)
+	DebugRandomScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, scoreMin, scoreMax, subscoreMin, subscoreMax int64, operator *int) (eventLeaderboard *TeamEventLeaderboard, err error)
 }
 
 // ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is created or not.
