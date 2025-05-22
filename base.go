@@ -76,6 +76,7 @@ type CollectionResolverFn func(ctx context.Context, systemType SystemType, colle
 type Credentials struct {
 	Token       string `json:"token,omitempty"`
 	Environment string `json:"environment,omitempty"`
+	AccountId   string `json:"account_id,omitempty"`
 }
 
 type CredentialsSourceFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, storeType EconomyStoreType, userID string) (*Credentials, error)
