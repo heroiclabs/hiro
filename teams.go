@@ -196,6 +196,9 @@ type TeamsSystem interface {
 
 	// MailboxGrant grants a reward to the team's mailbox.
 	MailboxGrant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, reward *Reward) (mailboxEntry *MailboxEntry, err error)
+
+	// SetOnMailboxClaimReward sets a custom reward function which will run after a team mailbox reward is rolled during claiming.
+	SetOnMailboxClaimReward(fn OnReward[*MailboxEntry])
 }
 
 // ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is created or not.
