@@ -3006,7 +3006,7 @@ message TeamMailboxDeleteRequest {
   // Team identifier.
   string id = 1;
   // Identifier for the mailbox entry to delete.
-  string entry_id = 2;
+  repeated string entry_ids = 2;
 }
 
 // Sync operation for a single inventory item.
