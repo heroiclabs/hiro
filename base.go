@@ -74,9 +74,14 @@ type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sq
 type CollectionResolverFn func(ctx context.Context, systemType SystemType, collection string) (string, error)
 
 type Credentials struct {
-	Token       string `json:"token,omitempty"`
+	// Needed for PlayStation, Xbox, Steam, and Epic.
+	Token string `json:"token,omitempty"`
+	// Needed for PlayStation only.
 	Environment string `json:"environment,omitempty"`
-	AccountId   string `json:"account_id,omitempty"`
+	// needed for Epic only.
+	AccountId string `json:"account_id,omitempty"`
+	// Needed for Steam only.
+	PublisherKey string `json:"publisher_key,omitempty"`
 }
 
 type CredentialsSourceFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, storeType EconomyStoreType, userID string) (*Credentials, error)
