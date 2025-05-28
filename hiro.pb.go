@@ -780,6 +780,7 @@ func (IncentiveType) EnumDescriptor() ([]byte, []int) {
 	return file_hiro_proto_rawDescGZIP(), []int{6}
 }
 
+// The state of a user's participation in a challenge.
 type ChallengeState int32
 
 const (
@@ -4330,6 +4331,7 @@ func (x *IncentiveRecipientClaimRequest) GetCode() string {
 	return ""
 }
 
+// Request to create a new challenge based on a template.
 type ChallengeCreateRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4468,6 +4470,7 @@ func (x *ChallengeCreateRequest) GetCategory() string {
 	return ""
 }
 
+// Request to join an ongoing challenge.
 type ChallengeJoinRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4516,6 +4519,7 @@ func (x *ChallengeJoinRequest) GetChallengeId() string {
 	return ""
 }
 
+// Request to leave a challenge.
 type ChallengeLeaveRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4564,6 +4568,7 @@ func (x *ChallengeLeaveRequest) GetChallengeId() string {
 	return ""
 }
 
+// Request to claim a reward from a challenge, if available. It also culls the challenge once all rewards are claimed.
 type ChallengeClaimRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4612,6 +4617,7 @@ func (x *ChallengeClaimRequest) GetChallengeId() string {
 	return ""
 }
 
+// Request to search for open challenges to join.
 type ChallengeSearchRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4678,6 +4684,7 @@ func (x *ChallengeSearchRequest) GetLimit() int64 {
 	return 0
 }
 
+// Request for the challenge creator to invite additional users to an ongoing challenge.
 type ChallengeInviteRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4735,6 +4742,7 @@ func (x *ChallengeInviteRequest) GetInvitees() []string {
 	return nil
 }
 
+// Request to submit a score to an active challenge.
 type ChallengeSubmitScoreRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4810,6 +4818,7 @@ func (x *ChallengeSubmitScoreRequest) GetMetadata() string {
 	return ""
 }
 
+// A challenge leaderboard, which is a collection of participants and their scores.
 type Challenge struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

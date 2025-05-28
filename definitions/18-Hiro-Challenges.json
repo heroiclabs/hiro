@@ -1,0 +1,44 @@
+{
+  "challenges": {
+    "speed_runner": {
+      "reward_tiers": [
+        {
+          "rank_min": 1,
+          "rank_max": 3,
+          "reward": {
+            "coins": 300,
+            "gems": 15,
+            "items": ["speed_boots", "time_crystal"]
+          }
+        },
+        {
+          "rank_min": 4,
+          "rank_max": 10,
+          "reward": {
+            "coins": 150,
+            "gems": 8,
+            "items": ["speed_boots"]
+          }
+        }
+      ],
+      "additional_properties": {
+        "description": "Complete the dungeon in record time",
+        "category": "speedrun",
+        "difficulty": "expert",
+        "dungeon_id": "crystal_caverns"
+      },
+      "max_num_score": 3600,
+      "start_delay_max_sec": 60,
+      "ascending": false,
+      "operator": "min",
+      "duration": {
+        "min_sec": 1800,
+        "max_sec": 3600
+      },
+      "players": {
+        "min": 1,
+        "max": 100
+      }
+    }
+  }
+}
