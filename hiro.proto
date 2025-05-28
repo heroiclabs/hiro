@@ -844,6 +844,7 @@ message IncentiveRecipientClaimRequest {
   string code = 1;
 }
 
+// Request to create a new challenge based on a template.
 message ChallengeCreateRequest {
   // Challenge template ID.
   string template_id = 1;
@@ -869,21 +870,25 @@ message ChallengeCreateRequest {
   string category = 11;
 }
 
+// Request to join an ongoing challenge.
 message ChallengeJoinRequest {
   // Challenge id.
   string challenge_id = 1;
 }
 
+// Request to leave a challenge.
 message ChallengeLeaveRequest {
   // Challenge id.
   string challenge_id = 1;
 }
 
+// Request to claim a reward from a challenge, if available. It also culls the challenge once all rewards are claimed.
 message ChallengeClaimRequest {
   // Challenge id.
   string challenge_id = 1;
 }
 
+// Request to search for open challenges to join.
 message ChallengeSearchRequest {
   // Optional name of challenge to filter by.
   string name = 1;
@@ -893,6 +898,7 @@ message ChallengeSearchRequest {
   int64 limit = 3;
 }
 
+// Request for the challenge creator to invite additional users to an ongoing challenge.
 message ChallengeInviteRequest {
   // Challenge id.
   string challenge_id = 1;
@@ -900,6 +906,7 @@ message ChallengeInviteRequest {
   repeated string invitees = 2;
 }
 
+// Request to submit a score to an active challenge.
 message ChallengeSubmitScoreRequest {
   // Challenge ID.
   string challenge_id = 1;
@@ -911,6 +918,7 @@ message ChallengeSubmitScoreRequest {
   string metadata = 4;
 }
 
+// A challenge leaderboard, which is a collection of participants and their scores.
 message Challenge {
   // Challenge ID.
   string id = 1;
@@ -958,6 +966,7 @@ message Challenge {
   bool open = 23;
 }
 
+// The state of a user's participation in a challenge.
 enum ChallengeState {
   // There is no applicable state
   CHALLENGE_STATE_NONE = 0;
@@ -972,8 +981,6 @@ enum ChallengeState {
   // The challenge was joined but later left.
   CHALLENGE_STATE_LEFT = 5;
 }
-
-// TODO: Change pending/rejected to enum
 
 // Retrieve available challenge leaderboards.
 message ChallengeListRequest {
