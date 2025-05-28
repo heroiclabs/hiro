@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "challenges": {
+      "patternProperties": {
+        ".+": {
+          "properties": {
+            "reward_tiers": {
+              "patternProperties": {
+                "[0-9]+": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "rank_max": {
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "rank_min": {
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "reward": {
+                        "$ref": "Hiro-Rewards"
+                      },
+                      "tier_change": {
+                        "type": "number"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "additional_properties": {
+              "patternProperties": {
+                ".{1,}": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "max_num_score": {
+              "minimum": 1,
+              "type": "number"
+            },
+            "start_delay_max_sec": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "ascending": {
+              "type": "boolean"
+            },
+            "operator": {
+                "enum": [
+                    "best",
+                    "set",
+                    "incr",
+                    "decr",
+                    "increment",
+                    "decrement"
+                ],
+                "type": "string"
+            },
+            "duration": {
+              "properties": {
+                "min_sec": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "max_sec": {
+                  "minimum": 0,
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "players": {
+              "properties": {
+                "min": {
+                  "minimum": 1,
+                  "type": "number"
+                },
+                "max": {
+                  "minimum": 1,
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "required": [
+            "max_num_score", "ascending", "operator", "duration", "players"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

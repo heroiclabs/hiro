@@ -844,6 +844,7 @@ message IncentiveRecipientClaimRequest {
   string code = 1;
 }
 
+// Request to create a new challenge based on a template.
 message ChallengeCreateRequest {
   // Challenge template ID.
   string template_id = 1;
@@ -869,21 +870,25 @@ message ChallengeCreateRequest {
   string category = 11;
 }
 
+// Request to join an ongoing challenge.
 message ChallengeJoinRequest {
   // Challenge id.
   string challenge_id = 1;
 }
 
+// Request to leave a challenge.
 message ChallengeLeaveRequest {
   // Challenge id.
   string challenge_id = 1;
 }
 
+// Request to claim a reward from a challenge, if available. It also culls the challenge once all rewards are claimed.
 message ChallengeClaimRequest {
   // Challenge id.
   string challenge_id = 1;
 }
 
+// Request to search for open challenges to join.
 message ChallengeSearchRequest {
   // Optional name of challenge to filter by.
   string name = 1;
@@ -893,6 +898,7 @@ message ChallengeSearchRequest {
   int64 limit = 3;
 }
 
+// Request for the challenge creator to invite additional users to an ongoing challenge.
 message ChallengeInviteRequest {
   // Challenge id.
   string challenge_id = 1;
@@ -900,6 +906,7 @@ message ChallengeInviteRequest {
   repeated string invitees = 2;
 }
 
+// Request to submit a score to an active challenge.
 message ChallengeSubmitScoreRequest {
   // Challenge ID.
   string challenge_id = 1;
@@ -921,6 +928,7 @@ message ChallengeRewardTier {
   AvailableRewards available_rewards = 3;
 }
 
+// The state of a user's participation in a challenge.
 enum ChallengeState {
   // There is no applicable state
   CHALLENGE_STATE_NONE = 0;
@@ -964,6 +972,7 @@ message ChallengeScore {
   ChallengeState state = 12;
 }
 
+// A challenge leaderboard, which is a collection of participants and their scores.
 message Challenge {
   // Challenge ID.
   string id = 1;
@@ -1011,8 +1020,6 @@ message Challenge {
   bool open = 23;
 }
 
-// TODO: Change pending/rejected to enum
-
 // Retrieve available challenge leaderboards.
 message ChallengeListRequest {
   // Optional filter of Event Leaderboard categories to list. If empty does not filter on category.
@@ -1034,6 +1041,7 @@ message ChallengesList {
   repeated Challenge challenges = 1;
 }
 
+// The minimum and maximum number of players that can participate in the challenge.
 message ChallengeMaxMinPlayers {
   // The minimum number of players that can participate in the challenge.
   int64 min = 1;
@@ -1041,6 +1049,7 @@ message ChallengeMaxMinPlayers {
   int64 max = 2;
 }
 
+// The minimum and maximum duration that can be set for the challenge.
 message ChallengeMinMaxDuration {
   // The minimum duration of challenge.
   int64 min_sec = 1;
