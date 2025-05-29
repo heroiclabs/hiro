@@ -911,6 +911,59 @@ message ChallengeSubmitScoreRequest {
   string metadata = 4;
 }
 
+// The reward tiers for the challenge.
+message ChallengeRewardTier {
+  // The maximum rank (inclusive).
+  int64 rank_max = 1;
+  // The minimum rank (inclusive).
+  int64 rank_min = 2;
+  // The available rewards for this range.
+  AvailableRewards available_rewards = 3;
+}
+
+enum ChallengeState {
+  // There is no applicable state
+  CHALLENGE_STATE_NONE = 0;
+  // The user has a pending invitation to the challenge.
+  CHALLENGE_STATE_INVITED = 1;
+  // The challenge was accepted.
+  CHALLENGE_STATE_JOINED = 2;
+  // The challenge was claimed.
+  CHALLENGE_STATE_CLAIMED = 3;
+  // The challenge was declined.
+  CHALLENGE_STATE_DECLINED = 4;
+  // The challenge was joined but later left.
+  CHALLENGE_STATE_LEFT = 5;
+}
+
+// A single participant entry to an event leaderboard.
+message ChallengeScore {
+  // User ID.
+  string id = 1;
+  // Username.
+  string username = 2;
+  // Display name.
+  string display_name = 3;
+  // Avatar URL.
+  string avatar_url = 4;
+  // Time when the user joined the challenge leaderboard.
+  int64 create_time_sec = 5;
+  // Time when the user last submitted a score.
+  int64 update_time_sec = 6;
+  // Rank within the event leaderboard.
+  int64 rank = 7;
+  // Score.
+  int64 score = 8;
+  // Subscore.
+  int64 subscore = 9;
+  // Number of score submissions.
+  int64 num_scores = 10;
+  // Metadata.
+  string metadata = 11;
+  // The state of the user participation in the challenge.
+  ChallengeState state = 12;
+}
+
 message Challenge {
   // Challenge ID.
   string id = 1;
@@ -958,21 +1011,6 @@ message Challenge {
   bool open = 23;
 }
 
-enum ChallengeState {
-  // There is no applicable state
-  CHALLENGE_STATE_NONE = 0;
-  // The user has a pending invitation to the challenge.
-  CHALLENGE_STATE_INVITED = 1;
-  // The challenge was accepted.
-  CHALLENGE_STATE_JOINED = 2;
-  // The challenge was claimed.
-  CHALLENGE_STATE_CLAIMED = 3;
-  // The challenge was declined.
-  CHALLENGE_STATE_DECLINED = 4;
-  // The challenge was joined but later left.
-  CHALLENGE_STATE_LEFT = 5;
-}
-
 // TODO: Change pending/rejected to enum
 
 // Retrieve available challenge leaderboards.
@@ -996,48 +1034,18 @@ message ChallengesList {
   repeated Challenge challenges = 1;
 }
 
-// A single participant entry to an event leaderboard.
-message ChallengeScore {
-  // User ID.
-  string id = 1;
-  // Username.
-  string username = 2;
-  // Display name.
-  string display_name = 3;
-  // Avatar URL.
-  string avatar_url = 4;
-  // Time when the user joined the challenge leaderboard.
-  int64 create_time_sec = 5;
-  // Time when the user last submitted a score.
-  int64 update_time_sec = 6;
-  // Rank within the event leaderboard.
-  int64 rank = 7;
-  // Score.
-  int64 score = 8;
-  // Subscore.
-  int64 subscore = 9;
-  // Number of score submissions.
-  int64 num_scores = 10;
-  // Metadata.
-  string metadata = 11;
-  // The state of the user participation in the challenge.
-  ChallengeState state = 12;
+message ChallengeMaxMinPlayers {
+  // The minimum number of players that can participate in the challenge.
+  int64 min = 1;
+  // The maximum number of players that can participate in the challenge.
+  int64 max = 2;
 }
 
-// The reward tiers for the challenge.
-message ChallengeRewardTier {
-  // The maximum rank (inclusive).
-  int64 rank_max = 1;
-  // The minimum rank (inclusive).
-  int64 rank_min = 2;
-  // The available rewards for this range.
-  AvailableRewards available_rewards = 3;
-}
-
-// Get all available challenge templates.
-message ChallengeTemplates {
-  // All available challenges templates, keyed by a unique identifier.
-  map<string, ChallengeTemplate> templates = 1;
+message ChallengeMinMaxDuration {
+  // The minimum duration of challenge.
+  int64 min_sec = 1;
+  // The maximum duration of challenge.
+  int64 max_sec = 2;
 }
 
 // An individually usable challenge template.
@@ -1060,18 +1068,10 @@ message ChallengeTemplate {
   string operator = 8;
 }
 
-message ChallengeMaxMinPlayers {
-  // The minimum number of players that can participate in the challenge.
-  int64 min = 1;
-  // The maximum number of players that can participate in the challenge.
-  int64 max = 2;
-}
-
-message ChallengeMinMaxDuration {
-  // The minimum duration of challenge.
-  int64 min_sec = 1;
-  // The maximum duration of challenge.
-  int64 max_sec = 2;
+// Get all available challenge templates.
+message ChallengeTemplates {
+  // All available challenges templates, keyed by a unique identifier.
+  map<string, ChallengeTemplate> templates = 1;
 }
 
 // Retrieve available event leaderboards.
