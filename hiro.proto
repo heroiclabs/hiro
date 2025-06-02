@@ -858,16 +858,14 @@ message ChallengeCreateRequest {
   bool open = 5;
   // Maximum number of scores a user can submit to the leaderboard.
   int64 max_scores = 6;
-  // Additional metadata properties.
-  map<string, string> additional_properties = 7;
   // Start time of the challenge. Set to 0 to start immediately.
-  int64 start_delay_sec = 8;
+  int64 start_delay_sec = 7;
   // Duration of the challenge. Set to 0 to have an unlimited challenge.
-  int64 duration_sec = 9;
+  int64 duration_sec = 8;
   // Maximum number of participants in the challenge.
-  int64 max_participants = 10;
+  int64 max_participants = 9;
   // Category of the challenge.
-  string category = 11;
+  string category = 10;
 }
 
 // Request to join an ongoing challenge.
@@ -1075,6 +1073,8 @@ message ChallengeTemplate {
   bool ascending = 7;
   // The operator of the challenge score submission.
   string operator = 8;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 9;
 }
 
 // Get all available challenge templates.
