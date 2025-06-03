@@ -5,6 +5,23 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.24.0] - 2025-06-03
+### Added
+- Add JSON schema and example data definition for Challenges.
+- (Unity) Add "conditionalUpdateMetadata" to update method in "EventLeaderboardSystem" type.
+- Add new Energy Modifiers for refill, count, and max.
+- (Unity) Streaks progress can be calculated Offline and synchronized to server.
+
+### Changed
+- (Unity) POCOs are now public to ease integration into custom RPCs and other SDKs.
+- (CPP) (Dart) (Godot) (Unreal) Update client impls with changes.
+
+### Fixed
+- Register Challenges with "SatoriPersonalizer" type.
+- Invert parameter behaviour with Event Leaderboard score update metadata exclusion.
+- Fix edge case where a rolled reward can grant too many reward items.
+- (Unity) Enforce Inventory Item max count when in Offline Mode.
+
 ## [1.23.0] - 2025-05-19
 ### Added
 - New gameplay system called Challenges for players to compete with each other on private leaderboards.

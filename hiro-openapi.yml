@@ -2703,10 +2703,6 @@ components:
           format: int64
         category:
           type: string
-        additionalProperties:
-          type: object
-          additionalProperties:
-            type: string
     ChallengeJoinRequest:
       type: object
       properties:
@@ -2754,6 +2750,50 @@ components:
           format: int64
         metadata:
           type: string
+    ChallengeRewardTier:
+      type: object
+      properties:
+        rank_max:
+          type: integer
+          format: int64
+        rank_min:
+          type: integer
+          format: int64
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+    ChallengeScore:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        display_name:
+          type: string
+        avatar_url:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        rank:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+        state:
+          $ref: '#/components/schemas/ChallengeState'
     Challenge:
       type: object
       properties:
@@ -2837,53 +2877,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Challenge'
-    ChallengeScore:
+    ChallengeMaxMinPlayers:
       type: object
       properties:
-        id:
-          type: string
-        username:
-          type: string
-        display_name:
-          type: string
-        avatar_url:
-          type: string
-        create_time_sec:
+        min:
           type: integer
           format: int64
-        update_time_sec:
+        max:
           type: integer
           format: int64
-        rank:
-          type: integer
-          format: int64
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        num_scores:
-          type: integer
-          format: int64
-        metadata:
-          type: string
-        state:
-          $ref: '#/components/schemas/ChallengeState'
-    ChallengeRewardTier:
+    ChallengeMinMaxDuration:
       type: object
       properties:
-        rank_max:
+        min_sec:
           type: integer
           format: int64
-        rank_min:
+        max_sec:
           type: integer
           format: int64
-        available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-    ChallengeTemplates:
-      type: object
-      properties:
     ChallengeTemplate:
       type: object
       properties:
@@ -2907,24 +2918,13 @@ components:
           type: boolean
         operator:
           type: string
-    ChallengeMaxMinPlayers:
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    ChallengeTemplates:
       type: object
       properties:
-        min:
-          type: integer
-          format: int64
-        max:
-          type: integer
-          format: int64
-    ChallengeMinMaxDuration:
-      type: object
-      properties:
-        min_sec:
-          type: integer
-          format: int64
-        max_sec:
-          type: integer
-          format: int64
     EventLeaderboardList:
       type: object
       properties:
@@ -2952,7 +2952,7 @@ components:
           format: int64
         metadata:
           type: string
-        always_update_metadata:
+        conditional_metadata_update:
           type: boolean
     EventLeaderboardClaim:
       type: object
