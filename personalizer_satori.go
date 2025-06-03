@@ -351,7 +351,7 @@ func NewSatoriPersonalizer(ctx context.Context, opts ...SatoriPersonalizerOption
 	return s
 }
 
-var allFlagNames = []string{"Hiro-Achievements", "Hiro-Base", "Hiro-Economy", "Hiro-Energy", "Hiro-Inventory", "Hiro-Leaderboards", "Hiro-Teams", "Hiro-Tutorials", "Hiro-Unlockables", "Hiro-Stats", "Hiro-Event-Leaderboards", "Hiro-Progression", "Hiro-Incentives", "Hiro-Auctions", "Hiro-Streaks"}
+var allFlagNames = []string{"Hiro-Achievements", "Hiro-Base", "Hiro-Economy", "Hiro-Energy", "Hiro-Inventory", "Hiro-Leaderboards", "Hiro-Teams", "Hiro-Tutorials", "Hiro-Unlockables", "Hiro-Stats", "Hiro-Event-Leaderboards", "Hiro-Progression", "Hiro-Incentives", "Hiro-Auctions", "Hiro-Streaks", "Hiro-Challenges"}
 
 func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string) (any, error) {
 	var flagName string
@@ -386,6 +386,8 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		flagName = "Hiro-Auctions"
 	case SystemTypeStreaks:
 		flagName = "Hiro-Streaks"
+	case SystemTypeChallenges:
+		flagName = "Hiro-Challenges"
 	default:
 		return nil, runtime.NewError("hiro system type unknown", 3)
 	}
