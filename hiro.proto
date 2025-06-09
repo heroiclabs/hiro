@@ -2820,8 +2820,8 @@ message TeamEventLeaderboardUpdate {
   int64 subscore = 4;
   // Metadata.
   string metadata = 5;
-  // Skip updating metadata if score and subscore are unchanged.
-  bool skip_metadata = 6;
+  // Update metadata only if score or subscore change.
+  bool conditional_metadata_update = 6;
 }
 
 // Claim the available reward for a team event leaderboard by ID.
