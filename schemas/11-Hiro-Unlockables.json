@@ -129,7 +129,6 @@
           },
           "required": [
             "probability",
-            "category",
             "name"
           ],
           "type": "object"
