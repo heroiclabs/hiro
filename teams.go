@@ -111,7 +111,7 @@ type TeamsSystem interface {
 	StorePurchase(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, itemID string) (updatedWallet map[string]int64, updatedInventory *Inventory, reward *Reward, err error)
 
 	// SetOnPurchaseReward sets a custom reward function which will run after a team store item's reward is rolled.
-	SetOnPurchaseReward(fn OnReward[*TeamEconomyConfigStoreItem])
+	SetOnPurchaseReward(fn OnTeamReward[*TeamEconomyConfigStoreItem])
 
 	// WalletGet fetches the wallet for a specified team.
 	WalletGet(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string) (*TeamWallet, error)
@@ -135,7 +135,7 @@ type TeamsSystem interface {
 	InventoryUpdateItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, instanceIDs map[string]*InventoryUpdateItemProperties) (updatedInventory *Inventory, err error)
 
 	// SetOnInventoryConsumeReward sets a custom reward function which will run after a team inventory item consume reward is rolled.
-	SetOnInventoryConsumeReward(fn OnReward[*InventoryConfigItem])
+	SetOnInventoryConsumeReward(fn OnTeamReward[*InventoryConfigItem])
 
 	// SetInventoryConfigSource sets a custom additional config lookup function.
 	SetInventoryConfigSource(fn ConfigSource[*InventoryConfigItem])
@@ -150,13 +150,13 @@ type TeamsSystem interface {
 	UpdateAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, achievementUpdates map[string]int64) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
 
 	// SetOnAchievementReward sets a custom reward function which will run after an achievement's reward is rolled.
-	SetOnAchievementReward(fn OnReward[*AchievementsConfigAchievement])
+	SetOnAchievementReward(fn OnTeamReward[*AchievementsConfigAchievement])
 
 	// SetOnSubAchievementReward sets a custom reward function which will run after a sub-achievement's reward is rolled.
-	SetOnSubAchievementReward(fn OnReward[*AchievementsConfigSubAchievement])
+	SetOnSubAchievementReward(fn OnTeamReward[*AchievementsConfigSubAchievement])
 
 	// SetOnAchievementTotalReward sets a custom reward function which will run after an achievement's total reward is rolled.
-	SetOnAchievementTotalReward(fn OnReward[*AchievementsConfigAchievement])
+	SetOnAchievementTotalReward(fn OnTeamReward[*AchievementsConfigAchievement])
 
 	// ListEventLeaderboard returns available event leaderboards for the team.
 	ListEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, withScores bool, categories []string) (eventLeaderboards []*TeamEventLeaderboard, err error)
@@ -174,7 +174,7 @@ type TeamsSystem interface {
 	ClaimEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string) (eventLeaderboard *TeamEventLeaderboard, err error)
 
 	// SetOnEventLeaderboardsReward sets a custom reward function which will run after a team event leaderboard's reward is rolled.
-	SetOnEventLeaderboardsReward(fn OnReward[*EventLeaderboardsConfigLeaderboard])
+	SetOnEventLeaderboardsReward(fn OnTeamReward[*EventLeaderboardsConfigLeaderboard])
 
 	// SetOnEventLeaderboardCohortSelection sets a custom function that can replace the cohort or opponent selection feature of team event leaderboards.
 	SetOnEventLeaderboardCohortSelection(fn OnTeamEventLeaderboardCohortSelection)
@@ -198,7 +198,7 @@ type TeamsSystem interface {
 	MailboxGrant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, reward *Reward) (mailboxEntry *MailboxEntry, err error)
 
 	// SetOnMailboxClaimReward sets a custom reward function which will run after a team mailbox reward is rolled during claiming.
-	SetOnMailboxClaimReward(fn OnReward[*MailboxEntry])
+	SetOnMailboxClaimReward(fn OnTeamReward[*MailboxEntry])
 }
 
 // ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is created or not.
