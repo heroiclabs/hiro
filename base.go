@@ -204,8 +204,11 @@ func (sc *systemConfig) GetExtra() any {
 	return sc.extra
 }
 
-// OnReward is a function which can be used by each gameplay system to provide an override reward.
+// OnReward is a function that can be used by each gameplay system to provide an override reward.
 type OnReward[T any] func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, sourceID string, source T, rewardConfig *EconomyConfigReward, reward *Reward) (*Reward, error)
+
+// OnTeamReward is a function that can be used by the teams system to provide an override reward.
+type OnTeamReward[T any] func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, sourceID string, source T, rewardConfig *EconomyConfigReward, reward *Reward) (*Reward, error)
 
 // A System is a base type for a gameplay system.
 type System interface {
