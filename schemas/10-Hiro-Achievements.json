@@ -128,7 +128,6 @@
                   },
                   "required": [
                     "name",
-                    "category",
                     "max_count"
                   ],
                   "type": "object"
@@ -142,7 +141,6 @@
           },
           "required": [
             "name",
-            "category",
             "max_count"
           ],
           "type": "object"

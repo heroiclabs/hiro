@@ -170,8 +170,7 @@
             }
           },
           "required": [
-            "name",
-            "category"
+            "name"
           ],
           "type": "object"
         }
