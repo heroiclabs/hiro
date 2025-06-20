@@ -775,6 +775,56 @@ message AvailableRewardsContents {
   int64 weight = 7;
 }
 
+// The reward contents for available team rewards.
+message AvailableTeamRewardsContents {
+  // All possible items from this particular reward.
+  map<string, AvailableRewardsItem> items = 1;
+  // All possible item sets from this particular reward.
+  repeated AvailableRewardsItemSet item_sets = 2;
+  // All possible currencies from this particular reward.
+  map<string, AvailableRewardsCurrency> currencies = 3;
+  // All reward modifiers from this particular reward.
+  repeated AvailableRewardsRewardModifier reward_modifiers = 4;
+  // The weight of the reward contents.
+  int64 weight = 5;
+}
+
+// Available rewards for each member of a team.
+message AvailableTeamMemberRewards {
+  // The guaranteed contents to grant.
+  AvailableRewardsContents guaranteed = 1;
+  // The weighted contents to grant.
+  repeated AvailableRewardsContents weighted = 2;
+  // The number of weighted reward contents to select from among the possibilities.
+  int64 max_rolls = 3;
+  /* The total weight that all weighted reward contents are calculated against. Auto calculated if set to 0 but can be
+     set to a higher value to introduce a chance of a "none" reward. */
+  int64 total_weight = 4;
+  // The maximum number of repeats of any given weighted reward.
+  int64 max_repeat_rolls = 5;
+  // If rewards will be sent to the team member's mailbox rather than applied directly.
+  bool to_mailbox = 6;
+}
+
+// Available rewards for the claimant's team.
+message AvailableTeamRewards {
+  // The guaranteed contents to grant.
+  AvailableTeamRewardsContents guaranteed = 1;
+  // The weighted contents to grant.
+  repeated AvailableTeamRewardsContents weighted = 2;
+  // The number of weighted reward contents to select from among the possibilities.
+  int64 max_rolls = 3;
+  /* The total weight that all weighted reward contents are calculated against. Auto calculated if set to 0 but can be
+     set to a higher value to introduce a chance of a "none" reward. */
+  int64 total_weight = 4;
+  // The maximum number of repeats of any given weighted reward.
+  int64 max_repeat_rolls = 5;
+  // If rewards will be sent to the claimant's mailbox rather than applied directly.
+  bool to_mailbox = 6;
+  // Reward to be granted to all individual team members.
+  AvailableTeamMemberRewards member_reward = 7;
+}
+
 // The available rewards and their probabilistic weights.
 message AvailableRewards {
   // The guaranteed contents to grant.
@@ -788,6 +838,10 @@ message AvailableRewards {
   int64 total_weight = 4;
   // The maximum number of repeats of any given weighted reward.
   int64 max_repeat_rolls = 5;
+  // If rewards will be sent to the claimant's mailbox rather than applied directly.
+  bool to_mailbox = 6;
+  // Rewards for the claimant's team, if any.
+  AvailableTeamRewards team_reward = 7;
 }
 
 // Types of incentives.
