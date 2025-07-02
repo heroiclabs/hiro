@@ -30,7 +30,7 @@
       "max_num_score": 3600,
       "start_delay_max_sec": 60,
       "ascending": false,
-      "operator": "min",
+      "operator": "set",
       "duration": {
         "min_sec": 1800,
         "max_sec": 3600
