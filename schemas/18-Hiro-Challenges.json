@@ -7,34 +7,24 @@
         ".+": {
           "properties": {
             "reward_tiers": {
-              "patternProperties": {
-                "[0-9]+": {
-                  "items": {
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "rank_max": {
-                        "minimum": 0,
-                        "type": "number"
-                      },
-                      "rank_min": {
-                        "minimum": 0,
-                        "type": "number"
-                      },
-                      "reward": {
-                        "$ref": "Hiro-Rewards"
-                      },
-                      "tier_change": {
-                        "type": "number"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "type": "array"
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "rank_max": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "rank_min": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "reward": {
+                  "$ref": "Hiro-Rewards"
                 }
               },
-              "type": "object"
+              "minItems": 1,
+              "type": "array"
             },
             "additional_properties": {
               "patternProperties": {
