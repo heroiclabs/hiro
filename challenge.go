@@ -18,7 +18,7 @@ type ChallengesConfigChallenge struct {
 	StartDelayMaxSec     int64                                  `json:"start_delay_max_sec,omitempty"`
 	Ascending            bool                                   `json:"ascending,omitempty"`
 	Operator             string                                 `json:"operator,omitempty"`
-	Duration             *ChallengeDuration                     `json:"duration,omitempty"`
+	Duration             *ChallengesConfigDuration              `json:"duration,omitempty"`
 	Players              *ChallengesConfigPlayers               `json:"players,omitempty"`
 }
 
@@ -28,7 +28,7 @@ type ChallengesConfigChallengeRewardTier struct {
 	Reward  *EconomyConfigReward `json:"reward,omitempty"`
 }
 
-type ChallengeDuration struct {
+type ChallengesConfigDuration struct {
 	MinSec int64 `json:"min_sec,omitempty"`
 	MaxSec int64 `json:"max_sec,omitempty"`
 }
