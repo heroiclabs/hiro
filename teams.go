@@ -199,6 +199,12 @@ type TeamsSystem interface {
 
 	// SetOnMailboxClaimReward sets a custom reward function which will run after a team mailbox reward is rolled during claiming.
 	SetOnMailboxClaimReward(fn OnTeamReward[*MailboxEntry])
+
+	// StatsList retrieves the full list of stats for the specified teams.
+	StatsList(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, teamIDs []string) (stats map[string]*StatList, err error)
+
+	// StatsUpdate updates public and private stats for the specified team.
+	StatsUpdate(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, publicStats []*StatUpdate, privateStats []*StatUpdate) (statList *StatList, err error)
 }
 
 // ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is created or not.

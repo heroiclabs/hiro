@@ -621,6 +621,44 @@ message ActiveRewardModifier {
   int64 end_time_sec = 6;
 }
 
+// Rewards granted to each member of the team.
+message TeamMemberReward {
+  // The items granted. Indexed by item ID.
+  map<string, int64> items = 1;
+  // The currencies granted.
+  map<string, int64> currencies = 2;
+  // The energy granted.
+  map<string, int32> energies = 3;
+  // The energy modifier granted.
+  repeated RewardEnergyModifier energy_modifiers = 4;
+  // The reward modifiers granted.
+  repeated RewardModifier reward_modifiers = 5;
+  // When the reward was granted, in UNIX time.
+  int64 grant_time_sec = 6;
+  // The item instances granted. Indexed by item instance ID.
+  map<string, RewardInventoryItem> item_instances = 7;
+}
+
+// Rewards granted to the team.
+message TeamReward {
+  // The items granted. Indexed by item ID.
+  map<string, int64> items = 1;
+  // The currencies granted.
+  map<string, int64> currencies = 2;
+  // The reward modifiers granted.
+  repeated RewardModifier reward_modifiers = 3;
+  // The reward modifiers granted that will apply to team members.
+  repeated RewardModifier member_reward_modifiers = 4;
+  // When the reward was granted, in UNIX time.
+  int64 grant_time_sec = 5;
+  // The item instances granted. Indexed by item instance ID.
+  map<string, RewardInventoryItem> item_instances = 6;
+  // Indicates if this reward was sent to the team mailbox.
+  bool to_mailbox = 7;
+  // Reward granted to each team member.
+  TeamMemberReward member_reward = 8;
+}
+
 // Rewards granted to the player.
 message Reward {
   // The items granted. Indexed by item ID.
@@ -637,6 +675,10 @@ message Reward {
   int64 grant_time_sec = 6;
   // The item instances granted. Indexed by item instance ID.
   map<string, RewardInventoryItem> item_instances = 7;
+  // Indicates if this reward was sent to the mailbox.
+  bool to_mailbox = 8;
+  // Team reward, if any.
+  TeamReward team_reward = 9;
 }
 
 // A list of rewards granted to the player.
@@ -802,8 +844,6 @@ message AvailableTeamMemberRewards {
   int64 total_weight = 4;
   // The maximum number of repeats of any given weighted reward.
   int64 max_repeat_rolls = 5;
-  // If rewards will be sent to the team member's mailbox rather than applied directly.
-  bool to_mailbox = 6;
 }
 
 // Available rewards for the claimant's team.
