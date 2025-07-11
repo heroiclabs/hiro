@@ -866,6 +866,8 @@ message ChallengeCreateRequest {
   int64 max_participants = 9;
   // Category of the challenge.
   string category = 10;
+  // Additional metadata properties.
+  map<string, string> metadata = 11;
 }
 
 // Request to join an ongoing challenge.
@@ -1016,6 +1018,10 @@ message Challenge {
   string category = 22;
   // Whether the challenge is open to participants beyond the initial invitees or not.
   bool open = 23;
+  // The user ID of the challenge owner.
+  string owner_id = 24;
+  // Additional metadata properties.
+  map<string, string> metadata = 25;
 }
 
 // Retrieve available challenge leaderboards.
@@ -1065,16 +1071,14 @@ message ChallengeTemplate {
   ChallengeMinMaxDuration duration = 3;
   // The maximum amount of delay before the challenge begins for participants.
   int64 start_delay_max = 4;
-  // Whether the challenge is invite-only or not.
-  bool open = 5;
   // The maximum number of scores that can be submitted to the challenge.
-  int64 max_num_score = 6;
+  int64 max_num_score = 5;
   // The ordering of the challenge scores.
-  bool ascending = 7;
+  bool ascending = 6;
   // The operator of the challenge score submission.
-  string operator = 8;
+  string operator = 7;
   // Additional metadata properties.
-  map<string, string> additional_properties = 9;
+  map<string, string> additional_properties = 8;
 }
 
 // Get all available challenge templates.

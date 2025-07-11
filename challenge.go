@@ -51,7 +51,7 @@ type ChallengesSystem interface {
 	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId string, categories []string, withScores bool) ([]*Challenge, error)
 
 	// Create a new challenge for a list of users.
-	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, templateId, name, description, category string, open bool, startDelaySec, durationSec int64, invitees []string, maxPlayers int64) (*Challenge, error)
+	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, templateId, name, description, category string, open bool, startDelaySec, durationSec int64, invitees []string, maxPlayers int64, metadata map[string]string) (*Challenge, error)
 
 	// Invite allows the creator of a challenge to invite more players to it.
 	Invite(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, challengeId string, invitees []string) (challenge *Challenge, err error)
