@@ -1020,6 +1020,8 @@ message Challenge {
   bool open = 23;
   // The user ID of the challenge owner.
   string owner_id = 24;
+  // Additional metadata properties.
+  map<string, string> metadata = 25;
 }
 
 // Retrieve available challenge leaderboards.
