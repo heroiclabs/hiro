@@ -1018,6 +1018,8 @@ message Challenge {
   string category = 22;
   // Whether the challenge is open to participants beyond the initial invitees or not.
   bool open = 23;
+  // The user ID of the challenge owner.
+  string owner_id = 24;
 }
 
 // Retrieve available challenge leaderboards.
