@@ -1841,6 +1841,10 @@ message EconomyPurchaseIntentRequest {
   EconomyStoreType store_type = 2;
   // The SKU code, if any.
   string sku = 3;
+  // Purchase real currency amount, if known.
+  int64 amount = 4;
+  // Purchase real currency code, if known.
+  string currency = 5;
 }
 
 // Request to purchase a particular store item.
