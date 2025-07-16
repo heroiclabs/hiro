@@ -51,6 +51,15 @@ func SatoriPersonalizerPublishAuthenticateEvents() SatoriPersonalizerOption {
 	}
 }
 
+func SatoriPersonalizerPublishAuthenticateEventsWithSession() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishAuthenticateRequest = true
+			personalizer.publishAuthenticateRequestWithSession = true
+		},
+	}
+}
+
 func SatoriPersonalizerPublishAchievementsEvents() SatoriPersonalizerOption {
 	return &satoriPersonalizerOptionFunc{
 		f: func(personalizer *SatoriPersonalizer) {
@@ -195,7 +204,8 @@ type SatoriPersonalizerCache struct {
 type SatoriPersonalizer struct {
 	publishAll bool
 
-	publishAuthenticateRequest bool
+	publishAuthenticateRequest            bool
+	publishAuthenticateRequestWithSession bool
 
 	publishAchievementsEvents      bool
 	publishBaseEvents              bool
@@ -220,10 +230,10 @@ type SatoriPersonalizer struct {
 }
 
 func (p *SatoriPersonalizer) Authenticate(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, created bool) {
-	if !p.IsPublishAuthenticateRequest() {
+	if !p.IsPublishAuthenticateRequest() && !p.IsPublishAuthenticateRequestWithSession() {
 		return
 	}
-	if _, err := nk.GetSatori().Authenticate(ctx, userID, nil, nil, true); err != nil && !errors.Is(err, runtime.ErrSatoriConfigurationInvalid) {
+	if _, err := nk.GetSatori().Authenticate(ctx, userID, nil, nil, p.IsPublishAuthenticateRequestWithSession()); err != nil && !errors.Is(err, runtime.ErrSatoriConfigurationInvalid) {
 		logger.WithField("error", err.Error()).Error("failed to authenticate with Satori")
 	}
 }
@@ -547,6 +557,10 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 
 func (p *SatoriPersonalizer) IsPublishAuthenticateRequest() bool {
 	return p.publishAll || p.publishAuthenticateRequest
+}
+
+func (p *SatoriPersonalizer) IsPublishAuthenticateRequestWithSession() bool {
+	return p.publishAuthenticateRequestWithSession
 }
 
 func (p *SatoriPersonalizer) IsPublishAchievementsEvents() bool {
