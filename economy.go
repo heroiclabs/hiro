@@ -232,7 +232,7 @@ type EconomySystem interface {
 	UnmarshalWallet(account *api.Account) (wallet map[string]int64, err error)
 
 	// PurchaseIntent will create a purchase intent for a particular store item for a user ID.
-	PurchaseIntent(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, sku string, amount int64, currency string) (err error)
+	PurchaseIntent(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, sku string, amount float64, currency string) (err error)
 
 	// PurchaseItem will validate a purchase and give the user ID the appropriate rewards.
 	PurchaseItem(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, receipt string) (updatedWallet map[string]int64, updatedInventory *Inventory, reward *Reward, isSandboxPurchase bool, err error)
