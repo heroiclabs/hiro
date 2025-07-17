@@ -2703,6 +2703,10 @@ components:
           format: int64
         category:
           type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
     ChallengeJoinRequest:
       type: object
       properties:
@@ -2850,7 +2854,13 @@ components:
           type: string
         open:
           type: boolean
+        owner_id:
+          type: string
         additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+        metadata:
           type: object
           additionalProperties:
             type: string
@@ -2909,8 +2919,6 @@ components:
         start_delay_max:
           type: integer
           format: int64
-        open:
-          type: boolean
         max_num_score:
           type: integer
           format: int64
@@ -3748,6 +3756,11 @@ components:
         store_type:
           $ref: '#/components/schemas/EconomyStoreType'
         sku:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
           type: string
     EconomyPurchaseRequest:
       type: object

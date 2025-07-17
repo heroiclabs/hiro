@@ -5,6 +5,23 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.25.0] - 2025-07-17
+### Added
+- A Challenge can be created with custom metadata.
+- (Unreal) The Hiro Online Subsystem (OSSv1) for Identity, Achievements, and Leaderboards is no longer in preview.
+- (Python) New Python Hiro GDK also with Nakama Leaderboards support.
+- A "PurchaseIntent" can now provide optional ISO currency code and amount.
+- (Unity) Automatically set ISO currency code and amount in "PurchaseIntent" with "UnityPurchasingSystem" type.
+
+### Changed
+- Update to Nakama 3.28.0 version on the nakama-common 1.38.0 release.
+- The category field is now optional in Hiro data definitions which use it.
+- (Unity) Update to '3.17.0' Nakama/Satori .NET client release.
+- AppLovin Max S2S callbacks for rewarded video Placements are updated for the latest changes of the API.
+
+### Fixed
+- Set "TotalClaimTimeSec" on Achievement update if claim count reached and "AutoClaimTotal" is enabled.
+
 ## [1.24.0] - 2025-06-03
 ### Added
 - Add JSON schema and example data definition for Challenges.
