@@ -120,7 +120,7 @@ type TeamsSystem interface {
 	System
 
 	// Create makes a new team (i.e. Nakama group) with additional metadata which configures the team.
-	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, req *TeamCreateRequest) (team *Team, err error)
+	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamCreateRequest) (team *Team, err error)
 
 	// List will return a list of teams which the user can join.
 	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, req *TeamListRequest) (teams *TeamList, err error)
