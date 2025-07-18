@@ -3206,8 +3206,10 @@ message TeamGiftContributeRequest {
 message TeamGiftContributeAck {
   // Updated gift data.
   TeamGift gift = 1;
+  // The count that was actually contributed.
+  int64 count = 2;
   // Reward that was actually granted for contributing.
-  Reward reward = 2;
+  Reward reward = 3;
 }
 
 // Request to claim all rewards currently available from a team gift.
