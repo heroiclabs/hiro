@@ -3124,12 +3124,18 @@ message TeamGiftReward {
 message TeamGiftContributor {
   // User identifier.
   string user_id = 1;
+  // Username.
+  string username = 2;
+  // Avatar URL.
+  string avatar_url = 3;
+  // Display name.
+  string display_name = 4;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user first contributed.
-  int64 create_time_sec = 2;
+  int64 create_time_sec = 5;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user most recently updated their contribution
-  int64 update_time_sec = 3;
+  int64 update_time_sec = 6;
   // Count contributed by this user.
-  int64 count = 4;
+  int64 count = 7;
 }
 
 // Team gift available to contribute to or claim rewards from.
