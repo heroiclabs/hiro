@@ -3128,6 +3128,8 @@ message TeamGiftContributor {
   int64 create_time_sec = 2;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user most recently updated their contribution
   int64 update_time_sec = 3;
+  // Count contributed by this user.
+  int64 count = 4;
 }
 
 // Team gift available to contribute to or claim rewards from.
