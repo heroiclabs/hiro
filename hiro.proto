@@ -2318,18 +2318,20 @@ message TeamCreateRequest {
 
 // Request to update a team.
 message TeamUpdateRequest {
+  // Team identifier.
+  string id = 1;
   // A new name for the team, or empty to leave unchanged.
-  string name = 1;
+  string name = 2;
   // A new description for the team, or empty to leave unchanged.
-  string desc = 2;
+  string desc = 3;
   // True if the team is open to join by any user.
-  bool open = 3;
+  bool open = 4;
   // The icon artwork reference ID for the team, or empty to leave unchanged.
-  string icon = 4;
+  string icon = 5;
   // The language expected to be a tag which follows the BCP-47 spec, or empty to leave unchanged.
-  string lang_tag = 5;
+  string lang_tag = 6;
   // Metadata to assign to the team, or empty to leave unchanged.
-  google.protobuf.Struct metadata = 6;
+  google.protobuf.Struct metadata = 7;
 }
 
 // A request to list teams which a user can join.
