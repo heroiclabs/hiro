@@ -239,6 +239,12 @@ type TeamsSystem interface {
 
 	// GiftClaim claims all pending rewards for a particular gift.
 	GiftClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, giftID string, endTimeSec int64) (ack *TeamGiftClaimAck, err error)
+
+	// SetOnGiftContributeReward sets a custom reward function which will run after a team gift contribution reward is rolled.
+	SetOnGiftContributeReward(fn OnTeamReward[*TeamGift])
+
+	// SetOnGiftClaimReward sets a custom reward function which will run after a team gift reward is rolled during claiming.
+	SetOnGiftClaimReward(fn OnTeamReward[*TeamGift])
 }
 
 // ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is created or not.
