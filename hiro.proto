@@ -96,6 +96,8 @@ enum RpcId {
 
   // Create a team which other players can join.
   RPC_ID_TEAMS_CREATE = 26 [(input) = "TeamCreateRequest", (output) = "Team"];
+  // Update a team's properties.
+  RPC_ID_TEAMS_UPDATE = 121 [(input) = "TeamUpdateRequest", (output) = "Team"];
   // List one or more teams which the player can join.
   RPC_ID_TEAMS_LIST = 27 [(input) = "TeamListRequest", (output) = "TeamList"];
   // Search for a team by name or optional short code.
@@ -2312,6 +2314,22 @@ message TeamCreateRequest {
   string lang_tag = 5;
   // The starting metadata passed in as part of creating the team.
   string setup_metadata = 6;
+}
+
+// Request to update a team.
+message TeamUpdateRequest {
+  // A new name for the team, or empty to leave unchanged.
+  string name = 1;
+  // A new description for the team, or empty to leave unchanged.
+  string desc = 2;
+  // True if the team is open to join by any user.
+  bool open = 3;
+  // The icon artwork reference ID for the team, or empty to leave unchanged.
+  string icon = 4;
+  // The language expected to be a tag which follows the BCP-47 spec, or empty to leave unchanged.
+  string lang_tag = 5;
+  // Metadata to assign to the team, or empty to leave unchanged.
+  google.protobuf.Struct metadata = 6;
 }
 
 // A request to list teams which a user can join.
