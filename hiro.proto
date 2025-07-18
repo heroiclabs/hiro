@@ -3154,28 +3154,30 @@ message TeamGift {
   int64 contribution_end_time_sec = 6;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the gift completed, and no further contributions are allowed.
   int64 end_time_sec = 7;
+  // Current count.
+  int64 count = 8;
   // Total count that can be contributed as part of this reward.
-  int64 max_count = 8;
+  int64 max_count = 9;
   // Maximum count that may be submitted from any individual contributor.
-  int64 max_contributor_count = 9;
+  int64 max_contributor_count = 10;
   // Cost per unit of contribution.
-  AvailableRewards contribution_cost = 10;
+  AvailableRewards contribution_cost = 11;
   // Reward per unit of contribution.
-  AvailableRewards contribution_reward = 11;
+  AvailableRewards contribution_reward = 12;
   // Rewards available as part of the gift once contribution thresholds are met.
-  repeated TeamGiftReward rewards = 12;
+  repeated TeamGiftReward rewards = 13;
   // Additional properties.
-  google.protobuf.Struct additional_properties = 13;
+  google.protobuf.Struct additional_properties = 14;
   // Contribution information for team members.
-  repeated TeamGiftContributor contributors = 14;
+  repeated TeamGiftContributor contributors = 15;
   // Flag indicating if the caller can contribute to this gift.
-  bool can_contribute = 15;
+  bool can_contribute = 16;
   // The count still available for the caller to contribute.
-  int64 contributor_remaining_count = 16;
+  int64 contributor_remaining_count = 17;
   // Flag indicating if the caller can claim any rewards from this gift.
-  bool can_claim = 17;
+  bool can_claim = 18;
   // Rewards available for the caller to claim.
-  repeated TeamGiftReward available_rewards = 18;
+  repeated TeamGiftReward available_rewards = 19;
 }
 
 // A list of gifts available for a team.
