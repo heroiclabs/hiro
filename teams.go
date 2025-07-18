@@ -24,6 +24,11 @@ import (
 var (
 	ErrTeamNotFound        = runtime.NewError("team not found", 3)         // INVALID_ARGUMENT
 	ErrTeamMaxSizeExceeded = runtime.NewError("team max size exceeded", 3) // INVALID_ARGUMENT
+
+	ErrTeamGiftsNotFound            = runtime.NewError("team gift not found", 3)                     // INVALID_ARGUMENT
+	ErrTeamGiftsNotActive           = runtime.NewError("team gift not active", 3)                    // INVALID_ARGUMENT
+	ErrTeamGiftsMaxCount            = runtime.NewError("team gift max count reached", 3)             // INVALID_ARGUMENT
+	ErrTeamGiftsMaxContributorCount = runtime.NewError("team gift max contributor count reached", 3) // INVALID_ARGUMENT
 )
 
 // TeamsConfig is the data definition for a TeamsSystem type.
@@ -242,6 +247,9 @@ type TeamsSystem interface {
 
 	// SetOnGiftContributeReward sets a custom reward function which will run after a team gift contribution reward is rolled.
 	SetOnGiftContributeReward(fn OnTeamReward[*TeamGift])
+
+	// SetOnGiftContributeCost sets a custom reward function which will run after a team gift contribution cost is rolled.
+	SetOnGiftContributeCost(fn OnTeamReward[*TeamGift])
 
 	// SetOnGiftClaimReward sets a custom reward function which will run after a team gift reward is rolled during claiming.
 	SetOnGiftClaimReward(fn OnTeamReward[*TeamGift])
