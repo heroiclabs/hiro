@@ -38,6 +38,7 @@ type TeamsConfig struct {
 	Achievements      *TeamsAchievementsConfig               `json:"achievements,omitempty"`
 	EventLeaderboards *TeamEventLeaderboardsConfig           `json:"event_leaderboards,omitempty"`
 	Mailbox           *TeamMailboxConfig                     `json:"mailbox,omitempty"`
+	Gifts             *TeamGiftsConfig                       `json:"gifts,omitempty"`
 }
 
 type TeamEconomyConfigStoreItem struct {
@@ -83,6 +84,30 @@ type TeamEventLeaderboardsConfig struct {
 type TeamMailboxConfig struct {
 	MaxSize   int `json:"max_size,omitempty"`
 	ExpirySec int `json:"expiry_sec,omitempty"`
+}
+
+type TeamGiftsConfig struct {
+	Gifts map[string]*TeamGiftsConfigGift `json:"gifts,omitempty"`
+}
+
+type TeamGiftsConfigGift struct {
+	Name                 string                       `json:"name,omitempty"`
+	Description          string                       `json:"description,omitempty"`
+	Category             string                       `json:"category,omitempty"`
+	ResetSchedule        string                       `json:"reset_schedule,omitempty"`
+	DurationSec          int64                        `json:"duration_sec,omitempty"`
+	MaxCount             int64                        `json:"max_count,omitempty"`
+	MaxContributorCount  int64                        `json:"max_contributor_count,omitempty"`
+	ContributionCost     *EconomyConfigReward         `json:"contribution_cost,omitempty"`
+	ContributionReward   *EconomyConfigReward         `json:"contribution_reward,omitempty"`
+	Rewards              []*TeamGiftsConfigGiftReward `json:"rewards,omitempty"`
+	AdditionalProperties map[string]interface{}       `json:"additional_properties,omitempty"`
+}
+
+type TeamGiftsConfigGiftReward struct {
+	MinCount             int64                `json:"min_count,omitempty"`
+	ContributorReward    *EconomyConfigReward `json:"contributor_reward,omitempty"`
+	NoncontributorReward *EconomyConfigReward `json:"noncontributor_reward,omitempty"`
 }
 
 // A TeamsSystem is a gameplay system which wraps the groups system in Nakama server.
@@ -205,6 +230,15 @@ type TeamsSystem interface {
 
 	// StatsUpdate updates public and private stats for the specified team.
 	StatsUpdate(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, publicStats []*StatUpdate, privateStats []*StatUpdate) (statList *StatList, err error)
+
+	// GiftList lists available team gifts, including past gifts that still have valid rewards to claim.
+	GiftList(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string) (giftList *TeamGiftList, err error)
+
+	// GiftContribute updates the specified gift with a given contribution amount.
+	GiftContribute(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, giftID string, count int64) (ack *TeamGiftContributeAck, err error)
+
+	// GiftClaim claims all pending rewards for a particular gift.
+	GiftClaim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, giftID string, endTimeSec int64) (ack *TeamGiftClaimAck, err error)
 }
 
 // ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is created or not.

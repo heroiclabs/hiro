@@ -158,6 +158,13 @@ enum RpcId {
   // Delete a reward from the team mailbox, even if it is not yet claimed.
   RPC_ID_TEAMS_MAILBOX_DELETE = 117 [(input) = "TeamMailboxDeleteRequest", (output) = ""];
 
+  // List available team gifts.
+  RPC_ID_TEAMS_GIFT_LIST = 118 [(input) = "TeamGiftListRequest", (output) = "TeamGiftList"];
+  // Contribute to an active team gift.
+  RPC_ID_TEAMS_GIFT_CONTRIBUTE = 119 [(input) = "TeamGiftContributeRequest", (output) = "TeamGiftContributeAck"];
+  // Claim the user's reward from an eligible team gift.
+  RPC_ID_TEAMS_GIFT_CLAIM = 120 [(input) = "TeamGiftClaimRequest", (output) = "TeamGiftClaimAck"];
+
   // Create a random unlockable to assign to a slot (or overflow) unless there are no slots.
   RPC_ID_UNLOCKABLES_CREATE = 30 [(input) = "", (output) = "UnlockablesList"];
   // Get the unlockables which are currently in progress for the player.
@@ -3101,6 +3108,114 @@ message TeamMailboxDeleteRequest {
   string id = 1;
   // Identifier for the mailbox entry to delete.
   repeated string entry_ids = 2;
+}
+
+// Reward associated with a contribution threshold in a team gift.
+message TeamGiftReward {
+  // Minimum count required to unlock this reward.
+  int64 min_count = 1;
+  // Reward for contributors to this gift.
+  AvailableRewards contributor_reward = 2;
+  // Reward to non-contributing team members.
+  AvailableRewards noncontributor_reward = 3;
+}
+
+// An individual contributor to a team gift.
+message TeamGiftContributor {
+  // User identifier.
+  string user_id = 1;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user first contributed.
+  int64 create_time_sec = 2;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user most recently updated their contribution
+  int64 update_time_sec = 3;
+}
+
+// Team gift available to contribute to or claim rewards from.
+message TeamGift {
+  // Gift identifier.
+  string id = 1;
+  // Name.
+  string name = 2;
+  // Description.
+  string description = 3;
+  // Category.
+  string category = 4;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the gift became available.
+  int64 start_time_sec = 5;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the gift completed, and no further contributions are allowed.
+  int64 contribution_end_time_sec = 6;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the gift completed, and no further contributions are allowed.
+  int64 end_time_sec = 7;
+  // Total count that can be contributed as part of this reward.
+  int64 max_count = 8;
+  // Maximum count that may be submitted from any individual contributor.
+  int64 max_contributor_count = 9;
+  // Cost per unit of contribution.
+  AvailableRewards contribution_cost = 10;
+  // Reward per unit of contribution.
+  AvailableRewards contribution_reward = 11;
+  // Rewards available as part of the gift once contribution thresholds are met.
+  repeated TeamGiftReward rewards = 12;
+  // Additional properties.
+  google.protobuf.Struct additional_properties = 13;
+  // Contribution information for team members.
+  repeated TeamGiftContributor contributors = 14;
+  // Flag indicating if the caller can contribute to this gift.
+  bool can_contribute = 15;
+  // The count still available for the caller to contribute.
+  int64 contributor_remaining_count = 16;
+  // Flag indicating if the caller can claim any rewards from this gift.
+  bool can_claim = 17;
+  // Rewards available for the caller to claim.
+  repeated TeamGiftReward available_rewards = 18;
+}
+
+// A list of gifts available for a team.
+message TeamGiftList {
+  // Gifts available for a team.
+  repeated TeamGift gifts = 1;
+}
+
+// Request to view available gifts for a team.
+message TeamGiftListRequest {
+  // Team identifier.
+  string id = 1;
+}
+
+// Request to contribute to a specific team gift.
+message TeamGiftContributeRequest {
+  // Team identifier.
+  string id = 1;
+  // Gift identifier.
+  string gift_id = 2;
+  // Count to contribute.
+  int64 count = 3;
+}
+
+// Result of contributing to a team gift.
+message TeamGiftContributeAck {
+  // Updated gift data.
+  TeamGift gift = 1;
+  // Reward that was actually granted for contributing.
+  Reward reward = 2;
+}
+
+// Request to claim all rewards currently available from a team gift.
+message TeamGiftClaimRequest {
+  // Team identifier.
+  string id = 1;
+  // Gift identifier.
+  string gift_id = 2;
+  // End time for a past iteration of this gift to claim for, or 0 for current.
+  int64 end_time_sec = 3;
+}
+
+// Result of claiming rewards from a team gift.
+message TeamGiftClaimAck {
+  // Updated gift data.
+  TeamGift gift = 1;
+  // Rewards that were claimed.
+  repeated Reward rewards = 2;
 }
 
 // Sync operation for a single inventory item.
