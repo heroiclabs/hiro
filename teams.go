@@ -128,6 +128,9 @@ type TeamsSystem interface {
 	// Search for teams based on given criteria.
 	Search(ctx context.Context, db *sql.DB, logger runtime.Logger, nk runtime.NakamaModule, req *TeamSearchRequest) (teams *TeamList, err error)
 
+	// Update changes one or more properties of the team.
+	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamUpdateRequest) (team *Team, err error)
+
 	// WriteChatMessage sends a message to the user's team even when they're not connected on a realtime socket.
 	WriteChatMessage(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamWriteChatMessageRequest) (resp *ChannelMessageAck, err error)
 
