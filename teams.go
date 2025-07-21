@@ -258,7 +258,4 @@ type TeamsSystem interface {
 	SetOnGiftClaimReward(fn OnTeamReward[*TeamGift])
 }
 
-// ValidateCreateTeamFn allows custom rules or velocity checks to be added as a precondition on whether a team is created or not.
-type ValidateCreateTeamFn func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamCreateRequest) *runtime.Error
-
 type OnTeamEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, storageIndex string, eventID string, config *EventLeaderboardsConfigLeaderboard, userID, teamID string, tier int, matchmakerProperties map[string]interface{}) (cohortID string, cohortUserIDs []string, newCohort *EventLeaderboardCohortConfig, err error)
