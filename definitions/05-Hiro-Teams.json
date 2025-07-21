@@ -1,3 +1,177 @@
 {
-    "max_team_size": 1
+	"initial_max_team_size": 5,
+	"max_team_size": 10,
+	"wallet": {
+		"currencies": {
+			"currency1": 100,
+			"currency2": 200
+		}
+	},
+	"store_items": {
+		"store_item1": {
+			"category": "category1",
+			"cost": {
+				"currencies": {
+					"currency1": 50,
+					"currency2": 75
+				}
+			},
+			"description": "description1",
+			"name": "name1",
+			"reward": {},
+			"additional_properties": {
+				"key1": "value1"
+			},
+			"disabled": false,
+			"unavailable": false
+		}
+	},
+	"stats":{
+		"stats_public": {
+			"public_state1": {
+				"value": 15,
+				"additional_properties": {}
+			}
+		},
+		"stats_private": {
+			"private_state1": {
+				"value": 15,
+				"additional_properties": {}
+			}
+		}
+	},
+	"inventory":{
+		"items": {
+			"item1": {
+				"name": "name1",
+				"description": "description1",
+				"category": "category1",
+				"item_sets": [ ],
+				"max_count": 0,
+				"stackable": true,
+				"consumable": true,
+				"consume_reward": {},
+				"string_properties": {
+				"prop1": "value1"
+				},
+				"numeric_properties": {
+				"prop2": 123
+				},
+				"keep_zero": true
+			}
+		},
+		"limits": {
+			"categories": {
+				"category1": 10
+			},
+			"item_sets": {}
+		}
+	},
+	"achievements":{
+		"achievements":{
+			"id1": {
+				"auto_claim": false,
+				"auto_claim_total": true,
+				"auto_reset": true,
+				"category": "category1",
+				"count": 0,
+				"max_count": 10,
+				"description": "description1",
+				"reset_cronexpr": "0 0 * * *",
+				"start_time_sec": "1735707600",
+				"end_time_sec": "1767243600",
+				"duration_sec": 86400,
+				"name": "name1",
+				"precondition_ids": [ "preid1", "preid2" ],
+				"reward": {},
+				"total_reward": {},
+				"sub_achievements": {},
+				"additional_properties": {
+					"key1": "value1"
+				}
+			}
+		}
+	},
+	"event_leaderboards":{
+		"event_leaderboards":{
+			"event1": {
+				"name": "event name",
+				"description": "event description",
+				"category": "some category",
+				"ascending": false,
+				"operator": "best",
+				"reset_schedule": "0 0 * * *",
+				"cohort_size": 100,
+				"additional_properties": {
+					"key": "value"
+				},
+				"max_num_score": 0,
+				"tiers": 5,
+				"max_idle_tier_drop": 1,
+				"start_time_sec": 0,
+				"end_time_sec": 0,
+				"duration": 86400,
+				"change_zones": {
+					"0": {
+					"promotion": 0.3,
+					"demotion": 0.2,
+					"demote_idle": true
+					}
+				},
+				"reward_tiers": {
+					"0": [
+						{
+							"rank_min": 1,
+							"rank_max": 10,
+							"tier_change": 1,
+							"reward": {}
+						},
+						{
+							"rank_min": 11,
+							"rank_max": 90,
+							"tier_change": 0,
+							"reward": {}
+						},
+						{
+							"rank_min": 91,
+							"rank_max": 100,
+							"tier_change": -1,
+							"reward": {}
+						}
+					]
+				}
+			}
+		}
+	},
+	"mailbox":{
+		"max_size": 100,
+		"expiry_sec": 86400
+	},
+	"gifts":{
+		"gifsts": {
+			"gift1": {
+				"name": "gift1",
+        	    "description": "description",
+				"category": "some category",
+				"reset_schedule": "0 0 * * *",
+				"duration_sec": 86400,
+				"MaxCount": 30,
+				"max_contributor_count": 10,
+				"contribution_cost": {
+
+				},
+				"contribution_reward": {
+
+				},
+				"rewards": [
+					{
+						"min_count":2,
+						"contributor_reward": {},
+						"noncontributor_reward": {}
+					}
+				],
+				"additional_properties":{}
+			}
+		}
+	}
 }
