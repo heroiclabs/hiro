@@ -294,13 +294,11 @@ func WithStatsSystem(configFile string, register bool) SystemConfig {
 }
 
 // WithTeamsSystem configures a TeamsSystem type and optionally registers its RPCs with the game server.
-func WithTeamsSystem(configFile string, register bool, validateCreateTeam ...ValidateCreateTeamFn) SystemConfig {
+func WithTeamsSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeTeams,
 		configFile: configFile,
 		register:   register,
-
-		extra: validateCreateTeam,
 	}
 }
 
