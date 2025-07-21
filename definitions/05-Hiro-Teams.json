@@ -78,8 +78,8 @@
 				"max_count": 10,
 				"description": "description1",
 				"reset_cronexpr": "0 0 * * *",
-				"start_time_sec": "1735707600",
-				"end_time_sec": "1767243600",
+				"start_time_sec": 1735707600,
+				"end_time_sec": 1767243600,
 				"duration_sec": 86400,
 				"name": "name1",
 				"precondition_ids": [ "preid1", "preid2" ],
@@ -148,17 +148,17 @@
 		"expiry_sec": 86400
 	},
 	"gifts":{
-		"gifsts": {
+		"gifts": {
 			"gift1": {
 				"name": "gift1",
         	    "description": "description",
 				"category": "some category",
 				"reset_schedule": "0 0 * * *",
 				"duration_sec": 86400,
-				"MaxCount": 30,
+				"max_count": 30,
 				"max_contributor_count": 10,
 				"contribution_cost": {
-
+					
 				},
 				"contribution_reward": {
 

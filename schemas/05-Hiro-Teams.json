@@ -1,11 +1,870 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
   "additionalProperties": false,
   "properties": {
+    "initial_max_team_size": {
+      "type": "integer",
+      "minimum": 0
+    },
     "max_team_size": {
-      "minimum": 1,
-      "type": "number"
+      "type": "integer",
+      "minimum": 1
+    },
+    "wallet": {
+      "$ref": "#/$defs/TeamsWalletConfig"
+    },
+    "store_items": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/TeamEconomyConfigStoreItem"
+      }
+    },
+    "stats": {
+      "$ref": "#/$defs/TeamsStatsConfig"
+    },
+    "inventory": {
+      "$ref": "#/$defs/TeamsInventoryConfig"
+    },
+    "achievements": {
+      "$ref": "#/$defs/TeamsAchievementsConfig"
+    },
+    "event_leaderboards": {
+      "$ref": "#/$defs/TeamEventLeaderboardsConfig"
+    },
+    "mailbox": {
+      "$ref": "#/$defs/TeamMailboxConfig"
+    },
+    "gifts": {
+      "$ref": "#/$defs/TeamGiftsConfig"
     }
   },
-  "type": "object"
+  "$defs": {
+    "TeamsWalletConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currencies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "TeamEconomyConfigStoreItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "cost": {
+          "$ref": "#/$defs/TeamEconomyConfigStoreItemCost"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "reward": {
+          "$ref": "#/$defs/EconomyConfigReward"
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "unavailable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TeamEconomyConfigStoreItemCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currencies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "EconomyConfigReward": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "guaranteed": {
+          "$ref": "#/$defs/EconomyConfigRewardContents"
+        },
+        "weighted": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EconomyConfigRewardContents"
+          }
+        },
+        "max_rolls": {
+          "type": "integer"
+        },
+        "max_repeat_rolls": {
+          "type": "integer"
+        },
+        "total_weight": {
+          "type": "integer"
+        },
+        "to_mailbox": {
+          "type": "boolean"
+        },
+        "team_reward": {
+          "$ref": "#/$defs/EconomyConfigTeamReward"
+        }
+      }
+    },
+    "EconomyConfigRewardContents": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EconomyConfigRewardItem"
+          }
+        },
+        "item_sets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EconomyConfigRewardItemSet"
+          }
+        },
+        "currencies": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EconomyConfigRewardCurrency"
+          }
+        },
+        "energies": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EconomyConfigRewardEnergy"
+          }
+        },
+        "energy_modifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EconomyConfigRewardEnergyModifier"
+          }
+        },
+        "reward_modifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EconomyConfigRewardRewardModifier"
+          }
+        },
+        "weight": {
+          "type": "integer"
+        }
+      }
+    },
+    "EconomyConfigTeamReward": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "guaranteed": {
+          "$ref": "#/$defs/EconomyConfigTeamRewardContents"
+        },
+        "weighted": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EconomyConfigTeamRewardContents"
+          }
+        },
+        "max_rolls": {
+          "type": "integer"
+        },
+        "max_repeat_rolls": {
+          "type": "integer"
+        },
+        "total_weight": {
+          "type": "integer"
+        },
+        "to_mailbox": {
+          "type": "boolean"
+        },
+        "member_reward": {
+          "$ref": "#/$defs/EconomyConfigTeamMemberReward"
+        }
+      }
+    },
+    "EconomyConfigTeamRewardContents": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EconomyConfigRewardItem"
+          }
+        },
+        "item_sets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EconomyConfigRewardItemSet"
+          }
+        },
+        "currencies": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EconomyConfigRewardCurrency"
+          }
+        },
+        "reward_modifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EconomyConfigRewardRewardModifier"
+          }
+        },
+        "weight": {
+          "type": "integer"
+        }
+      }
+    },
+    "EconomyConfigTeamMemberReward": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "guaranteed": {
+          "$ref": "#/$defs/EconomyConfigRewardContents"
+        },
+        "weighted": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EconomyConfigRewardContents"
+          }
+        },
+        "max_rolls": {
+          "type": "integer"
+        },
+        "max_repeat_rolls": {
+          "type": "integer"
+        },
+        "total_weight": {
+          "type": "integer"
+        },
+        "to_mailbox": {
+          "type": "boolean"
+        }
+      }
+    },
+    "EconomyConfigRewardItem": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/EconomyConfigRewardRangeInt64"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "string_properties": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/EconomyConfigRewardStringProperty"
+              }
+            },
+            "numeric_properties": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/EconomyConfigRewardRangeFloat64"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "EconomyConfigRewardRangeInt64": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": "integer"
+        },
+        "max": {
+          "type": "integer"
+        },
+        "multiple": {
+          "type": "integer"
+        }
+      }
+    },
+    "EconomyConfigRewardRangeUInt64": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "multiple": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "EconomyConfigRewardStringProperty": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "total_weight": {
+          "type": "integer"
+        },
+        "options": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "description": "EconomyConfigRewardStringPropertyOption - definition not provided"
+          }
+        }
+      }
+    },
+    "EconomyConfigRewardRangeFloat64": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "multiple": {
+          "type": "number"
+        }
+      }
+    },
+    "EconomyConfigRewardItemSet": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/EconomyConfigRewardRangeInt64"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max_repeats": {
+              "type": "integer"
+            },
+            "set": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "EconomyConfigRewardCurrency": {
+      "$ref": "#/$defs/EconomyConfigRewardRangeInt64"
+    },
+    "EconomyConfigRewardEnergy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": "integer"
+        },
+        "max": {
+          "type": "integer"
+        },
+        "multiple": {
+          "type": "integer"
+        }
+      },
+      "description": "Embeds EconomyConfigRewardRangeInt32 - definition not provided, assuming similar to Int64 range"
+    },
+    "EconomyConfigRewardRewardModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/EconomyConfigRewardRangeInt64"
+        },
+        "duration_sec": {
+          "$ref": "#/$defs/EconomyConfigRewardRangeUInt64"
+        }
+      }
+    },
+    "EconomyConfigRewardEnergyModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/EconomyConfigRewardRangeInt64"
+        },
+        "duration_sec": {
+          "$ref": "#/$defs/EconomyConfigRewardRangeUInt64"
+        }
+      }
+    },
+    "TeamsStatsConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stats_public": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/StatsConfigStat"
+          }
+        },
+        "stats_private": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/StatsConfigStat"
+          }
+        }
+      }
+    },
+    "StatsConfigStat": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "integer"
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "TeamsInventoryConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/InventoryConfigItem"
+          }
+        },
+        "limits": {
+          "type": "object",
+          "description": "InventoryConfigLimits - definition not provided"
+        }
+      }
+    },
+    "InventoryConfigItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "item_sets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "max_count": {
+          "type": "integer"
+        },
+        "stackable": {
+          "type": "boolean"
+        },
+        "consumable": {
+          "type": "boolean"
+        },
+        "consume_reward": {
+          "$ref": "#/$defs/EconomyConfigReward"
+        },
+        "string_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "numeric_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "keep_zero": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TeamsAchievementsConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "achievements": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/AchievementsConfigAchievement"
+          }
+        }
+      }
+    },
+    "AchievementsConfigAchievement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "auto_claim": {
+          "type": "boolean"
+        },
+        "auto_claim_total": {
+          "type": "boolean"
+        },
+        "auto_reset": {
+          "type": "boolean"
+        },
+        "category": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "start_time_sec": {
+          "type": "integer"
+        },
+        "end_time_sec": {
+          "type": "integer"
+        },
+        "reset_cronexpr": {
+          "type": "string"
+        },
+        "duration_sec": {
+          "type": "integer"
+        },
+        "max_count": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "precondition_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reward": {
+          "$ref": "#/$defs/EconomyConfigReward"
+        },
+        "total_reward": {
+          "$ref": "#/$defs/EconomyConfigReward"
+        },
+        "sub_achievements": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/AchievementsConfigSubAchievement"
+          }
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "AchievementsConfigSubAchievement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "auto_claim": {
+          "type": "boolean"
+        },
+        "auto_reset": {
+          "type": "boolean"
+        },
+        "category": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "reset_cronexpr": {
+          "type": "string"
+        },
+        "duration_sec": {
+          "type": "integer"
+        },
+        "max_count": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "precondition_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reward": {
+          "$ref": "#/$defs/EconomyConfigReward"
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "TeamEventLeaderboardsConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "event_leaderboards": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EventLeaderboardsConfigLeaderboard"
+          }
+        }
+      }
+    },
+    "EventLeaderboardsConfigLeaderboard": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "ascending": {
+          "type": "boolean"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "reset_schedule": {
+          "type": "string"
+        },
+        "cohort_size": {
+          "type": "integer"
+        },
+        "tier_overrides": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EventLeaderboardsConfigLeaderboardTierOverride"
+          }
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "max_num_score": {
+          "type": "integer"
+        },
+        "reward_tiers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/EventLeaderboardsConfigLeaderboardRewardTier"
+            }
+          }
+        },
+        "change_zones": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EventLeaderboardsConfigChangeZone"
+          }
+        },
+        "tiers": {
+          "type": "integer"
+        },
+        "max_idle_tier_drop": {
+          "type": "integer"
+        },
+        "start_time_sec": {
+          "type": "integer"
+        },
+        "end_time_sec": {
+          "type": "integer"
+        },
+        "duration": {
+          "type": "integer"
+        }
+      }
+    },
+    "EventLeaderboardsConfigLeaderboardTierOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cohort_size": {
+          "type": "integer"
+        }
+      }
+    },
+    "EventLeaderboardsConfigLeaderboardRewardTier": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "rank_max": {
+          "type": "integer"
+        },
+        "rank_min": {
+          "type": "integer"
+        },
+        "reward": {
+          "$ref": "#/$defs/EconomyConfigReward"
+        },
+        "tier_change": {
+          "type": "integer"
+        }
+      }
+    },
+    "EventLeaderboardsConfigChangeZone": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "promotion": {
+          "type": "number"
+        },
+        "demotion": {
+          "type": "number"
+        },
+        "demote_idle": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TeamMailboxConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_size": {
+          "type": "integer"
+        },
+        "expiry_sec": {
+          "type": "integer"
+        }
+      }
+    },
+    "TeamGiftsConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gifts": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/TeamGiftsConfigGift"
+          }
+        }
+      }
+    },
+    "TeamGiftsConfigGift": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "reset_schedule": {
+          "type": "string"
+        },
+        "duration_sec": {
+          "type": "integer"
+        },
+        "max_count": {
+          "type": "integer"
+        },
+        "max_contributor_count": {
+          "type": "integer"
+        },
+        "contribution_cost": {
+          "$ref": "#/$defs/EconomyConfigReward"
+        },
+        "contribution_reward": {
+          "$ref": "#/$defs/EconomyConfigReward"
+        },
+        "rewards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TeamGiftsConfigGiftReward"
+          }
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "TeamGiftsConfigGiftReward": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min_count": {
+          "type": "integer"
+        },
+        "contributor_reward": {
+          "$ref": "#/$defs/EconomyConfigReward"
+        },
+        "noncontributor_reward": {
+          "$ref": "#/$defs/EconomyConfigReward"
+        }
+      }
+    }
+  }
 }
