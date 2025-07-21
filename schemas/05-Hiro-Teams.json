@@ -47,7 +47,8 @@
         "currencies": {
           "type": "object",
           "additionalProperties": {
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           }
         }
       }
