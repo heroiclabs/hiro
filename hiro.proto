@@ -2886,7 +2886,7 @@ message TeamAchievementsClaimRequest {
   // Team identifier.
   string id = 1;
   // The set of team achievement IDs to claim.
-  repeated string ids = 2;
+  repeated string achievement_ids = 2;
   // Whether or not to claim the total reward as well, if available.
   bool claim_total_reward = 3;
 }
@@ -2902,7 +2902,7 @@ message TeamAchievementsUpdateRequest {
   // Team identifier.
   string id = 1;
   // The set of achievement IDs to progress.
-  repeated string ids = 2;
+  repeated string achievement_ids = 2;
   // The amount of progress to increment on the achievements.
   int64 amount = 3;
   // Achievements with different amounts.
