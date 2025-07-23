@@ -33,8 +33,9 @@ var (
 
 // TeamsConfig is the data definition for a TeamsSystem type.
 type TeamsConfig struct {
-	InitialMaxTeamSize int `json:"initial_max_team_size,omitempty"`
-	MaxTeamSize        int `json:"max_team_size,omitempty"`
+	InitialMaxTeamSize int  `json:"initial_max_team_size,omitempty"`
+	MaxTeamSize        int  `json:"max_team_size,omitempty"`
+	SingleTeam         bool `json:"single_team,omitempty"`
 
 	Wallet            *TeamsWalletConfig                     `json:"wallet,omitempty"`
 	StoreItems        map[string]*TeamEconomyConfigStoreItem `json:"store_items,omitempty"`
