@@ -24,6 +24,7 @@ import (
 var (
 	ErrTeamNotFound        = runtime.NewError("team not found", 3)         // INVALID_ARGUMENT
 	ErrTeamMaxSizeExceeded = runtime.NewError("team max size exceeded", 3) // INVALID_ARGUMENT
+	ErrTeamAlreadyMember   = runtime.NewError("already part of a team", 3) // INVALID_ARGUMENT
 
 	ErrTeamGiftsNotFound            = runtime.NewError("team gift not found", 3)                     // INVALID_ARGUMENT
 	ErrTeamGiftsNotActive           = runtime.NewError("team gift not active", 3)                    // INVALID_ARGUMENT
