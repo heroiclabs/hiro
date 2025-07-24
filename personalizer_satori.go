@@ -180,6 +180,14 @@ func SatoriPersonalizerPublishStreaksEvents() SatoriPersonalizerOption {
 	}
 }
 
+func SatoriPersonalizerPublishChallengeEvents() SatoriPersonalizerOption {
+	return &satoriPersonalizerOptionFunc{
+		f: func(personalizer *SatoriPersonalizer) {
+			personalizer.publishChallengeEvents = true
+		},
+	}
+}
+
 func SatoriPersonalizerPublishAllEvents() SatoriPersonalizerOption {
 	return &satoriPersonalizerOptionFunc{
 		f: func(personalizer *SatoriPersonalizer) {
@@ -222,6 +230,7 @@ type SatoriPersonalizer struct {
 	publishUnlockablesEvents       bool
 	publishAuctionsEvents          bool
 	publishStreaksEvents           bool
+	publishChallengeEvents         bool
 
 	noCache bool
 
@@ -304,6 +313,10 @@ func (p *SatoriPersonalizer) Send(ctx context.Context, logger runtime.Logger, nk
 			}
 		case SystemTypeStreaks:
 			if !p.IsPublishStreaksEvents() {
+				continue
+			}
+		case SystemTypeChallenges:
+			if !p.IsPublishChallengeEvents() {
 				continue
 			}
 		default:
@@ -621,4 +634,8 @@ func (p *SatoriPersonalizer) IsPublishAuctionsEvents() bool {
 
 func (p *SatoriPersonalizer) IsPublishStreaksEvents() bool {
 	return p.publishAll || p.publishStreaksEvents
+}
+
+func (p *SatoriPersonalizer) IsPublishChallengeEvents() bool {
+	return p.publishAll || p.publishChallengeEvents
 }
