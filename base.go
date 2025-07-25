@@ -73,6 +73,8 @@ type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sq
 
 type CollectionResolverFn func(ctx context.Context, systemType SystemType, collection string) (string, error)
 
+type ActivityCalculator func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) int64
+
 // Hiro provides a type which combines all gameplay systems.
 type Hiro interface {
 	// SetPersonalizer is deprecated in favor of AddPersonalizer function to compose a chain of configuration personalization.
@@ -85,6 +87,8 @@ type Hiro interface {
 
 	// SetCollectionResolver sets a function that may change the storage collection target for Hiro systems. Not typically used.
 	SetCollectionResolver(fn CollectionResolverFn)
+
+	SetActivityCalculator(fn ActivityCalculator)
 
 	GetAchievementsSystem() AchievementsSystem
 	GetBaseSystem() BaseSystem

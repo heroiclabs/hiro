@@ -121,6 +121,9 @@ type TeamGiftsConfigGiftReward struct {
 type TeamsSystem interface {
 	System
 
+	// SetActivityCalculator specifies a function to use when calculating team activity score.
+	SetActivityCalculator(fn TeamActivityCalculator)
+
 	// Create makes a new team (i.e. Nakama group) with additional metadata which configures the team.
 	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamCreateRequest) (team *Team, err error)
 
@@ -261,3 +264,5 @@ type TeamsSystem interface {
 }
 
 type OnTeamEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, storageIndex string, eventID string, config *EventLeaderboardsConfigLeaderboard, userID, teamID string, tier int, matchmakerProperties map[string]interface{}) (cohortID string, cohortUserIDs []string, newCohort *EventLeaderboardCohortConfig, err error)
+
+type TeamActivityCalculator func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, team *Team) int64

@@ -2270,6 +2270,14 @@ message RateAppRequest {
   string message = 2;
 }
 
+// Member of a particular team.
+message TeamMember {
+  // User identifier.
+  string id = 1;
+  // Activity score.
+  int64 activity = 2;
+}
+
 // A Team represents a group of users who play together.
 message Team {
   // The ID of a team.
@@ -2296,6 +2304,10 @@ message Team {
   int64 create_time_sec = 11;
   // The UNIX timestamp when the group was last updated.
   int64 update_time_sec = 12;
+  // Activity score.
+  int64 activity = 13;
+  // Team member activity.
+  repeated TeamMember members = 14;
 }
 
 // A request to create a team.
@@ -2358,6 +2370,8 @@ message TeamSearchRequest {
   int32 limit = 2;
   // Additionally search by language, if specified.
   string lang_tag = 3;
+  // Minimum team activity score, if specified.
+  int64 min_activity = 4;
 }
 
 // A request to write a chat message to the channel for a team the user is part of.
