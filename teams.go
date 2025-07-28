@@ -265,4 +265,7 @@ type TeamsSystem interface {
 
 type OnTeamEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, storageIndex string, eventID string, config *EventLeaderboardsConfigLeaderboard, userID, teamID string, tier int, matchmakerProperties map[string]interface{}) (cohortID string, cohortUserIDs []string, newCohort *EventLeaderboardCohortConfig, err error)
 
+// TeamActivityCalculator specifies a function used to resolve an activity score for a given team.
+// Implementations may inspect the team members list to use individual activity scores as part of
+// the calculation. Higher activity values should generally be used to indicate more active teams.
 type TeamActivityCalculator func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, team *Team) int64
