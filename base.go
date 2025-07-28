@@ -73,6 +73,10 @@ type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sq
 
 type CollectionResolverFn func(ctx context.Context, systemType SystemType, collection string) (string, error)
 
+// ActivityCalculator specifies a function used to resolve an activity score for some set of users.
+// Users not in the returned map are assumed to have an activity score of 0. Higher activity values
+// should generally be used to indicate more active users. Individual user activity scores may be
+// used to compute a team activity score for any teams the user is part of.
 type ActivityCalculator func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userIDs []string) map[string]int64
 
 // Hiro provides a type which combines all gameplay systems.
