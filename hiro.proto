@@ -1296,6 +1296,8 @@ message EventLeaderboardClaim {
 message EventLeaderboardRoll {
   // Event leaderboard ID to roll.
   string id = 1;
+  // Metadata for the initial score write.
+  string metadata = 2;
 }
 
 // A single participant entry to an event leaderboard.
