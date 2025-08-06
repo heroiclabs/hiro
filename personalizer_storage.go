@@ -44,6 +44,7 @@ const (
 	storagePersonalizerKeyUnlockables       = "unlockables"
 	storagePersonalizerKeyAuctions          = "auctions"
 	storagePersonalizerKeyStreaks           = "streaks"
+	storagePersonalizerKeyChallenges        = "challenges"
 )
 
 var _ Personalizer = (*StoragePersonalizer)(nil)
@@ -78,9 +79,11 @@ type storagePersonalizerUploadRequest struct {
 	Base             *BaseSystemConfig        `json:"base,omitempty"`
 	Auctions         *AuctionsConfig          `json:"auctions,omitempty"`
 	Streaks          *StreaksConfig           `json:"streaks,omitempty"`
+	Challenges       *ChallengesConfig        `json:"challenges,omitempty"`
 }
 
 func NewStoragePersonalizerDefault(logger runtime.Logger, initializer runtime.Initializer, register bool) *StoragePersonalizer {
+	logger.Info("NewStoragePersonalizerDefault register => %v", register)
 	return NewStoragePersonalizer(logger, 600, StoragePersonalizerCollectionDefault, initializer, register)
 }
 
@@ -274,6 +277,15 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			writes = append(writes, write)
 		}
 
+		if req.Challenges != nil {
+			write, err := p.newStorageWrite(req.Challenges, storagePersonalizerKeyChallenges)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error creating challenges storage object.")
+				return "", ErrInternal
+			}
+			writes = append(writes, write)
+		}
+
 		if len(writes) > 0 {
 			if _, err := nk.StorageWrite(ctx, writes); err != nil {
 				logger.WithField("error", err.Error()).Error("nk.StorageWrite error")
@@ -326,6 +338,8 @@ func (p *StoragePersonalizer) GetValue(ctx context.Context, logger runtime.Logge
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyAuctions}
 		case SystemTypeStreaks:
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyStreaks}
+		case SystemTypeChallenges:
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyChallenges}
 		default:
 			return nil, runtime.NewError("hiro system type unknown", 3)
 		}
