@@ -18,6 +18,15 @@
         }
     },
     {
+      "collection": "hiro_datadefinitions",
+      "key": "challenges",
+      "permission_read": 0,
+      "permission_write": 0,
+      "user_id": "00000000-0000-0000-0000-000000000000",
+      "value": {
+      }
+    },
+    {
         "collection": "hiro_datadefinitions",
         "key": "economy",
         "permission_read": 0,
