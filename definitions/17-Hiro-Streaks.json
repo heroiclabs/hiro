@@ -11,7 +11,7 @@
       "rewards": [
         {
           "count_min": 3,
-          "count_max": 3,
+          "count_max": 0,
           "reward": {
             "guaranteed": {
               "currencies": {
@@ -20,11 +20,12 @@
                 }
               }
             }
-          }
+          },
+          "repeatable": false
         },
         {
           "count_min": 6,
-          "count_max": 6,
+          "count_max": 0,
           "reward": {
             "guaranteed": {
               "currencies": {
@@ -33,11 +34,12 @@
                 }
               }
             }
-          }
+          },
+          "repeatable": false
         },
         {
           "count_min": 9,
-          "count_max": 9,
+          "count_max": 0,
           "reward": {
             "guaranteed": {
               "currencies": {
@@ -46,7 +48,8 @@
                 }
               }
             }
-          }
+          },
+          "repeatable": false
         }
       ]
     }
