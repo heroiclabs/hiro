@@ -14,6 +14,9 @@
         },
         "reward": {
           "$ref": "Hiro-Rewards"
+        },
+        "repeatable": {
+          "type": "boolean"
         }
       }
     }
