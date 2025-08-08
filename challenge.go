@@ -2,6 +2,7 @@ package hiro
 
 import (
 	"context"
+
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -63,7 +64,7 @@ type ChallengesSystem interface {
 	Leave(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, challengeId string) (*Challenge, error)
 
 	// SubmitScore submits a new score to the challenge.
-	SubmitScore(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, challengeId string, score, subscore int64, metadata map[string]any) (challenge *Challenge, err error)
+	SubmitScore(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userId, challengeId string, score, subscore int64, metadata map[string]any, conditionalMetadataUpdate bool) (challenge *Challenge, err error)
 
 	// Search allows to find open challenges that are not full.
 	Search(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, name, category string, limit int) ([]*Challenge, error)

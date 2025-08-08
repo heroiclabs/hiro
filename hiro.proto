@@ -918,6 +918,8 @@ message ChallengeSubmitScoreRequest {
   int64 subscore = 3;
   // Metadata.
   string metadata = 4;
+  // Update metadata only if score or subscore change.
+  bool conditional_metadata_update = 5;
 }
 
 // The reward tiers for the challenge.
