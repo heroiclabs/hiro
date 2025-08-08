@@ -2623,6 +2623,8 @@ message StreakAvailableReward {
   int64 count_max = 2;
   // Available reward contents.
   AvailableRewards reward = 3;
+  // Whether this reward can be claimed each reset period that count is between count_min and count_max.
+  bool repeatable = 4;
 }
 
 // A single claimed streak reward.
