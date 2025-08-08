@@ -2635,6 +2635,8 @@ message StreakReward {
   Reward reward = 3;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when this reward was claimed.
   int64 claim_time_sec = 4;
+  // Whether this reward can be claimed each reset period that count is between count_min and count_max.
+  bool repeatable = 5;
 }
 
 // An individual streak, along with its status and progress if any.
