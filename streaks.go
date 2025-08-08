@@ -43,9 +43,10 @@ type StreaksConfigStreak struct {
 }
 
 type StreaksConfigStreakReward struct {
-	CountMin int64                `json:"count_min,omitempty"`
-	CountMax int64                `json:"count_max,omitempty"`
-	Reward   *EconomyConfigReward `json:"reward,omitempty"`
+	CountMin   int64                `json:"count_min,omitempty"`
+	CountMax   int64                `json:"count_max,omitempty"`
+	Reward     *EconomyConfigReward `json:"reward,omitempty"`
+	Repeatable bool                 `json:"repeatable,omitempty"`
 }
 
 type StreaksSystem interface {
