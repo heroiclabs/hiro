@@ -322,6 +322,8 @@ message Progression {
   ProgressionPreconditionsBlock preconditions = 8;
   // Unmet preconditions.
   ProgressionPreconditionsBlock unmet_preconditions = 9;
+  // Flag indicating if unconditional updates are allowed.
+  bool unconditional_updates = 10;
 }
 
 enum ProgressionDeltaState {
