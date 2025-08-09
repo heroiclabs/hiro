@@ -322,6 +322,8 @@ message Progression {
   ProgressionPreconditionsBlock preconditions = 8;
   // Unmet preconditions.
   ProgressionPreconditionsBlock unmet_preconditions = 9;
+  // Flag indicating if unconditional updates are allowed.
+  bool unconditional_updates = 10;
 }
 
 enum ProgressionDeltaState {
@@ -916,6 +918,8 @@ message ChallengeSubmitScoreRequest {
   int64 subscore = 3;
   // Metadata.
   string metadata = 4;
+  // Update metadata only if score or subscore change.
+  bool conditional_metadata_update = 5;
 }
 
 // The reward tiers for the challenge.

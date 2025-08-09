@@ -41,6 +41,7 @@ type ProgressionConfigProgression struct {
 	AdditionalProperties map[string]string              `json:"additional_properties,omitempty"`
 	Preconditions        *ProgressionPreconditionsBlock `json:"preconditions,omitempty"`
 	ResetSchedule        string                         `json:"reset_schedule,omitempty"`
+	UnconditionalUpdates bool                           `json:"unconditional_updates,omitempty"`
 }
 
 // A ProgressionSystem is a gameplay system which represents a sequence of progression steps.
