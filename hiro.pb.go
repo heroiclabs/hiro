@@ -14940,7 +14940,7 @@ type StreakAvailableReward struct {
 	CountMax int64 `protobuf:"varint,2,opt,name=count_max,json=countMax,proto3" json:"count_max,omitempty"`
 	// Available reward contents.
 	Reward *AvailableRewards `protobuf:"bytes,3,opt,name=reward,proto3" json:"reward,omitempty"`
-	// Whether this reward can be claimed each reset period that count is between count_min and count_max.
+	// Whether this reward can be claimed at each count between count_min and count_max, both inclusive.
 	Repeatable bool `protobuf:"varint,4,opt,name=repeatable,proto3" json:"repeatable,omitempty"`
 }
 
@@ -15018,7 +15018,7 @@ type StreakReward struct {
 	Reward *Reward `protobuf:"bytes,3,opt,name=reward,proto3" json:"reward,omitempty"`
 	// The UNIX time (for gRPC clients) or ISO string (for REST clients) when this reward was claimed.
 	ClaimTimeSec int64 `protobuf:"varint,4,opt,name=claim_time_sec,json=claimTimeSec,proto3" json:"claim_time_sec,omitempty"`
-	// Whether this reward can be claimed each reset period that count is between count_min and count_max.
+	// Whether this reward can be claimed at each count between count_min and count_max, both inclusive.
 	Repeatable bool `protobuf:"varint,5,opt,name=repeatable,proto3" json:"repeatable,omitempty"`
 }
 
