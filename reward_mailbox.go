@@ -26,8 +26,7 @@ var (
 )
 
 type RewardMailboxConfig struct {
-	MaxSize   int `json:"max_size,omitempty"`
-	ExpirySec int `json:"expiry_sec,omitempty"`
+	MaxSize int `json:"max_size,omitempty"`
 }
 
 // A RewardMailboxSystem is a gameplay system representing a rewards mailbox for the player to claim from.

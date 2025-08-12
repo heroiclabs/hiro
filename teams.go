@@ -89,8 +89,7 @@ type TeamEventLeaderboardsConfig struct {
 }
 
 type TeamMailboxConfig struct {
-	MaxSize   int `json:"max_size,omitempty"`
-	ExpirySec int `json:"expiry_sec,omitempty"`
+	MaxSize int `json:"max_size,omitempty"`
 }
 
 type TeamGiftsConfig struct {
