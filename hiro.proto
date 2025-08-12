@@ -634,7 +634,7 @@ message ActiveRewardModifier {
 
 // Rewards granted to each member of the team.
 message TeamMemberReward {
-  // The items granted. Indexed by item ID.
+  // The items granted. Keyed by item ID.
   map<string, int64> items = 1;
   // The currencies granted.
   map<string, int64> currencies = 2;
@@ -646,13 +646,13 @@ message TeamMemberReward {
   repeated RewardModifier reward_modifiers = 5;
   // When the reward was granted, in UNIX time.
   int64 grant_time_sec = 6;
-  // The item instances granted. Indexed by item instance ID.
+  // The item instances granted. Keyed by item instance ID.
   map<string, RewardInventoryItem> item_instances = 7;
 }
 
 // Rewards granted to the team.
 message TeamReward {
-  // The items granted. Indexed by item ID.
+  // The items granted. Keyed by item ID.
   map<string, int64> items = 1;
   // The currencies granted.
   map<string, int64> currencies = 2;
@@ -662,7 +662,7 @@ message TeamReward {
   repeated RewardModifier member_reward_modifiers = 4;
   // When the reward was granted, in UNIX time.
   int64 grant_time_sec = 5;
-  // The item instances granted. Indexed by item instance ID.
+  // The item instances granted. Keyed by item instance ID.
   map<string, RewardInventoryItem> item_instances = 6;
   // Indicates if this reward was sent to the team reward mailbox, and what its expiry will be.
   int64 to_mailbox_expiry_sec = 7;
@@ -672,7 +672,7 @@ message TeamReward {
 
 // Rewards granted to the player.
 message Reward {
-  // The items granted. Indexed by item ID.
+  // The items granted. Keyed by item ID.
   map<string, int64> items = 1;
   // The currencies granted.
   map<string, int64> currencies = 2;
@@ -684,7 +684,7 @@ message Reward {
   repeated RewardModifier reward_modifiers = 5;
   // When the reward was granted, in UNIX time.
   int64 grant_time_sec = 6;
-  // The item instances granted. Indexed by item instance ID.
+  // The item instances granted. Keyed by item instance ID.
   map<string, RewardInventoryItem> item_instances = 7;
   // Indicates if this reward was sent to the reward mailbox, and what its expiry will be.
   int64 to_mailbox_expiry_sec = 8;
@@ -2761,7 +2761,7 @@ message RewardMailboxDeleteRequest {
 
 // Represents a request to retrieve available team store items.
 message TeamStoreListRequest {
-  // Team identifier.
+  // Team identifier for which to list available team store items.
   string id = 1;
 }
 
@@ -2803,7 +2803,7 @@ message TeamStore {
 
 // Request to purchase a particular team store item.
 message TeamStorePurchaseRequest {
-  // Team identifier.
+  // Team identifier for which to purchase a team store item.
   string id = 1;
   // A store item's ID.
   string item_id = 2;
@@ -2853,7 +2853,7 @@ message TeamStatListRequest {
 
 // Request an optionally batched stats update for a specified team.
 message TeamStatUpdateRequest {
-  // Team identifier.
+  // Team identifier for which to update stats.
   string id = 1;
   // Public stat updates.
   repeated StatUpdate public = 2;
@@ -2863,7 +2863,7 @@ message TeamStatUpdateRequest {
 
 // Request inventory items in the team inventory.
 message TeamInventoryListRequest {
-  // Team identifier.
+  // Team identifier for which to list inventory items.
   string id = 1;
   // The category for the items to filter for, or empty for all.
   string item_category = 2;
@@ -2871,7 +2871,7 @@ message TeamInventoryListRequest {
 
 // Request to consume some amount of items from a team inventory.
 message TeamInventoryConsumeRequest {
-  // Team identifier.
+  // Team identifier for which to consume inventory items.
   string id = 1;
   // Item ID amounts to consume, if any.
   map<string, int64> items = 2;
@@ -2883,7 +2883,7 @@ message TeamInventoryConsumeRequest {
 
 // Represents a request to grant items to a team.
 message TeamInventoryGrantRequest {
-  // Team identifier.
+  // Team identifier for which to grant inventory items.
   string id = 1;
   // The items to grant.
   map<string, int64> items = 2;
@@ -2891,7 +2891,7 @@ message TeamInventoryGrantRequest {
 
 // Represents a request to update properties of instanced items belonging to a team.
 message TeamInventoryUpdateItemsRequest {
-  // Team identifier.
+  // Team identifier for which to update inventory items.
   string id = 1;
   // The item updates to action, keyed by item instance ID.
   map<string, InventoryUpdateItemProperties> item_updates = 2;
@@ -2899,7 +2899,7 @@ message TeamInventoryUpdateItemsRequest {
 
 // Claim rewards with one or more team achievement on the server.
 message TeamAchievementsClaimRequest {
-  // Team identifier.
+  // Team identifier for which to claim the specified achievements.
   string id = 1;
   // The set of team achievement IDs to claim.
   repeated string achievement_ids = 2;
@@ -2909,13 +2909,13 @@ message TeamAchievementsClaimRequest {
 
 // Get achievements for a particular team.
 message TeamAchievementsGetRequest {
-  // Team identifier.
+  // Team identifier for which to get achievement data.
   string id = 1;
 }
 
 // Update progress on one or more team achievements on the server.
 message TeamAchievementsUpdateRequest {
-  // Team identifier.
+  // Team identifier for which to update achievements.
   string id = 1;
   // The set of achievement IDs to progress.
   repeated string achievement_ids = 2;
@@ -2927,7 +2927,7 @@ message TeamAchievementsUpdateRequest {
 
 // Retrieve available team event leaderboards.
 message TeamEventLeaderboardList {
-  // Team identifier.
+  // Team identifier for which to list team event leaderboards.
   string id = 1;
   // Whether or not the response should include scores, defaults to false.
   bool with_scores = 2;
@@ -2937,7 +2937,7 @@ message TeamEventLeaderboardList {
 
 // Find and retrieve a team event leaderboard by ID, automatically joining the event if necessary.
 message TeamEventLeaderboardGet {
-  // Team identifier.
+  // Team identifier for which to get the team event leaderboard.
   string id = 1;
   // Event leaderboard ID to get, and join if necessary/possible.
   string event_leaderboard_id = 2;
@@ -2945,7 +2945,7 @@ message TeamEventLeaderboardGet {
 
 // Submit a score to a team event leaderboard.
 message TeamEventLeaderboardUpdate {
-  // Team identifier.
+  // Team identifier for which to submit the update.
   string id = 1;
   // Event leaderboard ID.
   string event_leaderboard_id = 2;
@@ -2961,7 +2961,7 @@ message TeamEventLeaderboardUpdate {
 
 // Claim the available reward for a team event leaderboard by ID.
 message TeamEventLeaderboardClaim {
-  // Team identifier.
+  // Team identifier for which to attempt the claim.
   string id = 1;
   // Event leaderboard ID to claim.
   string event_leaderboard_id = 2;
@@ -2969,7 +2969,7 @@ message TeamEventLeaderboardClaim {
 
 // Roll a new cohort for the specified team event leaderboard.
 message TeamEventLeaderboardRoll {
-  // Team identifier.
+  // Team identifier for which to roll a cohort.
   string id = 1;
   // Event leaderboard ID to roll.
   string event_leaderboard_id = 2;
@@ -2977,7 +2977,7 @@ message TeamEventLeaderboardRoll {
 
 // A single participant entry to a team event leaderboard.
 message TeamEventLeaderboardScore {
-  // Team ID.
+  // Team identifier which owns this score.
   string id = 1;
   // Name.
   string name = 2;
@@ -3001,7 +3001,7 @@ message TeamEventLeaderboardScore {
 
 // Individual user contribution towards the score of a team in a team event leaderboard.
 message TeamEventLeaderboardContribution {
-  // User ID.
+  // User ID that owns this contribution.
   string id = 1;
   // Username.
   string username = 2;
@@ -3090,7 +3090,7 @@ message TeamEventLeaderboards {
 }
 
 message TeamEventLeaderboardDebugFillRequest {
-  // Team identifier.
+  // Team identifier for which to fill the cohort.
   string id = 1;
   // Event leaderboard ID to fill.
   string event_leaderboard_id = 2;
@@ -3100,7 +3100,7 @@ message TeamEventLeaderboardDebugFillRequest {
 
 // DEBUG. Payload describing scores to set for a cohort's participants.
 message TeamEventLeaderboardDebugRandomScoresRequest {
-  // Team identifier.
+  // Team identifier for which to use random cohort scores.
   string id = 1;
   // Event leaderboard ID to update.
   string event_leaderboard_id = 2;
@@ -3118,7 +3118,7 @@ message TeamEventLeaderboardDebugRandomScoresRequest {
 
 // Request to list team reward mailbox entries.
 message TeamRewardMailboxListRequest {
-  // Team identifier.
+  // Team identifier for which to list reward mailbox entries.
   string id = 1;
   // Maximum number of reward mailbox entries to return.
   int64 limit = 2;
@@ -3128,7 +3128,7 @@ message TeamRewardMailboxListRequest {
 
 // Request to claim a team reward mailbox entry, and optionally remove it at the same time.
 message TeamRewardMailboxClaimRequest {
-  // Team identifier.
+  // Team identifier for which to claim a mailbox entry.
   string id = 1;
   // Identifier for the reward mailbox entry to claim.
   string entry_id = 2;
@@ -3138,7 +3138,7 @@ message TeamRewardMailboxClaimRequest {
 
 // Request to delete a team reward mailbox entry, even if it is not yet claimed.
 message TeamRewardMailboxDeleteRequest {
-  // Team identifier.
+  // Team identifier for which to delete a mailbox entry.
   string id = 1;
   // Identifier for the reward mailbox entry to delete.
   repeated string entry_ids = 2;
@@ -3222,13 +3222,13 @@ message TeamGiftList {
 
 // Request to view available gifts for a team.
 message TeamGiftListRequest {
-  // Team identifier.
+  // Team identifier for which to list gifts.
   string id = 1;
 }
 
 // Request to contribute to a specific team gift.
 message TeamGiftContributeRequest {
-  // Team identifier.
+  // Team identifier for which to submit a gift contribution.
   string id = 1;
   // Gift identifier.
   string gift_id = 2;
@@ -3248,7 +3248,7 @@ message TeamGiftContributeAck {
 
 // Request to claim all rewards currently available from a team gift.
 message TeamGiftClaimRequest {
-  // Team identifier.
+  // Team identifier from which to claim a gift.
   string id = 1;
   // Gift identifier.
   string gift_id = 2;

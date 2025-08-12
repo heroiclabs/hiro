@@ -2677,7 +2677,7 @@ type TeamMemberReward struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The items granted. Indexed by item ID.
+	// The items granted. Keyed by item ID.
 	Items map[string]int64 `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 	// The currencies granted.
 	Currencies map[string]int64 `protobuf:"bytes,2,rep,name=currencies,proto3" json:"currencies,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
@@ -2689,7 +2689,7 @@ type TeamMemberReward struct {
 	RewardModifiers []*RewardModifier `protobuf:"bytes,5,rep,name=reward_modifiers,json=rewardModifiers,proto3" json:"reward_modifiers,omitempty"`
 	// When the reward was granted, in UNIX time.
 	GrantTimeSec int64 `protobuf:"varint,6,opt,name=grant_time_sec,json=grantTimeSec,proto3" json:"grant_time_sec,omitempty"`
-	// The item instances granted. Indexed by item instance ID.
+	// The item instances granted. Keyed by item instance ID.
 	ItemInstances map[string]*RewardInventoryItem `protobuf:"bytes,7,rep,name=item_instances,json=itemInstances,proto3" json:"item_instances,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -2780,7 +2780,7 @@ type TeamReward struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The items granted. Indexed by item ID.
+	// The items granted. Keyed by item ID.
 	Items map[string]int64 `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 	// The currencies granted.
 	Currencies map[string]int64 `protobuf:"bytes,2,rep,name=currencies,proto3" json:"currencies,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
@@ -2790,7 +2790,7 @@ type TeamReward struct {
 	MemberRewardModifiers []*RewardModifier `protobuf:"bytes,4,rep,name=member_reward_modifiers,json=memberRewardModifiers,proto3" json:"member_reward_modifiers,omitempty"`
 	// When the reward was granted, in UNIX time.
 	GrantTimeSec int64 `protobuf:"varint,5,opt,name=grant_time_sec,json=grantTimeSec,proto3" json:"grant_time_sec,omitempty"`
-	// The item instances granted. Indexed by item instance ID.
+	// The item instances granted. Keyed by item instance ID.
 	ItemInstances map[string]*RewardInventoryItem `protobuf:"bytes,6,rep,name=item_instances,json=itemInstances,proto3" json:"item_instances,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	// Indicates if this reward was sent to the team reward mailbox, and what its expiry will be.
 	ToMailboxExpirySec int64 `protobuf:"varint,7,opt,name=to_mailbox_expiry_sec,json=toMailboxExpirySec,proto3" json:"to_mailbox_expiry_sec,omitempty"`
@@ -2892,7 +2892,7 @@ type Reward struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The items granted. Indexed by item ID.
+	// The items granted. Keyed by item ID.
 	Items map[string]int64 `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 	// The currencies granted.
 	Currencies map[string]int64 `protobuf:"bytes,2,rep,name=currencies,proto3" json:"currencies,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
@@ -2904,7 +2904,7 @@ type Reward struct {
 	RewardModifiers []*RewardModifier `protobuf:"bytes,5,rep,name=reward_modifiers,json=rewardModifiers,proto3" json:"reward_modifiers,omitempty"`
 	// When the reward was granted, in UNIX time.
 	GrantTimeSec int64 `protobuf:"varint,6,opt,name=grant_time_sec,json=grantTimeSec,proto3" json:"grant_time_sec,omitempty"`
-	// The item instances granted. Indexed by item instance ID.
+	// The item instances granted. Keyed by item instance ID.
 	ItemInstances map[string]*RewardInventoryItem `protobuf:"bytes,7,rep,name=item_instances,json=itemInstances,proto3" json:"item_instances,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	// Indicates if this reward was sent to the reward mailbox, and what its expiry will be.
 	ToMailboxExpirySec int64 `protobuf:"varint,8,opt,name=to_mailbox_expiry_sec,json=toMailboxExpirySec,proto3" json:"to_mailbox_expiry_sec,omitempty"`
@@ -15846,7 +15846,7 @@ type TeamStoreListRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to list available team store items.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
@@ -16123,7 +16123,7 @@ type TeamStorePurchaseRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to purchase a team store item.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// A store item's ID.
 	ItemId string `protobuf:"bytes,2,opt,name=item_id,json=itemId,proto3" json:"item_id,omitempty"`
@@ -16473,7 +16473,7 @@ type TeamStatUpdateRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to update stats.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Public stat updates.
 	Public []*StatUpdate `protobuf:"bytes,2,rep,name=public,proto3" json:"public,omitempty"`
@@ -16540,7 +16540,7 @@ type TeamInventoryListRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to list inventory items.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// The category for the items to filter for, or empty for all.
 	ItemCategory string `protobuf:"bytes,2,opt,name=item_category,json=itemCategory,proto3" json:"item_category,omitempty"`
@@ -16598,7 +16598,7 @@ type TeamInventoryConsumeRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to consume inventory items.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Item ID amounts to consume, if any.
 	Items map[string]int64 `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
@@ -16674,7 +16674,7 @@ type TeamInventoryGrantRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to grant inventory items.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// The items to grant.
 	Items map[string]int64 `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
@@ -16732,7 +16732,7 @@ type TeamInventoryUpdateItemsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to update inventory items.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// The item updates to action, keyed by item instance ID.
 	ItemUpdates map[string]*InventoryUpdateItemProperties `protobuf:"bytes,2,rep,name=item_updates,json=itemUpdates,proto3" json:"item_updates,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
@@ -16790,7 +16790,7 @@ type TeamAchievementsClaimRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to claim the specified achievements.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// The set of team achievement IDs to claim.
 	AchievementIds []string `protobuf:"bytes,2,rep,name=achievement_ids,json=achievementIds,proto3" json:"achievement_ids,omitempty"`
@@ -16857,7 +16857,7 @@ type TeamAchievementsGetRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to get achievement data.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
@@ -16906,7 +16906,7 @@ type TeamAchievementsUpdateRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to update achievements.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// The set of achievement IDs to progress.
 	AchievementIds []string `protobuf:"bytes,2,rep,name=achievement_ids,json=achievementIds,proto3" json:"achievement_ids,omitempty"`
@@ -16982,7 +16982,7 @@ type TeamEventLeaderboardList struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to list team event leaderboards.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Whether or not the response should include scores, defaults to false.
 	WithScores bool `protobuf:"varint,2,opt,name=with_scores,json=withScores,proto3" json:"with_scores,omitempty"`
@@ -17049,7 +17049,7 @@ type TeamEventLeaderboardGet struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to get the team event leaderboard.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Event leaderboard ID to get, and join if necessary/possible.
 	EventLeaderboardId string `protobuf:"bytes,2,opt,name=event_leaderboard_id,json=eventLeaderboardId,proto3" json:"event_leaderboard_id,omitempty"`
@@ -17107,7 +17107,7 @@ type TeamEventLeaderboardUpdate struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to submit the update.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Event leaderboard ID.
 	EventLeaderboardId string `protobuf:"bytes,2,opt,name=event_leaderboard_id,json=eventLeaderboardId,proto3" json:"event_leaderboard_id,omitempty"`
@@ -17201,7 +17201,7 @@ type TeamEventLeaderboardClaim struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to attempt the claim.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Event leaderboard ID to claim.
 	EventLeaderboardId string `protobuf:"bytes,2,opt,name=event_leaderboard_id,json=eventLeaderboardId,proto3" json:"event_leaderboard_id,omitempty"`
@@ -17259,7 +17259,7 @@ type TeamEventLeaderboardRoll struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to roll a cohort.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Event leaderboard ID to roll.
 	EventLeaderboardId string `protobuf:"bytes,2,opt,name=event_leaderboard_id,json=eventLeaderboardId,proto3" json:"event_leaderboard_id,omitempty"`
@@ -17317,7 +17317,7 @@ type TeamEventLeaderboardScore struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team ID.
+	// Team identifier which owns this score.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Name.
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
@@ -17447,7 +17447,7 @@ type TeamEventLeaderboardContribution struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// User ID.
+	// User ID that owns this contribution.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Username.
 	Username string `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
@@ -17917,7 +17917,7 @@ type TeamEventLeaderboardDebugFillRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to fill the cohort.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Event leaderboard ID to fill.
 	EventLeaderboardId string `protobuf:"bytes,2,opt,name=event_leaderboard_id,json=eventLeaderboardId,proto3" json:"event_leaderboard_id,omitempty"`
@@ -17984,7 +17984,7 @@ type TeamEventLeaderboardDebugRandomScoresRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to use random cohort scores.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Event leaderboard ID to update.
 	EventLeaderboardId string `protobuf:"bytes,2,opt,name=event_leaderboard_id,json=eventLeaderboardId,proto3" json:"event_leaderboard_id,omitempty"`
@@ -18087,7 +18087,7 @@ type TeamRewardMailboxListRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to list reward mailbox entries.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Maximum number of reward mailbox entries to return.
 	Limit int64 `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
@@ -18154,7 +18154,7 @@ type TeamRewardMailboxClaimRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to claim a mailbox entry.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Identifier for the reward mailbox entry to claim.
 	EntryId string `protobuf:"bytes,2,opt,name=entry_id,json=entryId,proto3" json:"entry_id,omitempty"`
@@ -18221,7 +18221,7 @@ type TeamRewardMailboxDeleteRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to delete a mailbox entry.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Identifier for the reward mailbox entry to delete.
 	EntryIds []string `protobuf:"bytes,2,rep,name=entry_ids,json=entryIds,proto3" json:"entry_ids,omitempty"`
@@ -18709,7 +18709,7 @@ type TeamGiftListRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to list gifts.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
@@ -18758,7 +18758,7 @@ type TeamGiftContributeRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier for which to submit a gift contribution.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Gift identifier.
 	GiftId string `protobuf:"bytes,2,opt,name=gift_id,json=giftId,proto3" json:"gift_id,omitempty"`
@@ -18892,7 +18892,7 @@ type TeamGiftClaimRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Team identifier.
+	// Team identifier from which to claim a gift.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Gift identifier.
 	GiftId string `protobuf:"bytes,2,opt,name=gift_id,json=giftId,proto3" json:"gift_id,omitempty"`
