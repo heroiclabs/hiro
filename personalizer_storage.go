@@ -45,6 +45,7 @@ const (
 	storagePersonalizerKeyAuctions          = "auctions"
 	storagePersonalizerKeyStreaks           = "streaks"
 	storagePersonalizerKeyChallenges        = "challenges"
+	storagePersonalizerKeyRewardMailbox     = "reward_mailbox"
 )
 
 var _ Personalizer = (*StoragePersonalizer)(nil)
@@ -80,6 +81,7 @@ type storagePersonalizerUploadRequest struct {
 	Auctions         *AuctionsConfig          `json:"auctions,omitempty"`
 	Streaks          *StreaksConfig           `json:"streaks,omitempty"`
 	Challenges       *ChallengesConfig        `json:"challenges,omitempty"`
+	RewardMailbox    *RewardMailboxConfig     `json:"reward_mailbox,omitempty"`
 }
 
 func NewStoragePersonalizerDefault(logger runtime.Logger, initializer runtime.Initializer, register bool) *StoragePersonalizer {
@@ -125,7 +127,7 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			return "", ErrPayloadDecode
 		}
 
-		writes := make([]*runtime.StorageWrite, 0, 15)
+		writes := make([]*runtime.StorageWrite, 0, 17)
 
 		if req.Achievements != nil {
 			write, err := p.newStorageWrite(req.Achievements, storagePersonalizerKeyAchievements)
@@ -286,6 +288,15 @@ func rpcStoragePersonalizerUpload(initializer runtime.Initializer, p *StoragePer
 			writes = append(writes, write)
 		}
 
+		if req.RewardMailbox != nil {
+			write, err := p.newStorageWrite(req.RewardMailbox, storagePersonalizerKeyRewardMailbox)
+			if err != nil {
+				logger.WithField("error", err.Error()).Error("Error creating reward mailbox storage object.")
+				return "", ErrInternal
+			}
+			writes = append(writes, write)
+		}
+
 		if len(writes) > 0 {
 			if _, err := nk.StorageWrite(ctx, writes); err != nil {
 				logger.WithField("error", err.Error()).Error("nk.StorageWrite error")
@@ -340,6 +351,8 @@ func (p *StoragePersonalizer) GetValue(ctx context.Context, logger runtime.Logge
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyStreaks}
 		case SystemTypeChallenges:
 			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyChallenges}
+		case SystemTypeRewardMailbox:
+			readOp = &runtime.StorageRead{Collection: p.collection, Key: storagePersonalizerKeyRewardMailbox}
 		default:
 			return nil, runtime.NewError("hiro system type unknown", 3)
 		}

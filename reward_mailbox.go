@@ -21,31 +21,31 @@ import (
 )
 
 var (
-	ErrMailboxEntryNotFound       = runtime.NewError("mailbox entry not found", 3)       // INVALID_ARGUMENT
-	ErrMailboxEntryAlreadyClaimed = runtime.NewError("mailbox entry already claimed", 3) // INVALID_ARGUMENT
+	ErrRewardMailboxEntryNotFound       = runtime.NewError("reward mailbox entry not found", 3)       // INVALID_ARGUMENT
+	ErrRewardMailboxEntryAlreadyClaimed = runtime.NewError("reward mailbox entry already claimed", 3) // INVALID_ARGUMENT
 )
 
-type MailboxConfig struct {
+type RewardMailboxConfig struct {
 	MaxSize   int `json:"max_size,omitempty"`
 	ExpirySec int `json:"expiry_sec,omitempty"`
 }
 
-// A MailboxSystem is a gameplay system representing a rewards mailbox for the player to claim from.
-type MailboxSystem interface {
+// A RewardMailboxSystem is a gameplay system representing a rewards mailbox for the player to claim from.
+type RewardMailboxSystem interface {
 	System
 
 	// List the reward mailbox.
-	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, limit int, cursor string) (mailboxList *MailboxList, err error)
+	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, limit int, cursor string) (mailboxList *RewardMailboxList, err error)
 
 	// Claim a reward, and optionally remove it from the mailbox.
-	Claim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, id string, delete bool) (mailboxEntry *MailboxEntry, err error)
+	Claim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, id string, delete bool) (mailboxEntry *RewardMailboxEntry, err error)
 
 	// Delete a reward from the mailbox, even if it is not yet claimed.
 	Delete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, ids []string) error
 
 	// Grant a reward to the user's mailbox.
-	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, reward *Reward) (mailboxEntry *MailboxEntry, err error)
+	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, reward *Reward) (mailboxEntry *RewardMailboxEntry, err error)
 
 	// SetOnClaimReward sets a custom reward function which will run after a mailbox reward is rolled during claiming.
-	SetOnClaimReward(fn OnReward[*MailboxEntry])
+	SetOnClaimReward(fn OnReward[*RewardMailboxEntry])
 }

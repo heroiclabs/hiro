@@ -112,7 +112,7 @@ type Hiro interface {
 	GetAuctionsSystem() AuctionsSystem
 	GetStreaksSystem() StreaksSystem
 	GetChallengesSystem() ChallengesSystem
-	GetMailboxSystem() MailboxSystem
+	GetRewardMailboxSystem() RewardMailboxSystem
 }
 
 // The SystemType identifies each of the gameplay systems.
@@ -136,7 +136,7 @@ const (
 	SystemTypeAuctions
 	SystemTypeStreaks
 	SystemTypeChallenges
-	SystemTypeMailbox
+	SystemTypeRewardMailbox
 )
 
 // Init initializes a Hiro type with the configurations provided.
@@ -384,10 +384,10 @@ func WithChallengesSystem(configFile string, register bool) SystemConfig {
 	}
 }
 
-// WithMailboxSystem configures a MailboxSystem type and optionally registers its RPCs with the game server.
-func WithMailboxSystem(configFile string, register bool) SystemConfig {
+// WithRewardMailboxSystem configures a RewardMailboxSystem type and optionally registers its RPCs with the game server.
+func WithRewardMailboxSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
-		systemType: SystemTypeMailbox,
+		systemType: SystemTypeRewardMailbox,
 		configFile: configFile,
 		register:   register,
 	}

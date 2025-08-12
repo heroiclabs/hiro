@@ -153,12 +153,12 @@ enum RpcId {
   // DEBUG. Assign random scores within a given range to users within the caller's cohort, except for the caller themselves.
   RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES = 114 [(input) = "TeamEventLeaderboardDebugRandomScoresRequest", (output) = "TeamEventLeaderboard"];
 
-  // List rewards available in a team mailbox.
-  RPC_ID_TEAMS_MAILBOX_LIST = 115 [(input) = "TeamMailboxListRequest", (output) = "MailboxList"];
-  // Claim a reward from the team mailbox, and optionally delete it.
-  RPC_ID_TEAMS_MAILBOX_CLAIM = 116 [(input) = "TeamMailboxClaimRequest", (output) = "MailboxEntry"];
-  // Delete a reward from the team mailbox, even if it is not yet claimed.
-  RPC_ID_TEAMS_MAILBOX_DELETE = 117 [(input) = "TeamMailboxDeleteRequest", (output) = ""];
+  // List rewards available in a team reward mailbox.
+  RPC_ID_TEAMS_REWARD_MAILBOX_LIST = 115 [(input) = "TeamRewardMailboxListRequest", (output) = "RewardMailboxList"];
+  // Claim a reward from the team reward mailbox, and optionally delete it.
+  RPC_ID_TEAMS_REWARD_MAILBOX_CLAIM = 116 [(input) = "TeamRewardMailboxClaimRequest", (output) = "RewardMailboxEntry"];
+  // Delete a reward from the team reward mailbox, even if it is not yet claimed.
+  RPC_ID_TEAMS_REWARD_MAILBOX_DELETE = 117 [(input) = "TeamRewardMailboxDeleteRequest", (output) = ""];
 
   // List available team gifts.
   RPC_ID_TEAMS_GIFT_LIST = 118 [(input) = "TeamGiftListRequest", (output) = "TeamGiftList"];
@@ -288,12 +288,12 @@ enum RpcId {
   // Invite more users to an ongoing challenge.
   RPC_ID_CHALLENGE_INVITE = 90 [(input) = "ChallengeInviteRequest", (output) = "Challenge"];
 
-  // List rewards available in a mailbox.
-  RPC_ID_MAILBOX_LIST = 91 [(input) = "MailboxListRequest", (output) = "MailboxList"];
-  // Claim a reward from the mailbox, and optionally delete it.
-  RPC_ID_MAILBOX_CLAIM = 92 [(input) = "MailboxClaimRequest", (output) = "MailboxEntry"];
-  // Delete a reward from the mailbox, even if it is not yet claimed.
-  RPC_ID_MAILBOX_DELETE = 93 [(input) = "MailboxDeleteRequest", (output) = ""];
+  // List rewards available in a reward mailbox.
+  RPC_ID_REWARD_MAILBOX_LIST = 91 [(input) = "RewardMailboxListRequest", (output) = "RewardMailboxList"];
+  // Claim a reward from the reward mailbox, and optionally delete it.
+  RPC_ID_REWARD_MAILBOX_CLAIM = 92 [(input) = "RewardMailboxClaimRequest", (output) = "RewardMailboxEntry"];
+  // Delete a reward from the reward mailbox, even if it is not yet claimed.
+  RPC_ID_REWARD_MAILBOX_DELETE = 93 [(input) = "RewardMailboxDeleteRequest", (output) = ""];
 
   //--- Server to server RPCs ---//
 
@@ -395,6 +395,8 @@ message Progression {
   ProgressionPreconditionsBlock unmet_preconditions = 9;
   // Flag indicating if unconditional updates are allowed.
   bool unconditional_updates = 10;
+  // Flag indicating if the progression remains unlocked permanently once unlocked the first time.
+  bool permanent_unlock = 11;
 }
 
 enum ProgressionDeltaState {
@@ -662,8 +664,8 @@ message TeamReward {
   int64 grant_time_sec = 5;
   // The item instances granted. Indexed by item instance ID.
   map<string, RewardInventoryItem> item_instances = 6;
-  // Indicates if this reward was sent to the team mailbox.
-  bool to_mailbox = 7;
+  // Indicates if this reward was sent to the team reward mailbox, and what its expiry will be.
+  int64 to_mailbox_expiry_sec = 7;
   // Reward granted to each team member.
   TeamMemberReward member_reward = 8;
 }
@@ -684,8 +686,8 @@ message Reward {
   int64 grant_time_sec = 6;
   // The item instances granted. Indexed by item instance ID.
   map<string, RewardInventoryItem> item_instances = 7;
-  // Indicates if this reward was sent to the mailbox.
-  bool to_mailbox = 8;
+  // Indicates if this reward was sent to the reward mailbox, and what its expiry will be.
+  int64 to_mailbox_expiry_sec = 8;
   // Team reward, if any.
   TeamReward team_reward = 9;
 }
@@ -868,8 +870,8 @@ message AvailableTeamRewards {
   int64 total_weight = 4;
   // The maximum number of repeats of any given weighted reward.
   int64 max_repeat_rolls = 5;
-  // If rewards will be sent to the claimant's mailbox rather than applied directly.
-  bool to_mailbox = 6;
+  // If rewards will be sent to the claimant's reward mailbox rather than applied directly, and what its expiry will be.
+  int64 to_mailbox_expiry_sec = 6;
   // Reward to be granted to all individual team members.
   AvailableTeamMemberRewards member_reward = 7;
 }
@@ -887,8 +889,8 @@ message AvailableRewards {
   int64 total_weight = 4;
   // The maximum number of repeats of any given weighted reward.
   int64 max_repeat_rolls = 5;
-  // If rewards will be sent to the claimant's mailbox rather than applied directly.
-  bool to_mailbox = 6;
+  // If rewards will be sent to the claimant's reward mailbox rather than applied directly, and what its expiry will be.
+  int64 to_mailbox_expiry_sec = 6;
   // Rewards for the claimant's team, if any.
   AvailableTeamRewards team_reward = 7;
 }
@@ -2709,8 +2711,8 @@ message StreaksResetRequest {
   repeated string ids = 1;
 }
 
-// A mailbox entry and associated reward information.
-message MailboxEntry {
+// A reward mailbox entry and associated reward information.
+message RewardMailboxEntry {
   // Unique identifier for this entry.
   string id = 1;
   // Reward associated with this entry.
@@ -2727,33 +2729,33 @@ message MailboxEntry {
   bool can_claim = 7;
 }
 
-// A list of mailbox entries, with pagination information if applicable.
-message MailboxList {
-  // A list of mailbox entries for this mailbox.
-  repeated MailboxEntry entries = 1;
+// A list of reward mailbox entries, with pagination information if applicable.
+message RewardMailboxList {
+  // A list of reward mailbox entries for this reward mailbox.
+  repeated RewardMailboxEntry entries = 1;
   // Pagination cursor to fetch more results, or empty if there are no more.
   string cursor = 2;
 }
 
-// Request to list mailbox entries.
-message MailboxListRequest {
-  // Maximum number of mailbox entries to return.
+// Request to list reward mailbox entries.
+message RewardMailboxListRequest {
+  // Maximum number of reward mailbox entries to return.
   int64 limit = 1;
   // Cursor to paginate from, if any.
   string cursor = 2;
 }
 
-// Request to claim a mailbox entry, and optionally remove it at the same time.
-message MailboxClaimRequest {
-  // Identifier for the mailbox entry to claim.
+// Request to claim a reward mailbox entry, and optionally remove it at the same time.
+message RewardMailboxClaimRequest {
+  // Identifier for the reward mailbox entry to claim.
   string id = 1;
   // If the entry should be deleted as part of the claim.
   bool delete = 2;
 }
 
-// Request to delete a mailbox entry, even if it is not yet claimed.
-message MailboxDeleteRequest {
-  // Identifiers for the mailbox entries to delete.
+// Request to delete a reward mailbox entry, even if it is not yet claimed.
+message RewardMailboxDeleteRequest {
+  // Identifiers for the reward mailbox entries to delete.
   repeated string ids = 1;
 }
 
@@ -3114,31 +3116,31 @@ message TeamEventLeaderboardDebugRandomScoresRequest {
   int64 subscore_max = 7;
 }
 
-// Request to list team mailbox entries.
-message TeamMailboxListRequest {
+// Request to list team reward mailbox entries.
+message TeamRewardMailboxListRequest {
   // Team identifier.
   string id = 1;
-  // Maximum number of mailbox entries to return.
+  // Maximum number of reward mailbox entries to return.
   int64 limit = 2;
   // Cursor to paginate from, if any.
   string cursor = 3;
 }
 
-// Request to claim a team mailbox entry, and optionally remove it at the same time.
-message TeamMailboxClaimRequest {
+// Request to claim a team reward mailbox entry, and optionally remove it at the same time.
+message TeamRewardMailboxClaimRequest {
   // Team identifier.
   string id = 1;
-  // Identifier for the mailbox entry to claim.
+  // Identifier for the reward mailbox entry to claim.
   string entry_id = 2;
   // If the entry should be deleted as part of the claim.
   bool delete = 3;
 }
 
-// Request to delete a team mailbox entry, even if it is not yet claimed.
-message TeamMailboxDeleteRequest {
+// Request to delete a team reward mailbox entry, even if it is not yet claimed.
+message TeamRewardMailboxDeleteRequest {
   // Team identifier.
   string id = 1;
-  // Identifier for the mailbox entry to delete.
+  // Identifier for the reward mailbox entry to delete.
   repeated string entry_ids = 2;
 }
 
