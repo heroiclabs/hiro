@@ -1,11 +1,537 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
   "additionalProperties": false,
   "properties": {
+    "initial_max_team_size": {
+      "type": "integer",
+      "minimum": 1
+    },
     "max_team_size": {
-      "minimum": 1,
-      "type": "number"
+      "type": "integer",
+      "minimum": 1
+    },
+    "wallet": {
+      "$ref": "#/$defs/TeamsWalletConfig"
+    },
+    "store_items": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/TeamEconomyConfigStoreItem"
+      }
+    },
+    "stats": {
+      "$ref": "#/$defs/TeamsStatsConfig"
+    },
+    "inventory": {
+      "$ref": "#/$defs/TeamsInventoryConfig"
+    },
+    "achievements": {
+      "$ref": "#/$defs/TeamsAchievementsConfig"
+    },
+    "event_leaderboards": {
+      "$ref": "#/$defs/TeamEventLeaderboardsConfig"
+    },
+    "reward_mailbox": {
+      "$ref": "#/$defs/TeamRewardMailboxConfig"
+    },
+    "gifts": {
+      "$ref": "#/$defs/TeamGiftsConfig"
     }
   },
-  "type": "object"
+  "$defs": {
+    "TeamsWalletConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currencies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "TeamEconomyConfigStoreItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "cost": {
+          "$ref": "#/$defs/TeamEconomyConfigStoreItemCost"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "reward": {
+          "$ref": "Hiro-Rewards"
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "unavailable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TeamEconomyConfigStoreItemCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currencies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "TeamsStatsConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stats_public": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/StatsConfigStat"
+          }
+        },
+        "stats_private": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/StatsConfigStat"
+          }
+        }
+      }
+    },
+    "StatsConfigStat": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "integer"
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "TeamsInventoryConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/InventoryConfigItem"
+          }
+        },
+        "limits": {
+          "type": "object",
+          "description": "InventoryConfigLimits - definition not provided"
+        }
+      }
+    },
+    "InventoryConfigItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "item_sets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "max_count": {
+          "type": "integer"
+        },
+        "stackable": {
+          "type": "boolean"
+        },
+        "consumable": {
+          "type": "boolean"
+        },
+        "consume_reward": {
+          "$ref": "Hiro-Rewards"
+        },
+        "string_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "numeric_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "keep_zero": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TeamsAchievementsConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "achievements": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/AchievementsConfigAchievement"
+          }
+        }
+      }
+    },
+    "AchievementsConfigAchievement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "auto_claim": {
+          "type": "boolean"
+        },
+        "auto_claim_total": {
+          "type": "boolean"
+        },
+        "auto_reset": {
+          "type": "boolean"
+        },
+        "category": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "start_time_sec": {
+          "type": "integer"
+        },
+        "end_time_sec": {
+          "type": "integer"
+        },
+        "reset_cronexpr": {
+          "type": "string"
+        },
+        "duration_sec": {
+          "type": "integer"
+        },
+        "max_count": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "precondition_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reward": {
+          "$ref": "Hiro-Rewards"
+        },
+        "total_reward": {
+          "$ref": "Hiro-Rewards"
+        },
+        "sub_achievements": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/AchievementsConfigSubAchievement"
+          }
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "AchievementsConfigSubAchievement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "auto_claim": {
+          "type": "boolean"
+        },
+        "auto_reset": {
+          "type": "boolean"
+        },
+        "category": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "reset_cronexpr": {
+          "type": "string"
+        },
+        "duration_sec": {
+          "type": "integer"
+        },
+        "max_count": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "precondition_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reward": {
+          "$ref": "Hiro-Rewards"
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "TeamEventLeaderboardsConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "event_leaderboards": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EventLeaderboardsConfigLeaderboard"
+          }
+        }
+      }
+    },
+    "EventLeaderboardsConfigLeaderboard": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "ascending": {
+          "type": "boolean"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "reset_schedule": {
+          "type": "string"
+        },
+        "cohort_size": {
+          "type": "integer"
+        },
+        "tier_overrides": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EventLeaderboardsConfigLeaderboardTierOverride"
+          }
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "max_num_score": {
+          "type": "integer"
+        },
+        "reward_tiers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/EventLeaderboardsConfigLeaderboardRewardTier"
+            }
+          }
+        },
+        "change_zones": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/EventLeaderboardsConfigChangeZone"
+          }
+        },
+        "tiers": {
+          "type": "integer"
+        },
+        "max_idle_tier_drop": {
+          "type": "integer"
+        },
+        "start_time_sec": {
+          "type": "integer"
+        },
+        "end_time_sec": {
+          "type": "integer"
+        },
+        "duration": {
+          "type": "integer"
+        }
+      }
+    },
+    "EventLeaderboardsConfigLeaderboardTierOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cohort_size": {
+          "type": "integer"
+        }
+      }
+    },
+    "EventLeaderboardsConfigLeaderboardRewardTier": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "rank_max": {
+          "type": "integer"
+        },
+        "rank_min": {
+          "type": "integer"
+        },
+        "reward": {
+          "$ref": "Hiro-Rewards"
+        },
+        "tier_change": {
+          "type": "integer"
+        }
+      }
+    },
+    "EventLeaderboardsConfigChangeZone": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "promotion": {
+          "type": "number"
+        },
+        "demotion": {
+          "type": "number"
+        },
+        "demote_idle": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TeamRewardMailboxConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_size": {
+          "type": "integer"
+        },
+        "expiry_sec": {
+          "type": "integer"
+        }
+      }
+    },
+    "TeamGiftsConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gifts": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/TeamGiftsConfigGift"
+          }
+        }
+      }
+    },
+    "TeamGiftsConfigGift": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "reset_schedule": {
+          "type": "string"
+        },
+        "duration_sec": {
+          "type": "integer"
+        },
+        "max_count": {
+          "type": "integer"
+        },
+        "max_contributor_count": {
+          "type": "integer"
+        },
+        "contribution_cost": {
+          "$ref": "Hiro-Rewards"
+        },
+        "contribution_reward": {
+          "$ref": "Hiro-Rewards"
+        },
+        "rewards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TeamGiftsConfigGiftReward"
+          }
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "TeamGiftsConfigGiftReward": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min_count": {
+          "type": "integer"
+        },
+        "contributor_reward": {
+          "$ref": "Hiro-Rewards"
+        },
+        "noncontributor_reward": {
+          "$ref": "Hiro-Rewards"
+        }
+      }
+    }
+  }
 }

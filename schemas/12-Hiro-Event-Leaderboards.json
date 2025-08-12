@@ -118,6 +118,20 @@
               "minimum": 0,
               "type": "number"
             },
+            "tier_overrides": {
+              "patternProperties": {
+                "[0-9]+": {
+                  "properties": {
+                    "cohort_size": {
+                      "minimum": 1,
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "tiers": {
               "minimum": 1,
               "type": "number"

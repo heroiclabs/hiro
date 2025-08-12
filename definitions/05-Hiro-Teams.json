@@ -7,8 +7,7 @@
     }
   },
   "mailbox": {
-    "max_size": 10,
-    "expiry_sec": 86400
+    "max_size": 10
   },
   "store_items": {
     "store_item1": {
@@ -137,6 +136,47 @@
               "reward": {}
             }
           ]
+        }
+      }
+    }
+  },
+  "gifts": {
+    "gifts": {
+      "gift1": {
+        "name": "gift1",
+        "description": "description1",
+        "category": "category1",
+        "reset_schedule": "* * 0 0 0",
+        "duration_sec": 86400,
+        "max_count": 30,
+        "max_contributor_count": 3,
+        "contribution_cost": {},
+        "contribution_reward": {},
+        "rewards": [
+          {
+            "min_count": 30,
+            "contributor_reward": {
+              "guaranteed": {
+                "currencies": {
+                  "coins": {
+                    "min": 50
+                  }
+                }
+              }
+            },
+            "noncontributor_reward": {
+              "guaranteed": {
+                "currencies": {
+                  "coins": {
+                    "min": 25
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "additional_properties": {
+          "key1": "value1"
         }
       }
     }
