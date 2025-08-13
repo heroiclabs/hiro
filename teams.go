@@ -202,7 +202,7 @@ type TeamsSystem interface {
   GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string) (eventLeaderboard *TeamEventLeaderboard, err error)
 
   // RollEventLeaderboard places the team into a new cohort for the specified event leaderboard if possible.
-  RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, tier *int, matchmakerProperties map[string]interface{}) (eventLeaderboard *TeamEventLeaderboard, err error)
+  RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, tier *int, matchmakerProperties map[string]interface{}, metadata map[string]interface{}) (eventLeaderboard *TeamEventLeaderboard, err error)
 
   // UpdateEventLeaderboard updates the team's score in the specified event leaderboard, and returns the team's updated cohort information.
   UpdateEventLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, score, subscore int64, metadata map[string]interface{}, conditionalMetadataUpdate bool) (eventLeaderboard *TeamEventLeaderboard, err error)
