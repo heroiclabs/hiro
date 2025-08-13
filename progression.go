@@ -42,6 +42,7 @@ type ProgressionConfigProgression struct {
 	Preconditions        *ProgressionPreconditionsBlock `json:"preconditions,omitempty"`
 	ResetSchedule        string                         `json:"reset_schedule,omitempty"`
 	UnconditionalUpdates bool                           `json:"unconditional_updates,omitempty"`
+	PermanentUnlock      bool                           `json:"permanent_unlock,omitempty"`
 }
 
 // A ProgressionSystem is a gameplay system which represents a sequence of progression steps.

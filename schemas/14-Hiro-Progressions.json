@@ -150,6 +150,12 @@
               "pattern": ".+",
               "type": "string"
             },
+            "permanent_unlock": {
+              "type": "boolean"
+            },
+            "unconditional_updates": {
+              "type": "boolean"
+            },
             "preconditions": {
               "$ref": "#/definitions/ProgressionPreconditionsBlock"
             }

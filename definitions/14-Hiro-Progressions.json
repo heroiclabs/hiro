@@ -8,6 +8,8 @@
         "propKey1": "propValue1",
         "propKey2": "propValue2"
       },
+      "permanent_unlock": false,
+      "unconditional_updates": false,
       "preconditions": {
         "direct": {
           "counts": {
@@ -42,12 +44,16 @@
       "category": "category2",
       "additional_properties": {
         "propKey3": "propValue3"
-      }
+      },
+      "permanent_unlock": false,
+      "unconditional_updates": false
     },
     "progression3": {
       "name": "Third Progression",
       "description": "Description of the third progression",
       "category": "category3",
+      "permanent_unlock": false,
+      "unconditional_updates": false,
       "preconditions": {
         "direct": {
           "progressions": [

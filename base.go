@@ -73,6 +73,12 @@ type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sq
 
 type CollectionResolverFn func(ctx context.Context, systemType SystemType, collection string) (string, error)
 
+// ActivityCalculator specifies a function used to resolve an activity score for some set of users.
+// Users not in the returned map are assumed to have an activity score of 0. Higher activity values
+// should generally be used to indicate more active users. Individual user activity scores may be
+// used to compute a team activity score for any teams the user is part of.
+type ActivityCalculator func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userIDs []string) map[string]int64
+
 // Hiro provides a type which combines all gameplay systems.
 type Hiro interface {
 	// SetPersonalizer is deprecated in favor of AddPersonalizer function to compose a chain of configuration personalization.
@@ -85,6 +91,10 @@ type Hiro interface {
 
 	// SetCollectionResolver sets a function that may change the storage collection target for Hiro systems. Not typically used.
 	SetCollectionResolver(fn CollectionResolverFn)
+
+	// SetActivityCalculator sets a function expected to return an activity score for
+	// each of the requested users. Missing users are assumed to have a score of 0.
+	SetActivityCalculator(fn ActivityCalculator)
 
 	GetAchievementsSystem() AchievementsSystem
 	GetBaseSystem() BaseSystem
@@ -102,6 +112,7 @@ type Hiro interface {
 	GetAuctionsSystem() AuctionsSystem
 	GetStreaksSystem() StreaksSystem
 	GetChallengesSystem() ChallengesSystem
+	GetRewardMailboxSystem() RewardMailboxSystem
 }
 
 // The SystemType identifies each of the gameplay systems.
@@ -125,6 +136,7 @@ const (
 	SystemTypeAuctions
 	SystemTypeStreaks
 	SystemTypeChallenges
+	SystemTypeRewardMailbox
 )
 
 // Init initializes a Hiro type with the configurations provided.
@@ -202,8 +214,11 @@ func (sc *systemConfig) GetExtra() any {
 	return sc.extra
 }
 
-// OnReward is a function which can be used by each gameplay system to provide an override reward.
+// OnReward is a function that can be used by each gameplay system to provide an override reward.
 type OnReward[T any] func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, sourceID string, source T, rewardConfig *EconomyConfigReward, reward *Reward) (*Reward, error)
+
+// OnTeamReward is a function that can be used by the teams system to provide an override reward.
+type OnTeamReward[T any] func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, sourceID string, source T, rewardConfig *EconomyConfigReward, reward *Reward) (*Reward, error)
 
 // A System is a base type for a gameplay system.
 type System interface {
@@ -289,13 +304,11 @@ func WithStatsSystem(configFile string, register bool) SystemConfig {
 }
 
 // WithTeamsSystem configures a TeamsSystem type and optionally registers its RPCs with the game server.
-func WithTeamsSystem(configFile string, register bool, validateCreateTeam ...ValidateCreateTeamFn) SystemConfig {
+func WithTeamsSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
 		systemType: SystemTypeTeams,
 		configFile: configFile,
 		register:   register,
-
-		extra: validateCreateTeam,
 	}
 }
 
@@ -371,6 +384,15 @@ func WithChallengesSystem(configFile string, register bool) SystemConfig {
 	}
 }
 
+// WithRewardMailboxSystem configures a RewardMailboxSystem type and optionally registers its RPCs with the game server.
+func WithRewardMailboxSystem(configFile string, register bool) SystemConfig {
+	return &systemConfig{
+		systemType: SystemTypeRewardMailbox,
+		configFile: configFile,
+		register:   register,
+	}
+}
+
 // UnregisterRpc clears the implementation of one or more RPCs registered in Nakama by Hiro gameplay systems with a
 // no-op version (http response 404). This is useful to remove individual RPCs which you do not want to be callable by
 // game clients:
@@ -403,6 +425,8 @@ func UnregisterDebugRpc(initializer runtime.Initializer) error {
 	ids := []RpcId{
 		RpcId_RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL,
 		RpcId_RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES,
+		RpcId_RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_FILL,
+		RpcId_RPC_ID_TEAMS_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES,
 	}
 	return UnregisterRpc(initializer, ids...)
 }

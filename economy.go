@@ -81,11 +81,13 @@ type EconomyConfigPlacement struct {
 }
 
 type EconomyConfigReward struct {
-	Guaranteed     *EconomyConfigRewardContents   `json:"guaranteed,omitempty"`
-	Weighted       []*EconomyConfigRewardContents `json:"weighted,omitempty"`
-	MaxRolls       int64                          `json:"max_rolls,omitempty"`
-	MaxRepeatRolls int64                          `json:"max_repeat_rolls,omitempty"`
-	TotalWeight    int64                          `json:"total_weight,omitempty"`
+	Guaranteed         *EconomyConfigRewardContents   `json:"guaranteed,omitempty"`
+	Weighted           []*EconomyConfigRewardContents `json:"weighted,omitempty"`
+	MaxRolls           int64                          `json:"max_rolls,omitempty"`
+	MaxRepeatRolls     int64                          `json:"max_repeat_rolls,omitempty"`
+	TotalWeight        int64                          `json:"total_weight,omitempty"`
+	ToMailboxExpirySec int64                          `json:"to_mailbox_expiry_sec,omitempty"`
+	TeamReward         *EconomyConfigTeamReward       `json:"team_reward,omitempty"`
 }
 
 type EconomyConfigRewardContents struct {
@@ -96,6 +98,33 @@ type EconomyConfigRewardContents struct {
 	EnergyModifiers []*EconomyConfigRewardEnergyModifier    `json:"energy_modifiers,omitempty"`
 	RewardModifiers []*EconomyConfigRewardRewardModifier    `json:"reward_modifiers,omitempty"`
 	Weight          int64                                   `json:"weight,omitempty"`
+}
+
+type EconomyConfigTeamReward struct {
+	Guaranteed         *EconomyConfigTeamRewardContents   `json:"guaranteed,omitempty"`
+	Weighted           []*EconomyConfigTeamRewardContents `json:"weighted,omitempty"`
+	MaxRolls           int64                              `json:"max_rolls,omitempty"`
+	MaxRepeatRolls     int64                              `json:"max_repeat_rolls,omitempty"`
+	TotalWeight        int64                              `json:"total_weight,omitempty"`
+	ToMailboxExpirySec int64                              `json:"to_mailbox_expiry_sec,omitempty"`
+	MemberReward       *EconomyConfigTeamMemberReward     `json:"member_reward,omitempty"`
+}
+
+type EconomyConfigTeamRewardContents struct {
+	Items           map[string]*EconomyConfigRewardItem     `json:"items,omitempty"`
+	ItemSets        []*EconomyConfigRewardItemSet           `json:"item_sets,omitempty"`
+	Currencies      map[string]*EconomyConfigRewardCurrency `json:"currencies,omitempty"`
+	RewardModifiers []*EconomyConfigRewardRewardModifier    `json:"reward_modifiers,omitempty"`
+	Weight          int64                                   `json:"weight,omitempty"`
+}
+
+type EconomyConfigTeamMemberReward struct {
+	Guaranteed         *EconomyConfigRewardContents   `json:"guaranteed,omitempty"`
+	Weighted           []*EconomyConfigRewardContents `json:"weighted,omitempty"`
+	MaxRolls           int64                          `json:"max_rolls,omitempty"`
+	MaxRepeatRolls     int64                          `json:"max_repeat_rolls,omitempty"`
+	TotalWeight        int64                          `json:"total_weight,omitempty"`
+	ToMailboxExpirySec int64                          `json:"to_mailbox_expiry_sec,omitempty"`
 }
 
 type EconomyConfigRewardCurrency struct {

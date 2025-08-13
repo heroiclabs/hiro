@@ -22,6 +22,64 @@
         "$ref": "Hiro-Reward"
       },
       "type": "array"
+    },
+    "to_mailbox_expiry_sec": {
+      "type": "number"
+    },
+    "team_reward": {
+      "properties": {
+        "guaranteed": {
+          "$ref": "Hiro-Reward"
+        },
+        "max_repeat_rolls": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "max_rolls": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "total_weight": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "weighted": {
+          "items": {
+            "$ref": "Hiro-Reward"
+          },
+          "type": "array"
+        },
+        "to_mailbox_expiry_sec": {
+          "type": "number"
+        },
+        "member_reward": {
+          "properties": {
+            "guaranteed": {
+              "$ref": "Hiro-Reward"
+            },
+            "max_repeat_rolls": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "max_rolls": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "total_weight": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "weighted": {
+              "items": {
+                "$ref": "Hiro-Reward"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
     }
   },
   "type": "object"

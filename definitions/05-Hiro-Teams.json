@@ -1,3 +1,184 @@
 {
-    "max_team_size": 1
+  "initial_max_team_size": 25,
+  "max_team_size": 30,
+  "wallet": {
+    "currencies": {
+      "coin": 0
+    }
+  },
+  "mailbox": {
+    "max_size": 10
+  },
+  "store_items": {
+    "store_item1": {
+      "category": "category1",
+      "cost": {
+        "currencies": {
+          "currency1": 50,
+          "currency2": 75
+        }
+      },
+      "description": "description1",
+      "name": "name1",
+      "reward": {},
+      "additional_properties": {
+        "key1": "value1"
+      }
+    }
+  },
+  "stats": {
+    "stats_public": {
+      "stat1": {
+        "value": 0,
+        "additional_properties": {
+          "key1": "value1"
+        }
+      }
+    },
+    "stats_private": {
+      "stat2": {
+        "value": 0,
+        "additional_properties": {
+          "key1": "value1"
+        }
+      }
+    }
+  },
+  "inventory": {
+    "items": {
+      "item1": {
+        "name": "name1",
+        "description": "description1",
+        "category": "category1",
+        "item_sets": [ "set1", "set2" ],
+        "max_count": 0,
+        "stackable": true,
+        "consumable": true,
+        "consume_reward": {},
+        "string_properties": {
+          "prop1": "value1"
+        },
+        "numeric_properties": {
+          "prop2": 123
+        },
+        "keep_zero": true
+      }
+    },
+    "limits": {
+      "categories": {
+        "weapon": 5
+      },
+      "item_sets": {
+        "rare": 10
+      }
+    }
+  },
+  "achievements": {
+    "id1": {
+      "auto_claim": false,
+      "auto_claim_total": true,
+      "auto_reset": true,
+      "category": "category1",
+      "count": 0,
+      "max_count": 10,
+      "description": "description1",
+      "reset_cronexpr": "0 0 * * *",
+      "duration_sec": 86400,
+      "name": "name1",
+      "reward": {},
+      "total_reward": {}
+    }
+  },
+  "event_leaderboards": {
+    "event_leaderboards": {
+      "event1": {
+        "name": "event name",
+        "description": "event description",
+        "category": "some category",
+        "ascending": false,
+        "operator": "best",
+        "reset_schedule": "0 0 * * *",
+        "cohort_size": 100,
+        "additional_properties": {
+          "key": "value"
+        },
+        "max_num_score": 0,
+        "tiers": 5,
+        "max_idle_tier_drop": 1,
+        "start_time_sec": 0,
+        "end_time_sec": 0,
+        "duration": 86400,
+        "change_zones": {
+          "0": {
+            "promotion": 0.3,
+            "demotion": 0.2,
+            "demote_idle": true
+          }
+        },
+        "reward_tiers": {
+          "0": [
+            {
+              "rank_min": 1,
+              "rank_max": 10,
+              "tier_change": 1,
+              "reward": {}
+            },
+            {
+              "rank_min": 11,
+              "rank_max": 90,
+              "tier_change": 0,
+              "reward": {}
+            },
+            {
+              "rank_min": 91,
+              "rank_max": 100,
+              "tier_change": -1,
+              "reward": {}
+            }
+          ]
+        }
+      }
+    }
+  },
+  "gifts": {
+    "gifts": {
+      "gift1": {
+        "name": "gift1",
+        "description": "description1",
+        "category": "category1",
+        "reset_schedule": "* * 0 0 0",
+        "duration_sec": 86400,
+        "max_count": 30,
+        "max_contributor_count": 3,
+        "contribution_cost": {},
+        "contribution_reward": {},
+        "rewards": [
+          {
+            "min_count": 30,
+            "contributor_reward": {
+              "guaranteed": {
+                "currencies": {
+                  "coins": {
+                    "min": 50
+                  }
+                }
+              }
+            },
+            "noncontributor_reward": {
+              "guaranteed": {
+                "currencies": {
+                  "coins": {
+                    "min": 25
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "additional_properties": {
+          "key1": "value1"
+        }
+      }
+    }
+  }
 }

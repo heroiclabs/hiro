@@ -34,6 +34,7 @@ type EventLeaderboardsConfigLeaderboard struct {
 	Operator             string                                                     `json:"operator,omitempty"`
 	ResetSchedule        string                                                     `json:"reset_schedule,omitempty"`
 	CohortSize           int                                                        `json:"cohort_size,omitempty"`
+	TierOverrides        map[string]*EventLeaderboardsConfigLeaderboardTierOverride `json:"tier_overrides,omitempty"`
 	AdditionalProperties map[string]string                                          `json:"additional_properties,omitempty"`
 	MaxNumScore          int                                                        `json:"max_num_score,omitempty"`
 	RewardTiers          map[string][]*EventLeaderboardsConfigLeaderboardRewardTier `json:"reward_tiers,omitempty"`
@@ -46,6 +47,10 @@ type EventLeaderboardsConfigLeaderboard struct {
 
 	BackingId           string `json:"-"`
 	CalculatedBackingId string `json:"-"`
+}
+
+type EventLeaderboardsConfigLeaderboardTierOverride struct {
+	CohortSize int `json:"cohort_size,omitempty"`
 }
 
 type EventLeaderboardsConfigLeaderboardRewardTier struct {
