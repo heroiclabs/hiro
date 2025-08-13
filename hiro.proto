@@ -2623,6 +2623,8 @@ message StreakAvailableReward {
   int64 count_max = 2;
   // Available reward contents.
   AvailableRewards reward = 3;
+  // Whether this reward can be claimed at each count between count_min and count_max, both inclusive.
+  bool repeatable = 4;
 }
 
 // A single claimed streak reward.
@@ -2635,6 +2637,8 @@ message StreakReward {
   Reward reward = 3;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when this reward was claimed.
   int64 claim_time_sec = 4;
+  // Whether this reward can be claimed at each count between count_min and count_max, both inclusive.
+  bool repeatable = 5;
 }
 
 // An individual streak, along with its status and progress if any.
