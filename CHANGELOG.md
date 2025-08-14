@@ -5,6 +5,47 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.26.0] - 2025-08-13
+### Added
+- A Progression can be defined to allow its counts to be updated irrespective of any other preconditions.
+- If enabled, a Challenge score's metadata is updated only when the score itself changes.
+- A Progression can be defined to unlock permanently rather than have its state be computed.
+- Each player now has a Reward Mailbox which can be used to receive Rewards to be collected.
+- Huge redesign of the Teams gameplay system. This provides a very powerful set of features for Guilds, Clans, and other teamplay game design.
+- A Team can now earn currencies into a Team Wallet.
+- A Team can spend currencies in the Team Virtual Store for Rewards.
+- A Team can collect Inventory which could be consumed for the benefits of all team members.
+- A Team can make progress on Team Achievements with optional reset schedules.
+- A Team can compete on Team Event Leaderboards with individual contributions part of the team's score.
+- A Team can generate Team Gifts for players with different Rewards based on their activity.
+- A Team can track Team Stats about any statistics that are interesting to players.
+- A Team has a Team Reward Mailbox where Rewards can be sent to be collected.
+- Players can be restricted to be joined to only one Team at any time.
+- Players can have their activity and Team activity measured to track the frequency of play.
+- A Reward in all gameplay systems can be directed to grant it into Reward Mailbox.
+- When rolled into an Event Leaderboard cohort, the player's leaderboard record metadata can be set.
+- When rolled into a Team Event Leaderboard cohort, the Team player's leaderboard record metadata can be set.
+- A Streak can be defined with repeating claimable Rewards.
+- (Unity) (TypeScript) (Dart) (CPP) (Unreal) (Godot) (Python) Add functions for all new features.
+
+### Changed
+- The Reward definition is greatly extended to support Team Rewards and grants to individual players.
+- Update to Nakama 3.30.0 version on the nakama-common 1.40.0 release.
+- The Challenge gameplay system can now emit analytics events about activity.
+- Team icon field is replaced by the avatar URL field.
+- Teams no longer use "min_entry" metadata parameter on Create.
+- Event Leaderboard cohorts cannot be rolled when the previous cohort Reward is unclaimed.
+- Streak Reward(s) should define no "max_count" to allow them to be claimed beyond their initial eligible step.
+
+### Fixed
+- "StoragePersonalizer" type now recognizes Challenge definitions in the Nakama Storage engine.
+- Update JSON schema for Stats to include the latest fields.
+- TotalReward when claimed on an Achievement has its timestamp updated.
+- Set the Start Step correctly when a non-default value is used in a Tutorial definition.
+- Fix how new/updated Items are updated in local state on Grant operations.
+- Treat Item(s) as newly granted when granted as an Item's Reward.
+- The "AllowFakeReceipts" option in Economy definition should be copied into Personalizers.
+
 ## [1.25.0] - 2025-07-17
 ### Added
 - A Challenge can be created with custom metadata.
@@ -70,7 +111,7 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 - Add "claim_count" field to Streaks gameplay system.
 - A Donation now tracks and allows claiming from individual contributors.
 - Inventory has a new lifecycle hook to allow Item IDs to be validated externally.
-- Add List function to Event Leaderboards. 
+- Add List function to Event Leaderboards.
 
 ### Changed
 - Update to Nakama 3.26.0 version on the nakama-common 1.36.0 release.
