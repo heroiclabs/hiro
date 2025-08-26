@@ -3342,6 +3342,8 @@ message SyncEventLeaderboardUpdate {
   int64 subscore = 2;
   // Time when the score was generated on the client.
   int64 update_time_sec = 3;
+  // Metadata.
+  string metadata = 4;
 }
 
 // Input for an offline state sync of event leaderboard updates.
