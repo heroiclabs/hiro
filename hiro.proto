@@ -100,8 +100,10 @@ enum RpcId {
   RPC_ID_TEAMS_UPDATE = 121 [(input) = "TeamUpdateRequest", (output) = "Team"];
   // List one or more teams which the player can join.
   RPC_ID_TEAMS_LIST = 27 [(input) = "TeamListRequest", (output) = "TeamList"];
-  // Search for a team by name or optional short code.
+  // Search for teams by name or an optional short code.
   RPC_ID_TEAMS_SEARCH = 28 [(input) = "TeamSearchRequest", (output) = "TeamList"];
+  // Retrieves a team by its TeamID.
+  RPC_ID_TEAMS_GET_BY_ID = 122 [(input) = "TeamGetById", (output) = "Team"];
   // Write a chat message to the Team's chat channel.
   RPC_ID_TEAMS_WRITE_CHAT_MESSAGE = 29 [(input) = "TeamWriteChatMessageRequest", (output) = "ChannelMessageAck"];
 
@@ -2376,6 +2378,12 @@ message TeamSearchRequest {
   string lang_tag = 3;
   // Minimum team activity score, if specified.
   int64 min_activity = 4;
+}
+
+// A request to get a team by its TeamID.
+message TeamGetById {
+  // The ID of the team.
+  string team_id = 1;
 }
 
 // A request to write a chat message to the channel for a team the user is part of.
