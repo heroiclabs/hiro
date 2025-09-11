@@ -6078,6 +6078,8 @@ components:
         update_time_sec:
           type: integer
           format: int64
+        metadata:
+          type: string
     SyncEventLeaderboards:
       type: object
       properties:
