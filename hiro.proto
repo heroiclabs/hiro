@@ -103,7 +103,7 @@ enum RpcId {
   // Search for teams by name or an optional short code.
   RPC_ID_TEAMS_SEARCH = 28 [(input) = "TeamSearchRequest", (output) = "TeamList"];
   // Retrieves a team by its TeamID.
-  RPC_ID_TEAMS_GET_BY_ID = 122 [(input) = "TeamGetById", (output) = "Team"];
+  RPC_ID_TEAMS_GET = 122 [(input) = "TeamGetRequest", (output) = "Team"];
   // Write a chat message to the Team's chat channel.
   RPC_ID_TEAMS_WRITE_CHAT_MESSAGE = 29 [(input) = "TeamWriteChatMessageRequest", (output) = "ChannelMessageAck"];
 
@@ -2381,7 +2381,7 @@ message TeamSearchRequest {
 }
 
 // A request to get a team by its TeamID.
-message TeamGetById {
+message TeamGetRequest {
   // The ID of the team.
   string team_id = 1;
 }
