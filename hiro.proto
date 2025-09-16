@@ -1695,7 +1695,7 @@ message InventoryConsumeRewards {
 
 // Delete items from inventory
 message InventoryDeleteItemsRequest {
-  // list of instnace ids
+  // list of instance ids
   repeated string InstaceIDs = 1;
 }
 
