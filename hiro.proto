@@ -44,7 +44,7 @@ enum RpcId {
   // Update the properties on one or more inventory items owned by the player.
   RPC_ID_INVENTORY_UPDATE = 5 [(input) = "InventoryUpdateItemsRequest", (output) = "InventoryUpdateAck"];
   // Delete Items by instance id.
-  RPC_ID_INVENTORY_DELETE = 122 [(input) = "InventoryDeleteItemsRequest", (output) = "InventoryUpdateAck"];
+  RPC_ID_INVENTORY_DELETE = 123 [(input) = "InventoryDeleteItemsRequest", (output) = "InventoryUpdateAck"];
 
   // Claim one or more rewards which are partially or full donated by other players.
   RPC_ID_ECONOMY_DONATION_CLAIM = 6 [(input) = "EconomyDonationClaimRequest", (output) = "EconomyDonationClaimRewards"];
