@@ -1696,7 +1696,7 @@ message InventoryConsumeRewards {
 // Delete items from inventory
 message InventoryDeleteItemsRequest {
   // list of instance ids
-  repeated string InstanceIDs = 1;
+  repeated string instance_ids = 1;
 }
 
 // Response from granting or purchasing items. This contains updated inventory data, if changed.
