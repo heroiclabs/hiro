@@ -43,6 +43,8 @@ enum RpcId {
   RPC_ID_INVENTORY_GRANT = 4 [(input) = "InventoryGrantRequest", (output) = "InventoryUpdateAck"];
   // Update the properties on one or more inventory items owned by the player.
   RPC_ID_INVENTORY_UPDATE = 5 [(input) = "InventoryUpdateItemsRequest", (output) = "InventoryUpdateAck"];
+  // Delete Items by instance id.
+  RPC_ID_INVENTORY_DELETE = 123 [(input) = "InventoryDeleteItemsRequest", (output) = "InventoryUpdateAck"];
 
   // Claim one or more rewards which are partially or full donated by other players.
   RPC_ID_ECONOMY_DONATION_CLAIM = 6 [(input) = "EconomyDonationClaimRequest", (output) = "EconomyDonationClaimRewards"];
@@ -1689,6 +1691,12 @@ message InventoryConsumeRewards {
   map<string, RewardList> rewards = 2;
   // Consume rewards by instance ID, if any.
   map<string, RewardList> instance_rewards = 3;
+}
+
+// Delete items from inventory
+message InventoryDeleteItemsRequest {
+  // list of instance ids
+  repeated string instance_ids = 1;
 }
 
 // Response from granting or purchasing items. This contains updated inventory data, if changed.
