@@ -5,6 +5,10 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.27.1] - 2025-09-30
+### Changed
+- Update to Nakama 3.32.0 version on the nakama-common 1.42.0 release.
+
 ## [1.27.0] - 2025-09-30
 ### Added
 - New function to get a Team by ID.

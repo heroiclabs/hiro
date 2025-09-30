@@ -1,8 +1,8 @@
 module github.com/heroiclabs/hiro
 
-go 1.24.5
+go 1.25.0
 
 require (
-	github.com/heroiclabs/nakama-common v1.40.0
-	google.golang.org/protobuf v1.36.6
+	github.com/heroiclabs/nakama-common v1.42.0
+	google.golang.org/protobuf v1.36.8
 )
