@@ -5,6 +5,34 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.27.0] - 2025-09-30
+### Added
+- New function to get a Team by ID.
+- Delete an Item by instance ID in Inventory.
+- New benchmark suite with [Artillery](https://www.artillery.io/) for load tests.
+- (Unity) (TypeScript) (Dart) (CPP) (Unreal) (Godot) (Python) Add client functions for all new features.
+
+### Changed
+- An Event Leaderboard score update can submit metadata which is passed through to the underlying Leaderboard.
+- A Challenge score update can decide if metadata should be updated on score change.
+- (Unity) Update to '3.19.0' Nakama/Satori .NET client release.
+- Add user ID and other inputs into Economy logger for debugging.
+
+### Fixed
+- "RewardGrant" in server function should correctly grant Rewards which have no Inventory Items.
+- (Unity) Allow negative Economy grants to work in Offline Mode.
+- If set, use config source in Inventory consume function.
+- (Unity) Apply Energy refill increments in Offline Mode.
+- (Unity) Track score changes in Event Leaderboards while in Offline Mode.
+- Pass AvatarUrl into Team update function.
+- If set, apply collection resolver in Challenges invite function.
+- Use the input UNIX time when a Team Gift is claimed.
+- In custom matching function use correct tier override in Event Leaderboards.
+- Fix regression when rolled Reward contents are granted with "RewardGrant" and "GrantItems".
+- Progressions marked as permanently unlocked should remain unlocked even if an item precondition becomes unmet.
+- Expired Mailbox Messages should be pruned at client read time.
+- Fix Achievement replay when auto-reset is enabled and claim when max count is zero.
+
 ## [1.26.0] - 2025-08-13
 ### Added
 - A Progression can be defined to allow its counts to be updated irrespective of any other preconditions.
