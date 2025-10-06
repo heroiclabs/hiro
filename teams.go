@@ -135,6 +135,12 @@ type TeamsSystem interface {
   // Update changes one or more properties of the team.
   Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamUpdateRequest) (team *Team, err error)
 
+  // Get a team by its identifier.
+  Get(ctx context.Context, db *sql.DB, logger runtime.Logger, nk runtime.NakamaModule, req *TeamGetRequest) (*Team, error)
+
+  // UserTeamsList fetches user accounts and their associated teams.
+  UserTeamsList(ctx context.Context, db *sql.DB, logger runtime.Logger, nk runtime.NakamaModule, req *UserTeamsListRequest) (*UserTeamsList, error)
+
   // WriteChatMessage sends a message to the user's team even when they're not connected on a realtime socket.
   WriteChatMessage(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamWriteChatMessageRequest) (resp *ChannelMessageAck, err error)
 

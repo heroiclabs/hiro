@@ -106,6 +106,8 @@ enum RpcId {
   RPC_ID_TEAMS_SEARCH = 28 [(input) = "TeamSearchRequest", (output) = "TeamList"];
   // Retrieves a team by its TeamID.
   RPC_ID_TEAMS_GET = 122 [(input) = "TeamGetRequest", (output) = "Team"];
+  // Retrieve a list of teams associated with a given set of users.
+  RPC_ID_TEAMS_USER_TEAMS_LIST = 124 [(input) = "UserTeamsListRequest", (output) = "UserTeamsList"];
   // Write a chat message to the Team's chat channel.
   RPC_ID_TEAMS_WRITE_CHAT_MESSAGE = 29 [(input) = "TeamWriteChatMessageRequest", (output) = "ChannelMessageAck"];
 
@@ -2392,6 +2394,26 @@ message TeamSearchRequest {
 message TeamGetRequest {
   // The ID of the team.
   string team_id = 1;
+}
+
+// Request to fetch teams for a given set of users.
+message UserTeamsListRequest {
+  // Users to fetch teams for.
+  repeated string user_ids = 1;
+}
+
+// A user and their associated teams.
+message UserTeams {
+  // The user these teams are associated with.
+  string user_id = 1;
+  // All teams this user is part of.
+  repeated Team teams = 2;
+}
+
+// A list of users and their associated teams.
+message UserTeamsList {
+  // Results from a user teams lookup.
+  map<string, UserTeams> user_teams = 1;
 }
 
 // A request to write a chat message to the channel for a team the user is part of.
