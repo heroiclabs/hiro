@@ -5,6 +5,18 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.28.0] - 2025-10-07
+### Added
+- Add function to fetch user with Team profile.
+
+### Changed
+- If Team or user within an active Event Leaderboard has been deleted, skip using an empty score record.
+- (Unity) Update to '3.20.0' Nakama/Satori .NET client release.
+
+### Fixed
+- Do not allow re-claiming rewards if Team gift count is exactly equal to reward min count.
+- When an Inventory Item is consumed for Rewards, ensure rolled currencies are accumulated.
+
 ## [1.27.1] - 2025-09-30
 ### Changed
 - Update to Nakama 3.32.0 version on the nakama-common 1.42.0 release.
