@@ -810,6 +810,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_TEAMS_USER_TEAMS_LIST?unwrap:
+    post:
+      summary: TEAMS_USER_TEAMS_LIST
+      description: "Retrieve a list of teams associated with a given set of users."
+      operationId: TEAMS_USER_TEAMS_LIST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserTeamsListRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserTeamsList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_TEAMS_WRITE_CHAT_MESSAGE?unwrap:
     post:
       summary: TEAMS_WRITE_CHAT_MESSAGE
@@ -5043,6 +5067,67 @@ components:
       properties:
         team_id:
           type: string
+    UserTeamsListRequest:
+      type: object
+      properties:
+        user_ids:
+          type: array
+          items:
+            type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        display_name:
+          type: string
+        avatar_url:
+          type: string
+        lang_tag:
+          type: string
+        location:
+          type: string
+        timezone:
+          type: string
+        metadata:
+          type: string
+        facebook_id:
+          type: string
+        google_id:
+          type: string
+        gamecenter_id:
+          type: string
+        steam_id:
+          type: string
+        online:
+          type: boolean
+        edge_count:
+          type: integer
+          format: int32
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time:
+          type: integer
+          format: int64
+        facebook_instant_game_id:
+          type: string
+        apple_id:
+          type: string
+    UserTeams:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+    UserTeamsList:
+      type: object
+      properties:
     TeamWriteChatMessageRequest:
       type: object
       properties:
@@ -6331,6 +6416,7 @@ components:
         - RPC_ID_TEAMS_LIST
         - RPC_ID_TEAMS_SEARCH
         - RPC_ID_TEAMS_GET
+        - RPC_ID_TEAMS_USER_TEAMS_LIST
         - RPC_ID_TEAMS_WRITE_CHAT_MESSAGE
         - RPC_ID_TEAMS_STORE_GET
         - RPC_ID_TEAMS_STORE_PURCHASE
