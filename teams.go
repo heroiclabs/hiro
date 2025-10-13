@@ -22,14 +22,16 @@ import (
 )
 
 var (
-  ErrTeamNotFound        = runtime.NewError("team not found", 3)         // INVALID_ARGUMENT
-  ErrTeamMaxSizeExceeded = runtime.NewError("team max size exceeded", 3) // INVALID_ARGUMENT
-  ErrTeamAlreadyMember   = runtime.NewError("already part of a team", 3) // INVALID_ARGUMENT
-
+  ErrTeamAlreadyMember            = runtime.NewError("already part of a team", 3)                  // INVALID_ARGUMENT
   ErrTeamGiftsNotFound            = runtime.NewError("team gift not found", 3)                     // INVALID_ARGUMENT
   ErrTeamGiftsNotActive           = runtime.NewError("team gift not active", 3)                    // INVALID_ARGUMENT
   ErrTeamGiftsMaxCount            = runtime.NewError("team gift max count reached", 3)             // INVALID_ARGUMENT
   ErrTeamGiftsMaxContributorCount = runtime.NewError("team gift max contributor count reached", 3) // INVALID_ARGUMENT
+  ErrTeamMaxSizeExceeded          = runtime.NewError("team max size exceeded", 3)                  // INVALID_ARGUMENT
+  ErrTeamNotFound                 = runtime.NewError("team not found", 3)                          // INVALID_ARGUMENT
+
+  ErrTeamsMaxSizeInvalid          = runtime.NewError("teams max size invalid", 3)                  // INVALID_ARGUMENT
+  ErrTeamsInitialMaxSizeInvalid   = runtime.NewError("teams initial max size invalid", 3)          // INVALID_ARGUMENT
 )
 
 // TeamsConfig is the data definition for a TeamsSystem type.
