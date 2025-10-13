@@ -20,6 +20,12 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+var (
+	ErrAchievementsNotFound       = runtime.NewError("achievement not found", 3)       // INVALID_ARGUMENT
+	ErrAchievementsAlreadyClaimed = runtime.NewError("achievement already claimed", 3) // INVALID_ARGUMENT
+	ErrAchievementsNotComplete    = runtime.NewError("achievement not complete", 3)    // INVALID_ARGUMENT
+)
+
 // AchievementsConfig is the data definition for the TutorialsSystem type.
 type AchievementsConfig struct {
 	Achievements map[string]*AchievementsConfigAchievement `json:"achievements,omitempty"`

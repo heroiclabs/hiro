@@ -20,6 +20,11 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+var (
+	ErrStatsNotFound     = runtime.NewError("stats not found", 3)      // INVALID_ARGUMENT
+	ErrStatsUserNotFound = runtime.NewError("stats user not found", 3) // INVALID_ARGUMENT
+)
+
 // StatsConfig is the data definition for a StatsSystem type.
 type StatsConfig struct {
 	Whitelist    []string                    `json:"whitelist,omitempty"`

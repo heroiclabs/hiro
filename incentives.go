@@ -20,6 +20,14 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+var (
+	ErrIncentivesNotFound     = runtime.NewError("incentive not found", 3)
+	ErrIncentivesTooMany      = runtime.NewError("incentive created too many times", 3)
+	ErrIncentivesCodeNotFound = runtime.NewError("incentive code not found", 3)
+	ErrIncentivesCodeExpired  = runtime.NewError("incentive code expired", 3)
+	ErrIncentivesCodeClaimed  = runtime.NewError("incentive code already claimed", 3)
+)
+
 type IncentivesConfig struct {
 	Incentives map[string]*IncentivesConfigIncentive `json:"incentives,omitempty"`
 }
