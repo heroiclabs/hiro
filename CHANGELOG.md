@@ -7,7 +7,7 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 ## [1.28.1] - 2025-10-13
 ### Added
-- Added Error definitions.
+- Add Error definitions.
 
 ## [1.28.0] - 2025-10-07
 ### Added
