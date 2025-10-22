@@ -6,18 +6,51 @@
           "rank_min": 1,
           "rank_max": 3,
           "reward": {
-            "coins": 300,
-            "gems": 15,
-            "items": ["speed_boots", "time_crystal"]
+            "guaranteed": {
+              "currencies": {
+                "coins": {
+                  "min": 300
+                },
+                "gems": {
+                  "min": 15
+                }
+              },            
+              "items": {
+                "speed_boots": {
+                  "min": 1,
+                  "max": 1,
+                  "multiple": 1
+                },
+                "time_crystal": {
+                  "min": 1,
+                  "max": 1,
+                  "multiple": 1
+                }
+              }
+            }
           }
         },
         {
           "rank_min": 4,
           "rank_max": 10,
           "reward": {
-            "coins": 150,
-            "gems": 8,
-            "items": ["speed_boots"]
+            "guaranteed": {
+              "currencies": {
+                "coins": {
+                  "min": 150
+                },
+                "gems": {
+                  "min": 8
+                }
+              },
+              "items": {
+                "speed_boots": {
+                  "min": 1,
+                  "max": 1,
+                  "multiple": 1
+                }
+              }
+            }
           }
         }
       ],
@@ -27,16 +60,16 @@
         "difficulty": "expert",
         "dungeon_id": "crystal_caverns"
       },
-      "max_num_score": 3600,
+      "max_num_score": 3,
       "start_delay_max_sec": 60,
       "ascending": false,
-      "operator": "set",
+      "operator": "best",
       "duration": {
         "min_sec": 1800,
         "max_sec": 3600
       },
       "players": {
-        "min": 1,
+        "min": 2,
         "max": 100
       }
     }
