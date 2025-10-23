@@ -20,6 +20,12 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+var (
+	ErrEnergyNotFound     = runtime.NewError("energy not found", 3)        // INVALID_ARGUMENT
+	ErrEnergyInsufficient = runtime.NewError("energy insufficient", 3)     // INVALID_ARGUMENT
+	ErrEnergyNoAmounts    = runtime.NewError("energy amounts required", 3) // INVALID_ARGUMENT
+)
+
 // EnergyConfig is the data definition for the EnergySystem type.
 type EnergyConfig struct {
 	Energies map[string]*EnergyConfigEnergy `json:"energies,omitempty"`

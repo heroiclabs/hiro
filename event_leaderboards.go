@@ -21,6 +21,15 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+var (
+	ErrEventLeaderboardsNotFound       = runtime.NewError("event leaderboard not found", 3)           // INVALID_ARGUMENT
+	ErrEventLeaderboardsAlreadyClaimed = runtime.NewError("event leaderboard already claimed", 3)     // INVALID_ARGUMENT
+	ErrEventLeaderboardsNotComplete    = runtime.NewError("event leaderboard not complete", 3)        // INVALID_ARGUMENT
+	ErrEventLeaderboardsNotActive      = runtime.NewError("event leaderboard not active", 3)          // INVALID_ARGUMENT
+	ErrEventLeaderboardsNotJoined      = runtime.NewError("event leaderboard cohort not assigned", 9) // FAILED_PRECONDITION
+	ErrEventLeaderboardsNotClaimed     = runtime.NewError("event leaderboard not claimed", 3)         // INVALID_ARGUMENT
+)
+
 // EventLeaderboardsConfig is the data definition for the EventLeaderboardsSystem type.
 type EventLeaderboardsConfig struct {
 	EventLeaderboards map[string]*EventLeaderboardsConfigLeaderboard `json:"event_leaderboards,omitempty"`
