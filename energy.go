@@ -16,6 +16,7 @@ package hiro
 
 import (
 	"context"
+	"time"
 
 	"github.com/heroiclabs/nakama-common/runtime"
 )
@@ -36,6 +37,11 @@ type EnergyConfigEnergy struct {
 	AdditionalProperties map[string]string    `json:"additional_properties,omitempty"`
 }
 
+type EnergySpendWithTime struct {
+	Amount          int32
+	RefillStartTime time.Time
+}
+
 // The EnergySystem provides a gameplay system for Energy timers.
 //
 // An energy is a gameplay mechanic used to reward or limit progress which a player can make through the gameplay
@@ -51,6 +57,9 @@ type EnergySystem interface {
 
 	// Spend will deduct the amounts from each energy for a user by ID.
 	Spend(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32) (energies map[string]*Energy, reward *Reward, err error)
+
+	// SpendWithRefillStartTime will deduct the amounts from each energy for a user by ID and setting a custom start refill time.
+	SpendWithRefillStartTime(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, spends map[string]*EnergySpendWithTime) (map[string]*Energy, *Reward, error)
 
 	// Grant will add the amounts to each energy (while applying any energy modifiers) for a user by ID.
 	Grant(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, amounts map[string]int32, modifiers []*RewardEnergyModifier) (energies map[string]*Energy, err error)
