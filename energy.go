@@ -15,25 +15,25 @@
 package hiro
 
 import (
-	"context"
+  "context"
 
-	"github.com/heroiclabs/nakama-common/runtime"
+  "github.com/heroiclabs/nakama-common/runtime"
 )
 
 // EnergyConfig is the data definition for the EnergySystem type.
 type EnergyConfig struct {
-	Energies map[string]*EnergyConfigEnergy `json:"energies,omitempty"`
+  Energies map[string]*EnergyConfigEnergy `json:"energies,omitempty"`
 }
 
 type EnergyConfigEnergy struct {
-	StartCount           int32                `json:"start_count,omitempty"`
-	MaxCount             int32                `json:"max_count,omitempty"`
-	MaxOverfill          int32                `json:"max_overfill,omitempty"`
-	RefillCount          int32                `json:"refill_count,omitempty"`
-	RefillTimeSec        int64                `json:"refill_time_sec,omitempty"`
-	Implicit             bool                 `json:"implicit,omitempty"`
-	Reward               *EconomyConfigReward `json:"reward,omitempty"`
-	AdditionalProperties map[string]string    `json:"additional_properties,omitempty"`
+  StartCount           int32                `json:"start_count,omitempty"`
+  MaxCount             int32                `json:"max_count,omitempty"`
+  MaxOverfill          int32                `json:"max_overfill,omitempty"`
+  RefillCount          int32                `json:"refill_count,omitempty"`
+  RefillTimeSec        int64                `json:"refill_time_sec,omitempty"`
+  Implicit             bool                 `json:"implicit,omitempty"`
+  Reward               *EconomyConfigReward `json:"reward,omitempty"`
+  AdditionalProperties map[string]string    `json:"additional_properties,omitempty"`
 }
 
 // The EnergySystem provides a gameplay system for Energy timers.
