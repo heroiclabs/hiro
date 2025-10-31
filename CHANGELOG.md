@@ -5,6 +5,10 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.28.1] - 2025-10-13
+### Added
+- Add Error definitions.
+
 ## [1.28.0] - 2025-10-07
 ### Added
 - Add function to fetch user with Team profile.
