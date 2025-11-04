@@ -50,7 +50,7 @@ type EconomyConfig struct {
 	StoreItems        map[string]*EconomyConfigStoreItem `json:"store_items,omitempty"`
 	Placements        map[string]*EconomyConfigPlacement `json:"placements,omitempty"`
 	AllowFakeReceipts bool                               `json:"allow_fake_receipts,omitempty"`
-	SkuUses           map[string]int                     `json:"-"` // Auto-computed when the config is read or personalized.
+	SkuUses           map[string]int                     `json:"-"` // Auto-computed map to track how many store items use each specific SKU, populated when the config is read or personalized.
 }
 
 type EconomyConfigDonation struct {
