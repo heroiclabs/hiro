@@ -78,7 +78,7 @@ type EventLeaderboardsSystem interface {
 	GetEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) (eventLeaderboard *EventLeaderboard, err error)
 
 	// RollEventLeaderboard places the user into a new cohort for the specified event leaderboard if possible.
-	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string, tier *int, matchmakerProperties map[string]interface{}, metadata map[string]interface{}) (eventLeaderboard *EventLeaderboard, err error)
+	RollEventLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string, tier *int, claimReward bool, matchmakerProperties map[string]interface{}, metadata map[string]interface{}) (eventLeaderboard *EventLeaderboard, err error)
 
 	// UpdateEventLeaderboard updates the user's score in the specified event leaderboard, and returns the user's updated cohort information.
 	UpdateEventLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, username, eventLeaderboardID string, score, subscore int64, metadata map[string]interface{}, conditionalMetadataUpdate bool) (eventLeaderboard *EventLeaderboard, err error)
