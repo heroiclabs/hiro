@@ -1304,6 +1304,8 @@ message EventLeaderboardRoll {
   string id = 1;
   // Metadata for the initial score write.
   string metadata = 2;
+  // Claim reward while rolling into a cohort.
+  bool claim_reward = 4;
 }
 
 // A single participant entry to an event leaderboard.
@@ -3057,8 +3059,6 @@ message TeamEventLeaderboardRoll {
   string id = 1;
   // Event leaderboard ID to roll.
   string event_leaderboard_id = 2;
-  // Claim reward while rolling into a cohort.
-  bool claim_reward = 4;
   // Metadata for the initial score write.
   string metadata = 3;
 }
