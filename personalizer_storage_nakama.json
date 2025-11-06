@@ -1,6 +1,24 @@
 [
     {
         "collection": "hiro_datadefinitions",
+        "key": "achievements",
+        "permission_read": 0,
+        "permission_write": 0,
+        "user_id": "00000000-0000-0000-0000-000000000000",
+        "value": {
+        }
+    },
+    {
+        "collection": "hiro_datadefinitions",
+        "key": "auctions",
+        "permission_read": 0,
+        "permission_write": 0,
+        "user_id": "00000000-0000-0000-0000-000000000000",
+        "value": {
+        }
+    },
+    {
+        "collection": "hiro_datadefinitions",
         "key": "base",
         "permission_read": 0,
         "permission_write": 0,
@@ -10,21 +28,12 @@
     },
     {
         "collection": "hiro_datadefinitions",
-        "key": "achievements",
+        "key": "challenges",
         "permission_read": 0,
         "permission_write": 0,
         "user_id": "00000000-0000-0000-0000-000000000000",
         "value": {
         }
-    },
-    {
-      "collection": "hiro_datadefinitions",
-      "key": "challenges",
-      "permission_read": 0,
-      "permission_write": 0,
-      "user_id": "00000000-0000-0000-0000-000000000000",
-      "value": {
-      }
     },
     {
         "collection": "hiro_datadefinitions",
@@ -91,7 +100,25 @@
     },
     {
         "collection": "hiro_datadefinitions",
+        "key": "reward_mailbox",
+        "permission_read": 0,
+        "permission_write": 0,
+        "user_id": "00000000-0000-0000-0000-000000000000",
+        "value": {
+        }
+    },
+    {
+        "collection": "hiro_datadefinitions",
         "key": "stats",
+        "permission_read": 0,
+        "permission_write": 0,
+        "user_id": "00000000-0000-0000-0000-000000000000",
+        "value": {
+        }
+    },
+    {
+        "collection": "hiro_datadefinitions",
+        "key": "streaks",
         "permission_read": 0,
         "permission_write": 0,
         "user_id": "00000000-0000-0000-0000-000000000000",
