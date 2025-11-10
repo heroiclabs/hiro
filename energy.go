@@ -16,7 +16,6 @@ package hiro
 
 import (
 	"context"
-	"time"
 
 	"github.com/heroiclabs/nakama-common/runtime"
 )
@@ -35,11 +34,6 @@ type EnergyConfigEnergy struct {
 	Implicit             bool                 `json:"implicit,omitempty"`
 	Reward               *EconomyConfigReward `json:"reward,omitempty"`
 	AdditionalProperties map[string]string    `json:"additional_properties,omitempty"`
-}
-
-type EnergySpendWithTime struct {
-	Amount          int32
-	RefillStartTime time.Time
 }
 
 // The EnergySystem provides a gameplay system for Energy timers.
