@@ -62,9 +62,10 @@ type EventLeaderboardsConfigLeaderboardRewardTier struct {
 }
 
 type EventLeaderboardsConfigChangeZone struct {
-	Promotion  float64 `json:"promotion,omitempty"`
-	Demotion   float64 `json:"demotion,omitempty"`
-	DemoteIdle bool    `json:"demote_idle,omitempty"`
+	Promotion        float64 `json:"promotion,omitempty"`
+	Demotion         float64 `json:"demotion,omitempty"`
+	DemoteIdle       bool    `json:"demote_idle,omitempty"`
+	UseMaxCohortSize bool    `json:"use_max_cohort_size,omitempty"`
 }
 
 // An EventLeaderboardsSystem is a gameplay system which represents cohort-segmented, tier-based event leaderboards.
