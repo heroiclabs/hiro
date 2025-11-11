@@ -1645,6 +1645,8 @@ message InventoryItem {
   int64 update_time_sec = 14;
   // The instance ID of the item, if any.
   string instance_id = 15;
+  // Indicates if the item stays in the inventory even if there are non left.
+  bool keep_zero = 16;
 }
 
 // Request all inventory items in the economy.
