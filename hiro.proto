@@ -1360,6 +1360,8 @@ message EventLeaderboardChangeZone {
   double demotion = 2;
   // Whether or not to always demote players that failed to submit a score at all.
   bool demote_idle = 3;
+  // Whether or not to use the max cohort size or the actual cohort size to compute the change zones.
+  bool use_max_cohort_size = 4;
 }
 
 // Details about a specific event leaderboard.
