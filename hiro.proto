@@ -82,6 +82,8 @@ enum RpcId {
   RPC_ID_ENERGY_SPEND = 20 [(input) = "EnergySpendRequest", (output) = "EnergySpendReward"];
   // Grant one or more energies to the player.
   RPC_ID_ENERGY_GRANT = 65 [(input) = "EnergyGrantRequest", (output) = "EnergyList"];
+  // Spend one or more energies with custom refill start times for the player.
+  RPC_ID_ENERGY_SPEND_WITH_REFILL_START_TIME = 125 [(input) = "EnergySpendWithRefillStartTimeRequest", (output) = "EnergySpendReward"];
 
   // Get the tutorials and current progress step for the player.
   RPC_ID_TUTORIALS_GET = 21 [(input) = "", (output) = "TutorialList"];
@@ -2188,6 +2190,20 @@ message EnergySpendReward {
 message EnergyGrantRequest {
   // Energy amounts to grant.
   map<string, int32> amounts = 1;
+}
+
+// An energy spend with a custom refill start time.
+message EnergySpendWithTime {
+  // The amount to spend.
+  int32 amount = 1;
+  // The custom refill start time in seconds since Unix epoch.
+  int64 refill_start_time = 2;
+}
+
+// Request to spend one or more energies with custom refill start times.
+message EnergySpendWithRefillStartTimeRequest {
+  // Energy spends with custom refill start times, keyed on the energy identifier.
+  map<string, EnergySpendWithTime> spends = 1;
 }
 
 // A leaderboard configuration.
