@@ -698,6 +698,8 @@ message Reward {
   int64 to_mailbox_expiry_sec = 8;
   // Team reward, if any.
   TeamReward team_reward = 9;
+  // Message associated with the reward, if any.
+  string message = 10;
 }
 
 // A list of rewards granted to the player.
@@ -901,6 +903,8 @@ message AvailableRewards {
   int64 to_mailbox_expiry_sec = 6;
   // Rewards for the claimant's team, if any.
   AvailableTeamRewards team_reward = 7;
+  // Message associated with the reward, if any.
+  string message = 8;
 }
 
 // Types of incentives.
@@ -2628,6 +2632,10 @@ message SubAchievement {
   bool auto_claim = 15;
   // Whether the sub-achievement will reset after completion.
   bool auto_reset = 16;
+  // The UNIX timestamp when this sub-achievement was last updated.
+  int64 update_time_sec = 17;
+  // True if the sub-achievement is in an active period, false otherwise.
+  bool is_active = 18;
 }
 
 // An achievement which is a numeric task which can be unlocked and has an optional reward.
@@ -2678,6 +2686,10 @@ message Achievement {
   int64 start_time_sec = 22;
   // The UNIX timestamp when this achievement will allow updates. This may be before its next reset. A zero means it does not end.
   int64 end_time_sec = 23;
+  // The UNIX timestamp when this achievement was last updated.
+  int64 update_time_sec = 24;
+  // True if the achievement is in an active period, false otherwise.
+  bool is_active = 25;
 }
 
 // The achievements returned by the server.

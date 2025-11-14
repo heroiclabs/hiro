@@ -40,6 +40,9 @@ type LeaderboardsConfigLeaderboard struct {
 // server.
 type LeaderboardsSystem interface {
 	System
+
+	// Get returns a list of available leaderboards for the user.
+	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*LeaderboardConfigList, error)
 }
 
 // ValidateWriteScoreFn is a function used to validate the leaderboard score input.

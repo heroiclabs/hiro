@@ -89,6 +89,7 @@ type EconomyConfigReward struct {
 	TotalWeight        int64                          `json:"total_weight,omitempty"`
 	ToMailboxExpirySec int64                          `json:"to_mailbox_expiry_sec,omitempty"`
 	TeamReward         *EconomyConfigTeamReward       `json:"team_reward,omitempty"`
+	Message            string                         `json:"message,omitempty"`
 }
 
 type EconomyConfigRewardContents struct {
