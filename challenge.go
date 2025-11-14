@@ -2,11 +2,38 @@ package hiro
 
 import (
 	"context"
+  "fmt"
 
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
-const NotificationCodeChallengeInvite = -1000
+const (
+  MaxChallengesPerUserLimit = 100
+  MaxChallengeIndexEntries  = 1_000
+)
+
+var (
+	ErrChallengeNotFound               = runtime.NewError("challenge not found", 3)                     // INVALID_ARGUMENT
+	ErrChallengeUserNotFound           = runtime.NewError("challenge user not found", 3)                // INVALID_ARGUMENT
+	ErrChallengeMaxAttemptsReached     = runtime.NewError("challenge max attempts reached", 3)          // INVALID_ARGUMENT
+	ErrChallengeEnded                  = runtime.NewError("challenge ended", 3)                         // INVALID_ARGUMENT
+	ErrChallengeNotStarted             = runtime.NewError("challenge not started", 9)                   // FAILED_PRECONDITION
+	ErrChallengeEmptyName              = runtime.NewError("challenge name cannot be empty", 3)          // INVALID_ARGUMENT
+	ErrChallengeEmptyDescription       = runtime.NewError("challenge description cannot be empty", 3)   // INVALID_ARGUMENT
+	ErrChallengeTemplateNotFound       = runtime.NewError("challenge template not found", 3)            // INVALID_ARGUMENT
+	ErrChallengeStartDelayInvalid      = runtime.NewError("challenge start delay invalid", 3)           // INVALID_ARGUMENT
+	ErrChallengeDurationInvalid        = runtime.NewError("challenge duration invalid", 3)              // INVALID_ARGUMENT
+	ErrChallengeInvalidInvitees        = runtime.NewError("challenge invitee list invalid", 3)          // INVALID_ARGUMENT
+	ErrTooManyInvitees                 = runtime.NewError("invitee list over participant limit", 3)     // INVALID_ARGUMENT
+	ErrChallengeInvalidMaxParticipants = runtime.NewError("max participants out of template range", 3)  // INVALID_ARGUMENT
+	ErrChallengeMaxParticipants        = runtime.NewError("max participants reached", 3)                // INVALID_ARGUMENT
+	ErrChallengeRejected               = runtime.NewError("challenge rejected", 3)                      // INVALID_ARGUMENT
+	ErrChallengeNotJoined              = runtime.NewError("challenge not joined", 9)                    // FAILED_PRECONDITION
+	ErrChallengeNotComplete            = runtime.NewError("challenge not complete", 3)                  // INVALID_ARGUMENT
+	ErrChallengeInvalidOperator        = runtime.NewError("challenge operator is invalid", 3)           // INVALID_ARGUMENT
+	ErrChallengeOwnerCannotLeave       = runtime.NewError("owner cannot leave the challenge", 9)        // FAILED_PRECONDITION
+	ErrLimitInvalid                    = runtime.NewError(fmt.Sprintf("limit is invalid: > %d", MaxChallengeIndexEntries), 3)
+)
 
 type ChallengesConfig struct {
 	Challenges map[string]*ChallengesConfigChallenge `json:"challenges,omitempty"`
