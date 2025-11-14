@@ -448,6 +448,9 @@
         },
         "demote_idle": {
           "type": "boolean"
+        },
+        "use_max_cohort_size": {
+          "type": "boolean"
         }
       }
     },

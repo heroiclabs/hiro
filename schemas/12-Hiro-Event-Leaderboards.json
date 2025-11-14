@@ -35,6 +35,9 @@
                     "promotion": {
                       "minimum": 0,
                       "type": "number"
+                    },
+                    "use_max_cohort_size": {
+                      "type": "boolean"
                     }
                   },
                   "type": "object"

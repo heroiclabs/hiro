@@ -1304,6 +1304,8 @@ message EventLeaderboardRoll {
   string id = 1;
   // Metadata for the initial score write.
   string metadata = 2;
+  // Claim reward while rolling into a cohort.
+  bool claim_reward = 3;
 }
 
 // A single participant entry to an event leaderboard.
@@ -1360,6 +1362,8 @@ message EventLeaderboardChangeZone {
   double demotion = 2;
   // Whether or not to always demote players that failed to submit a score at all.
   bool demote_idle = 3;
+  // Whether or not to use the max cohort size or the actual cohort size to compute the change zones.
+  bool use_max_cohort_size = 4;
 }
 
 // Details about a specific event leaderboard.
@@ -1641,6 +1645,8 @@ message InventoryItem {
   int64 update_time_sec = 14;
   // The instance ID of the item, if any.
   string instance_id = 15;
+  // Indicates if the item stays in the inventory even if there are non left.
+  bool keep_zero = 16;
 }
 
 // Request all inventory items in the economy.
