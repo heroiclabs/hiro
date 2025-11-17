@@ -22,6 +22,7 @@ import (
 )
 
 var (
+	ErrTeamNameAlreadyExists        = runtime.NewError("team name already exists", 3)                // INVALID_ARGUMENT
 	ErrTeamAlreadyMember            = runtime.NewError("already part of a team", 3)                  // INVALID_ARGUMENT
 	ErrTeamGiftsMaxContributorCount = runtime.NewError("team gift max contributor count reached", 3) // INVALID_ARGUMENT
 	ErrTeamGiftsMaxCount            = runtime.NewError("team gift max count reached", 3)             // INVALID_ARGUMENT
