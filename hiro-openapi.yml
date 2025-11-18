@@ -3287,6 +3287,8 @@ components:
           format: int64
         team_reward:
           $ref: '#/components/schemas/TeamReward'
+        message:
+          type: string
         items:
           type: object
           additionalProperties:
@@ -3511,6 +3513,8 @@ components:
           format: int64
         team_reward:
           $ref: '#/components/schemas/AvailableTeamRewards'
+        message:
+          type: string
     IncentiveClaim:
       type: object
       properties:
@@ -4310,6 +4314,8 @@ components:
           format: int64
         instance_id:
           type: string
+        keep_zero:
+          type: boolean
         stringProperties:
           type: object
           additionalProperties:
@@ -5348,6 +5354,11 @@ components:
           type: boolean
         auto_reset:
           type: boolean
+        update_time_sec:
+          type: integer
+          format: int64
+        is_active:
+          type: boolean
         additionalProperties:
           type: object
           additionalProperties:
@@ -5408,6 +5419,11 @@ components:
         end_time_sec:
           type: integer
           format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        is_active:
+          type: boolean
         additionalProperties:
           type: object
           additionalProperties:
