@@ -5,9 +5,41 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [1.28.1] - 2025-10-13
+## [1.29.0] - 2025-11-18
 ### Added
-- Add Error definitions.
+- New BatchSpend function in Energy system.
+- "RollEventLeaderboard" function can claim which will return the rolled Reward.
+- New option to use max participant count in EventLeaderboard change zone brackets.
+- A custom refill start time can be set by a client to anchor when refill started while offline.
+- Register various endpoints which can be used via the Nakama Console.
+- All leaderboards defined can be returned by the Leaderboard system.
+- Achievements with a duration now have an "is_active" field to know when in an active phase.
+- Reward Mailbox messages can now contain text content.
+- (Unreal) Add OnlineSubsystem for Leaderboards.
+
+### Changed
+- Make Go error types public.
+- Update various JSON schemas for the gameplay systems.
+- When claiming a repeating Achievement its Reward is returned.
+- Internally track product SKUs used across multiple store items.
+- "keep_zero" is now returned with Inventory Items for Offline Mode.
+- A Challenge can be created without any initial invitees.
+- Deleted Teams now appear with no name in the Team Event Leaderboard list.
+- A deleted Team now also has its leaderboard scores removed.
+- A Team can be searched with no input or 3+ character input to support filter only searches.
+- Nakama error types are surfaced in Teams system for "name already in use" and scenarios.
+- (Unity) "PollPlacementStatusAsync" now uses "Task.Delay" due to Unity improvements.
+- (Unity) Update "ExampleCoordinator" code to show how to control play session lifetimes.
+- (Unity) (TypeScript) (Dart) (CPP) (Unreal) (Godot) (Python) Update clients for all new APIs.
+
+### Fixed
+- Add missing empty storage object definitions to import file.
+- Fix panic when Store Item is purchased but has no Reward definition.
+- Do not progress an Achievement's count after the end of its active phase.
+- Initialize Options in Inventory Item's string properties when deep cloned.
+- Fix incorrect rank calculation for the caller's Team in a Team Event Leaderboard.
+- (Unity) "TeamsSystem" observer emits signal on refresh even where logic returns early.
+- (Unity) Add "langTag" parameter to Create function.
 
 ## [1.28.0] - 2025-10-07
 ### Added
