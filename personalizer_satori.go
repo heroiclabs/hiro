@@ -18,6 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"maps"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -326,6 +327,7 @@ func (p *SatoriPersonalizer) Send(ctx context.Context, logger runtime.Logger, nk
 
 		metadata := event.Metadata
 		if traceID != "" {
+			metadata = maps.Clone(event.Metadata)
 			metadata["trace_id"] = traceID
 		}
 
