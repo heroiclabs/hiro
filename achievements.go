@@ -41,6 +41,7 @@ type AchievementsConfigAchievement struct {
 	StartTimeSec         int64                                        `json:"start_time_sec,omitempty"`
 	EndTimeSec           int64                                        `json:"end_time_sec,omitempty"`
 	ResetCronexpr        string                                       `json:"reset_cronexpr,omitempty"`
+	TimeOffsetSec        int64                                        `json:"time_offset_sec,omitempty"`
 	DurationSec          int64                                        `json:"duration_sec,omitempty"`
 	MaxCount             int64                                        `json:"max_count,omitempty"`
 	Name                 string                                       `json:"name,omitempty"`
