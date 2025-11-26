@@ -18,6 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"maps"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -252,6 +253,8 @@ func (p *SatoriPersonalizer) Send(ctx context.Context, logger runtime.Logger, nk
 		return
 	}
 
+	traceID, _ := ctx.Value(runtime.RUNTIME_CTX_TRACE_ID).(string)
+
 	satoriEvents := make([]*runtime.Event, 0, len(events))
 	for _, event := range events {
 		switch event.System.GetType() {
@@ -322,10 +325,16 @@ func (p *SatoriPersonalizer) Send(ctx context.Context, logger runtime.Logger, nk
 		default:
 		}
 
+		metadata := event.Metadata
+		if traceID != "" {
+			metadata = maps.Clone(event.Metadata)
+			metadata["trace_id"] = traceID
+		}
+
 		satoriEvent := &runtime.Event{
 			Name:      event.Name,
 			Id:        event.Id,
-			Metadata:  event.Metadata,
+			Metadata:  metadata,
 			Value:     event.Value,
 			Timestamp: event.Timestamp,
 		}
