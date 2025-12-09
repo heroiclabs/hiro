@@ -26,19 +26,21 @@ import (
 )
 
 var (
-	ErrInternal           = runtime.NewError("internal error occurred", 13) // INTERNAL
-	ErrBadInput           = runtime.NewError("bad input", 3)                // INVALID_ARGUMENT
-	ErrFileNotFound       = runtime.NewError("file not found", 3)
-	ErrNoSessionUser      = runtime.NewError("no user ID in session", 3)       // INVALID_ARGUMENT
-	ErrNoSessionID        = runtime.NewError("no session ID in session", 3)    // INVALID_ARGUMENT
-	ErrNoSessionUsername  = runtime.NewError("no username in session", 3)      // INVALID_ARGUMENT
-	ErrPayloadDecode      = runtime.NewError("cannot decode json", 13)         // INTERNAL
-	ErrPayloadEmpty       = runtime.NewError("payload should not be empty", 3) // INVALID_ARGUMENT
-	ErrPayloadEncode      = runtime.NewError("cannot encode json", 13)         // INTERNAL
-	ErrPayloadInvalid     = runtime.NewError("payload is invalid", 3)          // INVALID_ARGUMENT
-	ErrSessionUser        = runtime.NewError("user ID in session", 3)          // INVALID_ARGUMENT
-	ErrSystemNotAvailable = runtime.NewError("system not available", 13)       // INTERNAL
-	ErrSystemNotFound     = runtime.NewError("system not found", 13)           // INTERNAL
+	ErrInternal                = runtime.NewError("internal error occurred", 13) // INTERNAL
+	ErrBadInput                = runtime.NewError("bad input", 3)                // INVALID_ARGUMENT
+	ErrFileNotFound            = runtime.NewError("file not found", 3)
+	ErrNoSessionUser           = runtime.NewError("no user ID in session", 3)                 // INVALID_ARGUMENT
+	ErrNoSessionID             = runtime.NewError("no session ID in session", 3)              // INVALID_ARGUMENT
+	ErrNoSessionUsername       = runtime.NewError("no username in session", 3)                // INVALID_ARGUMENT
+	ErrPayloadDecode           = runtime.NewError("cannot decode json", 13)                   // INTERNAL
+	ErrPayloadEmpty            = runtime.NewError("payload should not be empty", 3)           // INVALID_ARGUMENT
+	ErrPayloadEncode           = runtime.NewError("cannot encode json", 13)                   // INTERNAL
+	ErrPayloadInvalid          = runtime.NewError("payload is invalid", 3)                    // INVALID_ARGUMENT
+	ErrSessionUser             = runtime.NewError("user ID in session", 3)                    // INVALID_ARGUMENT
+	ErrSystemNotAvailable      = runtime.NewError("system not available", 13)                 // INTERNAL
+	ErrSystemNotFound          = runtime.NewError("system not found", 13)                     // INTERNAL
+	ErrBaseProfanityCheckError = runtime.NewError("error checking message for profanity", 13) // INTERNAL
+	ErrBaseProfanityFound      = runtime.NewError("input contains profanity", 3)              // INVALID_ARGUMENT
 )
 
 // The BaseSystem provides various small features which aren't large enough to be in their own gameplay systems.
@@ -235,6 +237,12 @@ type System interface {
 // The function is always expected to return a value, and returning "" defers to Nakama's built-in behaviour.
 type UsernameOverrideFn func(requestedUsername string) string
 
+// ProfanityFilterFn can be used to implement a profanity filter that returns:
+// * A profanity confidence value for the given input content between 0.0 (lowest) and 1.0 (highest).
+// * A replacement content message with profanity censored appropriately.
+// * An error message if checking the content failed.
+type ProfanityFilterFn func(content string) (float64, string, error)
+
 // WithAchievementsSystem configures an AchievementsSystem type and optionally registers its RPCs with the game server.
 func WithAchievementsSystem(configFile string, register bool) SystemConfig {
 	return &systemConfig{
@@ -244,14 +252,115 @@ func WithAchievementsSystem(configFile string, register bool) SystemConfig {
 	}
 }
 
+type BaseSystemOption interface {
+	apply(extra map[string]any)
+}
+
+var _ BaseSystemOption = (*baseSystemOption)(nil)
+
+type baseSystemOption struct {
+	applyFn func(extra map[string]any)
+}
+
+func (b *baseSystemOption) apply(extra map[string]any) {
+	if b.applyFn == nil {
+		return
+	}
+	b.applyFn(extra)
+}
+
+// WithBaseSystemUsernameOverride can be used to provide a different username generation strategy from the default in
+// Nakama server.
+func WithBaseSystemUsernameOverride(fn UsernameOverrideFn) BaseSystemOption {
+	return &baseSystemOption{
+		applyFn: func(extra map[string]any) {
+			if fn == nil {
+				return
+			}
+			extra["UsernameOverride"] = fn
+		},
+	}
+}
+
+// WithBaseSystemProfanityFilter can be used to provide a specific implementation of the system's profanity filter.
+func WithBaseSystemProfanityFilter(fn ProfanityFilterFn) BaseSystemOption {
+	return &baseSystemOption{
+		applyFn: func(extra map[string]any) {
+			if fn == nil {
+				return
+			}
+			extra["ProfanityFilter"] = fn
+		},
+	}
+}
+
+// WithBaseSystemProfanityFilterChat sets the profanity filtering threshold for all chat messages, between 0.0 and 1.0.
+// Any value above the threshold will result in a rejection. Values outside 0.0 to 1.0 range will be clamped.
+// Default is not to filter at all.
+func WithBaseSystemProfanityFilterChat(threshold float64) BaseSystemOption {
+	return &baseSystemOption{
+		applyFn: func(extra map[string]any) {
+			if threshold < 0.0 {
+				threshold = 0.0
+			}
+			if threshold > 1.0 {
+				threshold = 1.0
+			}
+			extra["ProfanityFilterChat"] = threshold
+		},
+	}
+}
+
+// WithBaseSystemProfanityFilterUsername sets the profanity filtering threshold for usernames, between 0.0 and 1.0.
+// Any value above the threshold will result in a rejection. Values outside 0.0 to 1.0 range will be clamped.
+// Default is not to filter at all.
+func WithBaseSystemProfanityFilterUsername(threshold float64) BaseSystemOption {
+	return &baseSystemOption{
+		applyFn: func(extra map[string]any) {
+			if threshold < 0.0 {
+				threshold = 0.0
+			}
+			if threshold > 1.0 {
+				threshold = 1.0
+			}
+			extra["ProfanityFilterUsername"] = threshold
+		},
+	}
+}
+
+// WithBaseSystemProfanityFilterTeamName sets the profanity filtering threshold for team names, between 0.0 and 1.0.
+// Any value above the threshold will result in a rejection. Values outside 0.0 to 1.0 range will be clamped.
+// Default is not to filter at all.
+func WithBaseSystemProfanityFilterTeamName(threshold float64) BaseSystemOption {
+	return &baseSystemOption{
+		applyFn: func(extra map[string]any) {
+			if threshold < 0.0 {
+				threshold = 0.0
+			}
+			if threshold > 1.0 {
+				threshold = 1.0
+			}
+			extra["ProfanityFilterTeamName"] = threshold
+		},
+	}
+}
+
 // WithBaseSystem configures a BaseSystem type and optionally registers its RPCs with the game server.
-func WithBaseSystem(configFile string, register bool, usernameOverride ...UsernameOverrideFn) SystemConfig {
+func WithBaseSystem(configFile string, register bool, options ...BaseSystemOption) SystemConfig {
+	extra := make(map[string]any, len(options))
+	for _, option := range options {
+		if option == nil {
+			continue
+		}
+		option.apply(extra)
+	}
+
 	return &systemConfig{
 		systemType: SystemTypeBase,
 		configFile: configFile,
 		register:   register,
 
-		extra: usernameOverride,
+		extra: extra,
 	}
 }
 
