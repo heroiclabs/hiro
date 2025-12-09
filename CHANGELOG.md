@@ -5,6 +5,15 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.30.0] - 2025-12-09
+### Added
+- Achievements, Team Achievements, and Streaks can now specify a UTC time offset to anchor active phases to a player's localtime.
+- New profanity filter can be enabled on usernames, team names, and chat messages.
+
+### Changed
+- Request trace IDs are attached to analytics events in the Satori Publisher.
+- Update to Nakama common v1.44.0 release.
+
 ## [1.29.0] - 2025-11-18
 ### Added
 - New BatchSpend function in Energy system.
