@@ -5,6 +5,10 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.31.0] - 2025-12-10
+## Fixed
+- Update lookahead/lookbehind inputs to Live Events selector in Satori Personalizer.
+
 ## [1.30.0] - 2025-12-09
 ### Added
 - Achievements, Team Achievements, and Streaks can now specify a UTC time offset to anchor active phases to a player's localtime.
