@@ -185,13 +185,13 @@ type TeamsSystem interface {
 	SetInventoryConfigSource(fn ConfigSource[*InventoryConfigItem])
 
 	// ClaimAchievements when one or more achievements whose progress has completed by their IDs.
-	ClaimAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, achievementIDs []string, claimTotal bool) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
+	ClaimAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, achievementIDs []string, claimTotal bool) (achievements map[string]*TeamAchievement, repeatAchievements map[string]*TeamAchievement, err error)
 
 	// GetAchievements returns all achievements available to the user and progress on them.
-	GetAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
+	GetAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string) (achievements map[string]*TeamAchievement, repeatAchievements map[string]*TeamAchievement, err error)
 
 	// UpdateAchievements updates progress on one or more achievements by the same amount.
-	UpdateAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, achievementUpdates map[string]int64) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
+	UpdateAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, achievementUpdates map[string]int64) (achievements map[string]*TeamAchievement, repeatAchievements map[string]*TeamAchievement, err error)
 
 	// SetOnAchievementReward sets a custom reward function which will run after an achievement's reward is rolled.
 	SetOnAchievementReward(fn OnTeamReward[*AchievementsConfigAchievement])

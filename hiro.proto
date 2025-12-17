@@ -140,11 +140,11 @@ enum RpcId {
   RPC_ID_TEAMS_INVENTORY_UPDATE = 104 [(input) = "TeamInventoryUpdateItemsRequest", (output) = "InventoryUpdateAck"];
 
   // Claim one or more team achievements which have completed their progress.
-  RPC_ID_TEAMS_ACHIEVEMENTS_CLAIM = 105 [(input) = "TeamAchievementsClaimRequest", (output) = "AchievementsUpdateAck"];
+  RPC_ID_TEAMS_ACHIEVEMENTS_CLAIM = 105 [(input) = "TeamAchievementsClaimRequest", (output) = "TeamAchievementsUpdateAck"];
   // Get all team achievements with progress accumulated by the team.
-  RPC_ID_TEAMS_ACHIEVEMENTS_GET = 106 [(input) = "TeamAchievementsGetRequest", (output) = "AchievementList"];
+  RPC_ID_TEAMS_ACHIEVEMENTS_GET = 106 [(input) = "TeamAchievementsGetRequest", (output) = "TeamAchievementList"];
   // Update one or more team achievements with the same progress amount.
-  RPC_ID_TEAMS_ACHIEVEMENTS_UPDATE = 107 [(input) = "TeamAchievementsUpdateRequest", (output) = "AchievementsUpdateAck"];
+  RPC_ID_TEAMS_ACHIEVEMENTS_UPDATE = 107 [(input) = "TeamAchievementsUpdateRequest", (output) = "TeamAchievementsUpdateAck"];
 
   // List available event leaderboards.
   RPC_ID_TEAMS_EVENT_LEADERBOARD_LIST = 108 [(input) = "TeamEventLeaderboardList", (output) = "TeamEventLeaderboards"];
@@ -3043,6 +3043,138 @@ message TeamAchievementsUpdateRequest {
   map<string, int64> achievements = 4;
 }
 
+// An individual contributor to a team achievement.
+message TeamAchievementContributor {
+  // User identifier.
+  string user_id = 1;
+  // Username.
+  string username = 2;
+  // Avatar URL.
+  string avatar_url = 3;
+  // Display name.
+  string display_name = 4;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user first contributed.
+  int64 create_time_sec = 5;
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user most recently updated their contribution.
+  int64 update_time_sec = 6;
+  // Count contributed by this user.
+  int64 count = 7;
+}
+
+// A sub-achievement is an achievement which belongs as part of a parent achievement.
+message TeamSubAchievement {
+  // The category to group the sub-achievement together with others.
+  string category = 1;
+  // The UNIX timestamp for when the sub-achievement reward was claimed, or zero if unclaimed.
+  int64 claim_time_sec = 2;
+  // The count of the sub-achievement.
+  int64 count = 3;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 4;
+  // A description of the sub-achievement. May be an i18n code.
+  string description = 5;
+  // The UNIX timestamp when this sub-achievement will expire. This may be before its next reset. A zero means it does not expire.
+  int64 expire_time_sec = 6;
+  // The ID of the sub-achievement.
+  string id = 7;
+  // The maximum count of the sub-achievement.
+  int64 max_count = 8;
+  // The name of the sub-achievement. May be an i18n code.
+  string name = 9;
+  // The IDs which are a precondition on the progress to be made on this sub-achievement.
+  repeated string precondition_ids = 10;
+  // The UNIX timestamp when this sub-achievement will reset.
+  int64 reset_time_sec = 11;
+  // The outcome (rolled) reward for the achievement, if any.
+  Reward reward = 12;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 13;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 14;
+  // Whether the sub-achievement reward will be given automatically upon completion.
+  bool auto_claim = 15;
+  // Whether the sub-achievement will reset after completion.
+  bool auto_reset = 16;
+  // The UNIX timestamp when this sub-achievement was last updated.
+  int64 update_time_sec = 17;
+  // True if the sub-achievement is in an active period, false otherwise.
+  bool is_active = 18;
+  // Contribution information for team members.
+  repeated TeamAchievementContributor contributors = 19;
+}
+
+// An achievement which is a numeric task which can be unlocked and has an optional reward.
+message TeamAchievement {
+  // The category to group the achievement together with others.
+  string category = 1;
+  // The UNIX timestamp for when the achievement reward was claimed, or zero if unclaimed.
+  int64 claim_time_sec = 2;
+  // The UNIX timestamp for when the achievement total reward was claimed, or zero if unclaimed.
+  int64 total_claim_time_sec = 3;
+  // The count of the achievement.
+  int64 count = 4;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 5;
+  // A description of the achievement. May be an i18n code.
+  string description = 6;
+  // The UNIX timestamp when this achievement will expire. This may be before its next reset. A zero means it does not expire.
+  int64 expire_time_sec = 7;
+  // The ID of the achievement.
+  string id = 8;
+  // The maximum count of the achievement.
+  int64 max_count = 9;
+  // The name of the achievement. May be an i18n code.
+  string name = 10;
+  // The IDs which are a precondition on the progress to be made on this achievement.
+  repeated string precondition_ids = 11;
+  // The UNIX timestamp when this achievement will reset.
+  int64 reset_time_sec = 12;
+  // The available reward and its probabilities.
+  AvailableRewards available_rewards = 13;
+  // The outcome (rolled) reward for the achievement.
+  Reward reward = 14;
+  // The available reward and its probabilities for the total completion of the achievement, if any.
+  AvailableRewards available_total_reward = 15;
+  // The outcome (rolled) reward for the total completion of the achievement, if any.
+  Reward total_reward = 16;
+  // The sub-achievements for this achievement, if any.
+  map<string, TeamSubAchievement> sub_achievements = 17;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 18;
+  // Whether the achievement reward will be given automatically upon completion.
+  bool auto_claim = 19;
+  // Whether the achievement total reward will be given automatically upon completing this and all sub-achievements.
+  bool auto_claim_total = 20;
+  // Whether the achievement will reset after completion.
+  bool auto_reset = 21;
+  // The UNIX timestamp when this achievement will allow updates. This may be before its next reset. A zero means it is immediately available.
+  int64 start_time_sec = 22;
+  // The UNIX timestamp when this achievement will allow updates. This may be before its next reset. A zero means it does not end.
+  int64 end_time_sec = 23;
+  // The UNIX timestamp when this achievement was last updated.
+  int64 update_time_sec = 24;
+  // True if the achievement is in an active period, false otherwise.
+  bool is_active = 25;
+  // Contribution information for team members.
+  repeated TeamAchievementContributor contributors = 26;
+}
+
+// A response when an achievements update is acknowledged by the server.
+message TeamAchievementsUpdateAck {
+  // The one off achievements which can be progressed or are unlocked by the team.
+  map<string, TeamAchievement> achievements = 1;
+  // The repeat achievements which can be progressed or are unlocked by the team.
+  map<string, TeamAchievement> repeat_achievements = 2;
+}
+
+// The achievements returned by the server.
+message TeamAchievementList {
+  // The one off achievements which can be progressed or are unlocked by the team alongside all on the server.
+  map<string, TeamAchievement> achievements = 1;
+  // The repeat achievements which can be progressed or are unlocked by the team alongside all on the server.
+  map<string, TeamAchievement> repeat_achievements = 2;
+}
+
 // Retrieve available team event leaderboards.
 message TeamEventLeaderboardList {
   // Team identifier for which to list team event leaderboards.
@@ -3286,7 +3418,7 @@ message TeamGiftContributor {
   string display_name = 4;
   // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user first contributed.
   int64 create_time_sec = 5;
-  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user most recently updated their contribution
+  // The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user most recently updated their contribution.
   int64 update_time_sec = 6;
   // Count contributed by this user.
   int64 count = 7;
