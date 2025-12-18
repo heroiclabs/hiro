@@ -3093,6 +3093,8 @@ message TeamEventLeaderboardRoll {
   string event_leaderboard_id = 2;
   // Metadata for the initial score write.
   string metadata = 3;
+  // Claim reward while rolling into a cohort.
+  bool claim_reward = 4;
 }
 
 // A single participant entry to a team event leaderboard.
