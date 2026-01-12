@@ -1038,7 +1038,7 @@ message ChallengeCreateRequest {
   // Whether the challenged users have to accept the challenge or not.
   bool open = 5;
   // Maximum number of scores a user can submit to the leaderboard.
-  int64 max_scores = 6;
+  //int64 max_scores = 6; // Deprecated: Use template settings instead.
   // Start time of the challenge. Set to 0 to start immediately.
   int64 start_delay_sec = 7;
   // Duration of the challenge. Set to 0 to have an unlimited challenge.
