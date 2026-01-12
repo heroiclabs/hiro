@@ -3647,9 +3647,6 @@ components:
             type: string
         open:
           type: boolean
-        max_scores:
-          type: integer
-          format: int64
         start_delay_sec:
           type: integer
           format: int64
@@ -5872,6 +5869,8 @@ components:
           type: string
         metadata:
           type: string
+        claim_reward:
+          type: boolean
     TeamEventLeaderboardScore:
       type: object
       properties:

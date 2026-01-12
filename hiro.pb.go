@@ -5049,8 +5049,6 @@ type ChallengeCreateRequest struct {
 	Invitees []string `protobuf:"bytes,4,rep,name=invitees,proto3" json:"invitees,omitempty"`
 	// Whether the challenged users have to accept the challenge or not.
 	Open bool `protobuf:"varint,5,opt,name=open,proto3" json:"open,omitempty"`
-	// Maximum number of scores a user can submit to the leaderboard.
-	// int64 max_scores = 6; // Deprecated: Use template settings instead.
 	// Start time of the challenge. Set to 0 to start immediately.
 	StartDelaySec int64 `protobuf:"varint,7,opt,name=start_delay_sec,json=startDelaySec,proto3" json:"start_delay_sec,omitempty"`
 	// Duration of the challenge. Set to 0 to have an unlimited challenge.
