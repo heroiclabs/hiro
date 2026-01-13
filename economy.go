@@ -49,8 +49,8 @@ type EconomyConfig struct {
 	Donations         map[string]*EconomyConfigDonation  `json:"donations,omitempty"`
 	StoreItems        map[string]*EconomyConfigStoreItem `json:"store_items,omitempty"`
 	Placements        map[string]*EconomyConfigPlacement `json:"placements,omitempty"`
-	AllowFakeReceipts bool                               `json:"allow_fake_receipts,omitempty"`
-	SkuUses           map[string]int                     `json:"-"` // Auto-computed map to track how many store items use each specific SKU, populated when the config is read or personalized.
+	AllowFakeReceipts bool                               `json:"allow_fake_receipts,omitempty"` //This field is deprecated. Use SetAllowFakeReceipts instead.
+	SkuUses           map[string]int                     `json:"-"`                             // Auto-computed map to track how many store items use each specific SKU, populated when the config is read or personalized.
 }
 
 type EconomyConfigDonation struct {
@@ -282,6 +282,9 @@ type EconomySystem interface {
 
 	// PlacementFail will indicate that the user ID has failed to successfully view the ad placement.
 	PlacementFail(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string) (placementMetadata map[string]string, err error)
+
+	// SetAllowFakeReceipts sets whether fake receipts are allowed for testing purposes. This function replaces the existing AllowFakeReceipts setting in EconomyConfig.
+	SetAllowFakeReceipts(allow bool)
 
 	// SetOnDonationClaimReward sets a custom reward function which will run after a donation's reward is rolled.
 	SetOnDonationClaimReward(fn OnReward[*EconomyConfigDonation])
