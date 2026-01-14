@@ -19,6 +19,7 @@ package hiro;
 
 import "google/protobuf/descriptor.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/heroiclabs/hiro";
@@ -203,6 +204,12 @@ enum RpcId {
 
   // Get the leaderboards defined for the game.
   RPC_ID_LEADERBOARDS_CONFIG_GET = 38 [(input) = "", (output) = "LeaderboardConfigList"];
+  // Write a leaderboard record.
+  RPC_ID_LEADERBOARDS_WRITE_RECORD = 126 [(input) = "WriteLeaderboardRecordRequest", (output) = "LeaderboardRecord"];
+  // Delete the caller's leaderboard record.
+  RPC_ID_LEADERBOARDS_DELETE_RECORD = 127 [(input) = "DeleteLeaderboardRecordRequest", (output) = ""];
+  // List leaderboard records around the owner.
+  RPC_ID_LEADERBOARDS_LIST_RECORDS_AROUND_OWNER = 128 [(input) = "ListLeaderboardRecordsAroundOwnerRequest", (output) = "LeaderboardRecordList"];
 
   // List available event leaderboards.
   RPC_ID_EVENT_LEADERBOARD_LIST = 80 [(input) = "EventLeaderboardList", (output) = "EventLeaderboards"];
@@ -320,6 +327,61 @@ enum RpcSocketId {
   RPC_SOCKET_ID_AUCTIONS_FOLLOW = 1 [(input) = "AuctionFollowRequest", (output) = "AuctionList"];
   // Bid on an auction and follow it for further updates.
   RPC_SOCKET_ID_AUCTIONS_BID = 2 [(input) = "AuctionBidRequest", (output) = "Auction"];
+}
+
+enum Operator {
+  NO_OVERRIDE = 0;
+  BEST = 1;
+  SET = 2;
+  INCREMENT = 3;
+  DECREMENT = 4;
+}
+
+message WriteLeaderboardRecordRequest {
+  message LeaderboardRecordWrite {
+    int64 score = 1;
+    int64 subscore = 2;
+    string metadata = 3;
+    Operator operator = 4;
+  }
+
+  string leaderboard_id = 1;
+  LeaderboardRecordWrite record = 2;
+}
+
+message DeleteLeaderboardRecordRequest {
+  string leaderboard_id = 1;
+}
+
+message ListLeaderboardRecordsAroundOwnerRequest {
+  string leaderboard_id = 1;
+  google.protobuf.UInt32Value limit = 2;
+  string owner_id = 3;
+  google.protobuf.Int64Value expiry = 4;
+  string cursor = 5;
+}
+
+message LeaderboardRecord {
+  string leaderboard_id = 1;
+  string owner_id = 2;
+  string username = 3;
+  int64 score = 4;
+  int64 subscore = 5;
+  int32 num_score = 6;
+  string metadata = 7;
+  google.protobuf.Timestamp create_time = 8;
+  google.protobuf.Timestamp update_time = 9;
+  google.protobuf.Timestamp expiry_time = 10;
+  int64 rank = 11;
+  uint32 max_num_score = 12;
+}
+
+message LeaderboardRecordList {
+  repeated LeaderboardRecord records = 1;
+  repeated LeaderboardRecord owner_records = 2;
+  string next_cursor = 3;
+  string prev_cursor = 4;
+  int64 rank_count = 5;
 }
 
 // The cost(s) associated with permanently unlocking a progression.
