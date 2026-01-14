@@ -43,6 +43,21 @@ type LeaderboardsSystem interface {
 
 	// Get returns a list of available leaderboards for the user.
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*LeaderboardConfigList, error)
+
+	// Create creates a new leaderboard.
+	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, sortOrder, operator, resetSchedule string, authoritative bool, regions []string) error
+
+	// Delete deletes an existing leaderboard.
+	Delete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id string) error
+
+	// WriteRecord writes a leaderboard record.
+	WriteRecord(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, ownerID, username string, score, subscore int64, metadata map[string]interface{}) (*api.LeaderboardRecord, error)
+
+	// DeleteRecord deletes a leaderboard record.
+	DeleteRecord(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, ownerID string) error
+
+	// ListRecordsAroundOwner lists leaderboard records around an owner.
+	ListRecordsAroundOwner(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, ownerID string, limit int, cursor string, expiry int64) (*api.LeaderboardRecordList, error)
 }
 
 // ValidateWriteScoreFn is a function used to validate the leaderboard score input.
