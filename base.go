@@ -345,6 +345,57 @@ func WithBaseSystemProfanityFilterTeamName(threshold float64) BaseSystemOption {
 	}
 }
 
+// WithBaseSystemProfanityFilterTeamDescription sets the profanity filtering threshold for team descriptions, between 0.0 and 1.0.
+// Any value above the threshold will result in a rejection. Values outside 0.0 to 1.0 range will be clamped.
+// Default is not to filter at all.
+func WithBaseSystemProfanityFilterTeamDescription(threshold float64) BaseSystemOption {
+	return &baseSystemOption{
+		applyFn: func(extra map[string]any) {
+			if threshold < 0.0 {
+				threshold = 0.0
+			}
+			if threshold > 1.0 {
+				threshold = 1.0
+			}
+			extra["ProfanityFilterTeamDescription"] = threshold
+		},
+	}
+}
+
+// WithBaseSystemProfanityFilterChallengeName sets the profanity filtering threshold for challenge names, between 0.0 and 1.0.
+// Any value above the threshold will result in a rejection. Values outside 0.0 to 1.0 range will be clamped.
+// Default is not to filter at all.
+func WithBaseSystemProfanityFilterChallengeName(threshold float64) BaseSystemOption {
+	return &baseSystemOption{
+		applyFn: func(extra map[string]any) {
+			if threshold < 0.0 {
+				threshold = 0.0
+			}
+			if threshold > 1.0 {
+				threshold = 1.0
+			}
+			extra["ProfanityFilterChallengeName"] = threshold
+		},
+	}
+}
+
+// WithBaseSystemProfanityFilterChallengeDescription sets the profanity filtering threshold for challenge descriptions, between 0.0 and 1.0.
+// Any value above the threshold will result in a rejection. Values outside 0.0 to 1.0 range will be clamped.
+// Default is not to filter at all.
+func WithBaseSystemProfanityFilterChallengeDescription(threshold float64) BaseSystemOption {
+	return &baseSystemOption{
+		applyFn: func(extra map[string]any) {
+			if threshold < 0.0 {
+				threshold = 0.0
+			}
+			if threshold > 1.0 {
+				threshold = 1.0
+			}
+			extra["ProfanityFilterChallengeDescription"] = threshold
+		},
+	}
+}
+
 // WithBaseSystem configures a BaseSystem type and optionally registers its RPCs with the game server.
 func WithBaseSystem(configFile string, register bool, options ...BaseSystemOption) SystemConfig {
 	extra := make(map[string]any, len(options))
