@@ -208,8 +208,10 @@ enum RpcId {
   RPC_ID_LEADERBOARDS_WRITE_RECORD = 126 [(input) = "WriteLeaderboardRecordRequest", (output) = "LeaderboardRecord"];
   // Delete the caller's leaderboard record.
   RPC_ID_LEADERBOARDS_DELETE_RECORD = 127 [(input) = "DeleteLeaderboardRecordRequest", (output) = ""];
+  // List leaderboard records.
+  RPC_ID_LEADERBOARDS_LIST_RECORDS = 128 [(input) = "ListLeaderboardRecordsRequest", (output) = "LeaderboardRecordList"];
   // List leaderboard records around the owner.
-  RPC_ID_LEADERBOARDS_LIST_RECORDS_AROUND_OWNER = 128 [(input) = "ListLeaderboardRecordsAroundOwnerRequest", (output) = "LeaderboardRecordList"];
+  RPC_ID_LEADERBOARDS_LIST_RECORDS_AROUND_OWNER = 129 [(input) = "ListLeaderboardRecordsAroundOwnerRequest", (output) = "LeaderboardRecordList"];
 
   // List available event leaderboards.
   RPC_ID_EVENT_LEADERBOARD_LIST = 80 [(input) = "EventLeaderboardList", (output) = "EventLeaderboards"];
@@ -359,6 +361,14 @@ message ListLeaderboardRecordsAroundOwnerRequest {
   string owner_id = 3;
   google.protobuf.Int64Value expiry = 4;
   string cursor = 5;
+}
+
+message ListLeaderboardRecordsRequest {
+  string leaderboard_id = 1;
+  repeated string owner_ids = 2;
+  google.protobuf.UInt32Value limit = 3;
+  string cursor = 4;
+  google.protobuf.Int64Value expiry = 5;
 }
 
 message LeaderboardRecord {

@@ -56,6 +56,9 @@ type LeaderboardsSystem interface {
 	// DeleteRecord deletes a leaderboard record.
 	DeleteRecord(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, ownerID string) error
 
+	// ListRecords lists leaderboard records, optionally filtered by owner IDs.
+	ListRecords(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id string, ownerIDs []string, limit int, cursor string, expiry int64) (*api.LeaderboardRecordList, error)
+
 	// ListRecordsAroundOwner lists leaderboard records around an owner.
 	ListRecordsAroundOwner(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, ownerID string, limit int, cursor string, expiry int64) (*api.LeaderboardRecordList, error)
 }
