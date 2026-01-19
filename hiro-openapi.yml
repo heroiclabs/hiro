@@ -3043,7 +3043,7 @@ components:
         owner_id:
           type: string
         username:
-          $ref: '#/components/schemas/GoogleProtobufStringValue'
+          type: string
         score:
           type: integer
           format: int64
