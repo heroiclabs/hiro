@@ -3004,7 +3004,7 @@ components:
         leaderboard_id:
           type: string
         limit:
-          $ref: '#/components/schemas/GoogleProtobufUiNt32value'
+          $ref: '#/components/schemas/GoogleProtobufUInt32value'
         owner_id:
           type: string
         expiry:
