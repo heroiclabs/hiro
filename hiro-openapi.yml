@@ -6025,8 +6025,6 @@ components:
           type: string
         metadata:
           type: string
-        claim_reward:
-          type: boolean
     TeamEventLeaderboardScore:
       type: object
       properties:
