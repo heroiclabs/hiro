@@ -339,14 +339,14 @@ enum Operator {
   DECREMENT = 4;
 }
 
-message WriteLeaderboardRecordRequest {
-  message LeaderboardRecordWrite {
-    int64 score = 1;
-    int64 subscore = 2;
-    string metadata = 3;
-    Operator operator = 4;
-  }
+message LeaderboardRecordWrite {
+  int64 score = 1;
+  int64 subscore = 2;
+  string metadata = 3;
+  Operator operator = 4;
+}
 
+message WriteLeaderboardRecordRequest {
   string leaderboard_id = 1;
   LeaderboardRecordWrite record = 2;
 }
