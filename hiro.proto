@@ -1330,6 +1330,8 @@ message EventLeaderboardScore {
   int64 update_time_sec = 6;
   // Rank within the event leaderboard.
   int64 rank = 7;
+  // Promotion zone indicator: positive = promoted, negative = demoted, zero = no change.
+  int32 promotion_zone = 12;
   // Score.
   int64 score = 8;
   // Subscore.
