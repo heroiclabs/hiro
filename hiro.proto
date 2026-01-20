@@ -151,7 +151,7 @@ enum RpcId {
   RPC_ID_TEAMS_EVENT_LEADERBOARD_LIST = 108 [(input) = "TeamEventLeaderboardList", (output) = "TeamEventLeaderboards"];
   // Get a specified event leaderboard defined for the game.
   RPC_ID_TEAMS_EVENT_LEADERBOARD_GET = 109 [(input) = "TeamEventLeaderboardGet", (output) = "TeamEventLeaderboard"];
-  // Update an event leaderboard record for a user.
+  // Update an event leaderboard score for a user.
   RPC_ID_TEAMS_EVENT_LEADERBOARD_UPDATE = 110 [(input) = "TeamEventLeaderboardUpdate", (output) = "TeamEventLeaderboard"];
   // Claim an event leaderboard reward for a user.
   RPC_ID_TEAMS_EVENT_LEADERBOARD_CLAIM = 111 [(input) = "TeamEventLeaderboardClaim", (output) = "TeamEventLeaderboard"];
@@ -202,22 +202,20 @@ enum RpcId {
   // Sync offline state.
   RPC_ID_BASE_SYNC = 58 [(input) = "SyncRequest", (output) = "SyncResponse"];
 
-  // Get the leaderboards defined for the game.
+  // List available leaderboards.
   RPC_ID_LEADERBOARDS_CONFIG_GET = 38 [(input) = "", (output) = "LeaderboardConfigList"];
-  // Write a leaderboard record.
-  RPC_ID_LEADERBOARDS_WRITE_RECORD = 126 [(input) = "WriteLeaderboardRecordRequest", (output) = "LeaderboardRecord"];
-  // Delete the caller's leaderboard record.
-  RPC_ID_LEADERBOARDS_DELETE_RECORD = 127 [(input) = "DeleteLeaderboardRecordRequest", (output) = ""];
-  // List leaderboard records.
-  RPC_ID_LEADERBOARDS_LIST_RECORDS = 128 [(input) = "ListLeaderboardRecordsRequest", (output) = "LeaderboardRecordList"];
-  // List leaderboard records around the owner.
-  RPC_ID_LEADERBOARDS_LIST_RECORDS_AROUND_OWNER = 129 [(input) = "ListLeaderboardRecordsAroundOwnerRequest", (output) = "LeaderboardRecordList"];
+  // Get a specified leaderboard.
+  RPC_ID_LEADERBOARD_GET = 129 [(input) = "LeaderboardGet", (output) = "Leaderboard"];
+  // Update a leaderboard score.
+  RPC_ID_LEADERBOARD_UPDATE = 126 [(input) = "LeaderboardUpdate", (output) = "Leaderboard"];
+  // Delete the caller's leaderboard score.
+  RPC_ID_LEADERBOARD_DELETE = 127 [(input) = "LeaderboardDelete", (output) = ""];
 
   // List available event leaderboards.
   RPC_ID_EVENT_LEADERBOARD_LIST = 80 [(input) = "EventLeaderboardList", (output) = "EventLeaderboards"];
   // Get a specified event leaderboard defined for the game.
   RPC_ID_EVENT_LEADERBOARD_GET = 42 [(input) = "EventLeaderboardGet", (output) = "EventLeaderboard"];
-  // Update an event leaderboard record for a user.
+  // Update an event leaderboard score for a user.
   RPC_ID_EVENT_LEADERBOARD_UPDATE = 43 [(input) = "EventLeaderboardUpdate", (output) = "EventLeaderboard"];
   // Claim an event leaderboard reward for a user.
   RPC_ID_EVENT_LEADERBOARD_CLAIM = 44 [(input) = "EventLeaderboardClaim", (output) = "EventLeaderboard"];
@@ -339,59 +337,118 @@ enum Operator {
   DECREMENT = 4;
 }
 
-message LeaderboardRecordWrite {
-  int64 score = 1;
-  int64 subscore = 2;
-  string metadata = 3;
-  Operator operator = 4;
+message LeaderboardUpdate {
+  // Leaderboard ID.
+  string id = 1;
+  // Score.
+  int64 score = 2;
+  // Subscore.
+  int64 subscore = 3;
+  // Metadata.
+  string metadata = 4;
+  // Operator.
+  Operator operator = 5;
+  // Update metadata only if score or subscore change.
+  bool conditional_metadata_update = 6;
 }
 
-message WriteLeaderboardRecordRequest {
-  string leaderboard_id = 1;
-  LeaderboardRecordWrite record = 2;
-}
-
-message DeleteLeaderboardRecordRequest {
-  string leaderboard_id = 1;
-}
-
-message ListLeaderboardRecordsAroundOwnerRequest {
-  string leaderboard_id = 1;
-  google.protobuf.UInt32Value limit = 2;
-  string owner_id = 3;
-  google.protobuf.Int64Value expiry = 4;
-  string cursor = 5;
-}
-
-message ListLeaderboardRecordsRequest {
-  string leaderboard_id = 1;
-  repeated string owner_ids = 2;
-  google.protobuf.UInt32Value limit = 3;
-  string cursor = 4;
-  google.protobuf.Int64Value expiry = 5;
-}
-
-message LeaderboardRecord {
-  string leaderboard_id = 1;
+// Find and retrieve a leaderboard by ID.
+message LeaderboardGet {
+  // Leaderboard ID to get.
+  string id = 1;
+  // Owner ID to get scores around.
   string owner_id = 2;
-  string username = 3;
-  int64 score = 4;
-  int64 subscore = 5;
-  int32 num_score = 6;
-  string metadata = 7;
-  google.protobuf.Timestamp create_time = 8;
-  google.protobuf.Timestamp update_time = 9;
-  google.protobuf.Timestamp expiry_time = 10;
-  int64 rank = 11;
-  uint32 max_num_score = 12;
+  // Limit.
+  google.protobuf.UInt32Value limit = 3;
+  // Cursor.
+  string cursor = 4;
 }
 
-message LeaderboardRecordList {
-  repeated LeaderboardRecord records = 1;
-  repeated LeaderboardRecord owner_records = 2;
-  string next_cursor = 3;
-  string prev_cursor = 4;
-  int64 rank_count = 5;
+// Delete a leaderboard score.
+message LeaderboardDelete {
+  // Leaderboard ID.
+  string id = 1;
+}
+
+message LeaderboardScore {
+  // User ID.
+  string id = 1;
+  // Username.
+  string username = 2;
+  // Display name.
+  string display_name = 3;
+  // Avatar URL.
+  string avatar_url = 4;
+  // Time when the score was first created.
+  int64 create_time_sec = 5;
+  // Time when the score was last updated.
+  int64 update_time_sec = 6;
+  // Rank on the leaderboard.
+  int64 rank = 7;
+  // Score.
+  int64 score = 8;
+  // Subscore.
+  int64 subscore = 9;
+  // Number of score submissions.
+  int64 num_scores = 10;
+  // Metadata.
+  string metadata = 11;
+}
+
+// Details about a specific leaderboard.
+message Leaderboard {
+  // Leaderboard ID.
+  string id = 1;
+  // Score ordering. If true, lower scores are better.
+  bool ascending = 2;
+  // Score submission operator.
+  string operator = 3;
+  // The leaderboard reset schedule.
+  string reset_schedule = 4;
+  // Whether the leaderboard is authoritative or not.
+  bool authoritative = 5;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 6;
+  // Participants and their scores.
+  repeated LeaderboardScore scores = 7;
+  // Owner scores.
+  repeated LeaderboardScore owner_scores = 8;
+  // Next page cursor.
+  string next_cursor = 9;
+  // Previous page cursor.
+  string prev_cursor = 10;
+  // Total rank count.
+  int64 rank_count = 11;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 12;
+}
+
+// Several leaderboards, resulting from a listing operation.
+message Leaderboards {
+  // Zero or more leaderboards.
+  repeated Leaderboard leaderboards = 1;
+}
+
+// A leaderboard configuration.
+message LeaderboardConfig {
+  // The leaderboard id.
+  string id = 1;
+  // The leaderboard sort order.
+  string sort_order = 2;
+  // The leaderboard operator.
+  string operator = 3;
+  // The leaderboard reset schedule.
+  string reset_schedule = 4;
+  // Whether the leaderboard is authoritative or not.
+  bool authoritative = 5;
+  // List of regional leaderboards of the leaderboard, if any.
+  repeated string regions = 6;
+}
+
+// A list of leaderboard configurations.
+message LeaderboardConfigList {
+  // The list of leaderboard configurations.
+  repeated LeaderboardConfig leaderboard_configs = 1;
 }
 
 // The cost(s) associated with permanently unlocking a progression.
@@ -2317,28 +2374,6 @@ message EnergySpendWithTime {
 message EnergySpendWithRefillStartTimeRequest {
   // Energy spends with custom refill start times, keyed on the energy identifier.
   map<string, EnergySpendWithTime> spends = 1;
-}
-
-// A leaderboard configuration.
-message LeaderboardConfig {
-  // The leaderboard id.
-  string id = 1;
-  // The leaderboard sort order.
-  string sort_order = 2;
-  // The leaderboard operator.
-  string operator = 3;
-  // The leaderboard reset schedule.
-  string reset_schedule = 4;
-  // Whether the leaderboard is authoritative or not.
-  bool authoritative = 5;
-  // List of regional leaderboards of the leaderboard, if any.
-  repeated string regions = 6;
-}
-
-// A list of leaderboard configurations.
-message LeaderboardConfigList {
-  // The list of leaderboard configurations.
-  repeated LeaderboardConfig leaderboard_configs = 1;
 }
 
 // The states of a Tutorial.
