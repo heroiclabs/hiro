@@ -54,13 +54,10 @@ type LeaderboardsSystem interface {
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*LeaderboardConfigList, error)
 
 	// GetLeaderboard returns a specified leaderboard with scores.
-	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, limit int, cursor string) (*Leaderboard, error)
+	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, limit int32, cursor string) (*Leaderboard, error)
 
 	// Create creates a new leaderboard.
 	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, sortOrder, operator, resetSchedule string, authoritative bool, regions []string) error
-
-	// Delete deletes an existing leaderboard.
-	Delete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id string) error
 
 	// UpdateScore updates a leaderboard score.
 	UpdateScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID, username string, score, subscore int64, metadata map[string]any, operator Operator, conditionalMetadataUpdate bool) (*Leaderboard, error)
