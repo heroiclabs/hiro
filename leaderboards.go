@@ -36,8 +36,8 @@ type LeaderboardsConfigLeaderboard struct {
 	Metadata      map[string]string `json:"metadata,omitempty"`
 }
 
-// OnLeaderboardWriteScore is a function called before or after a leaderboard score is written.
-type OnLeaderboardWriteScore func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, score, subscore int64, metadata map[string]any) (int64, int64, map[string]any, error)
+// OnLeaderboardUpdateScore is a function called before or after a leaderboard score is updated.
+type OnLeaderboardUpdateScore func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, score, subscore int64, metadata map[string]any) (int64, int64, map[string]any, error)
 
 // OnLeaderboardDeleteScore is a function called before or after a leaderboard score is deleted.
 type OnLeaderboardDeleteScore func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string) error
@@ -53,8 +53,8 @@ type LeaderboardsSystem interface {
 	// Get returns a list of available leaderboards for the user.
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*LeaderboardConfigList, error)
 
-	// GetScores returns a specified leaderboard with scores.
-	GetScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, limit int, cursor string) (*Leaderboard, error)
+	// GetLeaderboard returns a specified leaderboard with scores.
+	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, limit int, cursor string) (*Leaderboard, error)
 
 	// Create creates a new leaderboard.
 	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, sortOrder, operator, resetSchedule string, authoritative bool, regions []string) error
@@ -62,17 +62,17 @@ type LeaderboardsSystem interface {
 	// Delete deletes an existing leaderboard.
 	Delete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id string) error
 
-	// WriteScore writes a leaderboard score.
-	WriteScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID, username string, score, subscore int64, metadata map[string]any, operator Operator, conditionalMetadataUpdate bool) (*Leaderboard, error)
+	// UpdateScore updates a leaderboard score.
+	UpdateScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID, username string, score, subscore int64, metadata map[string]any, operator Operator, conditionalMetadataUpdate bool) (*Leaderboard, error)
 
 	// DeleteScore deletes a leaderboard score.
 	DeleteScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string) error
 
-	// SetOnBeforeWriteScore sets a custom function which will run before a leaderboard score is written.
-	SetOnBeforeWriteScore(fn OnLeaderboardWriteScore)
+	// SetOnBeforeUpdateScore sets a custom function which will run before a leaderboard score is updated.
+	SetOnBeforeUpdateScore(fn OnLeaderboardUpdateScore)
 
-	// SetOnAfterWriteScore sets a custom function which will run after a leaderboard score is written.
-	SetOnAfterWriteScore(fn OnLeaderboardWriteScore)
+	// SetOnAfterUpdateScore sets a custom function which will run after a leaderboard score is updated.
+	SetOnAfterUpdateScore(fn OnLeaderboardUpdateScore)
 
 	// SetOnBeforeDeleteScore sets a custom function which will run before a leaderboard score is deleted.
 	SetOnBeforeDeleteScore(fn OnLeaderboardDeleteScore)
