@@ -56,14 +56,17 @@ type LeaderboardsSystem interface {
 	// GetLeaderboard returns a specified leaderboard with scores.
 	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, limit int32, cursor string) (*Leaderboard, error)
 
-	// Create creates a new leaderboard.
-	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, sortOrder, operator, resetSchedule string, authoritative bool, regions []string) error
+	// CreateLeaderboard creates a new leaderboard.
+	CreateLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, sortOrder, operator, resetSchedule string, authoritative bool, regions []string) error
 
-	// UpdateScore updates a leaderboard score.
-	UpdateScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID, username string, score, subscore int64, metadata map[string]any, operator Operator, conditionalMetadataUpdate bool) (*Leaderboard, error)
+	// DeleteLeaderboard deletes an existing leaderboard.
+	DeleteLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id string) error
 
-	// DeleteScore deletes a leaderboard score.
-	DeleteScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string) error
+	// UpdateLeaderboard updates the user's score in the specified event leaderboard.
+	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID, username string, score, subscore int64, metadata map[string]any, operator Operator, conditionalMetadataUpdate bool) (*Leaderboard, error)
+
+	// DeleteLeaderboardScore deletes a leaderboard score.
+	DeleteLeaderboardScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string) error
 
 	// SetOnBeforeUpdateScore sets a custom function which will run before a leaderboard score is updated.
 	SetOnBeforeUpdateScore(fn OnLeaderboardUpdateScore)
