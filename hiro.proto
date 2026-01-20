@@ -359,7 +359,7 @@ message LeaderboardGet {
   // Owner ID to get scores around.
   string owner_id = 2;
   // Limit.
-  google.protobuf.UInt32Value limit = 3;
+  int32 limit = 3;
   // Cursor.
   string cursor = 4;
 }
