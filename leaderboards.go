@@ -18,7 +18,6 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -28,13 +27,23 @@ type LeaderboardsConfig struct {
 }
 
 type LeaderboardsConfigLeaderboard struct {
-	Id            string   `json:"id,omitempty"`
-	SortOrder     string   `json:"sort_order,omitempty"`
-	Operator      string   `json:"operator,omitempty"`
-	ResetSchedule string   `json:"reset_schedule,omitempty"`
-	Authoritative bool     `json:"authoritative,omitempty"`
-	Regions       []string `json:"regions,omitempty"`
+	Id            string            `json:"id,omitempty"`
+	SortOrder     string            `json:"sort_order,omitempty"`
+	Operator      string            `json:"operator,omitempty"`
+	ResetSchedule string            `json:"reset_schedule,omitempty"`
+	Authoritative bool              `json:"authoritative,omitempty"`
+	Regions       []string          `json:"regions,omitempty"`
+	Metadata      map[string]string `json:"metadata,omitempty"`
 }
+
+// OnLeaderboardWriteScore is a function called before or after a leaderboard score is written.
+type OnLeaderboardWriteScore func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, score, subscore int64, metadata map[string]any) (int64, int64, map[string]any, error)
+
+// OnLeaderboardDeleteScore is a function called before or after a leaderboard score is deleted.
+type OnLeaderboardDeleteScore func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string) error
+
+// OnLeaderboardReset is a function called when a leaderboard resets.
+type OnLeaderboardReset func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, leaderboardID string, reset int64, config *LeaderboardsConfigLeaderboard) error
 
 // The LeaderboardsSystem defines a collection of leaderboards which can be defined as global or regional with Nakama
 // server.
@@ -44,24 +53,36 @@ type LeaderboardsSystem interface {
 	// Get returns a list of available leaderboards for the user.
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*LeaderboardConfigList, error)
 
+	// GetScores returns a specified leaderboard with scores.
+	GetScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, limit int, cursor string) (*Leaderboard, error)
+
 	// Create creates a new leaderboard.
 	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, sortOrder, operator, resetSchedule string, authoritative bool, regions []string) error
 
 	// Delete deletes an existing leaderboard.
 	Delete(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id string) error
 
-	// WriteRecord writes a leaderboard record.
-	WriteRecord(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, ownerID, username string, score, subscore int64, metadata map[string]interface{}) (*api.LeaderboardRecord, error)
+	// WriteScore writes a leaderboard score.
+	WriteScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID, username string, score, subscore int64, metadata map[string]any, operator Operator, conditionalMetadataUpdate bool) (*Leaderboard, error)
 
-	// DeleteRecord deletes a leaderboard record.
-	DeleteRecord(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, ownerID string) error
+	// DeleteScore deletes a leaderboard score.
+	DeleteScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string) error
 
-	// ListRecords lists leaderboard records, optionally filtered by owner IDs.
-	ListRecords(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id string, ownerIDs []string, limit int, cursor string, expiry int64) (*api.LeaderboardRecordList, error)
+	// SetOnBeforeWriteScore sets a custom function which will run before a leaderboard score is written.
+	SetOnBeforeWriteScore(fn OnLeaderboardWriteScore)
 
-	// ListRecordsAroundOwner lists leaderboard records around an owner.
-	ListRecordsAroundOwner(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, ownerID string, limit int, cursor string, expiry int64) (*api.LeaderboardRecordList, error)
+	// SetOnAfterWriteScore sets a custom function which will run after a leaderboard score is written.
+	SetOnAfterWriteScore(fn OnLeaderboardWriteScore)
+
+	// SetOnBeforeDeleteScore sets a custom function which will run before a leaderboard score is deleted.
+	SetOnBeforeDeleteScore(fn OnLeaderboardDeleteScore)
+
+	// SetOnAfterDeleteScore sets a custom function which will run after a leaderboard score is deleted.
+	SetOnAfterDeleteScore(fn OnLeaderboardDeleteScore)
+
+	// SetOnLeaderboardReset sets a custom function which will run when a leaderboard resets.
+	SetOnLeaderboardReset(fn OnLeaderboardReset)
 }
 
 // ValidateWriteScoreFn is a function used to validate the leaderboard score input.
-type ValidateWriteScoreFn func(context.Context, runtime.Logger, *sql.DB, runtime.NakamaModule, *api.WriteLeaderboardRecordRequest) *runtime.Error
+type ValidateWriteScoreFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, input *LeaderboardUpdate) *runtime.Error
