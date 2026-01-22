@@ -210,8 +210,6 @@ enum RpcId {
   RPC_ID_LEADERBOARD_GET = 132 [(input) = "LeaderboardGet", (output) = "Leaderboard"];
   // Update a leaderboard score.
   RPC_ID_LEADERBOARD_UPDATE = 126 [(input) = "LeaderboardUpdate", (output) = "Leaderboard"];
-  // Delete the caller's leaderboard score.
-  RPC_ID_LEADERBOARD_DELETE_SCORE = 130 [(input) = "LeaderboardDeleteScoreRequest", (output) = "Leaderboard"];
 
   // List available event leaderboards.
   RPC_ID_EVENT_LEADERBOARD_LIST = 80 [(input) = "EventLeaderboardList", (output) = "EventLeaderboards"];
@@ -360,12 +358,6 @@ message LeaderboardGet {
   int32 limit = 3;
   // Cursor.
   string cursor = 4;
-}
-
-// Delete a leaderboard score.
-message LeaderboardDeleteScoreRequest {
-  // Leaderboard ID.
-  string id = 1;
 }
 
 message LeaderboardScore {
