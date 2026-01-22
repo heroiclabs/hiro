@@ -5039,8 +5039,8 @@ components:
       properties:
         id:
           type: string
-        ascending:
-          type: boolean
+        sort_order:
+          type: string
         operator:
           type: string
         reset_schedule:
