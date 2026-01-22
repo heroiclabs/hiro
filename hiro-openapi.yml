@@ -1879,30 +1879,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /rpc/RPC_ID_LEADERBOARD_DELETE_SCORE?unwrap:
-    post:
-      summary: LEADERBOARD_DELETE_SCORE
-      description: "Delete the caller's leaderboard score."
-      operationId: LEADERBOARD_DELETE_SCORE
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LeaderboardDeleteScoreRequest'
-      responses:
-        '200':
-          description: A successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Leaderboard'
-        'default':
-          description: An error response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_EVENT_LEADERBOARD_LIST?unwrap:
     post:
       summary: EVENT_LEADERBOARD_LIST
@@ -5136,11 +5112,6 @@ components:
           type: string
         conditional_metadata_update:
           type: boolean
-    LeaderboardDeleteScoreRequest:
-      type: object
-      properties:
-        id:
-          type: string
     Tutorial:
       type: object
       properties:
@@ -6726,7 +6697,6 @@ components:
         - RPC_ID_LEADERBOARD_LIST
         - RPC_ID_LEADERBOARD_GET
         - RPC_ID_LEADERBOARD_UPDATE
-        - RPC_ID_LEADERBOARD_DELETE_SCORE
         - RPC_ID_EVENT_LEADERBOARD_LIST
         - RPC_ID_EVENT_LEADERBOARD_GET
         - RPC_ID_EVENT_LEADERBOARD_UPDATE

@@ -62,9 +62,6 @@ type LeaderboardsSystem interface {
 	// UpdateLeaderboard updates the user's score in the specified leaderboard.
 	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, username string, score, subscore int64, metadata map[string]any, conditionalMetadataUpdate bool) (*Leaderboard, error)
 
-	// DeleteLeaderboardScore deletes a leaderboard score.
-	DeleteLeaderboardScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID string) (*Leaderboard, error)
-
 	// SetOnBeforeUpdateScore sets a custom function which will run before a leaderboard score is updated.
 	SetOnBeforeUpdateScore(fn OnLeaderboardUpdate)
 
