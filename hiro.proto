@@ -202,14 +202,16 @@ enum RpcId {
   // Sync offline state.
   RPC_ID_BASE_SYNC = 58 [(input) = "SyncRequest", (output) = "SyncResponse"];
 
-  // List available leaderboards.
+  // Deprecated: Use RPC_ID_LEADERBOARD_LIST instead. List available leaderboards.
   RPC_ID_LEADERBOARDS_CONFIG_GET = 38 [(input) = "", (output) = "LeaderboardConfigList"];
-  // Get a specified leaderboard.
-  RPC_ID_LEADERBOARD_GET = 129 [(input) = "LeaderboardGet", (output) = "Leaderboard"];
+  // List available leaderboards.
+  RPC_ID_LEADERBOARD_LIST = 131 [(input) = "LeaderboardList", (output) = "Leaderboards"];
+  // Get a specified leaderboard with scores.
+  RPC_ID_LEADERBOARD_GET = 132 [(input) = "LeaderboardGet", (output) = "Leaderboard"];
   // Update a leaderboard score.
   RPC_ID_LEADERBOARD_UPDATE = 126 [(input) = "LeaderboardUpdate", (output) = "Leaderboard"];
   // Delete the caller's leaderboard score.
-  RPC_ID_LEADERBOARD_DELETE = 127 [(input) = "LeaderboardDelete", (output) = ""];
+  RPC_ID_LEADERBOARD_DELETE_SCORE = 130 [(input) = "LeaderboardDeleteScoreRequest", (output) = "Leaderboard"];
 
   // List available event leaderboards.
   RPC_ID_EVENT_LEADERBOARD_LIST = 80 [(input) = "EventLeaderboardList", (output) = "EventLeaderboards"];
@@ -329,12 +331,10 @@ enum RpcSocketId {
   RPC_SOCKET_ID_AUCTIONS_BID = 2 [(input) = "AuctionBidRequest", (output) = "Auction"];
 }
 
-enum Operator {
-  NO_OVERRIDE = 0;
-  BEST = 1;
-  SET = 2;
-  INCREMENT = 3;
-  DECREMENT = 4;
+// List available leaderboards.
+message LeaderboardList {
+  // Whether or not the response should include scores, defaults to false.
+  bool with_scores = 1;
 }
 
 message LeaderboardUpdate {
@@ -346,13 +346,11 @@ message LeaderboardUpdate {
   int64 subscore = 3;
   // Metadata.
   string metadata = 4;
-  // Operator.
-  Operator operator = 5;
   // Update metadata only if score or subscore change.
-  bool conditional_metadata_update = 6;
+  bool conditional_metadata_update = 5;
 }
 
-// Find and retrieve a leaderboard by ID.
+// Get a specified leaderboard with scores.
 message LeaderboardGet {
   // Leaderboard ID to get.
   string id = 1;
@@ -365,7 +363,7 @@ message LeaderboardGet {
 }
 
 // Delete a leaderboard score.
-message LeaderboardDelete {
+message LeaderboardDeleteScoreRequest {
   // Leaderboard ID.
   string id = 1;
 }
@@ -421,6 +419,8 @@ message Leaderboard {
   int64 rank_count = 11;
   // The UNIX timestamp for the current server time.
   int64 current_time_sec = 12;
+  // List of regional leaderboards, if any.
+  repeated string regions = 13;
 }
 
 // Several leaderboards, resulting from a listing operation.

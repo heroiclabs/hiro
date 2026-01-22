@@ -1791,8 +1791,9 @@ paths:
   /rpc/RPC_ID_LEADERBOARDS_CONFIG_GET?unwrap:
     post:
       summary: LEADERBOARDS_CONFIG_GET
-      description: "Get the leaderboards defined for the game."
+      description: "Deprecated: Use LEADERBOARD_LIST instead. Get the leaderboards defined for the game."
       operationId: LEADERBOARDS_CONFIG_GET
+      deprecated: true
       responses:
         '200':
           description: A successful response
@@ -1806,68 +1807,96 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /rpc/RPC_ID_LEADERBOARDS_WRITE_RECORD?unwrap:
+  /rpc/RPC_ID_LEADERBOARD_LIST?unwrap:
     post:
-      summary: LEADERBOARDS_WRITE_RECORD
-      description: "Write a leaderboard record."
-      operationId: LEADERBOARDS_WRITE_RECORD
+      summary: LEADERBOARD_LIST
+      description: "List available leaderboards."
+      operationId: LEADERBOARD_LIST
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WriteLeaderboardRecordRequest'
+              $ref: '#/components/schemas/LeaderboardList'
       responses:
         '200':
           description: A successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LeaderboardRecord'
+                $ref: '#/components/schemas/Leaderboards'
         'default':
           description: An error response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /rpc/RPC_ID_LEADERBOARDS_DELETE_RECORD?unwrap:
+  /rpc/RPC_ID_LEADERBOARD_GET?unwrap:
     post:
-      summary: LEADERBOARDS_DELETE_RECORD
-      description: "Delete the caller's leaderboard record."
-      operationId: LEADERBOARDS_DELETE_RECORD
+      summary: LEADERBOARD_GET
+      description: "Get a specified leaderboard with scores."
+      operationId: LEADERBOARD_GET
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeleteLeaderboardRecordRequest'
+              $ref: '#/components/schemas/LeaderboardGet'
       responses:
         '200':
           description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Leaderboard'
         'default':
           description: An error response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /rpc/RPC_ID_LEADERBOARDS_LIST_RECORDS_AROUND_OWNER?unwrap:
+  /rpc/RPC_ID_LEADERBOARD_UPDATE?unwrap:
     post:
-      summary: LEADERBOARDS_LIST_RECORDS_AROUND_OWNER
-      description: "List leaderboard records around the owner."
-      operationId: LEADERBOARDS_LIST_RECORDS_AROUND_OWNER
+      summary: LEADERBOARD_UPDATE
+      description: "Update a leaderboard score."
+      operationId: LEADERBOARD_UPDATE
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ListLeaderboardRecordsAroundOwnerRequest'
+              $ref: '#/components/schemas/LeaderboardUpdate'
       responses:
         '200':
           description: A successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LeaderboardRecordList'
+                $ref: '#/components/schemas/Leaderboard'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_LEADERBOARD_DELETE_SCORE?unwrap:
+    post:
+      summary: LEADERBOARD_DELETE_SCORE
+      description: "Delete the caller's leaderboard score."
+      operationId: LEADERBOARD_DELETE_SCORE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaderboardDeleteScoreRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Leaderboard'
         'default':
           description: An error response
           content:
@@ -2973,94 +3002,6 @@ components:
         code:
           type: integer
           format: int32
-    WriteLeaderboardRecordRequest:
-      type: object
-      properties:
-        leaderboard_id:
-          type: string
-        record:
-          $ref: '#/components/schemas/LeaderboardRecordWrite'
-    LeaderboardRecordWrite:
-      type: object
-      properties:
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        metadata:
-          type: string
-        operator:
-          $ref: '#/components/schemas/Operator'
-    DeleteLeaderboardRecordRequest:
-      type: object
-      properties:
-        leaderboard_id:
-          type: string
-    ListLeaderboardRecordsAroundOwnerRequest:
-      type: object
-      properties:
-        leaderboard_id:
-          type: string
-        limit:
-          $ref: '#/components/schemas/GoogleProtobufUInt32value'
-        owner_id:
-          type: string
-        expiry:
-          $ref: '#/components/schemas/GoogleProtobufInt64value'
-        cursor:
-          type: string
-    LeaderboardRecord:
-      type: object
-      properties:
-        leaderboard_id:
-          type: string
-        owner_id:
-          type: string
-        username:
-          type: string
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        num_score:
-          type: integer
-          format: int32
-        metadata:
-          type: string
-        create_time:
-          $ref: '#/components/schemas/GoogleProtobufTimestamp'
-        update_time:
-          $ref: '#/components/schemas/GoogleProtobufTimestamp'
-        expiry_time:
-          $ref: '#/components/schemas/GoogleProtobufTimestamp'
-        rank:
-          type: integer
-          format: int64
-        max_num_score:
-          type: integer
-          format: int32
-    LeaderboardRecordList:
-      type: object
-      properties:
-        records:
-          type: array
-          items:
-            $ref: '#/components/schemas/LeaderboardRecord'
-        owner_records:
-          type: array
-          items:
-            $ref: '#/components/schemas/LeaderboardRecord'
-        next_cursor:
-          type: string
-        prev_cursor:
-          type: string
-        rank_count:
-          type: integer
-          format: int64
     ProgressionCost:
       type: object
       properties:
@@ -5086,6 +5027,120 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LeaderboardConfig'
+    LeaderboardScore:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        display_name:
+          type: string
+        avatar_url:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        rank:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+    Leaderboard:
+      type: object
+      properties:
+        id:
+          type: string
+        ascending:
+          type: boolean
+        operator:
+          type: string
+        reset_schedule:
+          type: string
+        authoritative:
+          type: boolean
+        additional_properties:
+          type: object
+          additionalProperties:
+            type: string
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        owner_scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        next_cursor:
+          type: string
+        prev_cursor:
+          type: string
+        rank_count:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        regions:
+          type: array
+          items:
+            type: string
+    Leaderboards:
+      type: object
+      properties:
+        leaderboards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Leaderboard'
+    LeaderboardList:
+      type: object
+      properties:
+        with_scores:
+          type: boolean
+    LeaderboardGet:
+      type: object
+      properties:
+        id:
+          type: string
+        owner_id:
+          type: string
+        limit:
+          type: integer
+          format: int32
+        cursor:
+          type: string
+    LeaderboardUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+        conditional_metadata_update:
+          type: boolean
+    LeaderboardDeleteScoreRequest:
+      type: object
+      properties:
+        id:
+          type: string
     Tutorial:
       type: object
       properties:
@@ -6668,9 +6723,10 @@ components:
         - RPC_ID_BASE_SET_DEVICE_PREFS
         - RPC_ID_BASE_SYNC
         - RPC_ID_LEADERBOARDS_CONFIG_GET
-        - RPC_ID_LEADERBOARDS_WRITE_RECORD
-        - RPC_ID_LEADERBOARDS_DELETE_RECORD
-        - RPC_ID_LEADERBOARDS_LIST_RECORDS_AROUND_OWNER
+        - RPC_ID_LEADERBOARD_LIST
+        - RPC_ID_LEADERBOARD_GET
+        - RPC_ID_LEADERBOARD_UPDATE
+        - RPC_ID_LEADERBOARD_DELETE_SCORE
         - RPC_ID_EVENT_LEADERBOARD_LIST
         - RPC_ID_EVENT_LEADERBOARD_GET
         - RPC_ID_EVENT_LEADERBOARD_UPDATE
@@ -6725,14 +6781,6 @@ components:
         - RPC_SOCKET_ID_UNSPECIFIED
         - RPC_SOCKET_ID_AUCTIONS_FOLLOW
         - RPC_SOCKET_ID_AUCTIONS_BID
-    Operator:
-      type: string
-      enum:
-        - NO_OVERRIDE
-        - BEST
-        - SET
-        - INCREMENT
-        - DECREMENT
     ProgressionPreconditionsOperator:
       type: string
       enum:

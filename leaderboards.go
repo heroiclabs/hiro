@@ -36,8 +36,8 @@ type LeaderboardsConfigLeaderboard struct {
 	Metadata      map[string]string `json:"metadata,omitempty"`
 }
 
-// OnLeaderboardUpdateScore is a function called before or after a leaderboard score is updated.
-type OnLeaderboardUpdateScore func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, score, subscore int64, metadata map[string]any) (int64, int64, map[string]any, error)
+// OnLeaderboardUpdate is a function called before or after a leaderboard score is updated.
+type OnLeaderboardUpdate func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, score, subscore int64, metadata map[string]any) (int64, int64, map[string]any, error)
 
 // OnLeaderboardDeleteScore is a function called before or after a leaderboard score is deleted.
 type OnLeaderboardDeleteScore func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string) error
@@ -50,29 +50,26 @@ type OnLeaderboardReset func(ctx context.Context, logger runtime.Logger, db *sql
 type LeaderboardsSystem interface {
 	System
 
-	// Get returns a list of available leaderboards for the user.
+	// Deprecated: Use List instead. Get returns a list of available leaderboards for the user.
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*LeaderboardConfigList, error)
 
+	// List returns a list of available leaderboards for the user.
+	ListLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*Leaderboards, error)
+
 	// GetLeaderboard returns a specified leaderboard with scores.
-	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, limit int32, cursor string) (*Leaderboard, error)
+	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string, limit int32, cursor string) (*Leaderboard, error)
 
-	// CreateLeaderboard creates a new leaderboard.
-	CreateLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id, sortOrder, operator, resetSchedule string, authoritative bool, regions []string) error
-
-	// DeleteLeaderboard deletes an existing leaderboard.
-	DeleteLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, id string) error
-
-	// UpdateLeaderboard updates the user's score in the specified event leaderboard.
-	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID, username string, score, subscore int64, metadata map[string]any, operator Operator, conditionalMetadataUpdate bool) (*Leaderboard, error)
+	// UpdateLeaderboard updates the user's score in the specified leaderboard.
+	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, username string, score, subscore int64, metadata map[string]any, conditionalMetadataUpdate bool) (*Leaderboard, error)
 
 	// DeleteLeaderboardScore deletes a leaderboard score.
-	DeleteLeaderboardScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string) error
+	DeleteLeaderboardScore(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID string) (*Leaderboard, error)
 
 	// SetOnBeforeUpdateScore sets a custom function which will run before a leaderboard score is updated.
-	SetOnBeforeUpdateScore(fn OnLeaderboardUpdateScore)
+	SetOnBeforeUpdateScore(fn OnLeaderboardUpdate)
 
 	// SetOnAfterUpdateScore sets a custom function which will run after a leaderboard score is updated.
-	SetOnAfterUpdateScore(fn OnLeaderboardUpdateScore)
+	SetOnAfterUpdateScore(fn OnLeaderboardUpdate)
 
 	// SetOnBeforeDeleteScore sets a custom function which will run before a leaderboard score is deleted.
 	SetOnBeforeDeleteScore(fn OnLeaderboardDeleteScore)
