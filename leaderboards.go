@@ -21,6 +21,10 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+var (
+	ErrLeaderboardNotFound = runtime.NewError("leaderboard not found", 3) // INVALID_ARGUMENT
+)
+
 // LeaderboardsConfig is the data definition for the LeaderboardsSystem type.
 type LeaderboardsConfig struct {
 	Leaderboards []*LeaderboardsConfigLeaderboard `json:"leaderboards,omitempty"`
@@ -53,14 +57,14 @@ type LeaderboardsSystem interface {
 	// Deprecated: Use List instead. Get returns a list of available leaderboards for the user.
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*LeaderboardConfigList, error)
 
-	// List returns a list of available leaderboards for the user.
-	ListLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*Leaderboards, error)
+	// ListLeaderboard returns a list of available leaderboards for the user.
+	ListLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, withScores bool) (*Leaderboards, error)
 
 	// GetLeaderboard returns a specified leaderboard with scores.
 	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string, limit int32, cursor string) (*Leaderboard, error)
 
 	// UpdateLeaderboard updates the user's score in the specified leaderboard.
-	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, username string, score, subscore int64, metadata map[string]any, conditionalMetadataUpdate bool) (*Leaderboard, error)
+	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, username, leaderboardID string, score, subscore int64, metadata map[string]any, conditionalMetadataUpdate bool) (*Leaderboard, error)
 
 	// SetOnBeforeUpdateScore sets a custom function which will run before a leaderboard score is updated.
 	SetOnBeforeUpdateScore(fn OnLeaderboardUpdate)
