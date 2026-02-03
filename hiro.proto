@@ -1459,6 +1459,8 @@ message EventLeaderboard {
   int64 best_rank = 36;
   // Indicates if the event can receive score updates.
   bool can_update = 37;
+  // Indicates if the cohort can be rolled if being claimed at the same time.
+  bool can_roll_with_claim = 38;
 }
 
 // Several event leaderboards the user has access to, resulting from a listing operation.
