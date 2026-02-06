@@ -19,6 +19,7 @@ package hiro;
 
 import "google/protobuf/descriptor.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/heroiclabs/hiro";
@@ -150,7 +151,7 @@ enum RpcId {
   RPC_ID_TEAMS_EVENT_LEADERBOARD_LIST = 108 [(input) = "TeamEventLeaderboardList", (output) = "TeamEventLeaderboards"];
   // Get a specified event leaderboard defined for the game.
   RPC_ID_TEAMS_EVENT_LEADERBOARD_GET = 109 [(input) = "TeamEventLeaderboardGet", (output) = "TeamEventLeaderboard"];
-  // Update an event leaderboard record for a user.
+  // Update an event leaderboard score for a user.
   RPC_ID_TEAMS_EVENT_LEADERBOARD_UPDATE = 110 [(input) = "TeamEventLeaderboardUpdate", (output) = "TeamEventLeaderboard"];
   // Claim an event leaderboard reward for a user.
   RPC_ID_TEAMS_EVENT_LEADERBOARD_CLAIM = 111 [(input) = "TeamEventLeaderboardClaim", (output) = "TeamEventLeaderboard"];
@@ -201,14 +202,20 @@ enum RpcId {
   // Sync offline state.
   RPC_ID_BASE_SYNC = 58 [(input) = "SyncRequest", (output) = "SyncResponse"];
 
-  // Get the leaderboards defined for the game.
+  // Deprecated: Use RPC_ID_LEADERBOARD_LIST instead. List available leaderboards.
   RPC_ID_LEADERBOARDS_CONFIG_GET = 38 [(input) = "", (output) = "LeaderboardConfigList"];
+  // List available leaderboards.
+  RPC_ID_LEADERBOARD_LIST = 131 [(input) = "LeaderboardList", (output) = "Leaderboards"];
+  // Get a specified leaderboard with scores.
+  RPC_ID_LEADERBOARD_GET = 132 [(input) = "LeaderboardGet", (output) = "Leaderboard"];
+  // Update a leaderboard score.
+  RPC_ID_LEADERBOARD_UPDATE = 126 [(input) = "LeaderboardUpdate", (output) = "Leaderboard"];
 
   // List available event leaderboards.
   RPC_ID_EVENT_LEADERBOARD_LIST = 80 [(input) = "EventLeaderboardList", (output) = "EventLeaderboards"];
   // Get a specified event leaderboard defined for the game.
   RPC_ID_EVENT_LEADERBOARD_GET = 42 [(input) = "EventLeaderboardGet", (output) = "EventLeaderboard"];
-  // Update an event leaderboard record for a user.
+  // Update an event leaderboard score for a user.
   RPC_ID_EVENT_LEADERBOARD_UPDATE = 43 [(input) = "EventLeaderboardUpdate", (output) = "EventLeaderboard"];
   // Claim an event leaderboard reward for a user.
   RPC_ID_EVENT_LEADERBOARD_CLAIM = 44 [(input) = "EventLeaderboardClaim", (output) = "EventLeaderboard"];
@@ -320,6 +327,120 @@ enum RpcSocketId {
   RPC_SOCKET_ID_AUCTIONS_FOLLOW = 1 [(input) = "AuctionFollowRequest", (output) = "AuctionList"];
   // Bid on an auction and follow it for further updates.
   RPC_SOCKET_ID_AUCTIONS_BID = 2 [(input) = "AuctionBidRequest", (output) = "Auction"];
+}
+
+// List available leaderboards.
+message LeaderboardList {
+  // Whether or not the response should include scores, defaults to false.
+  bool with_scores = 1;
+}
+
+message LeaderboardUpdate {
+  // Leaderboard ID.
+  string id = 1;
+  // Score.
+  int64 score = 2;
+  // Subscore.
+  int64 subscore = 3;
+  // Metadata.
+  string metadata = 4;
+  // Update metadata only if score or subscore change.
+  bool conditional_metadata_update = 5;
+}
+
+// Get a specified leaderboard with scores.
+message LeaderboardGet {
+  // Leaderboard ID to get.
+  string id = 1;
+  // Owner ID to get scores around.
+  string owner_id = 2;
+  // Limit.
+  int32 limit = 3;
+  // Cursor.
+  string cursor = 4;
+}
+
+message LeaderboardScore {
+  // User ID.
+  string id = 1;
+  // Username.
+  string username = 2;
+  // Display name.
+  string display_name = 3;
+  // Avatar URL.
+  string avatar_url = 4;
+  // Time when the score was first created.
+  int64 create_time_sec = 5;
+  // Time when the score was last updated.
+  int64 update_time_sec = 6;
+  // Rank on the leaderboard.
+  int64 rank = 7;
+  // Score.
+  int64 score = 8;
+  // Subscore.
+  int64 subscore = 9;
+  // Number of score submissions.
+  int64 num_scores = 10;
+  // Metadata.
+  string metadata = 11;
+}
+
+// Details about a specific leaderboard.
+message Leaderboard {
+  // Leaderboard ID.
+  string id = 1;
+  // Score ordering. If true, lower scores are better.
+  bool ascending = 2;
+  // Score submission operator.
+  string operator = 3;
+  // The leaderboard reset schedule.
+  string reset_schedule = 4;
+  // Whether the leaderboard is authoritative or not.
+  bool authoritative = 5;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 6;
+  // Participants and their scores.
+  repeated LeaderboardScore scores = 7;
+  // Owner scores.
+  repeated LeaderboardScore owner_scores = 8;
+  // Next page cursor.
+  string next_cursor = 9;
+  // Previous page cursor.
+  string prev_cursor = 10;
+  // Total rank count.
+  int64 rank_count = 11;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 12;
+  // List of regional leaderboards, if any.
+  repeated string regions = 13;
+}
+
+// Several leaderboards, resulting from a listing operation.
+message Leaderboards {
+  // Zero or more leaderboards.
+  repeated Leaderboard leaderboards = 1;
+}
+
+// A leaderboard configuration.
+message LeaderboardConfig {
+  // The leaderboard id.
+  string id = 1;
+  // The leaderboard sort order.
+  string sort_order = 2;
+  // The leaderboard operator.
+  string operator = 3;
+  // The leaderboard reset schedule.
+  string reset_schedule = 4;
+  // Whether the leaderboard is authoritative or not.
+  bool authoritative = 5;
+  // List of regional leaderboards of the leaderboard, if any.
+  repeated string regions = 6;
+}
+
+// A list of leaderboard configurations.
+message LeaderboardConfigList {
+  // The list of leaderboard configurations.
+  repeated LeaderboardConfig leaderboard_configs = 1;
 }
 
 // The cost(s) associated with permanently unlocking a progression.
@@ -2209,28 +2330,6 @@ message EnergySpendWithTime {
 message EnergySpendWithRefillStartTimeRequest {
   // Energy spends with custom refill start times, keyed on the energy identifier.
   map<string, EnergySpendWithTime> spends = 1;
-}
-
-// A leaderboard configuration.
-message LeaderboardConfig {
-  // The leaderboard id.
-  string id = 1;
-  // The leaderboard sort order.
-  string sort_order = 2;
-  // The leaderboard operator.
-  string operator = 3;
-  // The leaderboard reset schedule.
-  string reset_schedule = 4;
-  // Whether the leaderboard is authoritative or not.
-  bool authoritative = 5;
-  // List of regional leaderboards of the leaderboard, if any.
-  repeated string regions = 6;
-}
-
-// A list of leaderboard configurations.
-message LeaderboardConfigList {
-  // The list of leaderboard configurations.
-  repeated LeaderboardConfig leaderboard_configs = 1;
 }
 
 // The states of a Tutorial.
