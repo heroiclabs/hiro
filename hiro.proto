@@ -311,6 +311,10 @@ enum RpcId {
   RPC_ID_ECONOMY_PLACEMENT_FAIL = 1002;
   // RPC to upload Hiro system configurations for the storage personalizer.
   RPC_ID_STORAGE_PERSONALIZER_UPLOAD = 1003;
+
+  // adriana-test
+  RPC_ID_ADRIANA_TEST = 1004 [(input) = "AdrianaTestRequest", (output) = "AdrianaTestMessage"];;
+
 }
 
 enum RpcSocketId {
@@ -2848,6 +2852,11 @@ message RewardMailboxEntry {
   bool can_claim = 7;
 }
 
+message AdrianaTestMessage {
+  // Documentation message generated
+  bool hello = 1;
+}
+
 // A list of reward mailbox entries, with pagination information if applicable.
 message RewardMailboxList {
   // A list of reward mailbox entries for this reward mailbox.
@@ -2870,6 +2879,12 @@ message RewardMailboxClaimRequest {
   string id = 1;
   // If the entry should be deleted as part of the claim.
   bool delete = 2;
+}
+
+// Request to say hello
+message AdrianaTestRequest {
+  // Documentation message
+  string yes = 1;
 }
 
 // Request to delete a reward mailbox entry, even if it is not yet claimed.
