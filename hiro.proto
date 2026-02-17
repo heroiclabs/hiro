@@ -1449,18 +1449,22 @@ message EventLeaderboard {
   int64 score_target_players = 31;
   // Amount of time singe rolling into the cohort that participants have to submit scores.
   int64 score_time_limit_sec = 32;
+  // Time when the score time limit ends, if it is set.
+  int64 score_time_limit_ends_sec = 33;
   // Tier change amount between event leaderboard active phases.
-  int64 tier_delta_per_phase = 33;
+  int64 tier_delta_per_phase = 34;
   // Amount of time in seconds that must pass before rolling is allowed again after a cohort ends.
-  int64 roll_cooldown_sec = 34;
+  int64 roll_cooldown_sec = 35;
+  // Time when the roll cooldown ends, if it is set.
+  int64 roll_cooldown_ends_sec = 36;
   // If roll count will increase on rerolls. By default it is not "frozen" so it increases.
-  bool reroll_count_freeze = 35;
+  bool reroll_count_freeze = 37;
   // Best rank achieved so far within the event leaderboard active phase.
-  int64 best_rank = 36;
+  int64 best_rank = 38;
   // Indicates if the event can receive score updates.
-  bool can_update = 37;
+  bool can_update = 39;
   // Indicates if the cohort can be rolled if being claimed at the same time.
-  bool can_roll_with_claim = 38;
+  bool can_roll_with_claim = 40;
 }
 
 // Several event leaderboards the user has access to, resulting from a listing operation.
