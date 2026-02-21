@@ -1353,6 +1353,10 @@ message EventLeaderboardRewardTier {
   AvailableRewards available_rewards = 4;
   // Change in tier for this rank range.
   int32 tier_change = 5;
+  // Amount of time in seconds that must pass before rolling is allowed again after a cohort ends.
+  int64 roll_cooldown_sec = 6;
+  // True if rerolling should not count towards rolls, false if it should increase rolls count.
+  bool reroll_count_freeze = 7;
 }
 
 // An event leaderboard's tier-specific set of rewards.
@@ -1371,6 +1375,12 @@ message EventLeaderboardChangeZone {
   bool demote_idle = 3;
   // Whether or not to use the max cohort size or the actual cohort size to compute the change zones.
   bool use_max_cohort_size = 4;
+  // True if rerolling with a promotion should not count towards rolls, false if it should increase rolls count.
+  bool promotion_reroll_count_freeze = 5;
+  // True if rerolling with a demotion should not count towards rolls, false if it should increase rolls count.
+  bool demotion_reroll_count_freeze = 6;
+  // True if rerolling with no tier change should not count towards rolls, false if it should increase rolls count.
+  bool nochange_reroll_count_freeze = 7;
 }
 
 // Details about a specific event leaderboard.
@@ -1429,6 +1439,32 @@ message EventLeaderboard {
   string cohort_id = 26;
   // Backing ID for underlying score tracking.
   string backing_id = 27;
+  // Number of rolls so far in this event leaderboard active phase.
+  int64 rolls = 28;
+  // Maximum number of rolls allowed within a single event leaderboard active phase.
+  int64 max_rolls = 29;
+  // Score target that must be reached, or 0 for unlimited.
+  int64 score_target = 30;
+  // Number of players that can reach the score target, if one is defined.
+  int64 score_target_players = 31;
+  // Amount of time since rolling into the cohort that participants have to submit scores.
+  int64 score_time_limit_sec = 32;
+  // Time when the score time limit ends, if it is set.
+  int64 score_time_limit_ends_sec = 33;
+  // Tier change amount between event leaderboard active phases.
+  int64 tier_delta_per_phase = 34;
+  // Amount of time in seconds that must pass before rolling is allowed again after a cohort ends.
+  int64 roll_cooldown_sec = 35;
+  // Time when the roll cooldown ends, if it is set.
+  int64 roll_cooldown_ends_sec = 36;
+  // If roll count will increase on rerolls. By default it is not "frozen" so it increases.
+  bool reroll_count_freeze = 37;
+  // Best rank achieved so far within the event leaderboard active phase.
+  int64 best_rank = 38;
+  // Indicates if the event can receive score updates.
+  bool can_update = 39;
+  // Indicates if the cohort can be rolled if being claimed at the same time.
+  bool can_roll_with_claim = 40;
 }
 
 // Several event leaderboards the user has access to, resulting from a listing operation.
@@ -3204,6 +3240,32 @@ message TeamEventLeaderboard {
   string backing_id = 27;
   // Contributions from team members towards the score.
   repeated TeamEventLeaderboardContribution contributions = 28;
+  // Number of rolls so far in this event leaderboard active phase.
+  int64 rolls = 29;
+  // Maximum number of rolls allowed within a single event leaderboard active phase.
+  int64 max_rolls = 30;
+  // Score target that must be reached, or 0 for unlimited.
+  int64 score_target = 31;
+  // Number of players that can reach the score target, if one is defined.
+  int64 score_target_players = 32;
+  // Amount of time since rolling into the cohort that participants have to submit scores.
+  int64 score_time_limit_sec = 33;
+  // Time when the score time limit ends, if it is set.
+  int64 score_time_limit_ends_sec = 34;
+  // Tier change amount between event leaderboard active phases.
+  int64 tier_delta_per_phase = 35;
+  // Amount of time in seconds that must pass before rolling is allowed again after a cohort ends.
+  int64 roll_cooldown_sec = 36;
+  // Time when the roll cooldown ends, if it is set.
+  int64 roll_cooldown_ends_sec = 37;
+  // If roll count will increase on rerolls. By default it is not "frozen" so it increases.
+  bool reroll_count_freeze = 38;
+  // Best rank achieved so far within the event leaderboard active phase.
+  int64 best_rank = 39;
+  // Indicates if the event can receive score updates.
+  bool can_update = 40;
+  // Indicates if the cohort can be rolled if being claimed at the same time.
+  bool can_roll_with_claim = 41;
 }
 
 // Several team event leaderboards the team has access to, resulting from a listing operation.
