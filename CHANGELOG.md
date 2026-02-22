@@ -5,8 +5,36 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.32.0] - 2026-02-22
+### Added
+- Huge improvement to Event Leaderboards (2.0) which can now handle many different rulesets, replay, and win conditions. 🎉
+- Both claim any rewards and roll into a cohort within a Team Event Leaderboard can be done together.
+- New profanity filter options for User display name, chat message update, Team description, and Challenge name and description fields.
+- New server function to reset an Achievement's progress.
+- (Unity) Add "IsClaimed" util extension method to "ISubAchievement" type.
+- (Unity) Add "GetStoreItemsByCategory" util extension method to "IEconomySystem" type.
+
+### Changed
+- AllowFakeReceipts option can now be set outside of Economy data definition for easier environment selection.
+- Update server function to fetch more than one Team by ID.
+- Update to Nakama common v1.44.2 release.
+- (Unity) Logger type can be assigned to both Nakama and Satori client types.
+- (Unity) Update to '3.21.2' Nakama/Satori .NET client release.
+- (Unity) Use "IInitializeSystem" with "RewardMailboxSystem" type.
+- (Unity) "PurchaseStoreItemAsync" can take a raw receipt (not using the UnityPurchasing wrapper).
+- (Unity) Check exception not "IsTransientException(e)" with catch block to switch to offline mode.
+
+### Fixed
+- Apply profanity filter checks to both team names and team chat message contents.
+- Use the time offset (if specified) when an Achievement is checked for expiry.
+- (Unity) "EventLeaderboardsSystem" should not be Observable because it does not store internal state.
+- (Unity) Recalculate update time to compute "IsActive" with offline Achievements progress.
+- (Unity) Use correct ID when merging achievement updates in offline progress.
+- (Unity) Trim achievement progress with separate removal list when offline.
+- (Unity) Raise exception when reverse item grant has insufficient items to deduct.
+
 ## [1.31.0] - 2025-12-10
-## Fixed
+### Fixed
 - Update lookahead/lookbehind inputs to Live Events selector in Satori Personalizer.
 
 ## [1.30.0] - 2025-12-09
