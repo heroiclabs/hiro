@@ -328,6 +328,23 @@ func WithBaseSystemProfanityFilterUsername(threshold float64) BaseSystemOption {
 	}
 }
 
+// WithBaseSystemProfanityFilterDisplayName sets the profanity filtering threshold for display names, between 0.0 and 1.0.
+// Any value above the threshold will result in a rejection. Values outside 0.0 to 1.0 range will be clamped.
+// Default is not to filter at all.
+func WithBaseSystemProfanityFilterDisplayName(threshold float64) BaseSystemOption {
+	return &baseSystemOption{
+		applyFn: func(extra map[string]any) {
+			if threshold < 0.0 {
+				threshold = 0.0
+			}
+			if threshold > 1.0 {
+				threshold = 1.0
+			}
+			extra["ProfanityFilterDisplayName"] = threshold
+		},
+	}
+}
+
 // WithBaseSystemProfanityFilterTeamName sets the profanity filtering threshold for team names, between 0.0 and 1.0.
 // Any value above the threshold will result in a rejection. Values outside 0.0 to 1.0 range will be clamped.
 // Default is not to filter at all.

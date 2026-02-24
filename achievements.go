@@ -81,6 +81,9 @@ type AchievementsSystem interface {
 	// UpdateAchievements updates progress on one or more achievements by the same amount.
 	UpdateAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, achievementUpdates map[string]int64) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
 
+	// ResetAchievements resets one or more achievements by their IDs by deleting their progress from the storage entry.
+	ResetAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, achievementIDs []string) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
+
 	// SetOnAchievementReward sets a custom reward function which will run after an achievement's reward is rolled.
 	SetOnAchievementReward(fn OnReward[*AchievementsConfigAchievement])
 

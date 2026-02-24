@@ -136,11 +136,11 @@ type TeamsSystem interface {
 	// Update changes one or more properties of the team.
 	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamUpdateRequest) (team *Team, err error)
 
-	// Get a team by its identifier.
-	Get(ctx context.Context, db *sql.DB, logger runtime.Logger, nk runtime.NakamaModule, req *TeamGetRequest) (*Team, error)
+	// Get one or more teams by their identifier.
+	Get(ctx context.Context, db *sql.DB, logger runtime.Logger, nk runtime.NakamaModule, ids []string) (teams map[string]*Team, err error)
 
 	// UserTeamsList fetches user accounts and their associated teams.
-	UserTeamsList(ctx context.Context, db *sql.DB, logger runtime.Logger, nk runtime.NakamaModule, req *UserTeamsListRequest) (*UserTeamsList, error)
+	UserTeamsList(ctx context.Context, db *sql.DB, logger runtime.Logger, nk runtime.NakamaModule, req *UserTeamsListRequest) (list *UserTeamsList, err error)
 
 	// WriteChatMessage sends a message to the user's team even when they're not connected on a realtime socket.
 	WriteChatMessage(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, req *TeamWriteChatMessageRequest) (resp *ChannelMessageAck, err error)
@@ -192,6 +192,9 @@ type TeamsSystem interface {
 
 	// UpdateAchievements updates progress on one or more achievements by the same amount.
 	UpdateAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, achievementUpdates map[string]int64) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
+
+	// ResetAchievements resets one or more achievements by their IDs by deleting their progress from the storage entry.
+	ResetAchievements(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, achievementIDs []string) (achievements map[string]*Achievement, repeatAchievements map[string]*Achievement, err error)
 
 	// SetOnAchievementReward sets a custom reward function which will run after an achievement's reward is rolled.
 	SetOnAchievementReward(fn OnTeamReward[*AchievementsConfigAchievement])
