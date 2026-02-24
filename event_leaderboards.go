@@ -109,7 +109,7 @@ type EventLeaderboardsSystem interface {
 	DebugRandomScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string, scoreMin, scoreMax, subscoreMin, subscoreMax int64, operator *int) (eventLeaderboard *EventLeaderboard, err error)
 
 	// DebugUnenroll removes the user from their current cohort in the specified event leaderboard.
-	DebugUnenroll(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) error
+	DebugUnenroll(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, eventLeaderboardID string) (eventLeaderboard *EventLeaderboard, err error)
 }
 
 type EventLeaderboardCohortConfig struct {
