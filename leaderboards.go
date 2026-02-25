@@ -32,8 +32,14 @@ type LeaderboardsConfig struct {
 
 type LeaderboardsConfigLeaderboard struct {
 	Id            string            `json:"id,omitempty"`
+	Name          string            `json:"name,omitempty"`
+	Description   string            `json:"description,omitempty"`
+	Category      string            `json:"category,omitempty"`
 	SortOrder     string            `json:"sort_order,omitempty"`
 	Operator      string            `json:"operator,omitempty"`
+	StartTimeSec  int64             `json:"start_time_sec,omitempty"`
+	EndTimeSec    int64             `json:"end_time_sec,omitempty"`
+	Duration      int64             `json:"duration,omitempty"`
 	ResetSchedule string            `json:"reset_schedule,omitempty"`
 	Authoritative bool              `json:"authoritative,omitempty"`
 	Regions       []string          `json:"regions,omitempty"`
@@ -46,11 +52,7 @@ type OnLeaderboardUpdate func(ctx context.Context, logger runtime.Logger, db *sq
 // OnLeaderboardDeleteScore is a function called before or after a leaderboard score is deleted.
 type OnLeaderboardDeleteScore func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string) error
 
-// OnLeaderboardReset is a function called when a leaderboard resets.
-type OnLeaderboardReset func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, leaderboardID string, reset int64, config *LeaderboardsConfigLeaderboard) error
-
-// The LeaderboardsSystem defines a collection of leaderboards which can be defined as global or regional with Nakama
-// server.
+// The LeaderboardsSystem defines a collection of leaderboards which can be defined as global or regional with Nakama server.
 type LeaderboardsSystem interface {
 	System
 
@@ -58,28 +60,25 @@ type LeaderboardsSystem interface {
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*LeaderboardConfigList, error)
 
 	// ListLeaderboard returns a list of available leaderboards for the user.
-	ListLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, withScores bool) (*Leaderboards, error)
+	ListLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, categories []string) (*LeaderboardList, error)
 
 	// GetLeaderboard returns a specified leaderboard with scores.
-	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string, limit int32, cursor string) (*Leaderboard, error)
+	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string) (*Leaderboard, error)
+
+	// ListLeaderboardScores returns a list of scores for a specified leaderboard.
+	ListLeaderboardScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string, ownerIds []string, limit int, cursor string, expiry int64) (*LeaderboardScoreList, error)
+
+	// ListLeaderboardScoresAroundOwner returns a list of scores for a specified leaderboard around the owner's score.
+	ListLeaderboardScoresAroundOwner(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string, ownerId string, limit int, cursor string, expiry int64) (*LeaderboardScoreList, error)
 
 	// UpdateLeaderboard updates the user's score in the specified leaderboard.
-	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, username, leaderboardID string, score, subscore int64, metadata map[string]any, conditionalMetadataUpdate bool) (*Leaderboard, error)
+	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, username, leaderboardID string, score, subscore int64, metadata map[string]interface{}, conditionalMetadataUpdate bool) (*LeaderboardScore, error)
 
 	// SetOnBeforeUpdateScore sets a custom function which will run before a leaderboard score is updated.
 	SetOnBeforeUpdateScore(fn OnLeaderboardUpdate)
 
 	// SetOnAfterUpdateScore sets a custom function which will run after a leaderboard score is updated.
 	SetOnAfterUpdateScore(fn OnLeaderboardUpdate)
-
-	// SetOnBeforeDeleteScore sets a custom function which will run before a leaderboard score is deleted.
-	SetOnBeforeDeleteScore(fn OnLeaderboardDeleteScore)
-
-	// SetOnAfterDeleteScore sets a custom function which will run after a leaderboard score is deleted.
-	SetOnAfterDeleteScore(fn OnLeaderboardDeleteScore)
-
-	// SetOnLeaderboardReset sets a custom function which will run when a leaderboard resets.
-	SetOnLeaderboardReset(fn OnLeaderboardReset)
 }
 
 // ValidateWriteScoreFn is a function used to validate the leaderboard score input.
