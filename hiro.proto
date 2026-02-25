@@ -19,7 +19,6 @@ package hiro;
 
 import "google/protobuf/descriptor.proto";
 import "google/protobuf/struct.proto";
-import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/heroiclabs/hiro";
@@ -205,11 +204,15 @@ enum RpcId {
   // Deprecated: Use RPC_ID_LEADERBOARD_LIST instead. List available leaderboards.
   RPC_ID_LEADERBOARDS_CONFIG_GET = 38 [(input) = "", (output) = "LeaderboardConfigList"];
   // List available leaderboards.
-  RPC_ID_LEADERBOARD_LIST = 131 [(input) = "LeaderboardList", (output) = "Leaderboards"];
+  RPC_ID_LEADERBOARD_LIST = 126 [(input) = "LeaderboardListRequest", (output) = "LeaderboardList"];
   // Get a specified leaderboard with scores.
-  RPC_ID_LEADERBOARD_GET = 132 [(input) = "LeaderboardGet", (output) = "Leaderboard"];
+  RPC_ID_LEADERBOARD_GET = 127 [(input) = "LeaderboardGet", (output) = "Leaderboard"];
   // Update a leaderboard score.
-  RPC_ID_LEADERBOARD_UPDATE = 126 [(input) = "LeaderboardUpdate", (output) = "Leaderboard"];
+  RPC_ID_LEADERBOARD_UPDATE = 128 [(input) = "LeaderboardUpdate", (output) = "LeaderboardScore"];
+  // List scores on a specified leaderboard.
+  RPC_ID_LEADERBOARD_SCORES_LIST = 129 [(input) = "LeaderboardScoresListRequest", (output) = "LeaderboardScoreList"];
+  // List scores on a specified leaderboard around the owner.
+  RPC_ID_LEADERBOARD_SCORES_LIST_AROUND_OWNER = 130 [(input) = "LeaderboardScoresListAroundOwnerRequest", (output) = "LeaderboardScoreList"];
 
   // List available event leaderboards.
   RPC_ID_EVENT_LEADERBOARD_LIST = 80 [(input) = "EventLeaderboardList", (output) = "EventLeaderboards"];
@@ -329,12 +332,6 @@ enum RpcSocketId {
   RPC_SOCKET_ID_AUCTIONS_BID = 2 [(input) = "AuctionBidRequest", (output) = "Auction"];
 }
 
-// List available leaderboards.
-message LeaderboardList {
-  // Whether or not the response should include scores, defaults to false.
-  bool with_scores = 1;
-}
-
 message LeaderboardUpdate {
   // Leaderboard ID.
   string id = 1;
@@ -348,81 +345,129 @@ message LeaderboardUpdate {
   bool conditional_metadata_update = 5;
 }
 
-// Get a specified leaderboard with scores.
+// Get a specified leaderboard.
 message LeaderboardGet {
   // Leaderboard ID to get.
   string id = 1;
-  // Player IDs to include scores for.
-  repeated string player_ids = 2;
-  // Limit.
-  int32 limit = 3;
-  // Cursor.
-  string cursor = 4;
 }
 
-message LeaderboardScore {
-  // User ID.
+message LeaderboardListRequest {
+  // Optional filter of Leaderboard categories to list. If empty does not filter on category.
+  repeated string categories = 1;
+}
+
+// List scores on a specified leaderboard.
+message LeaderboardScoresListRequest {
+  // Leaderboard ID to list scores from.
   string id = 1;
-  // Username.
-  string username = 2;
-  // Display name.
-  string display_name = 3;
-  // Avatar URL.
-  string avatar_url = 4;
-  // Time when the score was first created.
-  int64 create_time_sec = 5;
-  // Time when the score was last updated.
-  int64 update_time_sec = 6;
-  // Rank on the leaderboard.
-  int64 rank = 7;
-  // Score.
-  int64 score = 8;
-  // Subscore.
-  int64 subscore = 9;
-  // Number of score submissions.
-  int64 num_scores = 10;
+  // One or more owners to retrieve records for.
+  repeated string owner_ids = 2;
+  // Max number of records to return. Between 1 and 1000.
+  int32 limit = 3;
+  // A next or previous page cursor.
+  string cursor = 4;
+  // Expiry in seconds (since epoch) to begin fetching records from. Optional. 0 means from current time.
+  int64 expiry = 5;
+}
+
+// List scores on a specified leaderboard around the owner.
+message LeaderboardScoresListAroundOwnerRequest {
+  // The ID of the leaderboard to list for.
+  string id = 1;
+  // Max number of records to return. Between 1 and 100.
+  int32 limit = 2;
+  // The owner to retrieve records around.
+  string owner_id = 3;
+  // Expiry in seconds (since epoch) to begin fetching records from.
+  int64 expiry = 4;
+  // A next or previous page cursor.
+  string cursor = 5;
+}
+
+// A leaderboard score record.
+message LeaderboardScore {
+  // The ID of the leaderboard this score belongs to.
+  string leaderboard_id = 1;
+  // The ID of the score owner, usually a user or group.
+  string owner_id = 2;
+  // The username of the score owner, if the owner is a user.
+  google.protobuf.StringValue username = 3;
+  // The score value.
+  int64 score = 4;
+  // An optional subscore value.
+  int64 subscore = 5;
+  // The number of submissions to this score record.
+  int32 num_score = 6;
   // Metadata.
-  string metadata = 11;
+  string metadata = 7;
+  // Time when the score was first created.
+  int64 create_time_sec = 8;
+  // Time when the score was last updated.
+  int64 update_time_sec = 9;
+  // Time when the score will expire.
+  int64 expiry_time_sec = 10;
+  // The rank of this score.
+  int64 rank = 11;
+  // Number of score submissions.
+  int64 num_scores = 12;
+}
+
+message LeaderboardScoreList {
+  // A list of leaderboard scores.
+  repeated LeaderboardScore scores = 1;
+  // A batched set of leaderboard scores belonging to specified owners.
+  repeated LeaderboardScore owner_scores = 2;
+  // The cursor to send when retrieving the next page, if any.
+  string next_cursor = 3;
+  // The cursor to send when retrieving the previous page, if any.
+  string prev_cursor = 4;
+  // The total number of ranks available.
+  int64 rank_count = 5;
+  // Leaderboard type
+  Leaderboard leaderboard = 6;
 }
 
 // Details about a specific leaderboard.
 message Leaderboard {
   // Leaderboard ID.
   string id = 1;
-  // Score ordering. If true, lower scores are better.
-  bool ascending = 2;
+  // The name of the leaderboard. May be an i18n code.
+  string name = 2;
+  // A description of the leaderboard. May be an i18n code.
+  string description = 3;
+  // The category to group the leaderboard together with others.
+  string category = 4;
+  // The leaderboard sort order.
+  string sort_order = 5;
   // Score submission operator.
-  string operator = 3;
-  // The leaderboard reset schedule.
-  string reset_schedule = 4;
-  // Whether the leaderboard is authoritative or not.
-  bool authoritative = 5;
-  // Additional metadata properties.
-  map<string, string> additional_properties = 6;
-  // Participants and their scores.
-  repeated LeaderboardScore scores = 7;
-  // Owner scores.
-  repeated LeaderboardScore owner_scores = 8;
-  // Next page cursor.
-  string next_cursor = 9;
-  // Previous page cursor.
-  string prev_cursor = 10;
-  // Total rank count.
-  int64 rank_count = 11;
+  string operator = 6;
+  // Time when the leaderboard last reset if it has a reset schedule.
+  int64 prev_reset_time_sec = 7;
+  // The next scheduled reset time for the leaderboard if it has a reset schedule.
+  int64 next_reset_time_sec = 8;
   // The UNIX timestamp for the current server time.
-  int64 current_time_sec = 12;
+  int64 current_time_sec = 9;
+  // The UNIX timestamp for the start time of the tournament (only relevant for tournament leaderboards).
+  int64 start_time_sec = 10;
+  // The UNIX timestamp for the end time of the tournament (only relevant for tournament leaderboards).
+  int64 end_time_sec = 11;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 12;
   // List of regional leaderboards, if any.
   repeated string regions = 13;
+  // Whether the leaderboard is authoritative or not.
+  bool authoritative = 14;
 }
 
 // Several leaderboards, resulting from a listing operation.
-message Leaderboards {
+message LeaderboardList {
   // Zero or more leaderboards.
   repeated Leaderboard leaderboards = 1;
 }
 
 // A leaderboard configuration.
 message LeaderboardConfig {
+  option deprecated = true;
   // The leaderboard id.
   string id = 1;
   // The leaderboard sort order.
@@ -439,6 +484,7 @@ message LeaderboardConfig {
 
 // A list of leaderboard configurations.
 message LeaderboardConfigList {
+  option deprecated = true;
   // The list of leaderboard configurations.
   repeated LeaderboardConfig leaderboard_configs = 1;
 }
@@ -3049,7 +3095,7 @@ message TeamStoreItem {
 message TeamStore {
   // The list of store items.
   repeated TeamStoreItem store_items = 1;
-   // The list of active reward modifiers.
+  // The list of active reward modifiers.
   repeated ActiveRewardModifier active_reward_modifiers = 4;
   // Current server time.
   int64 current_time_sec = 5;
