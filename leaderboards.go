@@ -57,7 +57,7 @@ type LeaderboardsSystem interface {
 	Get(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*LeaderboardConfigList, error)
 
 	// ListLeaderboard returns a list of available leaderboards for the user.
-	ListLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, categories []string) (*LeaderboardList, error)
+	ListLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, categories []string) ([]*Leaderboard, error)
 
 	// GetLeaderboard returns a specified leaderboard with scores.
 	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string) (*Leaderboard, error)
@@ -69,7 +69,7 @@ type LeaderboardsSystem interface {
 	ListLeaderboardScoresAroundOwner(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string, ownerId string, limit int, cursor string, expiry int64) (*LeaderboardScoreList, error)
 
 	// UpdateLeaderboard updates the user's score in the specified leaderboard.
-	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, username, leaderboardID string, score, subscore int64, metadata map[string]interface{}, conditionalMetadataUpdate bool) (*LeaderboardScore, error)
+	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, username, leaderboardID string, score, subscore int64, metadata map[string]interface{}, conditionalMetadataUpdate bool, overrideOperator *int) (*LeaderboardScore, error)
 
 	// SetOnBeforeUpdateScore sets a custom function which will run before a leaderboard score is updated.
 	SetOnBeforeUpdateScore(fn OnLeaderboardUpdate)
