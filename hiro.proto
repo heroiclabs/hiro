@@ -391,7 +391,7 @@ message LeaderboardScore {
   // The ID of the score owner, usually a user or group.
   string owner_id = 2;
   // The username of the score owner, if the owner is a user.
-  google.protobuf.StringValue username = 3;
+  string username = 3;
   // The score value.
   int64 score = 4;
   // An optional subscore value.
