@@ -1269,7 +1269,7 @@ paths:
   /rpc/RPC_ID_TEAMS_EVENT_LEADERBOARD_UPDATE?unwrap:
     post:
       summary: TEAMS_EVENT_LEADERBOARD_UPDATE
-      description: "Update an event leaderboard record for a user."
+      description: "Update an event leaderboard score for a user."
       operationId: TEAMS_EVENT_LEADERBOARD_UPDATE
       requestBody:
         required: true
@@ -1791,7 +1791,7 @@ paths:
   /rpc/RPC_ID_LEADERBOARDS_CONFIG_GET?unwrap:
     post:
       summary: LEADERBOARDS_CONFIG_GET
-      description: "Get the leaderboards defined for the game."
+      description: "Deprecated: Use RPC_ID_LEADERBOARD_LIST instead. List available leaderboards."
       operationId: LEADERBOARDS_CONFIG_GET
       responses:
         '200':
@@ -1800,6 +1800,78 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LeaderboardConfigList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_LEADERBOARD_LIST?unwrap:
+    post:
+      summary: LEADERBOARD_LIST
+      description: "List available leaderboards."
+      operationId: LEADERBOARD_LIST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaderboardList'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Leaderboards'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_LEADERBOARD_GET?unwrap:
+    post:
+      summary: LEADERBOARD_GET
+      description: "Get a specified leaderboard with scores."
+      operationId: LEADERBOARD_GET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaderboardGet'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Leaderboard'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_LEADERBOARD_UPDATE?unwrap:
+    post:
+      summary: LEADERBOARD_UPDATE
+      description: "Update a leaderboard score."
+      operationId: LEADERBOARD_UPDATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaderboardUpdate'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Leaderboard'
         'default':
           description: An error response
           content:
@@ -1857,7 +1929,7 @@ paths:
   /rpc/RPC_ID_EVENT_LEADERBOARD_UPDATE?unwrap:
     post:
       summary: EVENT_LEADERBOARD_UPDATE
-      description: "Update an event leaderboard record for a user."
+      description: "Update an event leaderboard score for a user."
       operationId: EVENT_LEADERBOARD_UPDATE
       requestBody:
         required: true
@@ -2905,6 +2977,141 @@ components:
         code:
           type: integer
           format: int32
+    LeaderboardList:
+      type: object
+      properties:
+        with_scores:
+          type: boolean
+    LeaderboardUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+        conditional_metadata_update:
+          type: boolean
+    LeaderboardGet:
+      type: object
+      properties:
+        id:
+          type: string
+        player_ids:
+          type: array
+          items:
+            type: string
+        limit:
+          type: integer
+          format: int32
+        cursor:
+          type: string
+    LeaderboardScore:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        display_name:
+          type: string
+        avatar_url:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        rank:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+    Leaderboard:
+      type: object
+      properties:
+        id:
+          type: string
+        ascending:
+          type: boolean
+        operator:
+          type: string
+        reset_schedule:
+          type: string
+        authoritative:
+          type: boolean
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        owner_scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        next_cursor:
+          type: string
+        prev_cursor:
+          type: string
+        rank_count:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        regions:
+          type: array
+          items:
+            type: string
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    Leaderboards:
+      type: object
+      properties:
+        leaderboards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Leaderboard'
+    LeaderboardConfig:
+      type: object
+      properties:
+        id:
+          type: string
+        sort_order:
+          type: string
+        operator:
+          type: string
+        reset_schedule:
+          type: string
+        authoritative:
+          type: boolean
+        regions:
+          type: array
+          items:
+            type: string
+    LeaderboardConfigList:
+      type: object
+      properties:
+        leaderboard_configs:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardConfig'
     ProgressionCost:
       type: object
       properties:
@@ -3647,6 +3854,9 @@ components:
             type: string
         open:
           type: boolean
+        max_scores:
+          type: integer
+          format: int64
         start_delay_sec:
           type: integer
           format: int64
@@ -4906,30 +5116,6 @@ components:
     EnergySpendWithRefillStartTimeRequest:
       type: object
       properties:
-    LeaderboardConfig:
-      type: object
-      properties:
-        id:
-          type: string
-        sort_order:
-          type: string
-        operator:
-          type: string
-        reset_schedule:
-          type: string
-        authoritative:
-          type: boolean
-        regions:
-          type: array
-          items:
-            type: string
-    LeaderboardConfigList:
-      type: object
-      properties:
-        leaderboard_configs:
-          type: array
-          items:
-            $ref: '#/components/schemas/LeaderboardConfig'
     Tutorial:
       type: object
       properties:
@@ -6514,6 +6700,9 @@ components:
         - RPC_ID_BASE_SET_DEVICE_PREFS
         - RPC_ID_BASE_SYNC
         - RPC_ID_LEADERBOARDS_CONFIG_GET
+        - RPC_ID_LEADERBOARD_LIST
+        - RPC_ID_LEADERBOARD_GET
+        - RPC_ID_LEADERBOARD_UPDATE
         - RPC_ID_EVENT_LEADERBOARD_LIST
         - RPC_ID_EVENT_LEADERBOARD_GET
         - RPC_ID_EVENT_LEADERBOARD_UPDATE
