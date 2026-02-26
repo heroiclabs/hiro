@@ -49,9 +49,6 @@ type LeaderboardsConfigLeaderboard struct {
 // OnLeaderboardUpdate is a function called before or after a leaderboard score is updated.
 type OnLeaderboardUpdate func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string, score, subscore int64, metadata map[string]any) (int64, int64, map[string]any, error)
 
-// OnLeaderboardDeleteScore is a function called before or after a leaderboard score is deleted.
-type OnLeaderboardDeleteScore func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, leaderboardID, ownerID string) error
-
 // The LeaderboardsSystem defines a collection of leaderboards which can be defined as global or regional with Nakama server.
 type LeaderboardsSystem interface {
 	System
