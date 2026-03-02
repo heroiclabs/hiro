@@ -22,7 +22,8 @@ import (
 )
 
 var (
-	ErrLeaderboardNotFound = runtime.NewError("leaderboard not found", 3) // INVALID_ARGUMENT
+	ErrLeaderboardNotFound                    = runtime.NewError("leaderboard not found", 3)                      // INVALID_ARGUMENT
+	ErrLeaderboardUpdateOutsideActiveDuration = runtime.NewError("leaderboard update outside active duration", 3) // INVALID_ARGUMENT
 )
 
 // LeaderboardsConfig is the data definition for the LeaderboardsSystem type.
