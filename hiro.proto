@@ -370,6 +370,8 @@ message LeaderboardScoresListRequest {
   string cursor = 4;
   // Expiry in seconds (since epoch) to begin fetching records from. Optional. 0 means from current time.
   int64 expiry = 5;
+  // Optional region to list scores from. If empty does not filter on region.
+  string region = 6;
 }
 
 // List scores on a specified leaderboard around the owner.
@@ -384,6 +386,8 @@ message LeaderboardScoresListAroundOwnerRequest {
   int64 expiry = 4;
   // A next or previous page cursor.
   string cursor = 5;
+  // Optional region to list scores from. If empty does not filter on region.
+  string region = 6;
 }
 
 // A leaderboard score record.

@@ -65,10 +65,10 @@ type LeaderboardsSystem interface {
 	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string) (*Leaderboard, error)
 
 	// ListLeaderboardScores returns a list of scores for a specified leaderboard.
-	ListLeaderboardScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string, ownerIds []string, limit int, cursor string, expiry int64) (*LeaderboardScoreList, error)
+	ListLeaderboardScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID, region string, ownerIds []string, limit int, cursor string, expiry int64) (*LeaderboardScoreList, error)
 
 	// ListLeaderboardScoresAroundOwner returns a list of scores for a specified leaderboard around the owner's score.
-	ListLeaderboardScoresAroundOwner(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID string, ownerId string, limit int, cursor string, expiry int64) (*LeaderboardScoreList, error)
+	ListLeaderboardScoresAroundOwner(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, leaderboardID, region string, ownerId string, limit int, cursor string, expiry int64) (*LeaderboardScoreList, error)
 
 	// UpdateLeaderboard updates the user's score in the specified leaderboard.
 	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, username, leaderboardID string, score, subscore int64, metadata map[string]interface{}, conditionalMetadataUpdate bool, overrideOperator *int) (*LeaderboardScore, error)
