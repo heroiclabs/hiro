@@ -1339,6 +1339,8 @@ message EventLeaderboardScore {
   int64 subscore = 9;
   // Number of score submissions.
   int64 num_scores = 10;
+  // Score change zone
+  int32 change_zone = 12;
   // Metadata.
   string metadata = 11;
 }
