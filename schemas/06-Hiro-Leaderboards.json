@@ -5,11 +5,42 @@
     "leaderboards": {
       "items": {
         "properties": {
+          "additional_properties": {
+            "patternProperties": {
+              ".+": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
           "authoritative": {
             "type": "boolean"
           },
+          "ascending": {
+            "type": "boolean"
+          },
+          "category": {
+            "pattern": ".+",
+            "type": "string"
+          },
+          "description": {
+            "pattern": ".*",
+            "type": "string"
+          },
+          "duration": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "end_time_sec": {
+            "minimum": 0,
+            "type": "number"
+          },
           "id": {
             "pattern": ".{1,}",
+            "type": "string"
+          },
+          "name": {
+            "pattern": ".+",
             "type": "string"
           },
           "operator": {
@@ -41,11 +72,15 @@
               "descending"
             ],
             "type": "string"
+          },
+          "start_time_sec": {
+            "minimum": 0,
+            "type": "number"
           }
         },
         "required": [
           "id",
-          "sort_order",
+          "ascending",
           "operator",
           "authoritative"
         ],

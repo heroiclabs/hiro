@@ -439,8 +439,8 @@ message Leaderboard {
   string description = 3;
   // The category to group the leaderboard together with others.
   string category = 4;
-  // The leaderboard sort order.
-  string sort_order = 5;
+  // The leaderboard score ordering.
+  bool ascending = 5;
   // Score submission operator.
   string operator = 6;
   // Time when the leaderboard last reset if it has a reset schedule.

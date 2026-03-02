@@ -31,19 +31,20 @@ type LeaderboardsConfig struct {
 }
 
 type LeaderboardsConfigLeaderboard struct {
-	Id            string            `json:"id,omitempty"`
-	Name          string            `json:"name,omitempty"`
-	Description   string            `json:"description,omitempty"`
-	Category      string            `json:"category,omitempty"`
-	SortOrder     string            `json:"sort_order,omitempty"`
-	Operator      string            `json:"operator,omitempty"`
-	StartTimeSec  int64             `json:"start_time_sec,omitempty"`
-	EndTimeSec    int64             `json:"end_time_sec,omitempty"`
-	Duration      int64             `json:"duration,omitempty"`
-	ResetSchedule string            `json:"reset_schedule,omitempty"`
-	Authoritative bool              `json:"authoritative,omitempty"`
-	Regions       []string          `json:"regions,omitempty"`
-	Metadata      map[string]string `json:"metadata,omitempty"`
+	Id                   string            `json:"id,omitempty"`
+	Name                 string            `json:"name,omitempty"`
+	Description          string            `json:"description,omitempty"`
+	Category             string            `json:"category,omitempty"`
+	SortOrder            string            `json:"sort_order,omitempty"`
+	Ascending            bool              `json:"ascending,omitempty"`
+	Operator             string            `json:"operator,omitempty"`
+	StartTimeSec         int64             `json:"start_time_sec,omitempty"`
+	EndTimeSec           int64             `json:"end_time_sec,omitempty"`
+	Duration             int64             `json:"duration,omitempty"`
+	ResetSchedule        string            `json:"reset_schedule,omitempty"`
+	Authoritative        bool              `json:"authoritative,omitempty"`
+	Regions              []string          `json:"regions,omitempty"`
+	AdditionalProperties map[string]string `json:"additional_properties,omitempty"`
 }
 
 // OnLeaderboardUpdate is a function called before or after a leaderboard score is updated.
