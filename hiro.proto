@@ -1340,7 +1340,7 @@ message EventLeaderboardScore {
   // Number of score submissions.
   int64 num_scores = 10;
   // Score change zone
-  int32 change_zone = 12;
+  int32 tier_delta = 12;
   // Metadata.
   string metadata = 11;
 }
