@@ -20,27 +20,27 @@ import (
 
 // source of obtaining/spending an item, currency, energy, or modifier.
 const (
-	EventSourceDonationClaimed           = "donation_claimed"
-	EventSourceDonationGiven             = "donation_given"
-	EventSourceDonationRequested         = "donation_requested"
-	EventSourceEconomyGranted            = "economy_granted"
-	EventSourceRewardGranted             = "reward_granted"
-	EventSourceItemPurchased             = "item_purchased"
-	EventSourcePlacementSucceeded        = "placement_succeeded"
-	EventSourceAchievementUpdated        = "achievement_updated"
-	EventSourceAchievementClaimed        = "achievement_claimed"
-	EventSourceItemsConsumed             = "items_consumed"
-	EventSourceItemsGranted              = "items_granted"
-	EventSourceEnergySpent               = "energy_spent"
-	EventSourceIncentiveSenderClaimed    = "incentive_sender_claimed"
-	EventSourceIncentiveRecipientClaimed = "incentive_recipient_claimed"
-	EventSourceEventLeaderboardClaimed   = "event_leaderboard_claimed"
-	EventSourceProgressionPurchased      = "progression_purchased"
-	EventSourceUnlockableUnlockPurchased = "unlockable_unlock_purchased"
-	EventSourceUnlockableSlotPurchased   = "unlockable_slot_purchased"
-	EventSourceUnlockableClaimed         = "unlockable_claimed"
-	EventSourceInitializeUser            = "initialize_user"
-	EventSourceChallengeClaimed          = "challenge_claimed"
+	EventSourceDonationClaimed           = "donationClaimed"
+	EventSourceDonationGiven             = "donationGiven"
+	EventSourceDonationRequested         = "donationRequested"
+	EventSourceEconomyGranted            = "economyGranted"
+	EventSourceRewardGranted             = "rewardGranted"
+	EventSourceItemPurchased             = "itemPurchased"
+	EventSourcePlacementSucceeded        = "placementSucceeded"
+	EventSourceAchievementUpdated        = "achievementUpdated"
+	EventSourceAchievementClaimed        = "achievementClaimed"
+	EventSourceItemsConsumed             = "itemsConsumed"
+	EventSourceItemsGranted              = "itemsGranted"
+	EventSourceEnergySpent               = "energySpent"
+	EventSourceIncentiveSenderClaimed    = "incentiveSenderClaimed"
+	EventSourceIncentiveRecipientClaimed = "incentiveRecipientClaimed"
+	EventSourceEventLeaderboardClaimed   = "eventLeaderboardClaimed"
+	EventSourceProgressionPurchased      = "progressionPurchased"
+	EventSourceUnlockableUnlockPurchased = "unlockableUnlockPurchased"
+	EventSourceUnlockableSlotPurchased   = "unlockableSlotPurchased"
+	EventSourceUnlockableClaimed         = "unlockableClaimed"
+	EventSourceInitializeUser            = "initializeUser"
+	EventSourceChallengeClaimed          = "challengeClaimed"
 )
 
 func newUUID() string {
@@ -64,7 +64,7 @@ func NewDonationClaimedEvent(system System, donationID string, donationConfig *E
 		Name: "donationClaimed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"donation_id": donationID,
+			"donationId": donationID,
 		},
 		Timestamp: ts,
 
@@ -80,8 +80,8 @@ func NewDonationGivenEvent(system System, donationID string, donationConfig *Eco
 		Name: "donationGiven",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"donation_id":  donationID,
-			"recipient_id": recipientID,
+			"donationId":  donationID,
+			"recipientId": recipientID,
 		},
 		Timestamp: ts,
 
@@ -97,7 +97,7 @@ func NewDonationRequestedEvent(system System, donationID string, donationConfig 
 		Name: "donationRequested",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"donation_id": donationID,
+			"donationId": donationID,
 		},
 		Timestamp: ts,
 
@@ -113,8 +113,8 @@ func NewCurrencyGrantedEvent(system System, sourceID string, sourceConfig any, c
 		Name: "currencyGranted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"currency_id": currencyID,
-			"source":      source,
+			"currencyId": currencyID,
+			"source":     source,
 		},
 		Value:     strconv.FormatInt(amount, 10),
 		Timestamp: ts,
@@ -130,8 +130,8 @@ func NewItemGrantedEvent(system System, sourceID string, sourceConfig any, itemI
 		Name: "itemsGranted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"item_id": itemID,
-			"source":  source,
+			"itemId": itemID,
+			"source": source,
 		},
 		Value:     strconv.FormatInt(amount, 10),
 		Timestamp: ts,
@@ -147,9 +147,9 @@ func NewTeamItemGrantedEvent(system System, sourceID string, sourceConfig any, t
 		Name: "teamItemsGranted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"team_id": teamID,
-			"item_id": itemID,
-			"source":  source,
+			"teamId": teamID,
+			"itemId": itemID,
+			"source": source,
 		},
 		Value:     strconv.FormatInt(amount, 10),
 		Timestamp: ts,
@@ -166,8 +166,8 @@ func NewEnergyGrantedEvent(system System, sourceID string, sourceConfig any, ene
 		Name: "energyGranted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"energy_id": energyID,
-			"source":    source,
+			"energyId": energyID,
+			"source":   source,
 		},
 		Timestamp: ts,
 		Value:     strconv.FormatInt(int64(amount), 10),
@@ -184,10 +184,10 @@ func NewEnergyModiferGrantedEvent(system System, sourceID string, sourceConfig a
 		Name: "energyModifierGranted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"energy_modifier_id": energyModifierID,
-			"operator":           operator,
-			"duration_sec":       strconv.FormatUint(durationSec, 10),
-			"source":             source,
+			"energyModifierId": energyModifierID,
+			"operator":         operator,
+			"durationSec":      strconv.FormatUint(durationSec, 10),
+			"source":           source,
 		},
 		Value:     strconv.FormatInt(value, 10),
 		Timestamp: ts,
@@ -204,11 +204,11 @@ func NewRewardModifierGrantedEvent(system System, sourceID string, sourceConfig 
 		Name: "rewardModifierGranted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"reward_modifier_id": rewardModifierID,
-			"type":               modifierType,
-			"operator":           operator,
-			"duration_sec":       strconv.FormatUint(durationSec, 10),
-			"source":             source,
+			"rewardModifierId": rewardModifierID,
+			"type":             modifierType,
+			"operator":         operator,
+			"durationSec":      strconv.FormatUint(durationSec, 10),
+			"source":           source,
 		},
 		Value:     strconv.FormatInt(value, 10),
 		Timestamp: ts,
@@ -225,8 +225,8 @@ func NewCurrencySpentEvent(system System, sourceID string, sourceConfig any, cur
 		Name: "currencySpent",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"currency_id": currencyID,
-			"source":      source,
+			"currencyId": currencyID,
+			"source":     source,
 		},
 		Value:     strconv.FormatInt(int64(amount), 10),
 		Timestamp: ts,
@@ -243,8 +243,8 @@ func NewItemSpentEvent(system System, sourceID string, sourceConfig any, itemID 
 		Name: "itemSpent",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"item_id": itemID,
-			"source":  source,
+			"itemId": itemID,
+			"source": source,
 		},
 		Value:     strconv.FormatInt(int64(amount), 10),
 		Timestamp: ts,
@@ -261,7 +261,7 @@ func NewEnergySpentEvent(system System, energyID string, energyConfig *EnergyCon
 		Name: "energySpent",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"energy_id": energyID,
+			"energyId": energyID,
 		},
 		Value:     strconv.FormatInt(int64(amount), 10),
 		Timestamp: ts,
@@ -278,8 +278,8 @@ func NewPurchaseIntentEvent(system System, storeItemID string, storeItem *Econom
 		Name: "purchaseIntent",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"store_item_id": storeItemID,
-			"store_type":    storeType.String(),
+			"storeItemId": storeItemID,
+			"storeType":   storeType.String(),
 		},
 		Timestamp: ts,
 
@@ -295,10 +295,10 @@ func NewPurchaseCompletedEvent(system System, storeItemID string, storeItem *Eco
 		Name: "purchaseCompleted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"id":         storeItemID, // keep named as "id" rather than "store_item_id" for backwards compatibility.
-			"currency":   currency,
-			"amount":     strconv.FormatFloat(amount, 'f', 2, 64),
-			"store_type": storeType.String(),
+			"id":        storeItemID, // keep named as "id" rather than "storeItemId" for backwards compatibility.
+			"currency":  currency,
+			"amount":    strconv.FormatFloat(amount, 'f', 2, 64),
+			"storeType": storeType.String(),
 		},
 		Value:     strconv.FormatInt(amountUSDCents, 10),
 		Timestamp: ts,
@@ -315,7 +315,7 @@ func NewAdPlacementStartedEvent(system System, placementID string, placementConf
 		Name: "adPlacementStarted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"placement_id": placementID,
+			"placementId": placementID,
 		},
 		Timestamp: ts,
 
@@ -331,8 +331,8 @@ func NewAdPlacementSucceededEvent(system System, placementID string, placementCo
 		Name: "adPlacementSucceeded",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"placement_id": placementID,
-			"max_retries":  strconv.FormatBool(maxRetries),
+			"placementId": placementID,
+			"maxRetries":  strconv.FormatBool(maxRetries),
 		},
 		Timestamp: ts,
 
@@ -348,7 +348,7 @@ func NewAdPlacementFailedEvent(system System, placementID string, placementConfi
 		Name: "adPlacementFailed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"placement_id": placementID,
+			"placementId": placementID,
 		},
 		Timestamp: ts,
 
@@ -364,7 +364,7 @@ func NewAchievementUpdatedEvent(system System, achievementID string, achievement
 		Name: "achievementUpdated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"achievement_id": achievementID,
+			"achievementId": achievementID,
 		},
 		Value:     strconv.FormatInt(count, 10),
 		Timestamp: ts,
@@ -381,8 +381,8 @@ func NewTeamAchievementUpdatedEvent(system System, teamID, achievementID string,
 		Name: "achievementUpdated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"team_id":        teamID,
-			"achievement_id": achievementID,
+			"teamId":        teamID,
+			"achievementId": achievementID,
 		},
 		Value:     strconv.FormatInt(count, 10),
 		Timestamp: ts,
@@ -399,7 +399,7 @@ func NewAchievementClaimedEvent(system System, achievementID string, achievement
 		Name: "achievementClaimed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"achievement_id": achievementID,
+			"achievementId": achievementID,
 		},
 		Timestamp: ts,
 		// No value.
@@ -416,8 +416,8 @@ func NewTeamAchievementClaimedEvent(system System, teamID, achievementID string,
 		Name: "teamAchievementClaimed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"team_id":        teamID,
-			"achievement_id": achievementID,
+			"teamId":        teamID,
+			"achievementId": achievementID,
 		},
 		Timestamp: ts,
 		// No value.
@@ -434,7 +434,7 @@ func NewProgressionPurchasedEvent(system System, progressionID string, progressi
 		Name: "progressionPurchased",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"progression_id": progressionID,
+			"progressionId": progressionID,
 		},
 		Timestamp: ts,
 
@@ -450,8 +450,8 @@ func NewProgressionUpdatedEvent(system System, progressionID string, progression
 		Name: "progressionUpdated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"progression_id": progressionID,
-			"count_id":       countID,
+			"progressionId": progressionID,
+			"countId":       countID,
 		},
 		Value:     strconv.FormatInt(count, 10),
 		Timestamp: ts,
@@ -468,7 +468,7 @@ func NewProgressionResetEvent(system System, progressionID string, progressionCo
 		Name: "progressionReset",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"progression_id": progressionID,
+			"progressionId": progressionID,
 		},
 		Timestamp: ts,
 
@@ -484,7 +484,7 @@ func NewItemsConsumedEvent(system System, itemID string, itemConfig *InventoryCo
 		Name: "itemsConsumed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"item_id": itemID,
+			"itemId": itemID,
 		},
 		Value:     strconv.FormatInt(amount, 10),
 		Timestamp: ts,
@@ -501,8 +501,8 @@ func NewTeamItemsConsumedEvent(system System, teamID, itemID string, itemConfig 
 		Name: "teamItemsConsumed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"item_id": itemID,
-			"team_id": teamID,
+			"itemId": itemID,
+			"teamId": teamID,
 		},
 		Value:     strconv.FormatInt(amount, 10),
 		Timestamp: ts,
@@ -529,9 +529,9 @@ func NewItemUpdatedEvent(system System, itemID string, itemConfig *InventoryConf
 		Name: "itemUpdated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"item_id":            itemID,
-			"string_properties":  string(stringPropertiesJson),
-			"numeric_properties": string(numericPropertiesJson),
+			"itemId":            itemID,
+			"stringProperties":  string(stringPropertiesJson),
+			"numericProperties": string(numericPropertiesJson),
 		},
 		Timestamp: ts,
 
@@ -556,10 +556,10 @@ func NewTeamItemUpdatedEvent(system System, teamID, itemID string, itemConfig *I
 		Name: "teamItemUpdated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"team_id":            teamID,
-			"item_id":            itemID,
-			"string_properties":  string(stringPropertiesJson),
-			"numeric_properties": string(numericPropertiesJson),
+			"teamId":            teamID,
+			"itemId":            itemID,
+			"stringProperties":  string(stringPropertiesJson),
+			"numericProperties": string(numericPropertiesJson),
 		},
 		Timestamp: ts,
 
@@ -595,7 +595,7 @@ func NewTeamStatUpdatedEvent(system System, name string, stat any, operator Stat
 		Metadata: map[string]string{
 			"name":     name,
 			"operator": operator.String(),
-			"team_id":  teamID,
+			"teamId":  teamID,
 		},
 		Value:     strconv.FormatInt(value, 10),
 		Timestamp: ts,
@@ -612,7 +612,7 @@ func NewTutorialAcceptedEvent(system System, tutorialID string, tutorialConfig *
 		Name: "tutorialAccepted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"tutorial_id": tutorialID,
+			"tutorialId": tutorialID,
 		},
 		Timestamp: ts,
 
@@ -628,7 +628,7 @@ func NewTutorialDeclinedEvent(system System, tutorialID string, tutorialConfig *
 		Name: "tutorialDeclined",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"tutorial_id": tutorialID,
+			"tutorialId": tutorialID,
 		},
 		Timestamp: ts,
 
@@ -644,7 +644,7 @@ func NewTutorialStartedEvent(system System, tutorialID string, tutorialConfig *T
 		Name: "tutorialStarted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"tutorial_id": tutorialID,
+			"tutorialId": tutorialID,
 		},
 		Value:     strconv.FormatInt(int64(step), 10),
 		Timestamp: ts,
@@ -661,7 +661,7 @@ func NewTutorialAbandonedEvent(system System, tutorialID string, tutorialConfig 
 		Name: "tutorialAbandoned",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"tutorial_id": tutorialID,
+			"tutorialId": tutorialID,
 		},
 		Timestamp: ts,
 		Value:     strconv.FormatInt(int64(step), 10),
@@ -678,7 +678,7 @@ func NewTutorialStepCompletedEvent(system System, tutorialID string, tutorialCon
 		Name: "tutorialStepCompleted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"tutorial_id": tutorialID,
+			"tutorialId": tutorialID,
 		},
 		Value:     strconv.FormatInt(int64(step), 10),
 		Timestamp: ts,
@@ -695,7 +695,7 @@ func NewTutorialCompletedEvent(system System, tutorialID string, tutorialConfig 
 		Name: "tutorialCompleted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"tutorial_id": tutorialID,
+			"tutorialId": tutorialID,
 		},
 		Value:     strconv.FormatInt(int64(step), 10),
 		Timestamp: ts,
@@ -712,7 +712,7 @@ func NewTutorialResetEvent(system System, tutorialID string, tutorialConfig *Tut
 		Name: "tutorialReset",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"tutorial_id": tutorialID,
+			"tutorialId": tutorialID,
 		},
 		Timestamp: ts,
 
@@ -728,8 +728,8 @@ func NewTeamCreatedEvent(system System, teamID string, team *Team, open bool, ma
 		Name: "teamCreated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"team_id": teamID,
-			"open":    strconv.FormatBool(open),
+			"teamId": teamID,
+			"open":   strconv.FormatBool(open),
 		},
 		Timestamp: ts,
 		Value:     strconv.FormatInt(int64(maxCount), 10),
@@ -746,8 +746,8 @@ func NewIncentiveCreatedEvent(system System, incentiveID string, incentiveConfig
 		Name: "incentiveCreated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"incentive_id": incentiveID,
-			"code":         code,
+			"incentiveId": incentiveID,
+			"code":        code,
 		},
 		Timestamp: ts,
 
@@ -763,8 +763,8 @@ func NewIncentiveDeletedEvent(system System, incentiveID string, incentiveConfig
 		Name: "incentiveDeleted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"incentive_id": incentiveID,
-			"code":         code,
+			"incentiveId": incentiveID,
+			"code":        code,
 		},
 		Timestamp: ts,
 
@@ -780,9 +780,9 @@ func NewIncentiveSenderClaimedEvent(system System, incentiveID string, incentive
 		Name: "incentiveSenderClaimed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"incentive_id": incentiveID,
-			"code":         code,
-			"claimaint_id": clamaintID,
+			"incentiveId": incentiveID,
+			"code":        code,
+			"claimaintId": clamaintID,
 		},
 		Timestamp: ts,
 
@@ -798,8 +798,8 @@ func NewIncentiveRecipientClaimedEvent(system System, incentiveID string, incent
 		Name: "incentiveRecipientClaimed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"incentive_id": incentiveID,
-			"code":         code,
+			"incentiveId": incentiveID,
+			"code":        code,
 		},
 		Timestamp: ts,
 
@@ -815,7 +815,7 @@ func NewEventLeaderboardRolledEvent(system System, eventLeaderboardID string, ev
 		Name: "eventLeaderboardRolled",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"event_leaderboard_id": eventLeaderboardID,
+			"eventLeaderboardId": eventLeaderboardID,
 		},
 		Timestamp: ts,
 
@@ -831,8 +831,8 @@ func NewTeamEventLeaderboardRolledEvent(system System, teamID, eventLeaderboardI
 		Name: "teamEventLeaderboardRolled",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"team_id":              teamID,
-			"event_leaderboard_id": eventLeaderboardID,
+			"teamId":              teamID,
+			"eventLeaderboardId": eventLeaderboardID,
 		},
 		Timestamp: ts,
 
@@ -848,7 +848,7 @@ func NewEventLeaderboardUpdatedEvent(system System, eventLeaderboardID string, e
 		Name: "eventLeaderboardUpdated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"event_leaderboard_id": eventLeaderboardID,
+			"eventLeaderboardId": eventLeaderboardID,
 			"subscore":             strconv.FormatInt(subscore, 10),
 		},
 		Timestamp: ts,
@@ -866,8 +866,8 @@ func NewTeamEventLeaderboardUpdatedEvent(system System, teamID, eventLeaderboard
 		Name: "teamEventLeaderboardUpdated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"team_id":              teamID,
-			"event_leaderboard_id": eventLeaderboardID,
+			"teamId":              teamID,
+			"eventLeaderboardId": eventLeaderboardID,
 			"subscore":             strconv.FormatInt(subscore, 10),
 		},
 		Timestamp: ts,
@@ -885,7 +885,7 @@ func NewEventLeaderboardClaimedEvent(system System, eventLeaderboardID string, e
 		Name: "eventLeaderboardClaimed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"event_leaderboard_id": eventLeaderboardID,
+			"eventLeaderboardId": eventLeaderboardID,
 		},
 		Timestamp: ts,
 
@@ -901,8 +901,8 @@ func NewTeamEventLeaderboardClaimedEvent(system System, teamID, eventLeaderboard
 		Name: "teamEventLeaderboardClaimed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"team_id":              teamID,
-			"event_leaderboard_id": eventLeaderboardID,
+			"teamId":              teamID,
+			"eventLeaderboardId": eventLeaderboardID,
 		},
 		Timestamp: ts,
 
@@ -918,7 +918,7 @@ func NewUnlockableCreatedEvent(system System, unlockableID string, unlockableCon
 		Name: "unlockableCreated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"unlockable_id": unlockableID,
+			"unlockableId": unlockableID,
 		},
 		Timestamp: ts,
 
@@ -934,8 +934,8 @@ func NewUnlockableUnlockStartedEvent(system System, unlockableID string, unlocka
 		Name: "unlockableUnlockStarted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"unlockable_id": unlockableID,
-			"instance_id":   instanceID,
+			"unlockableId": unlockableID,
+			"instanceId":   instanceID,
 		},
 		Value:     strconv.FormatInt(int64(activeUnlockables), 10),
 		Timestamp: ts,
@@ -952,8 +952,8 @@ func NewUnlockableUnlockPurchasedEvent(system System, unlockableID string, unloc
 		Name: "unlockableUnlockPurchased",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"unlockable_id": unlockableID,
-			"instance_id":   instanceID,
+			"unlockableId": unlockableID,
+			"instanceId":   instanceID,
 		},
 		Timestamp: ts,
 
@@ -983,8 +983,8 @@ func NewUnlockableClaimedEvent(system System, unlockableID string, unlockableCon
 		Name: "unlockableClaimed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"unlockable_id": unlockableID,
-			"instance_id":   instanceID,
+			"unlockableId": unlockableID,
+			"instanceId":   instanceID,
 		},
 		Timestamp: ts,
 
@@ -1004,10 +1004,10 @@ func NewAuctionCreatedEvent(system System, auctionID string, auctionConfig *Auct
 		Name: "auctionCreated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"auction_id":   auctionID,
-			"template_id":  templateID,
-			"condition_id": conditionID,
-			"item_ids":     string(itemIDsEncoded),
+			"auctionId":   auctionID,
+			"templateId":  templateID,
+			"conditionId": conditionID,
+			"itemIds":     string(itemIDsEncoded),
 		},
 		Timestamp: ts,
 
@@ -1022,7 +1022,7 @@ func NewAuctionCancelledEvent(system System, auctionID string, auction *Auction,
 		Name: "auctionCancelled",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"auction_id": auctionID,
+			"auctionId": auctionID,
 		},
 		Timestamp: ts,
 
@@ -1037,7 +1037,7 @@ func NewAuctionBidEvent(system System, auctionID string, auction *Auction, ts in
 		Name: "auctionBid",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"auction_id": auctionID,
+			"auctionId": auctionID,
 		},
 		Timestamp: ts,
 
@@ -1052,7 +1052,7 @@ func NewAuctionClaimCreatedEvent(system System, auctionID string, auction *Aucti
 		Name: "auctionClaimCreated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"auction_id": auctionID,
+			"auctionId": auctionID,
 		},
 		Timestamp: ts,
 
@@ -1067,7 +1067,7 @@ func NewAuctionClaimBidEvent(system System, auctionID string, auction *Auction, 
 		Name: "auctionClaimBid",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"auction_id": auctionID,
+			"auctionId": auctionID,
 		},
 		Timestamp: ts,
 
@@ -1083,10 +1083,10 @@ func NewChallengeCreatedEvent(system System, challengeId string, challengeConfig
 		Name: "challengeCreated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"challenge_id": challengeId,
-			"template_id":  templateId,
-			"is_open":      strconv.FormatBool(isOpen),
-			"max_size":     strconv.FormatInt(size, 10),
+			"challengeId": challengeId,
+			"templateId":  templateId,
+			"isOpen":      strconv.FormatBool(isOpen),
+			"maxSize":     strconv.FormatInt(size, 10),
 		},
 		Timestamp: ts,
 
@@ -1104,8 +1104,8 @@ func NewChallengeInvitationSentEvent(system System, challengeId string, challeng
 		Name: "challengeInvitationSent",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"challenge_id": challengeId,
-			"invitee_id":   inviteeId,
+			"challengeId": challengeId,
+			"inviteeId":   inviteeId,
 		},
 		Timestamp: ts,
 
@@ -1121,7 +1121,7 @@ func NewChallengeInvitationAcceptedEvent(system System, challengeId string, chal
 		Name: "challengeInvitationAccepted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"challenge_id": challengeId,
+			"challengeId": challengeId,
 		},
 		Timestamp: ts,
 
@@ -1137,7 +1137,7 @@ func NewChallengeJoinedEvent(system System, challengeId string, challengeConfig 
 		Name: "challengeJoined",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"challenge_id": challengeId,
+			"challengeId": challengeId,
 		},
 		Timestamp: ts,
 
@@ -1153,11 +1153,11 @@ func NewChallengeUpdatedEvent(system System, challengeId string, challengeConfig
 		Name: "challengeUpdated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"challenge_id": challengeId,
-			"score":        strconv.FormatInt(score, 10),
-			"subscore":     strconv.FormatInt(subscore, 10),
-			"old_rank":     strconv.FormatInt(oldRank, 10),
-			"new_rank":     strconv.FormatInt(newRank, 10),
+			"challengeId": challengeId,
+			"score":    strconv.FormatInt(score, 10),
+			"subscore": strconv.FormatInt(subscore, 10),
+			"oldRank":  strconv.FormatInt(oldRank, 10),
+			"newRank":  strconv.FormatInt(newRank, 10),
 		},
 		Value:     strconv.FormatInt(score, 10),
 		Timestamp: ts,
@@ -1174,7 +1174,7 @@ func NewChallengeClaimedEvent(system System, challengeId string, challengeConfig
 		Name: "challengeClaimed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"challenge_id": challengeId,
+			"challengeId": challengeId,
 			"score":        strconv.FormatInt(score, 10),
 			"subscore":     strconv.FormatInt(subscore, 10),
 			"rank":         strconv.FormatInt(rank, 10),
@@ -1194,7 +1194,7 @@ func NewChallengeLeftEvent(system System, challengeId string, challengeConfig an
 		Name: "challengeLeft",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"challenge_id": challengeId,
+			"challengeId": challengeId,
 		},
 		Timestamp: ts,
 
