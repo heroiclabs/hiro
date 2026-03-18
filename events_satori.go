@@ -43,7 +43,7 @@ const (
 	EventSourceChallengeClaimed          = "challengeClaimed"
 )
 
-func newUUID() string {
+func newUUIDv4() string {
 	uuid := make([]byte, 16)
 	_, err := rand.Read(uuid)
 	if err != nil {
@@ -62,7 +62,7 @@ func newUUID() string {
 func NewDonationClaimedEvent(system System, donationID string, donationConfig *EconomyConfigDonation, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "donationClaimed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"donationId": donationID,
 		},
@@ -78,7 +78,7 @@ func NewDonationClaimedEvent(system System, donationID string, donationConfig *E
 func NewDonationGivenEvent(system System, donationID string, donationConfig *EconomyConfigDonation, recipientID string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "donationGiven",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"donationId":  donationID,
 			"recipientId": recipientID,
@@ -95,7 +95,7 @@ func NewDonationGivenEvent(system System, donationID string, donationConfig *Eco
 func NewDonationRequestedEvent(system System, donationID string, donationConfig *EconomyConfigDonation, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "donationRequested",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"donationId": donationID,
 		},
@@ -111,7 +111,7 @@ func NewDonationRequestedEvent(system System, donationID string, donationConfig 
 func NewCurrencyGrantedEvent(system System, sourceID string, sourceConfig any, currencyID string, amount int64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "currencyGranted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"currencyId": currencyID,
 			"source":     source,
@@ -128,7 +128,7 @@ func NewCurrencyGrantedEvent(system System, sourceID string, sourceConfig any, c
 func NewItemGrantedEvent(system System, sourceID string, sourceConfig any, itemID string, amount int64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "itemsGranted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"itemId": itemID,
 			"source": source,
@@ -145,7 +145,7 @@ func NewItemGrantedEvent(system System, sourceID string, sourceConfig any, itemI
 func NewTeamItemGrantedEvent(system System, sourceID string, sourceConfig any, teamID, itemID string, amount int64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamItemsGranted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"teamId": teamID,
 			"itemId": itemID,
@@ -164,7 +164,7 @@ func NewTeamItemGrantedEvent(system System, sourceID string, sourceConfig any, t
 func NewEnergyGrantedEvent(system System, sourceID string, sourceConfig any, energyID string, amount int32, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "energyGranted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"energyId": energyID,
 			"source":   source,
@@ -182,7 +182,7 @@ func NewEnergyGrantedEvent(system System, sourceID string, sourceConfig any, ene
 func NewEnergyModiferGrantedEvent(system System, sourceID string, sourceConfig any, energyModifierID string, operator string, value int64, durationSec uint64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "energyModifierGranted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"energyModifierId": energyModifierID,
 			"operator":         operator,
@@ -202,7 +202,7 @@ func NewEnergyModiferGrantedEvent(system System, sourceID string, sourceConfig a
 func NewRewardModifierGrantedEvent(system System, sourceID string, sourceConfig any, rewardModifierID string, modifierType string, operator string, value int64, durationSec uint64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "rewardModifierGranted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"rewardModifierId": rewardModifierID,
 			"type":             modifierType,
@@ -223,7 +223,7 @@ func NewRewardModifierGrantedEvent(system System, sourceID string, sourceConfig 
 func NewCurrencySpentEvent(system System, sourceID string, sourceConfig any, currencyID string, amount int64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "currencySpent",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"currencyId": currencyID,
 			"source":     source,
@@ -241,7 +241,7 @@ func NewCurrencySpentEvent(system System, sourceID string, sourceConfig any, cur
 func NewItemSpentEvent(system System, sourceID string, sourceConfig any, itemID string, amount int64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "itemSpent",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"itemId": itemID,
 			"source": source,
@@ -259,7 +259,7 @@ func NewItemSpentEvent(system System, sourceID string, sourceConfig any, itemID 
 func NewEnergySpentEvent(system System, energyID string, energyConfig *EnergyConfigEnergy, amount int32, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "energySpent",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"energyId": energyID,
 		},
@@ -276,7 +276,7 @@ func NewEnergySpentEvent(system System, energyID string, energyConfig *EnergyCon
 func NewPurchaseIntentEvent(system System, storeItemID string, storeItem *EconomyConfigStoreItem, storeType EconomyStoreType, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "purchaseIntent",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"storeItemId": storeItemID,
 			"storeType":   storeType.String(),
@@ -293,7 +293,7 @@ func NewPurchaseIntentEvent(system System, storeItemID string, storeItem *Econom
 func NewPurchaseCompletedEvent(system System, storeItemID string, test bool, storeItem *EconomyConfigStoreItem, currency string, amount float64, storeType EconomyStoreType, amountUSDCents int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "purchaseCompleted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"id":        storeItemID, // keep named as "id" rather than "storeItemId" for backwards compatibility.
 			"test":      strconv.FormatBool(test),
@@ -314,7 +314,7 @@ func NewPurchaseCompletedEvent(system System, storeItemID string, test bool, sto
 func NewAdPlacementStartedEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "adPlacementStarted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"placementId": placementID,
 		},
@@ -330,7 +330,7 @@ func NewAdPlacementStartedEvent(system System, placementID string, placementConf
 func NewAdPlacementSucceededEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, maxRetries bool, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "adPlacementSucceeded",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"placementId": placementID,
 			"maxRetries":  strconv.FormatBool(maxRetries),
@@ -347,7 +347,7 @@ func NewAdPlacementSucceededEvent(system System, placementID string, placementCo
 func NewAdPlacementFailedEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "adPlacementFailed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"placementId": placementID,
 		},
@@ -363,7 +363,7 @@ func NewAdPlacementFailedEvent(system System, placementID string, placementConfi
 func NewAchievementUpdatedEvent(system System, achievementID string, achievementConfig any, count int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "achievementUpdated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"achievementId": achievementID,
 		},
@@ -380,7 +380,7 @@ func NewAchievementUpdatedEvent(system System, achievementID string, achievement
 func NewTeamAchievementUpdatedEvent(system System, teamID, achievementID string, achievementConfig any, count int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "achievementUpdated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"teamId":        teamID,
 			"achievementId": achievementID,
@@ -398,7 +398,7 @@ func NewTeamAchievementUpdatedEvent(system System, teamID, achievementID string,
 func NewAchievementClaimedEvent(system System, achievementID string, achievementConfig *AchievementsConfigAchievement, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "achievementClaimed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"achievementId": achievementID,
 		},
@@ -415,7 +415,7 @@ func NewAchievementClaimedEvent(system System, achievementID string, achievement
 func NewTeamAchievementClaimedEvent(system System, teamID, achievementID string, achievementConfig *AchievementsConfigAchievement, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamAchievementClaimed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"teamId":        teamID,
 			"achievementId": achievementID,
@@ -433,7 +433,7 @@ func NewTeamAchievementClaimedEvent(system System, teamID, achievementID string,
 func NewProgressionPurchasedEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "progressionPurchased",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"progressionId": progressionID,
 		},
@@ -449,7 +449,7 @@ func NewProgressionPurchasedEvent(system System, progressionID string, progressi
 func NewProgressionUpdatedEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, countID string, count int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "progressionUpdated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"progressionId": progressionID,
 			"countId":       countID,
@@ -467,7 +467,7 @@ func NewProgressionUpdatedEvent(system System, progressionID string, progression
 func NewProgressionResetEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "progressionReset",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"progressionId": progressionID,
 		},
@@ -483,7 +483,7 @@ func NewProgressionResetEvent(system System, progressionID string, progressionCo
 func NewItemsConsumedEvent(system System, itemID string, itemConfig *InventoryConfigItem, amount int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "itemsConsumed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"itemId": itemID,
 		},
@@ -500,7 +500,7 @@ func NewItemsConsumedEvent(system System, itemID string, itemConfig *InventoryCo
 func NewTeamItemsConsumedEvent(system System, teamID, itemID string, itemConfig *InventoryConfigItem, amount int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamItemsConsumed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"itemId": itemID,
 			"teamId": teamID,
@@ -528,7 +528,7 @@ func NewItemUpdatedEvent(system System, itemID string, itemConfig *InventoryConf
 
 	return &PublisherEvent{
 		Name: "itemUpdated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"itemId":            itemID,
 			"stringProperties":  string(stringPropertiesJson),
@@ -555,7 +555,7 @@ func NewTeamItemUpdatedEvent(system System, teamID, itemID string, itemConfig *I
 
 	return &PublisherEvent{
 		Name: "teamItemUpdated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"teamId":            teamID,
 			"itemId":            itemID,
@@ -574,7 +574,7 @@ func NewTeamItemUpdatedEvent(system System, teamID, itemID string, itemConfig *I
 func NewStatUpdatedEvent(system System, name string, stat any, operator StatUpdateOperator, value int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "statUpdated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"name":     name,
 			"operator": operator.String(),
@@ -592,7 +592,7 @@ func NewStatUpdatedEvent(system System, name string, stat any, operator StatUpda
 func NewTeamStatUpdatedEvent(system System, name string, stat any, operator StatUpdateOperator, value int64, ts int64, teamID string) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "statUpdated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"name":     name,
 			"operator": operator.String(),
@@ -611,7 +611,7 @@ func NewTeamStatUpdatedEvent(system System, name string, stat any, operator Stat
 func NewTutorialAcceptedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialAccepted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"tutorialId": tutorialID,
 		},
@@ -627,7 +627,7 @@ func NewTutorialAcceptedEvent(system System, tutorialID string, tutorialConfig *
 func NewTutorialDeclinedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialDeclined",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"tutorialId": tutorialID,
 		},
@@ -643,7 +643,7 @@ func NewTutorialDeclinedEvent(system System, tutorialID string, tutorialConfig *
 func NewTutorialStartedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialStarted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"tutorialId": tutorialID,
 		},
@@ -660,7 +660,7 @@ func NewTutorialStartedEvent(system System, tutorialID string, tutorialConfig *T
 func NewTutorialAbandonedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int32, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialAbandoned",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"tutorialId": tutorialID,
 		},
@@ -677,7 +677,7 @@ func NewTutorialAbandonedEvent(system System, tutorialID string, tutorialConfig 
 func NewTutorialStepCompletedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialStepCompleted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"tutorialId": tutorialID,
 		},
@@ -694,7 +694,7 @@ func NewTutorialStepCompletedEvent(system System, tutorialID string, tutorialCon
 func NewTutorialCompletedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialCompleted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"tutorialId": tutorialID,
 		},
@@ -711,7 +711,7 @@ func NewTutorialCompletedEvent(system System, tutorialID string, tutorialConfig 
 func NewTutorialResetEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialReset",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"tutorialId": tutorialID,
 		},
@@ -727,7 +727,7 @@ func NewTutorialResetEvent(system System, tutorialID string, tutorialConfig *Tut
 func NewTeamCreatedEvent(system System, teamID string, team *Team, open bool, maxCount int32, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamCreated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"teamId": teamID,
 			"open":   strconv.FormatBool(open),
@@ -745,7 +745,7 @@ func NewTeamCreatedEvent(system System, teamID string, team *Team, open bool, ma
 func NewIncentiveCreatedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "incentiveCreated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"incentiveId": incentiveID,
 			"code":        code,
@@ -762,7 +762,7 @@ func NewIncentiveCreatedEvent(system System, incentiveID string, incentiveConfig
 func NewIncentiveDeletedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "incentiveDeleted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"incentiveId": incentiveID,
 			"code":        code,
@@ -779,7 +779,7 @@ func NewIncentiveDeletedEvent(system System, incentiveID string, incentiveConfig
 func NewIncentiveSenderClaimedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, clamaintID string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "incentiveSenderClaimed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"incentiveId": incentiveID,
 			"code":        code,
@@ -797,7 +797,7 @@ func NewIncentiveSenderClaimedEvent(system System, incentiveID string, incentive
 func NewIncentiveRecipientClaimedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "incentiveRecipientClaimed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"incentiveId": incentiveID,
 			"code":        code,
@@ -814,7 +814,7 @@ func NewIncentiveRecipientClaimedEvent(system System, incentiveID string, incent
 func NewEventLeaderboardRolledEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "eventLeaderboardRolled",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"eventLeaderboardId": eventLeaderboardID,
 		},
@@ -830,7 +830,7 @@ func NewEventLeaderboardRolledEvent(system System, eventLeaderboardID string, ev
 func NewTeamEventLeaderboardRolledEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamEventLeaderboardRolled",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"teamId":             teamID,
 			"eventLeaderboardId": eventLeaderboardID,
@@ -847,7 +847,7 @@ func NewTeamEventLeaderboardRolledEvent(system System, teamID, eventLeaderboardI
 func NewEventLeaderboardUpdatedEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, score int64, subscore int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "eventLeaderboardUpdated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"eventLeaderboardId": eventLeaderboardID,
 			"subscore":           strconv.FormatInt(subscore, 10),
@@ -865,7 +865,7 @@ func NewEventLeaderboardUpdatedEvent(system System, eventLeaderboardID string, e
 func NewTeamEventLeaderboardUpdatedEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, score int64, subscore int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamEventLeaderboardUpdated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"teamId":             teamID,
 			"eventLeaderboardId": eventLeaderboardID,
@@ -884,7 +884,7 @@ func NewTeamEventLeaderboardUpdatedEvent(system System, teamID, eventLeaderboard
 func NewEventLeaderboardClaimedEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "eventLeaderboardClaimed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"eventLeaderboardId": eventLeaderboardID,
 		},
@@ -900,7 +900,7 @@ func NewEventLeaderboardClaimedEvent(system System, eventLeaderboardID string, e
 func NewTeamEventLeaderboardClaimedEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamEventLeaderboardClaimed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"teamId":             teamID,
 			"eventLeaderboardId": eventLeaderboardID,
@@ -917,7 +917,7 @@ func NewTeamEventLeaderboardClaimedEvent(system System, teamID, eventLeaderboard
 func NewUnlockableCreatedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "unlockableCreated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"unlockableId": unlockableID,
 		},
@@ -933,7 +933,7 @@ func NewUnlockableCreatedEvent(system System, unlockableID string, unlockableCon
 func NewUnlockableUnlockStartedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, activeUnlockables int, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "unlockableUnlockStarted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"unlockableId": unlockableID,
 			"instanceId":   instanceID,
@@ -951,7 +951,7 @@ func NewUnlockableUnlockStartedEvent(system System, unlockableID string, unlocka
 func NewUnlockableUnlockPurchasedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "unlockableUnlockPurchased",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"unlockableId": unlockableID,
 			"instanceId":   instanceID,
@@ -968,7 +968,7 @@ func NewUnlockableUnlockPurchasedEvent(system System, unlockableID string, unloc
 func NewUnlockableSlotPurchasedEvent(system System, config *UnlockablesConfig, activeSlots int, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name:      "unlockableSlotPurchased",
-		Id:        newUUID(),
+		Id:        newUUIDv4(),
 		Value:     strconv.FormatInt(int64(activeSlots), 10),
 		Timestamp: ts,
 
@@ -982,7 +982,7 @@ func NewUnlockableSlotPurchasedEvent(system System, config *UnlockablesConfig, a
 func NewUnlockableClaimedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "unlockableClaimed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"unlockableId": unlockableID,
 			"instanceId":   instanceID,
@@ -1003,7 +1003,7 @@ func NewAuctionCreatedEvent(system System, auctionID string, auctionConfig *Auct
 
 	return &PublisherEvent{
 		Name: "auctionCreated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"auctionId":   auctionID,
 			"templateId":  templateID,
@@ -1021,7 +1021,7 @@ func NewAuctionCreatedEvent(system System, auctionID string, auctionConfig *Auct
 func NewAuctionCancelledEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "auctionCancelled",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"auctionId": auctionID,
 		},
@@ -1036,7 +1036,7 @@ func NewAuctionCancelledEvent(system System, auctionID string, auction *Auction,
 func NewAuctionBidEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "auctionBid",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"auctionId": auctionID,
 		},
@@ -1051,7 +1051,7 @@ func NewAuctionBidEvent(system System, auctionID string, auction *Auction, ts in
 func NewAuctionClaimCreatedEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "auctionClaimCreated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"auctionId": auctionID,
 		},
@@ -1066,7 +1066,7 @@ func NewAuctionClaimCreatedEvent(system System, auctionID string, auction *Aucti
 func NewAuctionClaimBidEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "auctionClaimBid",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"auctionId": auctionID,
 		},
@@ -1082,7 +1082,7 @@ func NewAuctionClaimBidEvent(system System, auctionID string, auction *Auction, 
 func NewChallengeCreatedEvent(system System, challengeId string, challengeConfig *ChallengesConfigChallenge, templateId string, isOpen bool, size int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeCreated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"challengeId": challengeId,
 			"templateId":  templateId,
@@ -1103,7 +1103,7 @@ func NewChallengeCreatedEvent(system System, challengeId string, challengeConfig
 func NewChallengeInvitationSentEvent(system System, challengeId string, challengeConfig any, inviteeId string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeInvitationSent",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"challengeId": challengeId,
 			"inviteeId":   inviteeId,
@@ -1120,7 +1120,7 @@ func NewChallengeInvitationSentEvent(system System, challengeId string, challeng
 func NewChallengeInvitationAcceptedEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeInvitationAccepted",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"challengeId": challengeId,
 		},
@@ -1136,7 +1136,7 @@ func NewChallengeInvitationAcceptedEvent(system System, challengeId string, chal
 func NewChallengeJoinedEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeJoined",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"challengeId": challengeId,
 		},
@@ -1152,7 +1152,7 @@ func NewChallengeJoinedEvent(system System, challengeId string, challengeConfig 
 func NewChallengeUpdatedEvent(system System, challengeId string, challengeConfig any, score int64, subscore int64, oldRank int64, newRank int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeUpdated",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"challengeId": challengeId,
 			"score":       strconv.FormatInt(score, 10),
@@ -1173,7 +1173,7 @@ func NewChallengeUpdatedEvent(system System, challengeId string, challengeConfig
 func NewChallengeClaimedEvent(system System, challengeId string, challengeConfig any, score int64, subscore int64, rank int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeClaimed",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"challengeId": challengeId,
 			"score":       strconv.FormatInt(score, 10),
@@ -1193,7 +1193,7 @@ func NewChallengeClaimedEvent(system System, challengeId string, challengeConfig
 func NewChallengeLeftEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeLeft",
-		Id:   newUUID(),
+		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"challengeId": challengeId,
 		},
