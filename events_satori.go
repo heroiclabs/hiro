@@ -182,7 +182,7 @@ func NewEnergyGrantedEvent(system System, sourceID string, sourceConfig any, ene
 }
 
 // A reward modifier was granted.
-func NewEnergyModiferGrantedEvent(system System, sourceID string, sourceConfig any, energyModifierID string, operator string, value int64, durationSec uint64, source string, ts int64) *PublisherEvent {
+func NewEnergyModifierGrantedEvent(system System, sourceID string, sourceConfig any, energyModifierID string, operator string, value int64, durationSec uint64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "energyModifierGranted",
 		Id:   newUUIDv4(),
@@ -779,14 +779,14 @@ func NewIncentiveDeletedEvent(system System, incentiveID string, incentiveConfig
 }
 
 // An incentive was claimed by the sender.
-func NewIncentiveSenderClaimedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, clamaintID string, ts int64) *PublisherEvent {
+func NewIncentiveSenderClaimedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, claimantID string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "incentiveSenderClaimed",
 		Id:   newUUIDv4(),
 		Metadata: map[string]string{
 			"incentiveId": incentiveID,
 			"code":        code,
-			"claimaintId": clamaintID,
+			"claimantId":  claimantID,
 		},
 		Timestamp: ts,
 
@@ -1236,7 +1236,7 @@ func NewRewardEvents(systems Hiro, sourceID string, sourceConfig any, reward *Re
 
 	if reward.EnergyModifiers != nil {
 		for _, modifier := range reward.EnergyModifiers {
-			events = append(events, NewEnergyModiferGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, modifier.Id, modifier.Operator, modifier.Value, modifier.DurationSec, source, ts))
+			events = append(events, NewEnergyModifierGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, modifier.Id, modifier.Operator, modifier.Value, modifier.DurationSec, source, ts))
 		}
 	}
 
