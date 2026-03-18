@@ -9,13 +9,13 @@
 // this material is strictly forbidden unless prior written permission is obtained
 // from GameUp Online, Inc.
 
-package main
+package hiro
 
 import (
+	"crypto/rand"
 	"encoding/json"
+	"fmt"
 	"strconv"
-
-	"github.com/heroiclabs/hiro"
 )
 
 // source of obtaining/spending an item, currency, energy, or modifier.
@@ -43,11 +43,26 @@ const (
 	eventSourceChallengeClaimed          = "challenge_claimed"
 )
 
+func newUUID() string {
+	uuid := make([]byte, 16)
+	_, err := rand.Read(uuid)
+	if err != nil {
+		panic(err)
+	}
+
+	// Set the appropriate version and variant
+	uuid[6] = (uuid[6] & 0x0f) | 0x40 // Version 4
+	uuid[8] = (uuid[8] & 0x3f) | 0x80 // Variant is 10
+
+	// Return the formatted UUID v4
+	return fmt.Sprintf("%x-%x-%x-%x-%x", uuid[0:4], uuid[4:6], uuid[6:8], uuid[8:10], uuid[10:])
+}
+
 // A donation was claimed.
-func newDonationClaimedEvent(system hiro.System, donationID string, donationConfig *hiro.EconomyConfigDonation, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newDonationClaimedEvent(system System, donationID string, donationConfig *EconomyConfigDonation, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "donationClaimed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"donation_id": donationID,
 		},
@@ -60,10 +75,10 @@ func newDonationClaimedEvent(system hiro.System, donationID string, donationConf
 }
 
 // A donation was given.
-func newDonationGivenEvent(system hiro.System, donationID string, donationConfig *hiro.EconomyConfigDonation, recipientID string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newDonationGivenEvent(system System, donationID string, donationConfig *EconomyConfigDonation, recipientID string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "donationGiven",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"donation_id":  donationID,
 			"recipient_id": recipientID,
@@ -77,10 +92,10 @@ func newDonationGivenEvent(system hiro.System, donationID string, donationConfig
 }
 
 // A donation was requested.
-func newDonationRequestedEvent(system hiro.System, donationID string, donationConfig *hiro.EconomyConfigDonation, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newDonationRequestedEvent(system System, donationID string, donationConfig *EconomyConfigDonation, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "donationRequested",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"donation_id": donationID,
 		},
@@ -93,10 +108,10 @@ func newDonationRequestedEvent(system hiro.System, donationID string, donationCo
 }
 
 // Currency was granted.
-func newCurrencyGrantedEvent(system hiro.System, sourceID string, sourceConfig any, currencyID string, amount int64, source string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newCurrencyGrantedEvent(system System, sourceID string, sourceConfig any, currencyID string, amount int64, source string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "currencyGranted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"currency_id": currencyID,
 			"source":      source,
@@ -110,10 +125,10 @@ func newCurrencyGrantedEvent(system hiro.System, sourceID string, sourceConfig a
 	}
 }
 
-func newItemGrantedEvent(system hiro.System, sourceID string, sourceConfig any, itemID string, amount int64, source string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newItemGrantedEvent(system System, sourceID string, sourceConfig any, itemID string, amount int64, source string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "itemsGranted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"item_id": itemID,
 			"source":  source,
@@ -127,10 +142,10 @@ func newItemGrantedEvent(system hiro.System, sourceID string, sourceConfig any, 
 	}
 }
 
-func newTeamItemGrantedEvent(system hiro.System, sourceID string, sourceConfig any, teamID, itemID string, amount int64, source string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTeamItemGrantedEvent(system System, sourceID string, sourceConfig any, teamID, itemID string, amount int64, source string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "teamItemsGranted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"team_id": teamID,
 			"item_id": itemID,
@@ -146,10 +161,10 @@ func newTeamItemGrantedEvent(system hiro.System, sourceID string, sourceConfig a
 }
 
 // Energy was granted.
-func newEnergyGrantedEvent(system hiro.System, sourceID string, sourceConfig any, energyID string, amount int32, source string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newEnergyGrantedEvent(system System, sourceID string, sourceConfig any, energyID string, amount int32, source string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "energyGranted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"energy_id": energyID,
 			"source":    source,
@@ -164,10 +179,10 @@ func newEnergyGrantedEvent(system hiro.System, sourceID string, sourceConfig any
 }
 
 // A reward modifier was granted.
-func newEnergyModiferGrantedEvent(system hiro.System, sourceID string, sourceConfig any, energyModifierID string, operator string, value int64, durationSec uint64, source string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newEnergyModiferGrantedEvent(system System, sourceID string, sourceConfig any, energyModifierID string, operator string, value int64, durationSec uint64, source string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "energyModifierGranted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"energy_modifier_id": energyModifierID,
 			"operator":           operator,
@@ -184,10 +199,10 @@ func newEnergyModiferGrantedEvent(system hiro.System, sourceID string, sourceCon
 }
 
 // A reward modifier was granted.
-func newRewardModifierGrantedEvent(system hiro.System, sourceID string, sourceConfig any, rewardModifierID string, modifierType string, operator string, value int64, durationSec uint64, source string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newRewardModifierGrantedEvent(system System, sourceID string, sourceConfig any, rewardModifierID string, modifierType string, operator string, value int64, durationSec uint64, source string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "rewardModifierGranted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"reward_modifier_id": rewardModifierID,
 			"type":               modifierType,
@@ -205,10 +220,10 @@ func newRewardModifierGrantedEvent(system hiro.System, sourceID string, sourceCo
 }
 
 // A currency was spent.
-func newCurrencySpentEvent(system hiro.System, sourceID string, sourceConfig any, currencyID string, amount int64, source string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newCurrencySpentEvent(system System, sourceID string, sourceConfig any, currencyID string, amount int64, source string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "currencySpent",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"currency_id": currencyID,
 			"source":      source,
@@ -223,10 +238,10 @@ func newCurrencySpentEvent(system hiro.System, sourceID string, sourceConfig any
 }
 
 // An item was spent.
-func newItemSpentEvent(system hiro.System, sourceID string, sourceConfig any, itemID string, amount int64, source string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newItemSpentEvent(system System, sourceID string, sourceConfig any, itemID string, amount int64, source string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "itemSpent",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"item_id": itemID,
 			"source":  source,
@@ -241,10 +256,10 @@ func newItemSpentEvent(system hiro.System, sourceID string, sourceConfig any, it
 }
 
 // Energy was spent.
-func newEnergySpentEvent(system hiro.System, energyID string, energyConfig *hiro.EnergyConfigEnergy, amount int32, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newEnergySpentEvent(system System, energyID string, energyConfig *EnergyConfigEnergy, amount int32, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "energySpent",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"energy_id": energyID,
 		},
@@ -258,10 +273,10 @@ func newEnergySpentEvent(system hiro.System, energyID string, energyConfig *hiro
 }
 
 // A purchase intent was placed.
-func newPurchaseIntentEvent(system hiro.System, storeItemID string, storeItem *hiro.EconomyConfigStoreItem, storeType hiro.EconomyStoreType, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newPurchaseIntentEvent(system System, storeItemID string, storeItem *EconomyConfigStoreItem, storeType EconomyStoreType, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "purchaseIntent",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"store_item_id": storeItemID,
 			"store_type":    storeType.String(),
@@ -275,10 +290,10 @@ func newPurchaseIntentEvent(system hiro.System, storeItemID string, storeItem *h
 }
 
 // A SKU purchase was completed.
-func newPurchaseCompletedEvent(system hiro.System, storeItemID string, storeItem *hiro.EconomyConfigStoreItem, currency string, amount float64, storeType hiro.EconomyStoreType, amountUSDCents int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newPurchaseCompletedEvent(system System, storeItemID string, storeItem *EconomyConfigStoreItem, currency string, amount float64, storeType EconomyStoreType, amountUSDCents int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "purchaseCompleted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"id":         storeItemID, // keep named as "id" rather than "store_item_id" for backwards compatibility.
 			"currency":   currency,
@@ -295,10 +310,10 @@ func newPurchaseCompletedEvent(system hiro.System, storeItemID string, storeItem
 }
 
 // An ad placement started.
-func newAdPlacementStartedEvent(system hiro.System, placementID string, placementConfig *hiro.EconomyConfigPlacement, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newAdPlacementStartedEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "adPlacementStarted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"placement_id": placementID,
 		},
@@ -311,10 +326,10 @@ func newAdPlacementStartedEvent(system hiro.System, placementID string, placemen
 }
 
 // An ad placement succeeded.
-func newAdPlacementSucceededEvent(system hiro.System, placementID string, placementConfig *hiro.EconomyConfigPlacement, maxRetries bool, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newAdPlacementSucceededEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, maxRetries bool, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "adPlacementSucceeded",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"placement_id": placementID,
 			"max_retries":  strconv.FormatBool(maxRetries),
@@ -328,10 +343,10 @@ func newAdPlacementSucceededEvent(system hiro.System, placementID string, placem
 }
 
 // An ad placement failed.
-func newAdPlacementFailedEvent(system hiro.System, placementID string, placementConfig *hiro.EconomyConfigPlacement, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newAdPlacementFailedEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "adPlacementFailed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"placement_id": placementID,
 		},
@@ -344,10 +359,10 @@ func newAdPlacementFailedEvent(system hiro.System, placementID string, placement
 }
 
 // An achievement was updated.
-func newAchievementUpdatedEvent(system hiro.System, achievementID string, achievementConfig any, count int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newAchievementUpdatedEvent(system System, achievementID string, achievementConfig any, count int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "achievementUpdated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"achievement_id": achievementID,
 		},
@@ -361,10 +376,10 @@ func newAchievementUpdatedEvent(system hiro.System, achievementID string, achiev
 }
 
 // A team achievement was updated.
-func newTeamAchievementUpdatedEvent(system hiro.System, teamID, achievementID string, achievementConfig any, count int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTeamAchievementUpdatedEvent(system System, teamID, achievementID string, achievementConfig any, count int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "achievementUpdated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"team_id":        teamID,
 			"achievement_id": achievementID,
@@ -379,10 +394,10 @@ func newTeamAchievementUpdatedEvent(system hiro.System, teamID, achievementID st
 }
 
 // An achievement was claimed.
-func newAchievementClaimedEvent(system hiro.System, achievementID string, achievementConfig *hiro.AchievementsConfigAchievement, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newAchievementClaimedEvent(system System, achievementID string, achievementConfig *AchievementsConfigAchievement, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "achievementClaimed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"achievement_id": achievementID,
 		},
@@ -396,10 +411,10 @@ func newAchievementClaimedEvent(system hiro.System, achievementID string, achiev
 }
 
 // A team achievement was claimed.
-func newTeamAchievementClaimedEvent(system hiro.System, teamID, achievementID string, achievementConfig *hiro.AchievementsConfigAchievement, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTeamAchievementClaimedEvent(system System, teamID, achievementID string, achievementConfig *AchievementsConfigAchievement, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "teamAchievementClaimed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"team_id":        teamID,
 			"achievement_id": achievementID,
@@ -414,10 +429,10 @@ func newTeamAchievementClaimedEvent(system hiro.System, teamID, achievementID st
 }
 
 // A progression was purchased.
-func newProgressionPurchasedEvent(system hiro.System, progressionID string, progressionConfig *hiro.ProgressionConfigProgression, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newProgressionPurchasedEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "progressionPurchased",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"progression_id": progressionID,
 		},
@@ -430,10 +445,10 @@ func newProgressionPurchasedEvent(system hiro.System, progressionID string, prog
 }
 
 // A progression was updated.
-func newProgressionUpdatedEvent(system hiro.System, progressionID string, progressionConfig *hiro.ProgressionConfigProgression, countID string, count int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newProgressionUpdatedEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, countID string, count int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "progressionUpdated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"progression_id": progressionID,
 			"count_id":       countID,
@@ -448,10 +463,10 @@ func newProgressionUpdatedEvent(system hiro.System, progressionID string, progre
 }
 
 // A progression was reset.
-func newProgressionResetEvent(system hiro.System, progressionID string, progressionConfig *hiro.ProgressionConfigProgression, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newProgressionResetEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "progressionReset",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"progression_id": progressionID,
 		},
@@ -464,10 +479,10 @@ func newProgressionResetEvent(system hiro.System, progressionID string, progress
 }
 
 // Inventory items were consumed.
-func newItemsConsumedEvent(system hiro.System, itemID string, itemConfig *hiro.InventoryConfigItem, amount int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newItemsConsumedEvent(system System, itemID string, itemConfig *InventoryConfigItem, amount int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "itemsConsumed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"item_id": itemID,
 		},
@@ -481,10 +496,10 @@ func newItemsConsumedEvent(system hiro.System, itemID string, itemConfig *hiro.I
 }
 
 // Team inventory items were consumed.
-func newTeamItemsConsumedEvent(system hiro.System, teamID, itemID string, itemConfig *hiro.InventoryConfigItem, amount int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTeamItemsConsumedEvent(system System, teamID, itemID string, itemConfig *InventoryConfigItem, amount int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "teamItemsConsumed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"item_id": itemID,
 			"team_id": teamID,
@@ -499,7 +514,7 @@ func newTeamItemsConsumedEvent(system hiro.System, teamID, itemID string, itemCo
 }
 
 // An inventory item was updated.
-func newItemUpdatedEvent(system hiro.System, itemID string, itemConfig *hiro.InventoryConfigItem, stringProperties map[string]string, numericProperties map[string]float64, ts int64) (*hiro.PublisherEvent, error) {
+func newItemUpdatedEvent(system System, itemID string, itemConfig *InventoryConfigItem, stringProperties map[string]string, numericProperties map[string]float64, ts int64) (*PublisherEvent, error) {
 	stringPropertiesJson, err := json.Marshal(stringProperties)
 	if err != nil {
 		return nil, err
@@ -510,9 +525,9 @@ func newItemUpdatedEvent(system hiro.System, itemID string, itemConfig *hiro.Inv
 		return nil, err
 	}
 
-	return &hiro.PublisherEvent{
+	return &PublisherEvent{
 		Name: "itemUpdated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"item_id":            itemID,
 			"string_properties":  string(stringPropertiesJson),
@@ -526,7 +541,7 @@ func newItemUpdatedEvent(system hiro.System, itemID string, itemConfig *hiro.Inv
 	}, nil
 }
 
-func newTeamItemUpdatedEvent(system hiro.System, teamID, itemID string, itemConfig *hiro.InventoryConfigItem, stringProperties map[string]string, numericProperties map[string]float64, ts int64) (*hiro.PublisherEvent, error) {
+func newTeamItemUpdatedEvent(system System, teamID, itemID string, itemConfig *InventoryConfigItem, stringProperties map[string]string, numericProperties map[string]float64, ts int64) (*PublisherEvent, error) {
 	stringPropertiesJson, err := json.Marshal(stringProperties)
 	if err != nil {
 		return nil, err
@@ -537,9 +552,9 @@ func newTeamItemUpdatedEvent(system hiro.System, teamID, itemID string, itemConf
 		return nil, err
 	}
 
-	return &hiro.PublisherEvent{
+	return &PublisherEvent{
 		Name: "teamItemUpdated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"team_id":            teamID,
 			"item_id":            itemID,
@@ -555,10 +570,10 @@ func newTeamItemUpdatedEvent(system hiro.System, teamID, itemID string, itemConf
 }
 
 // Stats were updated.
-func newStatUpdatedEvent(system hiro.System, name string, stat any, operator hiro.StatUpdateOperator, value int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newStatUpdatedEvent(system System, name string, stat any, operator StatUpdateOperator, value int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "statUpdated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"name":     name,
 			"operator": operator.String(),
@@ -573,10 +588,10 @@ func newStatUpdatedEvent(system hiro.System, name string, stat any, operator hir
 }
 
 // Team stats were updated.
-func newTeamStatUpdatedEvent(system hiro.System, name string, stat any, operator hiro.StatUpdateOperator, value int64, ts int64, teamID string) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTeamStatUpdatedEvent(system System, name string, stat any, operator StatUpdateOperator, value int64, ts int64, teamID string) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "statUpdated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"name":     name,
 			"operator": operator.String(),
@@ -592,10 +607,10 @@ func newTeamStatUpdatedEvent(system hiro.System, name string, stat any, operator
 }
 
 // A tutorial was accepted.
-func newTutorialAcceptedEvent(system hiro.System, tutorialID string, tutorialConfig *hiro.TutorialsConfigTutorial, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTutorialAcceptedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "tutorialAccepted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"tutorial_id": tutorialID,
 		},
@@ -608,10 +623,10 @@ func newTutorialAcceptedEvent(system hiro.System, tutorialID string, tutorialCon
 }
 
 // A tutorial was declined.
-func newTutorialDeclinedEvent(system hiro.System, tutorialID string, tutorialConfig *hiro.TutorialsConfigTutorial, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTutorialDeclinedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "tutorialDeclined",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"tutorial_id": tutorialID,
 		},
@@ -624,10 +639,10 @@ func newTutorialDeclinedEvent(system hiro.System, tutorialID string, tutorialCon
 }
 
 // A tutorial started.
-func newTutorialStartedEvent(system hiro.System, tutorialID string, tutorialConfig *hiro.TutorialsConfigTutorial, step int, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTutorialStartedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "tutorialStarted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"tutorial_id": tutorialID,
 		},
@@ -641,10 +656,10 @@ func newTutorialStartedEvent(system hiro.System, tutorialID string, tutorialConf
 }
 
 // A tutorial was abandoned.
-func newTutorialAbandonedEvent(system hiro.System, tutorialID string, tutorialConfig *hiro.TutorialsConfigTutorial, step int32, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTutorialAbandonedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int32, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "tutorialAbandoned",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"tutorial_id": tutorialID,
 		},
@@ -658,10 +673,10 @@ func newTutorialAbandonedEvent(system hiro.System, tutorialID string, tutorialCo
 }
 
 // A tutorial step was completed.
-func newTutorialStepCompletedEvent(system hiro.System, tutorialID string, tutorialConfig *hiro.TutorialsConfigTutorial, step int, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTutorialStepCompletedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "tutorialStepCompleted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"tutorial_id": tutorialID,
 		},
@@ -675,10 +690,10 @@ func newTutorialStepCompletedEvent(system hiro.System, tutorialID string, tutori
 }
 
 // A tutorial was completed.
-func newTutorialCompletedEvent(system hiro.System, tutorialID string, tutorialConfig *hiro.TutorialsConfigTutorial, step int, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTutorialCompletedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "tutorialCompleted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"tutorial_id": tutorialID,
 		},
@@ -692,10 +707,10 @@ func newTutorialCompletedEvent(system hiro.System, tutorialID string, tutorialCo
 }
 
 // One or more tutorials were reset.
-func newTutorialResetEvent(system hiro.System, tutorialID string, tutorialConfig *hiro.TutorialsConfigTutorial, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTutorialResetEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "tutorialReset",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"tutorial_id": tutorialID,
 		},
@@ -708,10 +723,10 @@ func newTutorialResetEvent(system hiro.System, tutorialID string, tutorialConfig
 }
 
 // A team was created.
-func newTeamCreatedEvent(system hiro.System, teamID string, team *hiro.Team, open bool, maxCount int32, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTeamCreatedEvent(system System, teamID string, team *Team, open bool, maxCount int32, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "teamCreated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"team_id": teamID,
 			"open":    strconv.FormatBool(open),
@@ -726,10 +741,10 @@ func newTeamCreatedEvent(system hiro.System, teamID string, team *hiro.Team, ope
 }
 
 // An incentive was created.
-func newIncentiveCreatedEvent(system hiro.System, incentiveID string, incentiveConfig *hiro.IncentivesConfigIncentive, code string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newIncentiveCreatedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "incentiveCreated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"incentive_id": incentiveID,
 			"code":         code,
@@ -743,10 +758,10 @@ func newIncentiveCreatedEvent(system hiro.System, incentiveID string, incentiveC
 }
 
 // An incentive was deleted.
-func newIncentiveDeletedEvent(system hiro.System, incentiveID string, incentiveConfig *hiro.IncentivesConfigIncentive, code string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newIncentiveDeletedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "incentiveDeleted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"incentive_id": incentiveID,
 			"code":         code,
@@ -760,10 +775,10 @@ func newIncentiveDeletedEvent(system hiro.System, incentiveID string, incentiveC
 }
 
 // An incentive was claimed by the sender.
-func newIncentiveSenderClaimedEvent(system hiro.System, incentiveID string, incentiveConfig *hiro.IncentivesConfigIncentive, code string, clamaintID string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newIncentiveSenderClaimedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, clamaintID string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "incentiveSenderClaimed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"incentive_id": incentiveID,
 			"code":         code,
@@ -778,10 +793,10 @@ func newIncentiveSenderClaimedEvent(system hiro.System, incentiveID string, ince
 }
 
 // An incentive was claimed by the recipient.
-func newIncentiveRecipientClaimedEvent(system hiro.System, incentiveID string, incentiveConfig *hiro.IncentivesConfigIncentive, code string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newIncentiveRecipientClaimedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "incentiveRecipientClaimed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"incentive_id": incentiveID,
 			"code":         code,
@@ -795,10 +810,10 @@ func newIncentiveRecipientClaimedEvent(system hiro.System, incentiveID string, i
 }
 
 // An event leaderboard was rolled.
-func newEventLeaderboardRolledEvent(system hiro.System, eventLeaderboardID string, eventLeaderboardConfig *hiro.EventLeaderboardsConfigLeaderboard, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newEventLeaderboardRolledEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "eventLeaderboardRolled",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"event_leaderboard_id": eventLeaderboardID,
 		},
@@ -811,10 +826,10 @@ func newEventLeaderboardRolledEvent(system hiro.System, eventLeaderboardID strin
 }
 
 // A team leaderboard was rolled.
-func newTeamEventLeaderboardRolledEvent(system hiro.System, teamID, eventLeaderboardID string, eventLeaderboardConfig *hiro.EventLeaderboardsConfigLeaderboard, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTeamEventLeaderboardRolledEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "teamEventLeaderboardRolled",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"team_id":              teamID,
 			"event_leaderboard_id": eventLeaderboardID,
@@ -828,10 +843,10 @@ func newTeamEventLeaderboardRolledEvent(system hiro.System, teamID, eventLeaderb
 }
 
 // An event leaderboard was updated.
-func newEventLeaderboardUpdatedEvent(system hiro.System, eventLeaderboardID string, eventLeaderboardConfig *hiro.EventLeaderboardsConfigLeaderboard, score int64, subscore int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newEventLeaderboardUpdatedEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, score int64, subscore int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "eventLeaderboardUpdated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"event_leaderboard_id": eventLeaderboardID,
 			"subscore":             strconv.FormatInt(subscore, 10),
@@ -846,10 +861,10 @@ func newEventLeaderboardUpdatedEvent(system hiro.System, eventLeaderboardID stri
 }
 
 // A team event leaderboard was updated.
-func newTeamEventLeaderboardUpdatedEvent(system hiro.System, teamID, eventLeaderboardID string, eventLeaderboardConfig *hiro.EventLeaderboardsConfigLeaderboard, score int64, subscore int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTeamEventLeaderboardUpdatedEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, score int64, subscore int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "teamEventLeaderboardUpdated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"team_id":              teamID,
 			"event_leaderboard_id": eventLeaderboardID,
@@ -865,10 +880,10 @@ func newTeamEventLeaderboardUpdatedEvent(system hiro.System, teamID, eventLeader
 }
 
 // An event leaderboard was claimed.
-func newEventLeaderboardClaimedEvent(system hiro.System, eventLeaderboardID string, eventLeaderboardConfig *hiro.EventLeaderboardsConfigLeaderboard, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newEventLeaderboardClaimedEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "eventLeaderboardClaimed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"event_leaderboard_id": eventLeaderboardID,
 		},
@@ -881,10 +896,10 @@ func newEventLeaderboardClaimedEvent(system hiro.System, eventLeaderboardID stri
 }
 
 // A team event leaderboard was claimed.
-func newTeamEventLeaderboardClaimedEvent(system hiro.System, teamID, eventLeaderboardID string, eventLeaderboardConfig *hiro.EventLeaderboardsConfigLeaderboard, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newTeamEventLeaderboardClaimedEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "teamEventLeaderboardClaimed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"team_id":              teamID,
 			"event_leaderboard_id": eventLeaderboardID,
@@ -898,10 +913,10 @@ func newTeamEventLeaderboardClaimedEvent(system hiro.System, teamID, eventLeader
 }
 
 // An unlockable was created.
-func newUnlockableCreatedEvent(system hiro.System, unlockableID string, unlockableConfig *hiro.UnlockablesConfigUnlockable, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newUnlockableCreatedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "unlockableCreated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"unlockable_id": unlockableID,
 		},
@@ -914,10 +929,10 @@ func newUnlockableCreatedEvent(system hiro.System, unlockableID string, unlockab
 }
 
 // An unlockable's unlock was started.
-func newUnlockableUnlockStartedEvent(system hiro.System, unlockableID string, unlockableConfig *hiro.UnlockablesConfigUnlockable, instanceID string, activeUnlockables int, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newUnlockableUnlockStartedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, activeUnlockables int, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "unlockableUnlockStarted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"unlockable_id": unlockableID,
 			"instance_id":   instanceID,
@@ -932,10 +947,10 @@ func newUnlockableUnlockStartedEvent(system hiro.System, unlockableID string, un
 }
 
 // An unlockable's unlock was purchased.
-func newUnlockableUnlockPurchasedEvent(system hiro.System, unlockableID string, unlockableConfig *hiro.UnlockablesConfigUnlockable, instanceID string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newUnlockableUnlockPurchasedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "unlockableUnlockPurchased",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"unlockable_id": unlockableID,
 			"instance_id":   instanceID,
@@ -949,10 +964,10 @@ func newUnlockableUnlockPurchasedEvent(system hiro.System, unlockableID string, 
 }
 
 // An unlockable slot was purchased.
-func newUnlockableSlotPurchasedEvent(system hiro.System, config *hiro.UnlockablesConfig, activeSlots int, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newUnlockableSlotPurchasedEvent(system System, config *UnlockablesConfig, activeSlots int, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name:      "unlockableSlotPurchased",
-		Id:        newUUIDv4(),
+		Id:        newUUID(),
 		Value:     strconv.FormatInt(int64(activeSlots), 10),
 		Timestamp: ts,
 
@@ -963,10 +978,10 @@ func newUnlockableSlotPurchasedEvent(system hiro.System, config *hiro.Unlockable
 }
 
 // An unlockable was claimed.
-func newUnlockableClaimedEvent(system hiro.System, unlockableID string, unlockableConfig *hiro.UnlockablesConfigUnlockable, instanceID string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newUnlockableClaimedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "unlockableClaimed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"unlockable_id": unlockableID,
 			"instance_id":   instanceID,
@@ -979,15 +994,15 @@ func newUnlockableClaimedEvent(system hiro.System, unlockableID string, unlockab
 	}
 }
 
-func newAuctionCreatedEvent(system hiro.System, auctionID string, auctionConfig *hiro.AuctionsConfigAuction, templateID, conditionID string, itemIDs map[string]int64, ts int64) (*hiro.PublisherEvent, error) {
+func newAuctionCreatedEvent(system System, auctionID string, auctionConfig *AuctionsConfigAuction, templateID, conditionID string, itemIDs map[string]int64, ts int64) (*PublisherEvent, error) {
 	itemIDsEncoded, err := json.Marshal(itemIDs)
 	if err != nil {
 		return nil, err
 	}
 
-	return &hiro.PublisherEvent{
+	return &PublisherEvent{
 		Name: "auctionCreated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"auction_id":   auctionID,
 			"template_id":  templateID,
@@ -1002,10 +1017,10 @@ func newAuctionCreatedEvent(system hiro.System, auctionID string, auctionConfig 
 	}, nil
 }
 
-func newAuctionCancelledEvent(system hiro.System, auctionID string, auction *hiro.Auction, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newAuctionCancelledEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "auctionCancelled",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"auction_id": auctionID,
 		},
@@ -1017,10 +1032,10 @@ func newAuctionCancelledEvent(system hiro.System, auctionID string, auction *hir
 	}
 }
 
-func newAuctionBidEvent(system hiro.System, auctionID string, auction *hiro.Auction, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newAuctionBidEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "auctionBid",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"auction_id": auctionID,
 		},
@@ -1032,10 +1047,10 @@ func newAuctionBidEvent(system hiro.System, auctionID string, auction *hiro.Auct
 	}
 }
 
-func newAuctionClaimCreatedEvent(system hiro.System, auctionID string, auction *hiro.Auction, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newAuctionClaimCreatedEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "auctionClaimCreated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"auction_id": auctionID,
 		},
@@ -1047,10 +1062,10 @@ func newAuctionClaimCreatedEvent(system hiro.System, auctionID string, auction *
 	}
 }
 
-func newAuctionClaimBidEvent(system hiro.System, auctionID string, auction *hiro.Auction, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newAuctionClaimBidEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "auctionClaimBid",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"auction_id": auctionID,
 		},
@@ -1063,10 +1078,10 @@ func newAuctionClaimBidEvent(system hiro.System, auctionID string, auction *hiro
 }
 
 // New challenge created by a player
-func newChallengeCreatedEvent(system hiro.System, challengeId string, challengeConfig *hiro.ChallengesConfigChallenge, templateId string, isOpen bool, size int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newChallengeCreatedEvent(system System, challengeId string, challengeConfig *ChallengesConfigChallenge, templateId string, isOpen bool, size int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "challengeCreated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"challenge_id": challengeId,
 			"template_id":  templateId,
@@ -1084,10 +1099,10 @@ func newChallengeCreatedEvent(system hiro.System, challengeId string, challengeC
 // New invitation to a challenge is sent by a player:
 // 1. Invitees added while creating challenge
 // 2. An invitation can be sent after the challenge is created.
-func newChallengeInvitationSentEvent(system hiro.System, challengeId string, challengeConfig any, inviteeId string, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newChallengeInvitationSentEvent(system System, challengeId string, challengeConfig any, inviteeId string, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "challengeInvitationSent",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"challenge_id": challengeId,
 			"invitee_id":   inviteeId,
@@ -1101,10 +1116,10 @@ func newChallengeInvitationSentEvent(system hiro.System, challengeId string, cha
 }
 
 // New invitation accepted event - Sent when a player accepted the challenge invitation
-func newChallengeInvitationAcceptedEvent(system hiro.System, challengeId string, challengeConfig any, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newChallengeInvitationAcceptedEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "challengeInvitationAccepted",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"challenge_id": challengeId,
 		},
@@ -1117,10 +1132,10 @@ func newChallengeInvitationAcceptedEvent(system hiro.System, challengeId string,
 }
 
 // Player joined to an open challenge
-func newChallengeJoinedEvent(system hiro.System, challengeId string, challengeConfig any, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newChallengeJoinedEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "challengeJoined",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"challenge_id": challengeId,
 		},
@@ -1133,10 +1148,10 @@ func newChallengeJoinedEvent(system hiro.System, challengeId string, challengeCo
 }
 
 // Player joined to an open challenge
-func newChallengeUpdatedEvent(system hiro.System, challengeId string, challengeConfig any, score int64, subscore int64, oldRank int64, newRank int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newChallengeUpdatedEvent(system System, challengeId string, challengeConfig any, score int64, subscore int64, oldRank int64, newRank int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "challengeUpdated",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"challenge_id": challengeId,
 			"score":        strconv.FormatInt(score, 10),
@@ -1154,10 +1169,10 @@ func newChallengeUpdatedEvent(system hiro.System, challengeId string, challengeC
 }
 
 // The player claims challenge rewards
-func newChallengeClaimedEvent(system hiro.System, challengeId string, challengeConfig any, score int64, subscore int64, rank int64, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newChallengeClaimedEvent(system System, challengeId string, challengeConfig any, score int64, subscore int64, rank int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "challengeClaimed",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"challenge_id": challengeId,
 			"score":        strconv.FormatInt(score, 10),
@@ -1174,10 +1189,10 @@ func newChallengeClaimedEvent(system hiro.System, challengeId string, challengeC
 }
 
 // Player left the challenge
-func newChallengeLeftEvent(system hiro.System, challengeId string, challengeConfig any, ts int64) *hiro.PublisherEvent {
-	return &hiro.PublisherEvent{
+func newChallengeLeftEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
+	return &PublisherEvent{
 		Name: "challengeLeft",
-		Id:   newUUIDv4(),
+		Id:   newUUID(),
 		Metadata: map[string]string{
 			"challenge_id": challengeId,
 		},
@@ -1190,40 +1205,40 @@ func newChallengeLeftEvent(system hiro.System, challengeId string, challengeConf
 }
 
 // Helper for creating multiple reward-related events.
-func newRewardEvents(systems *Hiro, sourceID string, sourceConfig any, reward *hiro.Reward, source string, ts int64) []*hiro.PublisherEvent {
+func newRewardEvents(systems Hiro, sourceID string, sourceConfig any, reward *Reward, source string, ts int64) []*PublisherEvent {
 	if reward == nil {
 		return nil
 	}
 
-	events := make([]*hiro.PublisherEvent, 0)
+	events := make([]*PublisherEvent, 0)
 
 	if reward.Items != nil {
 		for itemID, amount := range reward.Items {
-			events = append(events, newItemGrantedEvent(systems.inventorySystem, sourceID, sourceConfig, itemID, amount, source, ts))
+			events = append(events, newItemGrantedEvent(systems.GetInventorySystem(), sourceID, sourceConfig, itemID, amount, source, ts))
 		}
 	}
 
 	if reward.Currencies != nil {
 		for itemID, amount := range reward.Currencies {
-			events = append(events, newCurrencyGrantedEvent(systems.economySystem, sourceID, sourceConfig, itemID, amount, source, ts))
+			events = append(events, newCurrencyGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, itemID, amount, source, ts))
 		}
 	}
 
 	if reward.Energies != nil {
 		for energyID, amount := range reward.Energies {
-			events = append(events, newEnergyGrantedEvent(systems.economySystem, sourceID, sourceConfig, energyID, amount, source, ts))
+			events = append(events, newEnergyGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, energyID, amount, source, ts))
 		}
 	}
 
 	if reward.EnergyModifiers != nil {
 		for _, modifier := range reward.EnergyModifiers {
-			events = append(events, newEnergyModiferGrantedEvent(systems.economySystem, sourceID, sourceConfig, modifier.Id, modifier.Operator, modifier.Value, modifier.DurationSec, source, ts))
+			events = append(events, newEnergyModiferGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, modifier.Id, modifier.Operator, modifier.Value, modifier.DurationSec, source, ts))
 		}
 	}
 
 	if reward.RewardModifiers != nil {
 		for _, modifier := range reward.RewardModifiers {
-			events = append(events, newRewardModifierGrantedEvent(systems.economySystem, sourceID, sourceConfig, modifier.Id, modifier.Type, modifier.Operator, modifier.Value, modifier.DurationSec, source, ts))
+			events = append(events, newRewardModifierGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, modifier.Id, modifier.Type, modifier.Operator, modifier.Value, modifier.DurationSec, source, ts))
 		}
 	}
 
@@ -1231,18 +1246,18 @@ func newRewardEvents(systems *Hiro, sourceID string, sourceConfig any, reward *h
 }
 
 // Helper for creating multiple cost-related events.
-func newCostEvents(systems *Hiro, sourceID string, sourceConfig any, currencyCost map[string]int64, itemCost map[string]int64, source string, ts int64) []*hiro.PublisherEvent {
-	events := make([]*hiro.PublisherEvent, 0)
+func newCostEvents(systems Hiro, sourceID string, sourceConfig any, currencyCost map[string]int64, itemCost map[string]int64, source string, ts int64) []*PublisherEvent {
+	events := make([]*PublisherEvent, 0)
 
 	if len(currencyCost) > 0 {
 		for currencyID, amount := range currencyCost {
-			events = append(events, newCurrencySpentEvent(systems.economySystem, sourceID, sourceConfig, currencyID, amount, source, ts))
+			events = append(events, newCurrencySpentEvent(systems.GetEconomySystem(), sourceID, sourceConfig, currencyID, amount, source, ts))
 		}
 	}
 
 	if len(itemCost) > 0 {
 		for itemID, amount := range itemCost {
-			events = append(events, newItemSpentEvent(systems.inventorySystem, sourceID, sourceConfig, itemID, amount, source, ts))
+			events = append(events, newItemSpentEvent(systems.GetInventorySystem(), sourceID, sourceConfig, itemID, amount, source, ts))
 		}
 	}
 
