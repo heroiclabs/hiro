@@ -1148,7 +1148,7 @@ func NewChallengeJoinedEvent(system System, challengeId string, challengeConfig 
 	}
 }
 
-// Player joined to an open challenge
+// Player's challenge score or rank was updated
 func NewChallengeUpdatedEvent(system System, challengeId string, challengeConfig any, score int64, subscore int64, oldRank int64, newRank int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeUpdated",
