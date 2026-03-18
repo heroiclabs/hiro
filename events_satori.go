@@ -59,7 +59,7 @@ func newUUID() string {
 }
 
 // A donation was claimed.
-func newDonationClaimedEvent(system System, donationID string, donationConfig *EconomyConfigDonation, ts int64) *PublisherEvent {
+func NewDonationClaimedEvent(system System, donationID string, donationConfig *EconomyConfigDonation, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "donationClaimed",
 		Id:   newUUID(),
@@ -75,7 +75,7 @@ func newDonationClaimedEvent(system System, donationID string, donationConfig *E
 }
 
 // A donation was given.
-func newDonationGivenEvent(system System, donationID string, donationConfig *EconomyConfigDonation, recipientID string, ts int64) *PublisherEvent {
+func NewDonationGivenEvent(system System, donationID string, donationConfig *EconomyConfigDonation, recipientID string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "donationGiven",
 		Id:   newUUID(),
@@ -92,7 +92,7 @@ func newDonationGivenEvent(system System, donationID string, donationConfig *Eco
 }
 
 // A donation was requested.
-func newDonationRequestedEvent(system System, donationID string, donationConfig *EconomyConfigDonation, ts int64) *PublisherEvent {
+func NewDonationRequestedEvent(system System, donationID string, donationConfig *EconomyConfigDonation, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "donationRequested",
 		Id:   newUUID(),
@@ -108,7 +108,7 @@ func newDonationRequestedEvent(system System, donationID string, donationConfig 
 }
 
 // Currency was granted.
-func newCurrencyGrantedEvent(system System, sourceID string, sourceConfig any, currencyID string, amount int64, source string, ts int64) *PublisherEvent {
+func NewCurrencyGrantedEvent(system System, sourceID string, sourceConfig any, currencyID string, amount int64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "currencyGranted",
 		Id:   newUUID(),
@@ -125,7 +125,7 @@ func newCurrencyGrantedEvent(system System, sourceID string, sourceConfig any, c
 	}
 }
 
-func newItemGrantedEvent(system System, sourceID string, sourceConfig any, itemID string, amount int64, source string, ts int64) *PublisherEvent {
+func NewItemGrantedEvent(system System, sourceID string, sourceConfig any, itemID string, amount int64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "itemsGranted",
 		Id:   newUUID(),
@@ -142,7 +142,7 @@ func newItemGrantedEvent(system System, sourceID string, sourceConfig any, itemI
 	}
 }
 
-func newTeamItemGrantedEvent(system System, sourceID string, sourceConfig any, teamID, itemID string, amount int64, source string, ts int64) *PublisherEvent {
+func NewTeamItemGrantedEvent(system System, sourceID string, sourceConfig any, teamID, itemID string, amount int64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamItemsGranted",
 		Id:   newUUID(),
@@ -161,7 +161,7 @@ func newTeamItemGrantedEvent(system System, sourceID string, sourceConfig any, t
 }
 
 // Energy was granted.
-func newEnergyGrantedEvent(system System, sourceID string, sourceConfig any, energyID string, amount int32, source string, ts int64) *PublisherEvent {
+func NewEnergyGrantedEvent(system System, sourceID string, sourceConfig any, energyID string, amount int32, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "energyGranted",
 		Id:   newUUID(),
@@ -179,7 +179,7 @@ func newEnergyGrantedEvent(system System, sourceID string, sourceConfig any, ene
 }
 
 // A reward modifier was granted.
-func newEnergyModiferGrantedEvent(system System, sourceID string, sourceConfig any, energyModifierID string, operator string, value int64, durationSec uint64, source string, ts int64) *PublisherEvent {
+func NewEnergyModiferGrantedEvent(system System, sourceID string, sourceConfig any, energyModifierID string, operator string, value int64, durationSec uint64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "energyModifierGranted",
 		Id:   newUUID(),
@@ -199,7 +199,7 @@ func newEnergyModiferGrantedEvent(system System, sourceID string, sourceConfig a
 }
 
 // A reward modifier was granted.
-func newRewardModifierGrantedEvent(system System, sourceID string, sourceConfig any, rewardModifierID string, modifierType string, operator string, value int64, durationSec uint64, source string, ts int64) *PublisherEvent {
+func NewRewardModifierGrantedEvent(system System, sourceID string, sourceConfig any, rewardModifierID string, modifierType string, operator string, value int64, durationSec uint64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "rewardModifierGranted",
 		Id:   newUUID(),
@@ -220,7 +220,7 @@ func newRewardModifierGrantedEvent(system System, sourceID string, sourceConfig 
 }
 
 // A currency was spent.
-func newCurrencySpentEvent(system System, sourceID string, sourceConfig any, currencyID string, amount int64, source string, ts int64) *PublisherEvent {
+func NewCurrencySpentEvent(system System, sourceID string, sourceConfig any, currencyID string, amount int64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "currencySpent",
 		Id:   newUUID(),
@@ -238,7 +238,7 @@ func newCurrencySpentEvent(system System, sourceID string, sourceConfig any, cur
 }
 
 // An item was spent.
-func newItemSpentEvent(system System, sourceID string, sourceConfig any, itemID string, amount int64, source string, ts int64) *PublisherEvent {
+func NewItemSpentEvent(system System, sourceID string, sourceConfig any, itemID string, amount int64, source string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "itemSpent",
 		Id:   newUUID(),
@@ -256,7 +256,7 @@ func newItemSpentEvent(system System, sourceID string, sourceConfig any, itemID 
 }
 
 // Energy was spent.
-func newEnergySpentEvent(system System, energyID string, energyConfig *EnergyConfigEnergy, amount int32, ts int64) *PublisherEvent {
+func NewEnergySpentEvent(system System, energyID string, energyConfig *EnergyConfigEnergy, amount int32, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "energySpent",
 		Id:   newUUID(),
@@ -273,7 +273,7 @@ func newEnergySpentEvent(system System, energyID string, energyConfig *EnergyCon
 }
 
 // A purchase intent was placed.
-func newPurchaseIntentEvent(system System, storeItemID string, storeItem *EconomyConfigStoreItem, storeType EconomyStoreType, ts int64) *PublisherEvent {
+func NewPurchaseIntentEvent(system System, storeItemID string, storeItem *EconomyConfigStoreItem, storeType EconomyStoreType, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "purchaseIntent",
 		Id:   newUUID(),
@@ -290,7 +290,7 @@ func newPurchaseIntentEvent(system System, storeItemID string, storeItem *Econom
 }
 
 // A SKU purchase was completed.
-func newPurchaseCompletedEvent(system System, storeItemID string, storeItem *EconomyConfigStoreItem, currency string, amount float64, storeType EconomyStoreType, amountUSDCents int64, ts int64) *PublisherEvent {
+func NewPurchaseCompletedEvent(system System, storeItemID string, storeItem *EconomyConfigStoreItem, currency string, amount float64, storeType EconomyStoreType, amountUSDCents int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "purchaseCompleted",
 		Id:   newUUID(),
@@ -310,7 +310,7 @@ func newPurchaseCompletedEvent(system System, storeItemID string, storeItem *Eco
 }
 
 // An ad placement started.
-func newAdPlacementStartedEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, ts int64) *PublisherEvent {
+func NewAdPlacementStartedEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "adPlacementStarted",
 		Id:   newUUID(),
@@ -326,7 +326,7 @@ func newAdPlacementStartedEvent(system System, placementID string, placementConf
 }
 
 // An ad placement succeeded.
-func newAdPlacementSucceededEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, maxRetries bool, ts int64) *PublisherEvent {
+func NewAdPlacementSucceededEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, maxRetries bool, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "adPlacementSucceeded",
 		Id:   newUUID(),
@@ -343,7 +343,7 @@ func newAdPlacementSucceededEvent(system System, placementID string, placementCo
 }
 
 // An ad placement failed.
-func newAdPlacementFailedEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, ts int64) *PublisherEvent {
+func NewAdPlacementFailedEvent(system System, placementID string, placementConfig *EconomyConfigPlacement, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "adPlacementFailed",
 		Id:   newUUID(),
@@ -359,7 +359,7 @@ func newAdPlacementFailedEvent(system System, placementID string, placementConfi
 }
 
 // An achievement was updated.
-func newAchievementUpdatedEvent(system System, achievementID string, achievementConfig any, count int64, ts int64) *PublisherEvent {
+func NewAchievementUpdatedEvent(system System, achievementID string, achievementConfig any, count int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "achievementUpdated",
 		Id:   newUUID(),
@@ -376,7 +376,7 @@ func newAchievementUpdatedEvent(system System, achievementID string, achievement
 }
 
 // A team achievement was updated.
-func newTeamAchievementUpdatedEvent(system System, teamID, achievementID string, achievementConfig any, count int64, ts int64) *PublisherEvent {
+func NewTeamAchievementUpdatedEvent(system System, teamID, achievementID string, achievementConfig any, count int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "achievementUpdated",
 		Id:   newUUID(),
@@ -394,7 +394,7 @@ func newTeamAchievementUpdatedEvent(system System, teamID, achievementID string,
 }
 
 // An achievement was claimed.
-func newAchievementClaimedEvent(system System, achievementID string, achievementConfig *AchievementsConfigAchievement, ts int64) *PublisherEvent {
+func NewAchievementClaimedEvent(system System, achievementID string, achievementConfig *AchievementsConfigAchievement, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "achievementClaimed",
 		Id:   newUUID(),
@@ -411,7 +411,7 @@ func newAchievementClaimedEvent(system System, achievementID string, achievement
 }
 
 // A team achievement was claimed.
-func newTeamAchievementClaimedEvent(system System, teamID, achievementID string, achievementConfig *AchievementsConfigAchievement, ts int64) *PublisherEvent {
+func NewTeamAchievementClaimedEvent(system System, teamID, achievementID string, achievementConfig *AchievementsConfigAchievement, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamAchievementClaimed",
 		Id:   newUUID(),
@@ -429,7 +429,7 @@ func newTeamAchievementClaimedEvent(system System, teamID, achievementID string,
 }
 
 // A progression was purchased.
-func newProgressionPurchasedEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, ts int64) *PublisherEvent {
+func NewProgressionPurchasedEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "progressionPurchased",
 		Id:   newUUID(),
@@ -445,7 +445,7 @@ func newProgressionPurchasedEvent(system System, progressionID string, progressi
 }
 
 // A progression was updated.
-func newProgressionUpdatedEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, countID string, count int64, ts int64) *PublisherEvent {
+func NewProgressionUpdatedEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, countID string, count int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "progressionUpdated",
 		Id:   newUUID(),
@@ -463,7 +463,7 @@ func newProgressionUpdatedEvent(system System, progressionID string, progression
 }
 
 // A progression was reset.
-func newProgressionResetEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, ts int64) *PublisherEvent {
+func NewProgressionResetEvent(system System, progressionID string, progressionConfig *ProgressionConfigProgression, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "progressionReset",
 		Id:   newUUID(),
@@ -479,7 +479,7 @@ func newProgressionResetEvent(system System, progressionID string, progressionCo
 }
 
 // Inventory items were consumed.
-func newItemsConsumedEvent(system System, itemID string, itemConfig *InventoryConfigItem, amount int64, ts int64) *PublisherEvent {
+func NewItemsConsumedEvent(system System, itemID string, itemConfig *InventoryConfigItem, amount int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "itemsConsumed",
 		Id:   newUUID(),
@@ -496,7 +496,7 @@ func newItemsConsumedEvent(system System, itemID string, itemConfig *InventoryCo
 }
 
 // Team inventory items were consumed.
-func newTeamItemsConsumedEvent(system System, teamID, itemID string, itemConfig *InventoryConfigItem, amount int64, ts int64) *PublisherEvent {
+func NewTeamItemsConsumedEvent(system System, teamID, itemID string, itemConfig *InventoryConfigItem, amount int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamItemsConsumed",
 		Id:   newUUID(),
@@ -514,7 +514,7 @@ func newTeamItemsConsumedEvent(system System, teamID, itemID string, itemConfig 
 }
 
 // An inventory item was updated.
-func newItemUpdatedEvent(system System, itemID string, itemConfig *InventoryConfigItem, stringProperties map[string]string, numericProperties map[string]float64, ts int64) (*PublisherEvent, error) {
+func NewItemUpdatedEvent(system System, itemID string, itemConfig *InventoryConfigItem, stringProperties map[string]string, numericProperties map[string]float64, ts int64) (*PublisherEvent, error) {
 	stringPropertiesJson, err := json.Marshal(stringProperties)
 	if err != nil {
 		return nil, err
@@ -541,7 +541,7 @@ func newItemUpdatedEvent(system System, itemID string, itemConfig *InventoryConf
 	}, nil
 }
 
-func newTeamItemUpdatedEvent(system System, teamID, itemID string, itemConfig *InventoryConfigItem, stringProperties map[string]string, numericProperties map[string]float64, ts int64) (*PublisherEvent, error) {
+func NewTeamItemUpdatedEvent(system System, teamID, itemID string, itemConfig *InventoryConfigItem, stringProperties map[string]string, numericProperties map[string]float64, ts int64) (*PublisherEvent, error) {
 	stringPropertiesJson, err := json.Marshal(stringProperties)
 	if err != nil {
 		return nil, err
@@ -570,7 +570,7 @@ func newTeamItemUpdatedEvent(system System, teamID, itemID string, itemConfig *I
 }
 
 // Stats were updated.
-func newStatUpdatedEvent(system System, name string, stat any, operator StatUpdateOperator, value int64, ts int64) *PublisherEvent {
+func NewStatUpdatedEvent(system System, name string, stat any, operator StatUpdateOperator, value int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "statUpdated",
 		Id:   newUUID(),
@@ -588,7 +588,7 @@ func newStatUpdatedEvent(system System, name string, stat any, operator StatUpda
 }
 
 // Team stats were updated.
-func newTeamStatUpdatedEvent(system System, name string, stat any, operator StatUpdateOperator, value int64, ts int64, teamID string) *PublisherEvent {
+func NewTeamStatUpdatedEvent(system System, name string, stat any, operator StatUpdateOperator, value int64, ts int64, teamID string) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "statUpdated",
 		Id:   newUUID(),
@@ -607,7 +607,7 @@ func newTeamStatUpdatedEvent(system System, name string, stat any, operator Stat
 }
 
 // A tutorial was accepted.
-func newTutorialAcceptedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
+func NewTutorialAcceptedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialAccepted",
 		Id:   newUUID(),
@@ -623,7 +623,7 @@ func newTutorialAcceptedEvent(system System, tutorialID string, tutorialConfig *
 }
 
 // A tutorial was declined.
-func newTutorialDeclinedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
+func NewTutorialDeclinedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialDeclined",
 		Id:   newUUID(),
@@ -639,7 +639,7 @@ func newTutorialDeclinedEvent(system System, tutorialID string, tutorialConfig *
 }
 
 // A tutorial started.
-func newTutorialStartedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
+func NewTutorialStartedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialStarted",
 		Id:   newUUID(),
@@ -656,7 +656,7 @@ func newTutorialStartedEvent(system System, tutorialID string, tutorialConfig *T
 }
 
 // A tutorial was abandoned.
-func newTutorialAbandonedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int32, ts int64) *PublisherEvent {
+func NewTutorialAbandonedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int32, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialAbandoned",
 		Id:   newUUID(),
@@ -673,7 +673,7 @@ func newTutorialAbandonedEvent(system System, tutorialID string, tutorialConfig 
 }
 
 // A tutorial step was completed.
-func newTutorialStepCompletedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
+func NewTutorialStepCompletedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialStepCompleted",
 		Id:   newUUID(),
@@ -690,7 +690,7 @@ func newTutorialStepCompletedEvent(system System, tutorialID string, tutorialCon
 }
 
 // A tutorial was completed.
-func newTutorialCompletedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
+func NewTutorialCompletedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialCompleted",
 		Id:   newUUID(),
@@ -707,7 +707,7 @@ func newTutorialCompletedEvent(system System, tutorialID string, tutorialConfig 
 }
 
 // One or more tutorials were reset.
-func newTutorialResetEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
+func NewTutorialResetEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "tutorialReset",
 		Id:   newUUID(),
@@ -723,7 +723,7 @@ func newTutorialResetEvent(system System, tutorialID string, tutorialConfig *Tut
 }
 
 // A team was created.
-func newTeamCreatedEvent(system System, teamID string, team *Team, open bool, maxCount int32, ts int64) *PublisherEvent {
+func NewTeamCreatedEvent(system System, teamID string, team *Team, open bool, maxCount int32, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamCreated",
 		Id:   newUUID(),
@@ -741,7 +741,7 @@ func newTeamCreatedEvent(system System, teamID string, team *Team, open bool, ma
 }
 
 // An incentive was created.
-func newIncentiveCreatedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
+func NewIncentiveCreatedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "incentiveCreated",
 		Id:   newUUID(),
@@ -758,7 +758,7 @@ func newIncentiveCreatedEvent(system System, incentiveID string, incentiveConfig
 }
 
 // An incentive was deleted.
-func newIncentiveDeletedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
+func NewIncentiveDeletedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "incentiveDeleted",
 		Id:   newUUID(),
@@ -775,7 +775,7 @@ func newIncentiveDeletedEvent(system System, incentiveID string, incentiveConfig
 }
 
 // An incentive was claimed by the sender.
-func newIncentiveSenderClaimedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, clamaintID string, ts int64) *PublisherEvent {
+func NewIncentiveSenderClaimedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, clamaintID string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "incentiveSenderClaimed",
 		Id:   newUUID(),
@@ -793,7 +793,7 @@ func newIncentiveSenderClaimedEvent(system System, incentiveID string, incentive
 }
 
 // An incentive was claimed by the recipient.
-func newIncentiveRecipientClaimedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
+func NewIncentiveRecipientClaimedEvent(system System, incentiveID string, incentiveConfig *IncentivesConfigIncentive, code string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "incentiveRecipientClaimed",
 		Id:   newUUID(),
@@ -810,7 +810,7 @@ func newIncentiveRecipientClaimedEvent(system System, incentiveID string, incent
 }
 
 // An event leaderboard was rolled.
-func newEventLeaderboardRolledEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
+func NewEventLeaderboardRolledEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "eventLeaderboardRolled",
 		Id:   newUUID(),
@@ -826,7 +826,7 @@ func newEventLeaderboardRolledEvent(system System, eventLeaderboardID string, ev
 }
 
 // A team leaderboard was rolled.
-func newTeamEventLeaderboardRolledEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
+func NewTeamEventLeaderboardRolledEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamEventLeaderboardRolled",
 		Id:   newUUID(),
@@ -843,7 +843,7 @@ func newTeamEventLeaderboardRolledEvent(system System, teamID, eventLeaderboardI
 }
 
 // An event leaderboard was updated.
-func newEventLeaderboardUpdatedEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, score int64, subscore int64, ts int64) *PublisherEvent {
+func NewEventLeaderboardUpdatedEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, score int64, subscore int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "eventLeaderboardUpdated",
 		Id:   newUUID(),
@@ -861,7 +861,7 @@ func newEventLeaderboardUpdatedEvent(system System, eventLeaderboardID string, e
 }
 
 // A team event leaderboard was updated.
-func newTeamEventLeaderboardUpdatedEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, score int64, subscore int64, ts int64) *PublisherEvent {
+func NewTeamEventLeaderboardUpdatedEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, score int64, subscore int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamEventLeaderboardUpdated",
 		Id:   newUUID(),
@@ -880,7 +880,7 @@ func newTeamEventLeaderboardUpdatedEvent(system System, teamID, eventLeaderboard
 }
 
 // An event leaderboard was claimed.
-func newEventLeaderboardClaimedEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
+func NewEventLeaderboardClaimedEvent(system System, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "eventLeaderboardClaimed",
 		Id:   newUUID(),
@@ -896,7 +896,7 @@ func newEventLeaderboardClaimedEvent(system System, eventLeaderboardID string, e
 }
 
 // A team event leaderboard was claimed.
-func newTeamEventLeaderboardClaimedEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
+func NewTeamEventLeaderboardClaimedEvent(system System, teamID, eventLeaderboardID string, eventLeaderboardConfig *EventLeaderboardsConfigLeaderboard, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "teamEventLeaderboardClaimed",
 		Id:   newUUID(),
@@ -913,7 +913,7 @@ func newTeamEventLeaderboardClaimedEvent(system System, teamID, eventLeaderboard
 }
 
 // An unlockable was created.
-func newUnlockableCreatedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, ts int64) *PublisherEvent {
+func NewUnlockableCreatedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "unlockableCreated",
 		Id:   newUUID(),
@@ -929,7 +929,7 @@ func newUnlockableCreatedEvent(system System, unlockableID string, unlockableCon
 }
 
 // An unlockable's unlock was started.
-func newUnlockableUnlockStartedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, activeUnlockables int, ts int64) *PublisherEvent {
+func NewUnlockableUnlockStartedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, activeUnlockables int, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "unlockableUnlockStarted",
 		Id:   newUUID(),
@@ -947,7 +947,7 @@ func newUnlockableUnlockStartedEvent(system System, unlockableID string, unlocka
 }
 
 // An unlockable's unlock was purchased.
-func newUnlockableUnlockPurchasedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, ts int64) *PublisherEvent {
+func NewUnlockableUnlockPurchasedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "unlockableUnlockPurchased",
 		Id:   newUUID(),
@@ -964,7 +964,7 @@ func newUnlockableUnlockPurchasedEvent(system System, unlockableID string, unloc
 }
 
 // An unlockable slot was purchased.
-func newUnlockableSlotPurchasedEvent(system System, config *UnlockablesConfig, activeSlots int, ts int64) *PublisherEvent {
+func NewUnlockableSlotPurchasedEvent(system System, config *UnlockablesConfig, activeSlots int, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name:      "unlockableSlotPurchased",
 		Id:        newUUID(),
@@ -978,7 +978,7 @@ func newUnlockableSlotPurchasedEvent(system System, config *UnlockablesConfig, a
 }
 
 // An unlockable was claimed.
-func newUnlockableClaimedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, ts int64) *PublisherEvent {
+func NewUnlockableClaimedEvent(system System, unlockableID string, unlockableConfig *UnlockablesConfigUnlockable, instanceID string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "unlockableClaimed",
 		Id:   newUUID(),
@@ -994,7 +994,7 @@ func newUnlockableClaimedEvent(system System, unlockableID string, unlockableCon
 	}
 }
 
-func newAuctionCreatedEvent(system System, auctionID string, auctionConfig *AuctionsConfigAuction, templateID, conditionID string, itemIDs map[string]int64, ts int64) (*PublisherEvent, error) {
+func NewAuctionCreatedEvent(system System, auctionID string, auctionConfig *AuctionsConfigAuction, templateID, conditionID string, itemIDs map[string]int64, ts int64) (*PublisherEvent, error) {
 	itemIDsEncoded, err := json.Marshal(itemIDs)
 	if err != nil {
 		return nil, err
@@ -1017,7 +1017,7 @@ func newAuctionCreatedEvent(system System, auctionID string, auctionConfig *Auct
 	}, nil
 }
 
-func newAuctionCancelledEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
+func NewAuctionCancelledEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "auctionCancelled",
 		Id:   newUUID(),
@@ -1032,7 +1032,7 @@ func newAuctionCancelledEvent(system System, auctionID string, auction *Auction,
 	}
 }
 
-func newAuctionBidEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
+func NewAuctionBidEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "auctionBid",
 		Id:   newUUID(),
@@ -1047,7 +1047,7 @@ func newAuctionBidEvent(system System, auctionID string, auction *Auction, ts in
 	}
 }
 
-func newAuctionClaimCreatedEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
+func NewAuctionClaimCreatedEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "auctionClaimCreated",
 		Id:   newUUID(),
@@ -1062,7 +1062,7 @@ func newAuctionClaimCreatedEvent(system System, auctionID string, auction *Aucti
 	}
 }
 
-func newAuctionClaimBidEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
+func NewAuctionClaimBidEvent(system System, auctionID string, auction *Auction, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "auctionClaimBid",
 		Id:   newUUID(),
@@ -1078,7 +1078,7 @@ func newAuctionClaimBidEvent(system System, auctionID string, auction *Auction, 
 }
 
 // New challenge created by a player
-func newChallengeCreatedEvent(system System, challengeId string, challengeConfig *ChallengesConfigChallenge, templateId string, isOpen bool, size int64, ts int64) *PublisherEvent {
+func NewChallengeCreatedEvent(system System, challengeId string, challengeConfig *ChallengesConfigChallenge, templateId string, isOpen bool, size int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeCreated",
 		Id:   newUUID(),
@@ -1099,7 +1099,7 @@ func newChallengeCreatedEvent(system System, challengeId string, challengeConfig
 // New invitation to a challenge is sent by a player:
 // 1. Invitees added while creating challenge
 // 2. An invitation can be sent after the challenge is created.
-func newChallengeInvitationSentEvent(system System, challengeId string, challengeConfig any, inviteeId string, ts int64) *PublisherEvent {
+func NewChallengeInvitationSentEvent(system System, challengeId string, challengeConfig any, inviteeId string, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeInvitationSent",
 		Id:   newUUID(),
@@ -1116,7 +1116,7 @@ func newChallengeInvitationSentEvent(system System, challengeId string, challeng
 }
 
 // New invitation accepted event - Sent when a player accepted the challenge invitation
-func newChallengeInvitationAcceptedEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
+func NewChallengeInvitationAcceptedEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeInvitationAccepted",
 		Id:   newUUID(),
@@ -1132,7 +1132,7 @@ func newChallengeInvitationAcceptedEvent(system System, challengeId string, chal
 }
 
 // Player joined to an open challenge
-func newChallengeJoinedEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
+func NewChallengeJoinedEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeJoined",
 		Id:   newUUID(),
@@ -1148,7 +1148,7 @@ func newChallengeJoinedEvent(system System, challengeId string, challengeConfig 
 }
 
 // Player joined to an open challenge
-func newChallengeUpdatedEvent(system System, challengeId string, challengeConfig any, score int64, subscore int64, oldRank int64, newRank int64, ts int64) *PublisherEvent {
+func NewChallengeUpdatedEvent(system System, challengeId string, challengeConfig any, score int64, subscore int64, oldRank int64, newRank int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeUpdated",
 		Id:   newUUID(),
@@ -1169,7 +1169,7 @@ func newChallengeUpdatedEvent(system System, challengeId string, challengeConfig
 }
 
 // The player claims challenge rewards
-func newChallengeClaimedEvent(system System, challengeId string, challengeConfig any, score int64, subscore int64, rank int64, ts int64) *PublisherEvent {
+func NewChallengeClaimedEvent(system System, challengeId string, challengeConfig any, score int64, subscore int64, rank int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeClaimed",
 		Id:   newUUID(),
@@ -1189,7 +1189,7 @@ func newChallengeClaimedEvent(system System, challengeId string, challengeConfig
 }
 
 // Player left the challenge
-func newChallengeLeftEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
+func NewChallengeLeftEvent(system System, challengeId string, challengeConfig any, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "challengeLeft",
 		Id:   newUUID(),
@@ -1205,7 +1205,7 @@ func newChallengeLeftEvent(system System, challengeId string, challengeConfig an
 }
 
 // Helper for creating multiple reward-related events.
-func newRewardEvents(systems Hiro, sourceID string, sourceConfig any, reward *Reward, source string, ts int64) []*PublisherEvent {
+func NewRewardEvents(systems Hiro, sourceID string, sourceConfig any, reward *Reward, source string, ts int64) []*PublisherEvent {
 	if reward == nil {
 		return nil
 	}
@@ -1214,31 +1214,31 @@ func newRewardEvents(systems Hiro, sourceID string, sourceConfig any, reward *Re
 
 	if reward.Items != nil {
 		for itemID, amount := range reward.Items {
-			events = append(events, newItemGrantedEvent(systems.GetInventorySystem(), sourceID, sourceConfig, itemID, amount, source, ts))
+			events = append(events, NewItemGrantedEvent(systems.GetInventorySystem(), sourceID, sourceConfig, itemID, amount, source, ts))
 		}
 	}
 
 	if reward.Currencies != nil {
 		for itemID, amount := range reward.Currencies {
-			events = append(events, newCurrencyGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, itemID, amount, source, ts))
+			events = append(events, NewCurrencyGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, itemID, amount, source, ts))
 		}
 	}
 
 	if reward.Energies != nil {
 		for energyID, amount := range reward.Energies {
-			events = append(events, newEnergyGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, energyID, amount, source, ts))
+			events = append(events, NewEnergyGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, energyID, amount, source, ts))
 		}
 	}
 
 	if reward.EnergyModifiers != nil {
 		for _, modifier := range reward.EnergyModifiers {
-			events = append(events, newEnergyModiferGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, modifier.Id, modifier.Operator, modifier.Value, modifier.DurationSec, source, ts))
+			events = append(events, NewEnergyModiferGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, modifier.Id, modifier.Operator, modifier.Value, modifier.DurationSec, source, ts))
 		}
 	}
 
 	if reward.RewardModifiers != nil {
 		for _, modifier := range reward.RewardModifiers {
-			events = append(events, newRewardModifierGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, modifier.Id, modifier.Type, modifier.Operator, modifier.Value, modifier.DurationSec, source, ts))
+			events = append(events, NewRewardModifierGrantedEvent(systems.GetEconomySystem(), sourceID, sourceConfig, modifier.Id, modifier.Type, modifier.Operator, modifier.Value, modifier.DurationSec, source, ts))
 		}
 	}
 
@@ -1246,18 +1246,18 @@ func newRewardEvents(systems Hiro, sourceID string, sourceConfig any, reward *Re
 }
 
 // Helper for creating multiple cost-related events.
-func newCostEvents(systems Hiro, sourceID string, sourceConfig any, currencyCost map[string]int64, itemCost map[string]int64, source string, ts int64) []*PublisherEvent {
+func NewCostEvents(systems Hiro, sourceID string, sourceConfig any, currencyCost map[string]int64, itemCost map[string]int64, source string, ts int64) []*PublisherEvent {
 	events := make([]*PublisherEvent, 0)
 
 	if len(currencyCost) > 0 {
 		for currencyID, amount := range currencyCost {
-			events = append(events, newCurrencySpentEvent(systems.GetEconomySystem(), sourceID, sourceConfig, currencyID, amount, source, ts))
+			events = append(events, NewCurrencySpentEvent(systems.GetEconomySystem(), sourceID, sourceConfig, currencyID, amount, source, ts))
 		}
 	}
 
 	if len(itemCost) > 0 {
 		for itemID, amount := range itemCost {
-			events = append(events, newItemSpentEvent(systems.GetInventorySystem(), sourceID, sourceConfig, itemID, amount, source, ts))
+			events = append(events, NewItemSpentEvent(systems.GetInventorySystem(), sourceID, sourceConfig, itemID, amount, source, ts))
 		}
 	}
 
