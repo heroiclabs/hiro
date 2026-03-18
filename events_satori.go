@@ -290,12 +290,13 @@ func NewPurchaseIntentEvent(system System, storeItemID string, storeItem *Econom
 }
 
 // A SKU purchase was completed.
-func NewPurchaseCompletedEvent(system System, storeItemID string, storeItem *EconomyConfigStoreItem, currency string, amount float64, storeType EconomyStoreType, amountUSDCents int64, ts int64) *PublisherEvent {
+func NewPurchaseCompletedEvent(system System, storeItemID string, test bool, storeItem *EconomyConfigStoreItem, currency string, amount float64, storeType EconomyStoreType, amountUSDCents int64, ts int64) *PublisherEvent {
 	return &PublisherEvent{
 		Name: "purchaseCompleted",
 		Id:   newUUID(),
 		Metadata: map[string]string{
 			"id":        storeItemID, // keep named as "id" rather than "storeItemId" for backwards compatibility.
+			"test":      strconv.FormatBool(test),
 			"currency":  currency,
 			"amount":    strconv.FormatFloat(amount, 'f', 2, 64),
 			"storeType": storeType.String(),
@@ -595,7 +596,7 @@ func NewTeamStatUpdatedEvent(system System, name string, stat any, operator Stat
 		Metadata: map[string]string{
 			"name":     name,
 			"operator": operator.String(),
-			"teamId":  teamID,
+			"teamId":   teamID,
 		},
 		Value:     strconv.FormatInt(value, 10),
 		Timestamp: ts,
@@ -831,7 +832,7 @@ func NewTeamEventLeaderboardRolledEvent(system System, teamID, eventLeaderboardI
 		Name: "teamEventLeaderboardRolled",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"teamId":              teamID,
+			"teamId":             teamID,
 			"eventLeaderboardId": eventLeaderboardID,
 		},
 		Timestamp: ts,
@@ -849,7 +850,7 @@ func NewEventLeaderboardUpdatedEvent(system System, eventLeaderboardID string, e
 		Id:   newUUID(),
 		Metadata: map[string]string{
 			"eventLeaderboardId": eventLeaderboardID,
-			"subscore":             strconv.FormatInt(subscore, 10),
+			"subscore":           strconv.FormatInt(subscore, 10),
 		},
 		Timestamp: ts,
 		Value:     strconv.FormatInt(score, 10),
@@ -866,9 +867,9 @@ func NewTeamEventLeaderboardUpdatedEvent(system System, teamID, eventLeaderboard
 		Name: "teamEventLeaderboardUpdated",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"teamId":              teamID,
+			"teamId":             teamID,
 			"eventLeaderboardId": eventLeaderboardID,
-			"subscore":             strconv.FormatInt(subscore, 10),
+			"subscore":           strconv.FormatInt(subscore, 10),
 		},
 		Timestamp: ts,
 		Value:     strconv.FormatInt(score, 10),
@@ -901,7 +902,7 @@ func NewTeamEventLeaderboardClaimedEvent(system System, teamID, eventLeaderboard
 		Name: "teamEventLeaderboardClaimed",
 		Id:   newUUID(),
 		Metadata: map[string]string{
-			"teamId":              teamID,
+			"teamId":             teamID,
 			"eventLeaderboardId": eventLeaderboardID,
 		},
 		Timestamp: ts,
@@ -1154,10 +1155,10 @@ func NewChallengeUpdatedEvent(system System, challengeId string, challengeConfig
 		Id:   newUUID(),
 		Metadata: map[string]string{
 			"challengeId": challengeId,
-			"score":    strconv.FormatInt(score, 10),
-			"subscore": strconv.FormatInt(subscore, 10),
-			"oldRank":  strconv.FormatInt(oldRank, 10),
-			"newRank":  strconv.FormatInt(newRank, 10),
+			"score":       strconv.FormatInt(score, 10),
+			"subscore":    strconv.FormatInt(subscore, 10),
+			"oldRank":     strconv.FormatInt(oldRank, 10),
+			"newRank":     strconv.FormatInt(newRank, 10),
 		},
 		Value:     strconv.FormatInt(score, 10),
 		Timestamp: ts,
@@ -1175,9 +1176,9 @@ func NewChallengeClaimedEvent(system System, challengeId string, challengeConfig
 		Id:   newUUID(),
 		Metadata: map[string]string{
 			"challengeId": challengeId,
-			"score":        strconv.FormatInt(score, 10),
-			"subscore":     strconv.FormatInt(subscore, 10),
-			"rank":         strconv.FormatInt(rank, 10),
+			"score":       strconv.FormatInt(score, 10),
+			"subscore":    strconv.FormatInt(subscore, 10),
+			"rank":        strconv.FormatInt(rank, 10),
 		},
 		Value:     strconv.FormatInt(score, 10),
 		Timestamp: ts,
