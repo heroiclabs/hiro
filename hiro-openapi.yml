@@ -2102,10 +2102,6 @@ paths:
       responses:
         '200':
           description: A successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventLeaderboard'
         'default':
           description: An error response
           content:
@@ -3093,6 +3089,8 @@ components:
         expiry:
           type: integer
           format: int64
+        region:
+          type: string
     LeaderboardScoresListAroundOwnerRequest:
       type: object
       properties:
@@ -3107,6 +3105,8 @@ components:
           type: integer
           format: int64
         cursor:
+          type: string
+        region:
           type: string
     LeaderboardScore:
       type: object
@@ -3174,8 +3174,8 @@ components:
           type: string
         category:
           type: string
-        sort_order:
-          type: string
+        ascending:
+          type: boolean
         operator:
           type: string
         prev_reset_time_sec:
