@@ -81,9 +81,32 @@
           },
           "operator": {
             "enum": [
-              "infinite"
+              "infinite",
+              "set_refill_count",
+              "set_refill_sec",
+              "set_max_count"
             ],
             "type": "string"
+          },
+          "value": {
+            "properties": {
+              "max": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "min": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "multiple": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "min"
+            ],
+            "type": "object"
           }
         },
         "required": [

@@ -48,6 +48,10 @@
               "pattern": ".*",
               "type": "string"
             },
+            "duration_sec": {
+              "minimum": 0,
+              "type": "integer"
+            },
             "max_count": {
               "minimum": 0,
               "type": "integer"

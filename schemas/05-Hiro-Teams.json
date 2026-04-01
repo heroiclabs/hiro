@@ -523,9 +523,6 @@
       "properties": {
         "max_size": {
           "type": "integer"
-        },
-        "expiry_sec": {
-          "type": "integer"
         }
       }
     },
