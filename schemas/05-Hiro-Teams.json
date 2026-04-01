@@ -148,6 +148,7 @@
             "categories": {
               "patternProperties": {
                 ".+": {
+                  "minimum": 0,
                   "type": "integer"
                 }
               },
@@ -156,6 +157,7 @@
             "item_sets": {
               "patternProperties": {
                 ".+": {
+                  "minimum": 0,
                   "type": "integer"
                 }
               },
