@@ -5,11 +5,11 @@
     "Hiro-StreakReward": {
       "properties": {
         "count_min": {
-          "type": "number",
+          "type": "integer",
           "minimum": 0
         },
         "count_max": {
-          "type": "number",
+          "type": "integer",
           "minimum": 0
         },
         "reward": {
@@ -35,27 +35,31 @@
               "pattern": ".*"
             },
             "count": {
-              "type": "number",
+              "type": "integer",
               "minimum": 0
             },
             "max_count": {
-              "type": "number",
+              "type": "integer",
               "minimum": 0
             },
             "max_count_current_reset": {
-              "type": "number",
+              "type": "integer",
               "minimum": 0
             },
             "idle_count_decay_reset": {
-              "type": "number",
+              "type": "integer",
               "minimum": 0
             },
             "max_idle_count_decay": {
-              "type": "number",
+              "type": "integer",
               "minimum": 0
             },
             "reset_cronexpr": {
               "type": "string"
+            },
+            "time_offset_sec": {
+              "type": "integer",
+              "minimum": 0
             },
             "rewards": {
               "type": "array",
@@ -64,11 +68,11 @@
               }
             },
             "start_time_sec": {
-              "type": "number",
+              "type": "integer",
               "minimum": 0
             },
             "end_time_sec": {
-              "type": "number",
+              "type": "integer",
               "minimum": 0
             },
             "disabled": {

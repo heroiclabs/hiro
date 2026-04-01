@@ -8,15 +8,15 @@
           "properties": {
             "max": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "min": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "multiple": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "required": [
@@ -33,15 +33,15 @@
           "properties": {
             "max": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "min": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "multiple": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "required": [
@@ -59,15 +59,15 @@
             "properties": {
               "max": {
                 "minimum": 0,
-                "type": "number"
+                "type": "integer"
               },
               "min": {
                 "minimum": 0,
-                "type": "number"
+                "type": "integer"
               },
               "multiple": {
                 "minimum": 0,
-                "type": "number"
+                "type": "integer"
               }
             },
             "required": [
@@ -100,19 +100,19 @@
         "properties": {
           "max": {
             "minimum": 0,
-            "type": "number"
+            "type": "integer"
           },
           "max_repeats": {
             "minimum": 0,
-            "type": "number"
+            "type": "integer"
           },
           "min": {
             "minimum": 0,
-            "type": "number"
+            "type": "integer"
           },
           "multiple": {
             "minimum": 0,
-            "type": "number"
+            "type": "integer"
           },
           "set": {
             "items": {
@@ -136,15 +136,15 @@
           "properties": {
             "max": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "min": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "multiple": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "numeric_properties": {
               "patternProperties": {
@@ -178,7 +178,7 @@
                           "properties": {
                             "weight": {
                               "minimum": 0,
-                              "type": "number"
+                              "type": "integer"
                             }
                           }
                         }
@@ -187,7 +187,7 @@
                     },
                     "total_weight": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     }
                   }
                 }
@@ -210,15 +210,15 @@
             "properties": {
               "max": {
                 "minimum": 0,
-                "type": "number"
+                "type": "integer"
               },
               "min": {
                 "minimum": 0,
-                "type": "number"
+                "type": "integer"
               },
               "multiple": {
                 "minimum": 0,
-                "type": "number"
+                "type": "integer"
               }
             },
             "required": [
@@ -248,15 +248,15 @@
             "properties": {
               "max": {
                 "minimum": 0,
-                "type": "number"
+                "type": "integer"
               },
               "min": {
                 "minimum": 0,
-                "type": "number"
+                "type": "integer"
               },
               "multiple": {
                 "minimum": 0,
-                "type": "number"
+                "type": "integer"
               }
             },
             "required": [
@@ -278,7 +278,7 @@
     },
     "weight": {
       "minimum": 0,
-      "type": "number"
+      "type": "integer"
     }
   },
   "type": "object"

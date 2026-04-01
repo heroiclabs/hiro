@@ -29,7 +29,7 @@
             },
             "count": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "description": {
               "pattern": ".*",
@@ -37,19 +37,23 @@
             },
             "duration_sec": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "start_time_sec": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "end_time_sec": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
+            },
+            "time_offset_sec": {
+              "minimum": 0,
+              "type": "integer"
             },
             "max_count": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "name": {
               "pattern": ".{1,}",
@@ -93,7 +97,7 @@
                     },
                     "count": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     },
                     "description": {
                       "pattern": ".*",
@@ -101,11 +105,15 @@
                     },
                     "duration_sec": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
+                    },
+                    "time_offset_sec": {
+                      "minimum": 0,
+                      "type": "integer"
                     },
                     "max_count": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     },
                     "name": {
                       "pattern": ".{1,}",

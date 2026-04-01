@@ -4,15 +4,15 @@
   "properties": {
     "active_slots": {
       "minimum": 0,
-      "type": "number"
+      "type": "integer"
     },
     "max_active_slots": {
       "minimum": 0,
-      "type": "number"
+      "type": "integer"
     },
     "max_queued_unlocks": {
       "minimum": 0,
-      "type": "number"
+      "type": "integer"
     },
     "slot_cost": {
       "properties": {
@@ -20,7 +20,7 @@
           "patternProperties": {
             ".{1,}": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "type": "object"
@@ -29,7 +29,7 @@
           "patternProperties": {
             ".{1,}": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "type": "object"
@@ -39,7 +39,7 @@
     },
     "slots": {
       "minimum": 0,
-      "type": "number"
+      "type": "integer"
     },
     "unlockables": {
       "patternProperties": {
@@ -63,7 +63,7 @@
                   "patternProperties": {
                     ".{1,}": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     }
                   },
                   "type": "object"
@@ -72,7 +72,7 @@
                   "patternProperties": {
                     ".{1,}": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     }
                   },
                   "type": "object"
@@ -82,7 +82,7 @@
             },
             "cost_unit_time_sec": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "description": {
               "pattern": ".*",
@@ -94,7 +94,7 @@
             },
             "probability": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "reward": {
               "$ref": "Hiro-Rewards"
@@ -105,7 +105,7 @@
                   "patternProperties": {
                     ".{1,}": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     }
                   },
                   "type": "object"
@@ -114,7 +114,7 @@
                   "patternProperties": {
                     ".{1,}": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     }
                   },
                   "type": "object"
@@ -124,7 +124,7 @@
             },
             "wait_time_sec": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "required": [

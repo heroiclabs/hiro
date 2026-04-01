@@ -16,11 +16,11 @@
             },
             "max_step": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "start_step": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "type": "object"

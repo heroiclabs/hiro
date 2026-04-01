@@ -20,20 +20,24 @@
                 "type": "string"
               }
             },
+            "bid_history_count": {
+              "minimum": 0,
+              "type": "integer"
+            },
             "conditions": {
               "patternProperties": {
                 ".+": {
                   "properties": {
                     "duration_sec": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     },
                     "listing_cost": {
                       "properties": {
                         "currencies": {
                           "patternProperties": {
                             ".+": {
-                              "type": "number"
+                              "type": "integer"
                             }
                           },
                           "type": "object"
@@ -41,7 +45,7 @@
                         "items": {
                           "patternProperties": {
                             ".+": {
-                              "type": "number"
+                              "type": "integer"
                             }
                           },
                           "type": "object"
@@ -49,7 +53,7 @@
                         "energies": {
                           "patternProperties": {
                             ".+": {
-                              "type": "number"
+                              "type": "integer"
                             }
                           },
                           "type": "object"
@@ -62,7 +66,7 @@
                         "currencies": {
                           "patternProperties": {
                             ".+": {
-                              "type": "number"
+                              "type": "integer"
                             }
                           },
                           "type": "object"
@@ -78,7 +82,7 @@
                         "fixed": {
                           "patternProperties": {
                             ".+": {
-                              "type": "number"
+                              "type": "integer"
                             }
                           },
                           "type": "object"
@@ -88,15 +92,15 @@
                     },
                     "extension_threshold_sec": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     },
                     "extension_sec": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     },
                     "extension_max_sec": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     },
                     "fee": {
                       "properties": {
@@ -106,7 +110,7 @@
                         "fixed": {
                           "patternProperties": {
                             ".+": {
-                              "type": "number"
+                              "type": "integer"
                             }
                           },
                           "type": "object"
