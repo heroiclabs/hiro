@@ -144,7 +144,24 @@
         },
         "limits": {
           "type": "object",
-          "description": "InventoryConfigLimits - definition not provided"
+          "properties": {
+            "categories": {
+              "patternProperties": {
+                ".+": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "item_sets": {
+              "patternProperties": {
+                ".+": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
         }
       }
     },

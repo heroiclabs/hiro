@@ -80,9 +80,14 @@
                           "type": "number"
                         },
                         "fixed": {
-                          "patternProperties": {
-                            ".+": {
-                              "type": "integer"
+                          "properties": {
+                            "currencies": {
+                              "patternProperties": {
+                                ".+": {
+                                  "type": "integer"
+                                }
+                              },
+                              "type": "object"
                             }
                           },
                           "type": "object"
@@ -108,9 +113,14 @@
                           "type": "number"
                         },
                         "fixed": {
-                          "patternProperties": {
-                            ".+": {
-                              "type": "integer"
+                          "properties": {
+                            "currencies": {
+                              "patternProperties": {
+                                ".+": {
+                                  "type": "integer"
+                                }
+                              },
+                              "type": "object"
                             }
                           },
                           "type": "object"
