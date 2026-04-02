@@ -1968,6 +1968,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_EVENT_LEADERBOARD_DEBUG_UNENROLL?unwrap:
+    post:
+      summary: EVENT_LEADERBOARD_DEBUG_UNENROLL
+      description: "DEBUG. Unenroll from an event leaderboard cohort."
+      operationId: EVENT_LEADERBOARD_DEBUG_UNENROLL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventLeaderboardDebugUnenrollRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventLeaderboard'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_STATS_GET?unwrap:
     post:
       summary: STATS_GET
@@ -3647,6 +3671,9 @@ components:
             type: string
         open:
           type: boolean
+        max_scores:
+          type: integer
+          format: int64
         start_delay_sec:
           type: integer
           format: int64
@@ -3962,6 +3989,9 @@ components:
         num_scores:
           type: integer
           format: int64
+        tier_delta:
+          type: integer
+          format: int32
         metadata:
           type: string
     EventLeaderboardRewardTier:
@@ -3980,6 +4010,11 @@ components:
         tier_change:
           type: integer
           format: int32
+        roll_cooldown_sec:
+          type: integer
+          format: int64
+        reroll_count_freeze:
+          type: boolean
     EventLeaderboardRewardTiers:
       type: object
       properties:
@@ -3999,6 +4034,12 @@ components:
         demote_idle:
           type: boolean
         use_max_cohort_size:
+          type: boolean
+        promotion_reroll_count_freeze:
+          type: boolean
+        demotion_reroll_count_freeze:
+          type: boolean
+        nochange_reroll_count_freeze:
           type: boolean
     EventLeaderboard:
       type: object
@@ -4063,6 +4104,42 @@ components:
           type: string
         backing_id:
           type: string
+        rolls:
+          type: integer
+          format: int64
+        max_rolls:
+          type: integer
+          format: int64
+        score_target:
+          type: integer
+          format: int64
+        score_target_players:
+          type: integer
+          format: int64
+        score_time_limit_sec:
+          type: integer
+          format: int64
+        score_time_limit_ends_sec:
+          type: integer
+          format: int64
+        tier_delta_per_phase:
+          type: integer
+          format: int64
+        roll_cooldown_sec:
+          type: integer
+          format: int64
+        roll_cooldown_ends_sec:
+          type: integer
+          format: int64
+        reroll_count_freeze:
+          type: boolean
+        best_rank:
+          type: integer
+          format: int64
+        can_update:
+          type: boolean
+        can_roll_with_claim:
+          type: boolean
         additionalProperties:
           type: object
           additionalProperties:
@@ -4102,6 +4179,13 @@ components:
         subscore_max:
           type: integer
           format: int64
+    EventLeaderboardDebugUnenrollRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
     EconomyDonationContributor:
       type: object
       properties:
@@ -5995,6 +6079,42 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TeamEventLeaderboardContribution'
+        rolls:
+          type: integer
+          format: int64
+        max_rolls:
+          type: integer
+          format: int64
+        score_target:
+          type: integer
+          format: int64
+        score_target_players:
+          type: integer
+          format: int64
+        score_time_limit_sec:
+          type: integer
+          format: int64
+        score_time_limit_ends_sec:
+          type: integer
+          format: int64
+        tier_delta_per_phase:
+          type: integer
+          format: int64
+        roll_cooldown_sec:
+          type: integer
+          format: int64
+        roll_cooldown_ends_sec:
+          type: integer
+          format: int64
+        reroll_count_freeze:
+          type: boolean
+        best_rank:
+          type: integer
+          format: int64
+        can_update:
+          type: boolean
+        can_roll_with_claim:
+          type: boolean
         additionalProperties:
           type: object
           additionalProperties:
@@ -6521,6 +6641,7 @@ components:
         - RPC_ID_EVENT_LEADERBOARD_ROLL
         - RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL
         - RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES
+        - RPC_ID_EVENT_LEADERBOARD_DEBUG_UNENROLL
         - RPC_ID_STATS_GET
         - RPC_ID_STATS_UPDATE
         - RPC_ID_PROGRESSIONS_GET
