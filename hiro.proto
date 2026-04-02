@@ -219,7 +219,7 @@ enum RpcId {
   // DEBUG. Assign random scores within a given range to users within the caller's cohort, except for the caller themselves.
   RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES = 61 [(input) = "EventLeaderboardDebugRandomScoresRequest", (output) = "EventLeaderboard"];
   // DEBUG. Unenroll from an event leaderboard cohort.
-  RPC_ID_EVENT_LEADERBOARD_DEBUG_UNENROLL = 126 [(input) = "EventLeaderboardDebugUnenrollRequest", (output) = ""];
+  RPC_ID_EVENT_LEADERBOARD_DEBUG_UNENROLL = 126 [(input) = "EventLeaderboardDebugUnenrollRequest", (output) = "EventLeaderboard"];
 
   // Get all stats.
   RPC_ID_STATS_GET = 46 [(input) = "", (output) = "StatList"];
