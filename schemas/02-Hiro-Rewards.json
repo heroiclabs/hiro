@@ -7,15 +7,15 @@
     },
     "max_repeat_rolls": {
       "minimum": 0,
-      "type": "number"
+      "type": "integer"
     },
     "max_rolls": {
       "minimum": 0,
-      "type": "number"
+      "type": "integer"
     },
     "total_weight": {
       "minimum": 0,
-      "type": "number"
+      "type": "integer"
     },
     "weighted": {
       "items": {
@@ -24,7 +24,10 @@
       "type": "array"
     },
     "to_mailbox_expiry_sec": {
-      "type": "number"
+      "type": "integer"
+    },
+    "message": {
+      "type": "string"
     },
     "team_reward": {
       "properties": {
@@ -33,15 +36,15 @@
         },
         "max_repeat_rolls": {
           "minimum": 0,
-          "type": "number"
+          "type": "integer"
         },
         "max_rolls": {
           "minimum": 0,
-          "type": "number"
+          "type": "integer"
         },
         "total_weight": {
           "minimum": 0,
-          "type": "number"
+          "type": "integer"
         },
         "weighted": {
           "items": {
@@ -50,7 +53,7 @@
           "type": "array"
         },
         "to_mailbox_expiry_sec": {
-          "type": "number"
+          "type": "integer"
         },
         "member_reward": {
           "properties": {
@@ -59,21 +62,24 @@
             },
             "max_repeat_rolls": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "max_rolls": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "total_weight": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "weighted": {
               "items": {
                 "$ref": "Hiro-Reward"
               },
               "type": "array"
+            },
+            "to_mailbox_expiry_sec": {
+              "type": "integer"
             }
           },
           "type": "object"

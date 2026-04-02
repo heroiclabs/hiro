@@ -38,6 +38,15 @@
                     },
                     "use_max_cohort_size": {
                       "type": "boolean"
+                    },
+                    "promotion_reroll_count_freeze": {
+                      "type": "boolean"
+                    },
+                    "demotion_reroll_count_freeze": {
+                      "type": "boolean"
+                    },
+                    "nochange_reroll_count_freeze": {
+                      "type": "boolean"
                     }
                   },
                   "type": "object"
@@ -47,7 +56,7 @@
             },
             "cohort_size": {
               "minimum": 1,
-              "type": "number"
+              "type": "integer"
             },
             "description": {
               "pattern": ".*",
@@ -55,19 +64,43 @@
             },
             "duration": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
+            },
+            "max_rolls": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "score_target": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "score_target_players": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "score_time_limit_sec": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "tier_delta_per_phase": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "roll_cooldown_sec": {
+              "minimum": 0,
+              "type": "integer"
             },
             "end_time_sec": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "max_idle_tier_drop": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "max_num_score": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "name": {
               "pattern": ".+",
@@ -97,17 +130,24 @@
                       },
                       "rank_max": {
                         "minimum": 0,
-                        "type": "number"
+                        "type": "integer"
                       },
                       "rank_min": {
                         "minimum": 0,
-                        "type": "number"
+                        "type": "integer"
                       },
                       "reward": {
                         "$ref": "Hiro-Rewards"
                       },
                       "tier_change": {
-                        "type": "number"
+                        "type": "integer"
+                      },
+                      "roll_cooldown_sec": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "reroll_count_freeze": {
+                        "type": "boolean"
                       }
                     },
                     "type": "object"
@@ -119,15 +159,41 @@
             },
             "start_time_sec": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "tier_overrides": {
               "patternProperties": {
                 "[0-9]+": {
                   "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
                     "cohort_size": {
                       "minimum": 1,
-                      "type": "number"
+                      "type": "integer"
+                    },
+                    "max_num_score": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "score_target": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "score_target_players": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "score_time_limit_sec": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "tier_delta_per_phase": {
+                      "minimum": 0,
+                      "type": "integer"
                     }
                   },
                   "type": "object"
@@ -137,7 +203,7 @@
             },
             "tiers": {
               "minimum": 1,
-              "type": "number"
+              "type": "integer"
             }
           },
           "type": "object"

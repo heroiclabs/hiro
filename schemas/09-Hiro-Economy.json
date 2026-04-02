@@ -23,7 +23,7 @@
                   "patternProperties": {
                     ".{1,}": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     }
                   },
                   "type": "object"
@@ -32,7 +32,7 @@
                   "patternProperties": {
                     ".{1,}": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     }
                   },
                   "type": "object"
@@ -42,15 +42,19 @@
             },
             "count": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "description": {
               "pattern": ".*",
               "type": "string"
             },
+            "duration_sec": {
+              "minimum": 0,
+              "type": "integer"
+            },
             "max_count": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "name": {
               "pattern": ".{1,}",
@@ -61,7 +65,7 @@
             },
             "user_contribution_max_count": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "required": [
@@ -79,7 +83,7 @@
           "patternProperties": {
             ".{1,}": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "type": "object"
@@ -88,7 +92,7 @@
           "patternProperties": {
             ".{1,}": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "type": "object"
@@ -139,7 +143,7 @@
                   "patternProperties": {
                     ".{1,}": {
                       "minimum": 0,
-                      "type": "number"
+                      "type": "integer"
                     }
                   },
                   "type": "object"

@@ -11,6 +11,9 @@
       "type": "integer",
       "minimum": 1
     },
+    "allow_multiple_teams": {
+      "type": "boolean"
+    },
     "wallet": {
       "$ref": "#/$defs/TeamsWalletConfig"
     },
@@ -141,7 +144,26 @@
         },
         "limits": {
           "type": "object",
-          "description": "InventoryConfigLimits - definition not provided"
+          "properties": {
+            "categories": {
+              "patternProperties": {
+                ".+": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "item_sets": {
+              "patternProperties": {
+                ".+": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
         }
       }
     },
@@ -242,6 +264,9 @@
         "duration_sec": {
           "type": "integer"
         },
+        "time_offset_sec": {
+          "type": "integer"
+        },
         "max_count": {
           "type": "integer"
         },
@@ -297,6 +322,9 @@
           "type": "string"
         },
         "duration_sec": {
+          "type": "integer"
+        },
+        "time_offset_sec": {
           "type": "integer"
         },
         "max_count": {
@@ -403,6 +431,24 @@
         },
         "duration": {
           "type": "integer"
+        },
+        "max_rolls": {
+          "type": "integer"
+        },
+        "score_target": {
+          "type": "integer"
+        },
+        "score_target_players": {
+          "type": "integer"
+        },
+        "score_time_limit_sec": {
+          "type": "integer"
+        },
+        "tier_delta_per_phase": {
+          "type": "integer"
+        },
+        "roll_cooldown_sec": {
+          "type": "integer"
         }
       }
     },
@@ -410,7 +456,28 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
         "cohort_size": {
+          "type": "integer"
+        },
+        "max_num_score": {
+          "type": "integer"
+        },
+        "score_target": {
+          "type": "integer"
+        },
+        "score_target_players": {
+          "type": "integer"
+        },
+        "score_time_limit_sec": {
+          "type": "integer"
+        },
+        "tier_delta_per_phase": {
           "type": "integer"
         }
       }
@@ -433,6 +500,12 @@
         },
         "tier_change": {
           "type": "integer"
+        },
+        "roll_cooldown_sec": {
+          "type": "integer"
+        },
+        "reroll_count_freeze": {
+          "type": "boolean"
         }
       }
     },
@@ -451,6 +524,15 @@
         },
         "use_max_cohort_size": {
           "type": "boolean"
+        },
+        "promotion_reroll_count_freeze": {
+          "type": "boolean"
+        },
+        "demotion_reroll_count_freeze": {
+          "type": "boolean"
+        },
+        "nochange_reroll_count_freeze": {
+          "type": "boolean"
         }
       }
     },
@@ -459,9 +541,6 @@
       "additionalProperties": false,
       "properties": {
         "max_size": {
-          "type": "integer"
-        },
-        "expiry_sec": {
           "type": "integer"
         }
       }

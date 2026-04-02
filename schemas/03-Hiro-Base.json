@@ -29,7 +29,7 @@
     "rate_app_smtp_port": {
       "maximum": 65535,
       "minimum": 1,
-      "type": "number"
+      "type": "integer"
     },
     "rate_app_smtp_username": {
       "pattern": ".{1,}",

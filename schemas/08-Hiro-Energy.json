@@ -19,26 +19,26 @@
             },
             "max_count": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "max_overfill": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "refill_count": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "refill_time_sec": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "reward": {
               "$ref": "Hiro-Rewards"
             },
             "start_count": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "required": [

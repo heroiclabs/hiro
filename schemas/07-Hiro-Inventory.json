@@ -35,7 +35,7 @@
             },
             "max_count": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             },
             "name": {
               "pattern": ".{1,}",
@@ -76,7 +76,7 @@
           "patternProperties": {
             ".+": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "type": "object"
@@ -85,7 +85,7 @@
           "patternProperties": {
             ".+": {
               "minimum": 0,
-              "type": "number"
+              "type": "integer"
             }
           },
           "type": "object"
