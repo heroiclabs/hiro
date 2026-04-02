@@ -416,21 +416,6 @@ message LeaderboardScore {
   int64 num_scores = 12;
 }
 
-message LeaderboardScoreList {
-  // A list of leaderboard scores.
-  repeated LeaderboardScore scores = 1;
-  // A batched set of leaderboard scores belonging to specified owners.
-  repeated LeaderboardScore owner_scores = 2;
-  // The cursor to send when retrieving the next page, if any.
-  string next_cursor = 3;
-  // The cursor to send when retrieving the previous page, if any.
-  string prev_cursor = 4;
-  // The total number of ranks available.
-  int64 rank_count = 5;
-  // Leaderboard type
-  Leaderboard leaderboard = 6;
-}
-
 // Details about a specific leaderboard.
 message Leaderboard {
   // Leaderboard ID.
@@ -467,6 +452,21 @@ message Leaderboard {
 message LeaderboardList {
   // Zero or more leaderboards.
   repeated Leaderboard leaderboards = 1;
+}
+
+message LeaderboardScoreList {
+  // A list of leaderboard scores.
+  repeated LeaderboardScore scores = 1;
+  // A batched set of leaderboard scores belonging to specified owners.
+  repeated LeaderboardScore owner_scores = 2;
+  // The cursor to send when retrieving the next page, if any.
+  string next_cursor = 3;
+  // The cursor to send when retrieving the previous page, if any.
+  string prev_cursor = 4;
+  // The total number of ranks available.
+  int64 rank_count = 5;
+  // Leaderboard type
+  Leaderboard leaderboard = 6;
 }
 
 // A leaderboard configuration.

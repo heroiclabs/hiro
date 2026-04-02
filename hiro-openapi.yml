@@ -2102,6 +2102,10 @@ paths:
       responses:
         '200':
           description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventLeaderboard'
         'default':
           description: An error response
           content:
@@ -3058,8 +3062,6 @@ components:
           format: int64
         metadata:
           type: string
-        conditional_metadata_update:
-          type: boolean
     LeaderboardGet:
       type: object
       properties:
