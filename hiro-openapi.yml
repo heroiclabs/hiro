@@ -3145,26 +3145,6 @@ components:
         num_scores:
           type: integer
           format: int64
-    LeaderboardScoreList:
-      type: object
-      properties:
-        scores:
-          type: array
-          items:
-            $ref: '#/components/schemas/LeaderboardScore'
-        owner_scores:
-          type: array
-          items:
-            $ref: '#/components/schemas/LeaderboardScore'
-        next_cursor:
-          type: string
-        prev_cursor:
-          type: string
-        rank_count:
-          type: integer
-          format: int64
-        leaderboard:
-          $ref: '#/components/schemas/Leaderboard'
     Leaderboard:
       type: object
       properties:
@@ -3212,6 +3192,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Leaderboard'
+    LeaderboardScoreList:
+      type: object
+      properties:
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        owner_scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        next_cursor:
+          type: string
+        prev_cursor:
+          type: string
+        rank_count:
+          type: integer
+          format: int64
+        leaderboard:
+          $ref: '#/components/schemas/Leaderboard'
     LeaderboardConfig:
       type: object
       properties:

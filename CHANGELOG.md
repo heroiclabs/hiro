@@ -5,6 +5,26 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.33.0] - 2026-04-02
+### Added
+- Add "DebugUnenroll" function to Event Leaderboards for easier QA tests.
+- Return "tier_delta" in Event Leaderboard scores which indicates promotion/demotion zones.
+- (Unity) Provide "OnlineChanged" event signal in "NetworkProbe" for eager detection.
+
+### Changed
+- All analytics events published to Satori are now public functions.
+- Update all JSON schemas to include latest game system fields and definitions.
+- Expand "LeaderboardsSystem" to wrap everything in Nakama Leaderboards to use Hiro personalizers.
+- (Unreal) Simplify Steam authentication with Identity in Hiro Online Subsystem.
+- (CPP) (Dart) (Godot) (Python) (TypeScript) (Unity) (Unreal) Update clients for all new APIs.
+
+### Fixed
+- Handle Auction bid won by player account which has since been deleted gracefully.
+- Fix currency delta dropped when balance matches server after offline.
+- (Unity) Fix "PlayerPrefsStorage" returns hollow objects for missing keys.
+- (Unity) Copy codex properties into inventory items granted in rewards while offline.
+- (Unity) Return valid "AchievementClaimAck" and "EnergySpendReward" types when offline.
+
 ## [1.32.0] - 2026-02-22
 ### Added
 - Huge improvement to Event Leaderboards (2.0) which can now handle many different rulesets, replay, and win conditions. 🎉
