@@ -41,6 +41,8 @@ enum RpcId {
   RPC_ID_INVENTORY_CONSUME = 3 [(input) = "InventoryConsumeRequest", (output) = "InventoryConsumeRewards"];
   // Grant one or more inventory items to the player.
   RPC_ID_INVENTORY_GRANT = 4 [(input) = "InventoryGrantRequest", (output) = "InventoryUpdateAck"];
+  // Grant and set each invetory item for one or more inventory items to the player.
+  RPC_ID_INVENTORY_GRANT_SET = 132 [(input) = "InventoryGrantSetRequest", (output) = "InventoryUpdateAck"];
   // Update the properties on one or more inventory items owned by the player.
   RPC_ID_INVENTORY_UPDATE = 5 [(input) = "InventoryUpdateItemsRequest", (output) = "InventoryUpdateAck"];
   // Delete Items by instance id.
@@ -1891,6 +1893,11 @@ message InventoryUpdateItemProperties {
   map<string, string> string_properties = 1;
   // The properties with numeric values.
   map<string, double> numeric_properties = 2;
+}
+
+// Represents a request to grant and set the properties of newly granted items.
+message InventoryGrantSetRequest {
+  map<string, InventoryUpdateItemProperties> items = 1;
 }
 
 // Represents a request to update properties of instanced items.

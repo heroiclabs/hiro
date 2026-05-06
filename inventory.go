@@ -66,6 +66,8 @@ type InventorySystem interface {
 	// GrantItems will add the item(s) to a user's inventory by ID.
 	GrantItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, itemIDs map[string]int64, ignoreLimits bool) (updatedInventory *Inventory, newItems map[string]*InventoryItem, updatedItems map[string]*InventoryItem, notGrantedItemIDs map[string]int64, err error)
 
+	GrantAndSetItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, items map[string]*InventoryUpdateItemProperties, ignoreLimits bool) (updatedInventory *Inventory, newItems map[string]*InventoryItem, updatedItems map[string]*InventoryItem, notGrantedItemIDs map[string]int64, err error)
+
 	// UpdateItems will update the properties which are stored on each item by instance ID for a user.
 	UpdateItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, instanceIDs map[string]*InventoryUpdateItemProperties) (updatedInventory *Inventory, err error)
 

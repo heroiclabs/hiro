@@ -116,6 +116,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_INVENTORY_GRANT_SET?unwrap:
+    post:
+      summary: INVENTORY_GRANT_SET
+      description: "Grant and set each invetory item for one or more inventory items to the player."
+      operationId: INVENTORY_GRANT_SET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryGrantSetRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryUpdateAck'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_INVENTORY_UPDATE?unwrap:
     post:
       summary: INVENTORY_UPDATE
@@ -4728,6 +4752,9 @@ components:
           type: object
           additionalProperties:
             type: string
+    InventoryGrantSetRequest:
+      type: object
+      properties:
     InventoryUpdateItemsRequest:
       type: object
       properties:
@@ -6844,6 +6871,7 @@ components:
         - RPC_ID_INVENTORY_LIST_INVENTORY
         - RPC_ID_INVENTORY_CONSUME
         - RPC_ID_INVENTORY_GRANT
+        - RPC_ID_INVENTORY_GRANT_SET
         - RPC_ID_INVENTORY_UPDATE
         - RPC_ID_INVENTORY_DELETE
         - RPC_ID_ECONOMY_DONATION_CLAIM
