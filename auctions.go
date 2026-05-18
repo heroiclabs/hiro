@@ -35,6 +35,8 @@ var (
 	ErrAuctionBidInvalid        = runtime.NewError("auction bid invalid", 3)            // INVALID_ARGUMENT
 	ErrAuctionCannotClaim       = runtime.NewError("auction cannot be claimed", 3)      // INVALID_ARGUMENT
 	ErrAuctionCannotCancel      = runtime.NewError("auction cannot be cancelled", 3)    // INVALID_ARGUMENT
+	ErrAuctionBidNotAllowed     = runtime.NewError("auction bid not allowed", 7)        // PERMISSION_DENIED
+	ErrAuctionBidItemsInvalid   = runtime.NewError("auction bid items invalid", 3)      // INVALID_ARGUMENT
 )
 
 // AuctionsConfig is the data definition for the AuctionsSystem type.
@@ -57,6 +59,7 @@ type AuctionsConfigAuctionCondition struct {
 	ExtensionThresholdSec int64                                       `json:"extension_threshold_sec,omitempty"`
 	ExtensionSec          int64                                       `json:"extension_sec,omitempty"`
 	ExtensionMaxSec       int64                                       `json:"extension_max_sec,omitempty"`
+	InstantComplete       bool                                        `json:"instant_complete,omitempty"`
 	Fee                   *AuctionsConfigAuctionConditionFee          `json:"fee,omitempty"`
 }
 
@@ -68,6 +71,7 @@ type AuctionsConfigAuctionConditionCost struct {
 
 type AuctionsConfigAuctionConditionBid struct {
 	Currencies map[string]int64 `json:"currencies,omitempty"`
+	ItemCounts map[string]int64 `json:"item_counts,omitempty"`
 }
 
 type AuctionsConfigAuctionConditionBidIncrement struct {
@@ -107,7 +111,7 @@ type AuctionsSystem interface {
 	Cancel(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, auctionID string) (*AuctionCancel, error)
 
 	// Create a new auction based on supplied parameters and available configuration.
-	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, templateID, conditionID string, instanceIDs []string, startTimeSec int64, items []*InventoryItem, overrideConfig *AuctionsConfigAuction) (*Auction, error)
+	Create(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, templateID, conditionID string, instanceIDs []string, startTimeSec int64, allowedUserIDs []string, items []*InventoryItem, overrideConfig *AuctionsConfigAuction) (*Auction, error)
 
 	// ListBids returns auctions the user has successfully bid on.
 	ListBids(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, limit int, cursor string) (*AuctionList, error)
