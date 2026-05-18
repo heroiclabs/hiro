@@ -1945,8 +1945,14 @@ message InventoryList {
 
 // Bid amount associated with an auction.
 message AuctionBidAmount {
-  // Currencies required or placed as part of the bid.
+  // Currencies required (ask) or placed (offer) as part of the bid.
   map<string, int64> currencies = 1;
+  // Per-item-id counts the bidder must include. Ask-only.
+  map<string, int64> item_counts = 2;
+  // Inventory instance IDs the bidder is escrowing. Offer-only.
+  repeated string instance_ids = 3;
+  // Resolved escrowed items, populated by the server. Offer-only.
+  repeated InventoryItem items = 4;
 }
 
 // Fee structure associated with an auction, which will be deducted on completion.
@@ -1993,6 +1999,8 @@ message AuctionTemplateCondition {
   int64 extension_max_sec = 7;
   // Auction fee the creator will pay out of the winning bid amount, if any.
   AuctionFee fee = 8;
+  // Whether the auction should be immediately completed if a bid meets the buyout price.
+  bool instant_complete = 9;
 }
 
 // An individually usable auction template.
@@ -2091,6 +2099,10 @@ message Auction {
   AuctionBid bid_first = 29;
   // Most recent set of bids placed on this auction, ordered from newest to oldest retained.
   repeated AuctionBid bid_history = 30;
+  // User IDs of directed users that are allowed to see and bid on this auction, if any.
+  repeated string allowed_user_ids = 31;
+  // Whether the auction should be immediately completed if a bid meets the buyout price.
+  bool instant_complete = 32;
 }
 
 // Notification payload containing a bid update for a followed auction.
@@ -2168,6 +2180,8 @@ message AuctionListRequest {
   int64 limit = 3;
   // Cursor to use for retrieving the next page of results.
   string cursor = 4;
+  // If true, only returns auctions that the user is directly allowed to see and bid on, by being included in the allowed users list for directed auctions.
+  bool directed_at_me = 5;
 }
 
 // Request to place a bid on an active auction.
@@ -2208,6 +2222,8 @@ message AuctionCreateRequest {
   repeated string instance_ids = 3;
   // Time when the auction should start, omit to start immediately.
   int64 start_time_sec = 4;
+  // User IDs of directed users that are allowed to see and bid on this auction, if any.
+  repeated string allowed_user_ids = 5;
 }
 
 // Request to retrieve a list of auctions the user has bid on.
