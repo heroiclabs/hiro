@@ -96,7 +96,7 @@ type AuctionsSystem interface {
 	GetTemplates(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (*AuctionTemplates, error)
 
 	// List auctions based on provided criteria.
-	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, query string, sort []string, limit int, cursor string) (*AuctionList, error)
+	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, query string, directedAtMe bool, sort []string, limit int, cursor string) (*AuctionList, error)
 
 	// Bid on an active auction.
 	Bid(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, sessionID, auctionID, version string, bid *AuctionBidAmount, marshaler *protojson.MarshalOptions) (*Auction, error)
