@@ -253,6 +253,11 @@ func (p *SatoriPersonalizer) Send(ctx context.Context, logger runtime.Logger, nk
 		return
 	}
 
+	vars, ok := ctx.Value(runtime.RUNTIME_CTX_VARS).(map[string]string)
+	if ok && vars["LimitedForAnalytics"] == "true" {
+		return
+	}
+
 	traceID, _ := ctx.Value(runtime.RUNTIME_CTX_TRACE_ID).(string)
 
 	satoriEvents := make([]*runtime.Event, 0, len(events))
@@ -386,6 +391,11 @@ func NewSatoriPersonalizer(ctx context.Context, opts ...SatoriPersonalizerOption
 var allFlagNames = []string{"Hiro-Achievements", "Hiro-Base", "Hiro-Economy", "Hiro-Energy", "Hiro-Inventory", "Hiro-Leaderboards", "Hiro-Teams", "Hiro-Tutorials", "Hiro-Unlockables", "Hiro-Stats", "Hiro-Event-Leaderboards", "Hiro-Progression", "Hiro-Incentives", "Hiro-Auctions", "Hiro-Streaks", "Hiro-Challenges", "Hiro-Reward-Mailbox"}
 
 func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string) (any, error) {
+	vars, ok := ctx.Value(runtime.RUNTIME_CTX_VARS).(map[string]string)
+	if ok && vars["LimitedForPersonalize"] == "true" {
+		return nil, nil
+	}
+
 	var flagName string
 	switch system.GetType() {
 	case SystemTypeAchievements:
