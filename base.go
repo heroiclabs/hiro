@@ -71,7 +71,7 @@ type BaseSystemConfig struct {
 	RateAppTemplate string `json:"rate_app_template"` // HTML email template
 }
 
-type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, session *api.Session) error
+type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, session *api.Session, provider AuthProvider) error
 
 type CollectionResolverFn func(ctx context.Context, systemType SystemType, collection string) (string, error)
 
@@ -140,6 +140,20 @@ const (
 	SystemTypeStreaks
 	SystemTypeChallenges
 	SystemTypeRewardMailbox
+)
+
+type AuthProvider string
+
+const (
+	AuthProviderApple               AuthProvider = "Apple"
+	AuthProviderCustom              AuthProvider = "Custom"
+	AuthProviderDevice              AuthProvider = "Device"
+	AuthProviderEmail               AuthProvider = "Email"
+	AuthProviderFacebook            AuthProvider = "Facebook"
+	AuthProviderFacebookInstantGame AuthProvider = "FacebookInstantGame"
+	AuthProviderGameCenter          AuthProvider = "GameCenter"
+	AuthProviderGoogle              AuthProvider = "Google"
+	AuthProviderSteam               AuthProvider = "Steam"
 )
 
 // Init initializes a Hiro type with the configurations provided.

@@ -239,7 +239,7 @@ type SatoriPersonalizer struct {
 	cache      map[context.Context]*SatoriPersonalizerCache
 }
 
-func (p *SatoriPersonalizer) Authenticate(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, created bool) {
+func (p *SatoriPersonalizer) Authenticate(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, created bool, provider AuthProvider) {
 	if !p.IsPublishAuthenticateRequest() && !p.IsPublishAuthenticateRequestWithSession() {
 		return
 	}

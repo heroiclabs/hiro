@@ -48,7 +48,7 @@ type PublisherEvent struct {
 type Publisher interface {
 	// Authenticate is called every time a user authenticates with Hiro. The 'created' flag is true if this
 	// is a newly created user account, and each implementation may choose to handle this as it chooses.
-	Authenticate(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, created bool)
+	Authenticate(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, created bool, provider AuthProvider)
 
 	// Send is called when there are one or more events generated.
 	Send(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, events []*PublisherEvent)
