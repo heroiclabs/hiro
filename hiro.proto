@@ -2152,6 +2152,8 @@ message AuctionClaimCreated {
   AuctionBidAmount fee = 3;
   // Items returned in the event of a failed auction.
   repeated InventoryItem returned_items = 4;
+  // Items received from the winning bid in the event of a successful auction, if any.
+  repeated InventoryItem received_items = 5;
 }
 
 // Result of cancelling an auction.
