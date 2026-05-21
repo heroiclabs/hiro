@@ -4772,7 +4772,20 @@ components:
     AuctionBidAmount:
       type: object
       properties:
+        instance_ids:
+          type: array
+          items:
+            type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
         currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        itemCounts:
           type: object
           additionalProperties:
             type: integer
@@ -4834,6 +4847,8 @@ components:
           format: int64
         fee:
           $ref: '#/components/schemas/AuctionFee'
+        instant_complete:
+          type: boolean
     AuctionTemplate:
       type: object
       properties:
@@ -4949,6 +4964,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AuctionBid'
+        allowed_user_ids:
+          type: array
+          items:
+            type: string
+        instant_complete:
+          type: boolean
     AuctionNotificationBid:
       type: object
       properties:
@@ -4998,6 +5019,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InventoryItem'
+        received_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
     AuctionCancel:
       type: object
       properties:
@@ -5028,6 +5053,8 @@ components:
           format: int64
         cursor:
           type: string
+        directed_at_me:
+          type: boolean
     AuctionBidRequest:
       type: object
       properties:
@@ -5066,6 +5093,10 @@ components:
         start_time_sec:
           type: integer
           format: int64
+        allowed_user_ids:
+          type: array
+          items:
+            type: string
     AuctionListBidsRequest:
       type: object
       properties:
