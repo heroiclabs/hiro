@@ -388,7 +388,7 @@ func NewSatoriPersonalizer(ctx context.Context, opts ...SatoriPersonalizerOption
 	return s
 }
 
-var allFlagNames = []string{"Hiro-Achievements", "Hiro-Base", "Hiro-Economy", "Hiro-Energy", "Hiro-Inventory", "Hiro-Leaderboards", "Hiro-Teams", "Hiro-Tutorials", "Hiro-Unlockables", "Hiro-Stats", "Hiro-Event-Leaderboards", "Hiro-Progression", "Hiro-Incentives", "Hiro-Auctions", "Hiro-Streaks", "Hiro-Challenges", "Hiro-Reward-Mailbox"}
+var allFlagNames = []string{"Hiro-Achievements", "Hiro-Base", "Hiro-Economy", "Hiro-Energy", "Hiro-Inventory", "Hiro-Leaderboards", "Hiro-Teams", "Hiro-Tutorials", "Hiro-Unlockables", "Hiro-Stats", "Hiro-Event-Leaderboards", "Hiro-Progressions", "Hiro-Incentives", "Hiro-Auctions", "Hiro-Streaks", "Hiro-Challenges", "Hiro-Reward-Mailbox"}
 
 func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, system System, userID string) (any, error) {
 	vars, ok := ctx.Value(runtime.RUNTIME_CTX_VARS).(map[string]string)
@@ -421,7 +421,7 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 	case SystemTypeEventLeaderboards:
 		flagName = "Hiro-Event-Leaderboards"
 	case SystemTypeProgression:
-		flagName = "Hiro-Progression"
+		flagName = "Hiro-Progressions"
 	case SystemTypeIncentives:
 		flagName = "Hiro-Incentives"
 	case SystemTypeAuctions:
