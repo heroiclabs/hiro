@@ -89,7 +89,7 @@ type Hiro interface {
 
 	AddPublisher(publisher Publisher)
 
-	SetAfterAuthenticate(fn AfterAuthenticateFn)
+	SetAfterAuthenticate(fn AfterAuthenticateFn) error
 
 	// SetCollectionResolver sets a function that may change the storage collection target for Hiro systems. Not typically used.
 	SetCollectionResolver(fn CollectionResolverFn)
