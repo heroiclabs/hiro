@@ -4847,7 +4847,7 @@ components:
           format: int64
         fee:
           $ref: '#/components/schemas/AuctionFee'
-        instant_complete:
+        immediate_buyout:
           type: boolean
     AuctionTemplate:
       type: object
@@ -4968,7 +4968,7 @@ components:
           type: array
           items:
             type: string
-        instant_complete:
+        immediate_buyout:
           type: boolean
     AuctionNotificationBid:
       type: object
@@ -5053,7 +5053,7 @@ components:
           format: int64
         cursor:
           type: string
-        directed_at_me:
+        allowed_only:
           type: boolean
     AuctionBidRequest:
       type: object
