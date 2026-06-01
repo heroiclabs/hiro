@@ -59,7 +59,7 @@ type AuctionsConfigAuctionCondition struct {
 	ExtensionThresholdSec int64                                       `json:"extension_threshold_sec,omitempty"`
 	ExtensionSec          int64                                       `json:"extension_sec,omitempty"`
 	ExtensionMaxSec       int64                                       `json:"extension_max_sec,omitempty"`
-	InstantComplete       bool                                        `json:"instant_complete,omitempty"`
+	ImmediateBuyout       bool                                        `json:"immediate_buyout,omitempty"`
 	Fee                   *AuctionsConfigAuctionConditionFee          `json:"fee,omitempty"`
 }
 
