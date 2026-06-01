@@ -2000,7 +2000,7 @@ message AuctionTemplateCondition {
   // Auction fee the creator will pay out of the winning bid amount, if any.
   AuctionFee fee = 8;
   // Whether the auction should be immediately completed if a bid meets the buyout price.
-  bool instant_complete = 9;
+  bool immediate_buyout = 9;
 }
 
 // An individually usable auction template.
