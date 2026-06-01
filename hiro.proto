@@ -2102,7 +2102,7 @@ message Auction {
   // User IDs of directed users that are allowed to see and bid on this auction, if any.
   repeated string allowed_user_ids = 31;
   // Whether the auction should be immediately completed if a bid meets the buyout price.
-  bool instant_complete = 32;
+  bool immediate_buyout = 32;
 }
 
 // Notification payload containing a bid update for a followed auction.
@@ -2183,7 +2183,7 @@ message AuctionListRequest {
   // Cursor to use for retrieving the next page of results.
   string cursor = 4;
   // If true, only returns auctions that the user is directly allowed to see and bid on, by being included in the allowed users list for directed auctions.
-  bool directed_at_me = 5;
+  bool allowed_only = 5;
 }
 
 // Request to place a bid on an active auction.
