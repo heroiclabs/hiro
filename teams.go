@@ -172,8 +172,8 @@ type TeamsSystem interface {
 	// InventoryConsumeItems will deduct the item(s) from the team's inventory and run the consume reward for each one, if defined.
 	InventoryConsumeItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, itemIDs, instanceIDs map[string]int64, overConsume bool) (updatedInventory *Inventory, rewards map[string][]*Reward, instanceRewards map[string][]*Reward, err error)
 
-	// InventoryGrantItems will add the item(s) to a team's inventory by ID.
-	InventoryGrantItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, itemIDs map[string]int64, ignoreLimits bool) (updatedInventory *Inventory, newItems map[string]*InventoryItem, updatedItems map[string]*InventoryItem, notGrantedItemIDs map[string]int64, err error)
+	// InventoryGrantItems will add the item(s) to a team's inventory by ID, optionally setting properties on each granted item.
+	InventoryGrantItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, itemIDs map[string]int64, properties map[string]*InventoryUpdateItemProperties, ignoreLimits bool) (updatedInventory *Inventory, newItems map[string]*InventoryItem, updatedItems map[string]*InventoryItem, notGrantedItemIDs map[string]int64, err error)
 
 	// InventoryUpdateItems will update the properties which are stored on each item by instance ID for a team.
 	InventoryUpdateItems(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, instanceIDs map[string]*InventoryUpdateItemProperties) (updatedInventory *Inventory, err error)

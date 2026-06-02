@@ -1883,6 +1883,8 @@ message InventoryListRequest {
 message InventoryGrantRequest {
   // The items to grant.
   map<string, int64> items = 1;
+  // The properties to set on each granted item, keyed by item ID.
+  map<string, InventoryUpdateItemProperties> properties = 2;
 }
 
 // The typed properties to update in an instanced inventory item.
@@ -3219,6 +3221,8 @@ message TeamInventoryGrantRequest {
   string id = 1;
   // The items to grant.
   map<string, int64> items = 2;
+  // The properties to set on each granted item, keyed by item ID.
+  map<string, InventoryUpdateItemProperties> properties = 3;
 }
 
 // Represents a request to update properties of instanced items belonging to a team.
