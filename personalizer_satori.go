@@ -453,7 +453,6 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 		if len(flagList.Flags) >= 1 {
 			config = system.GetConfig()
 			decoder := json.NewDecoder(strings.NewReader(flagList.Flags[0].Value))
-			decoder.DisallowUnknownFields()
 			if err := decoder.Decode(config); err != nil {
 				logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
 				return nil, err
@@ -478,7 +477,6 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 				}
 				for _, liveEvent := range liveEventsList.LiveEvents {
 					decoder := json.NewDecoder(strings.NewReader(liveEvent.Value))
-					decoder.DisallowUnknownFields()
 					if err := decoder.Decode(config); err != nil {
 						// The live event may be intended for a different purpose, do not log or return an error here.
 						continue
@@ -557,7 +555,6 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 
 			config = system.GetConfig()
 			decoder := json.NewDecoder(strings.NewReader(flHandle.Value()))
-			decoder.DisallowUnknownFields()
 			if err := decoder.Decode(config); err != nil {
 				logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
 				return nil, err
@@ -571,7 +568,6 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 			}
 			for _, liveEvent := range liveEventsList.LiveEvents {
 				decoder := json.NewDecoder(strings.NewReader(liveEvent.Value))
-				decoder.DisallowUnknownFields()
 				if err := decoder.Decode(config); err != nil {
 					// The live event may be intended for a different purpose, do not log or return an error here.
 					continue

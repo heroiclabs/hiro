@@ -5,6 +5,10 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [Unreleased]
+### Changed
+- Support forward compatibility with definitions in Storage and Satori personalizers.
+
 ## [1.33.0] - 2026-04-02
 ### Added
 - Add "DebugUnenroll" function to Event Leaderboards for easier QA tests.
