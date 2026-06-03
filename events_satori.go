@@ -43,6 +43,7 @@ const (
 	EventSourceUnlockableSlotPurchased   = "unlockableSlotPurchased"
 	EventSourceUnlockableClaimed         = "unlockableClaimed"
 	EventSourceInitializeUser            = "initializeUser"
+	EventSourceReapplyInitializeUser     = "reapplyInitializeUser"
 	EventSourceChallengeClaimed          = "challengeClaimed"
 )
 

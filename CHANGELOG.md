@@ -6,6 +6,9 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
 ## [Unreleased]
+### Added
+- Add new economy "ReapplyInitializeUser" function to apply new initialize_user config currencies and items to an existing user.
+
 ### Changed
 - Support forward compatibility with definitions in Storage and Satori personalizers.
 

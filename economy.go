@@ -286,6 +286,9 @@ type EconomySystem interface {
 	// SetAllowFakeReceipts sets whether fake receipts are allowed for testing purposes. This function replaces the existing AllowFakeReceipts setting in EconomyConfig.
 	SetAllowFakeReceipts(allow bool)
 
+	// ReapplyInitializeUser reapplies the initialize user configuration for a given userID. It only applies new currencies and inventory items. This can be used to retroactively apply changes to the initialize user configuration.
+	ReapplyInitializeUser(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID string) error
+
 	// SetOnDonationClaimReward sets a custom reward function which will run after a donation's reward is rolled.
 	SetOnDonationClaimReward(fn OnReward[*EconomyConfigDonation])
 
