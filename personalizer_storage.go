@@ -382,7 +382,6 @@ func (p *StoragePersonalizer) GetValue(ctx context.Context, logger runtime.Logge
 
 	config := system.GetConfig()
 	decoder := json.NewDecoder(strings.NewReader(cached.object.Value))
-	decoder.DisallowUnknownFields()
 	if err := decoder.Decode(config); err != nil {
 		logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging storage value")
 		return nil, err
