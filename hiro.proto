@@ -1879,18 +1879,20 @@ message InventoryListRequest {
   string item_category = 1;
 }
 
-// Represents a request to grant items to the user.
-message InventoryGrantRequest {
-  // The items to grant.
-  map<string, int64> items = 1;
-}
-
 // The typed properties to update in an instanced inventory item.
 message InventoryUpdateItemProperties {
   // The properties with string values.
   map<string, string> string_properties = 1;
   // The properties with numeric values.
   map<string, double> numeric_properties = 2;
+}
+
+// Represents a request to grant items to the user.
+message InventoryGrantRequest {
+  // The items to grant.
+  map<string, int64> items = 1;
+  // The properties to set on each granted item, keyed by item ID.
+  map<string, InventoryUpdateItemProperties> properties = 2;
 }
 
 // Represents a request to update properties of instanced items.
@@ -3219,6 +3221,8 @@ message TeamInventoryGrantRequest {
   string id = 1;
   // The items to grant.
   map<string, int64> items = 2;
+  // The properties to set on each granted item, keyed by item ID.
+  map<string, InventoryUpdateItemProperties> properties = 3;
 }
 
 // Represents a request to update properties of instanced items belonging to a team.
