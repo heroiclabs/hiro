@@ -61,6 +61,10 @@
               "type": "integer",
               "minimum": 0
             },
+            "leeway_sec": {
+              "type": "integer",
+              "minimum": 0
+            },
             "rewards": {
               "type": "array",
               "items": {

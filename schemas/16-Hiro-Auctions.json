@@ -70,6 +70,14 @@
                             }
                           },
                           "type": "object"
+                        },
+                        "item_counts": {
+                          "patternProperties": {
+                            ".+": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -82,6 +90,14 @@
                         "fixed": {
                           "properties": {
                             "currencies": {
+                              "patternProperties": {
+                                ".+": {
+                                  "type": "integer"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "item_counts": {
                               "patternProperties": {
                                 ".+": {
                                   "type": "integer"
@@ -107,6 +123,9 @@
                       "minimum": 0,
                       "type": "integer"
                     },
+                    "immediate_buyout": {
+                      "type": "boolean"
+                    },
                     "fee": {
                       "properties": {
                         "percentage": {
@@ -115,6 +134,14 @@
                         "fixed": {
                           "properties": {
                             "currencies": {
+                              "patternProperties": {
+                                ".+": {
+                                  "type": "integer"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "item_counts": {
                               "patternProperties": {
                                 ".+": {
                                   "type": "integer"
