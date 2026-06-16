@@ -4713,6 +4713,13 @@ components:
       properties:
         item_category:
           type: string
+    InventoryUpdateItemProperties:
+      type: object
+      properties:
+        stringProperties:
+          type: object
+          additionalProperties:
+            type: string
     InventoryGrantRequest:
       type: object
       properties:
@@ -4721,13 +4728,6 @@ components:
           additionalProperties:
             type: integer
             format: int64
-    InventoryUpdateItemProperties:
-      type: object
-      properties:
-        stringProperties:
-          type: object
-          additionalProperties:
-            type: string
     InventoryUpdateItemsRequest:
       type: object
       properties:
