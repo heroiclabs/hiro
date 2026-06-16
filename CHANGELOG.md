@@ -5,12 +5,30 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.34.0] - 2026-06-16
 ### Added
-- Add new economy "ReapplyInitializeUser" function to apply new initialize_user config currencies and items to an existing user.
+- New Economy "ReapplyInitializeUser" function applies unseen initial currencies and items to an existing user.
+- Auctions can be created for direct bids (trades) between players and listed by the current player.
+- New Satori Personalizer opts to disable analytics and/or personalization for a player.
+- (Unity) Add "Reset" function to "NakamaSystem" type for QA/Test scenarios.
 
 ### Changed
 - Support forward compatibility with definitions in Storage and Satori personalizers.
+- Inventory "GrantItems" function can set properties on the item instances when granted.
+- If "SetAfterAuthenticate" is used, it overwrites any Nakama authentication before hooks already set.
+- "SetAfterAuthenticate" now passes an enum which indicates which social provider initiated the authentication.
+- Store the Reward Mailbox as part of the rest of the JSON schemas.
+- (Unity) Upgrade "UnityPurchasing" type to support Unity's v5 package, drop support for v4 package.
+- (Unity) Various small improvements to "ExampleCoordinator" type.
+- (CPP) (Dart) (Godot) (Python) (TypeScript) (Unity) (Unreal) Update clients for all new APIs.
+
+### Fixed
+- Use "Hiro-Progressions" as key name in Satori Personalizer.
+- Inventory "ConsumeItems" clamps input checks to prevent negative consume counts to become grants.
+- Ensure "ToMailboxExpirySec" is cloned as part of Reward definition types.
+- Recompute rank if score changes and "knownScores" param is used with Event Leaderboards.
+- (Unreal) Pass by const ref not by value and use a weak pointer before dereference in callback in code generation.
+- (Unity) With Event Leaderboards 2.0 use "CanUpdate" rules in Offline score updates.
 
 ## [1.33.0] - 2026-04-02
 ### Added
