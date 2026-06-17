@@ -213,6 +213,16 @@ enum RpcId {
   RPC_ID_LEADERBOARD_SCORES_LIST = 130 [(input) = "LeaderboardScoresListRequest", (output) = "LeaderboardScoreList"];
   // List scores on a specified leaderboard around the owner.
   RPC_ID_LEADERBOARD_SCORES_LIST_AROUND_OWNER = 131 [(input) = "LeaderboardScoresListAroundOwnerRequest", (output) = "LeaderboardScoreList"];
+  // List available team leaderboards.
+  RPC_ID_TEAMS_LEADERBOARD_LIST = 132 [(input) = "TeamLeaderboardListRequest", (output) = "TeamLeaderboardList"];
+  // Get a specified team leaderboard with the team's score and member contributions.
+  RPC_ID_TEAMS_LEADERBOARD_GET = 133 [(input) = "TeamLeaderboardGet", (output) = "TeamLeaderboard"];
+  // Update a team leaderboard score with a member contribution.
+  RPC_ID_TEAMS_LEADERBOARD_UPDATE = 134 [(input) = "TeamLeaderboardUpdate", (output) = "TeamLeaderboard"];
+  // List team scores on a specified team leaderboard.
+  RPC_ID_TEAMS_LEADERBOARD_SCORES_LIST = 135 [(input) = "TeamLeaderboardScoresListRequest", (output) = "LeaderboardScoreList"];
+  // List team scores on a specified team leaderboard around the caller's team.
+  RPC_ID_TEAMS_LEADERBOARD_SCORES_LIST_AROUND_TEAM = 136 [(input) = "TeamLeaderboardScoresListAroundTeamRequest", (output) = "LeaderboardScoreList"];
 
   // List available event leaderboards.
   RPC_ID_EVENT_LEADERBOARD_LIST = 80 [(input) = "EventLeaderboardList", (output) = "EventLeaderboards"];
@@ -3457,6 +3467,126 @@ message TeamEventLeaderboard {
 message TeamEventLeaderboards {
   // Zero or more event leaderboards.
   repeated TeamEventLeaderboard event_leaderboards = 1;
+}
+
+// List team leaderboards.
+message TeamLeaderboardListRequest {
+  // Team identifier for which to list team leaderboards.
+  string team_id = 1;
+  // Optional filter of leaderboard categories to list. If empty does not filter on category.
+  repeated string categories = 2;
+}
+
+// A list of team leaderboards.
+message TeamLeaderboardList {
+  // Zero or more team leaderboards.
+  repeated TeamLeaderboard leaderboards = 1;
+}
+
+// Get a specified team leaderboard.
+message TeamLeaderboardGet {
+  // Team identifier.
+  string team_id = 1;
+  // Leaderboard ID to get.
+  string id = 2;
+}
+
+// Update a team leaderboard score.
+message TeamLeaderboardUpdate {
+  // Team identifier.
+  string team_id = 1;
+  // Leaderboard ID.
+  string id = 2;
+  // Score.
+  int64 score = 3;
+  // Subscore.
+  int64 subscore = 4;
+  // Metadata.
+  string metadata = 5;
+}
+
+// List team scores on a specified team leaderboard.
+message TeamLeaderboardScoresListRequest {
+  // Team identifier of the caller's team.
+  string team_id = 1;
+  // Leaderboard ID to list scores from.
+  string id = 2;
+  // One or more team owners to retrieve records for.
+  repeated string owner_ids = 3;
+  // Max number of records to return. Between 1 and 1000.
+  int32 limit = 4;
+  // A next or previous page cursor.
+  string cursor = 5;
+  // Expiry in seconds (since epoch) to begin fetching records from. Optional. 0 means from current time.
+  int64 expiry = 6;
+  // Optional region to list scores from. If empty does not filter on region.
+  string region = 7;
+}
+
+// List team scores on a specified team leaderboard around the caller's team.
+message TeamLeaderboardScoresListAroundTeamRequest {
+  // Team identifier of the caller's team.
+  string team_id = 1;
+  // Leaderboard ID to list scores from.
+  string id = 2;
+  // Max number of records to return. Between 1 and 100.
+  int32 limit = 3;
+  // A next or previous page cursor.
+  string cursor = 4;
+  // Expiry in seconds (since epoch) to begin fetching records from. Optional. 0 means from current time.
+  int64 expiry = 5;
+  // Optional region to list scores from. If empty does not filter on region.
+  string region = 6;
+}
+
+// A member's score contribution towards a team leaderboard record.
+message TeamLeaderboardContribution {
+  // User ID of the contributing team member.
+  string user_id = 1;
+  // Contributed score.
+  int64 score = 2;
+  // Contributed subscore.
+  int64 subscore = 3;
+  // Number of score submissions by this member.
+  int64 num_scores = 4;
+  // Time when the contribution was first created.
+  int64 create_time_sec = 5;
+  // Time when the contribution was last updated.
+  int64 update_time_sec = 6;
+  // Metadata.
+  string metadata = 7;
+}
+
+// Details about a team leaderboard.
+message TeamLeaderboard {
+  // Leaderboard ID.
+  string id = 1;
+  // The name of the leaderboard. May be an i18n code.
+  string name = 2;
+  // A description of the leaderboard. May be an i18n code.
+  string description = 3;
+  // The category to group the leaderboard together with others.
+  string category = 4;
+  // The leaderboard score ordering.
+  bool ascending = 5;
+  // Score submission operator.
+  string operator = 6;
+  // Time when the leaderboard last reset if it has a reset schedule.
+  int64 prev_reset_time_sec = 7;
+  // The next scheduled reset time for the leaderboard if it has a reset schedule.
+  int64 next_reset_time_sec = 8;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 9;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 10;
+  // List of regional leaderboards, if any.
+  repeated string regions = 11;
+  // Whether the leaderboard is authoritative or not.
+  bool authoritative = 12;
+  // The team's current score record, if any.
+  LeaderboardScore score = 13;
+  // Contributions from team members towards the score.
+  repeated TeamLeaderboardContribution contributions = 14;
 }
 
 message TeamEventLeaderboardDebugFillRequest {

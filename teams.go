@@ -45,6 +45,7 @@ type TeamsConfig struct {
 	Inventory         *TeamsInventoryConfig                  `json:"inventory,omitempty"`
 	Achievements      *TeamsAchievementsConfig               `json:"achievements,omitempty"`
 	EventLeaderboards *TeamEventLeaderboardsConfig           `json:"event_leaderboards,omitempty"`
+	Leaderboards      *TeamLeaderboardsConfig                `json:"leaderboards,omitempty"`
 	RewardMailbox     *TeamRewardMailboxConfig               `json:"reward_mailbox,omitempty"`
 	Gifts             *TeamGiftsConfig                       `json:"gifts,omitempty"`
 }
@@ -87,6 +88,10 @@ type TeamsAchievementsConfig struct {
 
 type TeamEventLeaderboardsConfig struct {
 	EventLeaderboards map[string]*EventLeaderboardsConfigLeaderboard `json:"event_leaderboards,omitempty"`
+}
+
+type TeamLeaderboardsConfig struct {
+	Leaderboards []*LeaderboardsConfigLeaderboard `json:"leaderboards,omitempty"`
 }
 
 type TeamRewardMailboxConfig struct {
@@ -231,6 +236,21 @@ type TeamsSystem interface {
 
 	// DebugRandomScores assigns random scores to the participants of the team's current cohort, except to the team itself.
 	DebugRandomScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, eventLeaderboardID string, scoreMin, scoreMax, subscoreMin, subscoreMax int64, operator *int) (eventLeaderboard *TeamEventLeaderboard, err error)
+
+	// ListLeaderboard returns available team leaderboards.
+	ListLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, categories []string) (leaderboards []*TeamLeaderboard, err error)
+
+	// GetLeaderboard returns a specified team leaderboard with the team's score and member contributions.
+	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, leaderboardID string) (leaderboard *TeamLeaderboard, err error)
+
+	// ListLeaderboardScores returns a list of team scores for a specified team leaderboard.
+	ListLeaderboardScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, leaderboardID, region string, ownerIds []string, limit int, cursor string, expiry int64) (scoreList *LeaderboardScoreList, err error)
+
+	// ListLeaderboardScoresAroundTeam returns a list of team scores for a specified team leaderboard around the caller's team.
+	ListLeaderboardScoresAroundTeam(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, leaderboardID, region string, limit int, cursor string, expiry int64) (scoreList *LeaderboardScoreList, err error)
+
+	// UpdateLeaderboard submits a team member's score contribution to the team's record in the specified team leaderboard.
+	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, leaderboardID string, score, subscore int64, metadata map[string]interface{}) (leaderboard *TeamLeaderboard, err error)
 
 	// RewardMailboxList lists the team reward mailbox, from most recent to oldest.
 	RewardMailboxList(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, limit int, cursor string) (mailboxList *RewardMailboxList, err error)
