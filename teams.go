@@ -250,7 +250,13 @@ type TeamsSystem interface {
 	ListLeaderboardScoresAroundTeam(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, leaderboardID, region string, limit int, cursor string, expiry int64) (scoreList *LeaderboardScoreList, err error)
 
 	// UpdateLeaderboard submits a team member's score contribution to the team's record in the specified team leaderboard.
-	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, leaderboardID string, score, subscore int64, metadata map[string]interface{}) (leaderboard *TeamLeaderboard, err error)
+	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, leaderboardID string, score, subscore int64, metadata map[string]interface{}, overrideOperator *int) (leaderboard *TeamLeaderboard, err error)
+
+	// SetOnBeforeUpdateLeaderboardScore sets a custom function which will run before a team leaderboard score is updated.
+	SetOnBeforeUpdateLeaderboardScore(fn OnTeamLeaderboardUpdate)
+
+	// SetOnAfterUpdateLeaderboardScore sets a custom function which will run after a team leaderboard score is updated.
+	SetOnAfterUpdateLeaderboardScore(fn OnTeamLeaderboardUpdate)
 
 	// RewardMailboxList lists the team reward mailbox, from most recent to oldest.
 	RewardMailboxList(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, limit int, cursor string) (mailboxList *RewardMailboxList, err error)
@@ -291,6 +297,9 @@ type TeamsSystem interface {
 	// SetOnGiftClaimReward sets a custom reward function which will run after a team gift reward is rolled during claiming.
 	SetOnGiftClaimReward(fn OnTeamReward[*TeamGift])
 }
+
+// OnTeamLeaderboardUpdate is a function called before or after a team leaderboard score is updated.
+type OnTeamLeaderboardUpdate func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, leaderboardID string, score, subscore int64, metadata map[string]interface{}) (int64, int64, map[string]interface{}, error)
 
 type OnTeamEventLeaderboardCohortSelection func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, storageIndex string, eventID string, config *EventLeaderboardsConfigLeaderboard, userID, teamID string, tier int, matchmakerProperties map[string]interface{}) (cohortID string, cohortUserIDs []string, newCohort *EventLeaderboardCohortConfig, err error)
 
