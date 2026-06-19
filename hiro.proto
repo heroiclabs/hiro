@@ -3477,6 +3477,56 @@ message TeamLeaderboardListRequest {
   repeated string categories = 2;
 }
 
+// A member's score contribution towards a team leaderboard record.
+message TeamLeaderboardContribution {
+  // User ID of the contributing team member.
+  string user_id = 1;
+  // Contributed score.
+  int64 score = 2;
+  // Contributed subscore.
+  int64 subscore = 3;
+  // Number of score submissions by this member.
+  int64 num_scores = 4;
+  // Time when the contribution was first created.
+  int64 create_time_sec = 5;
+  // Time when the contribution was last updated.
+  int64 update_time_sec = 6;
+  // Metadata.
+  string metadata = 7;
+}
+
+// Details about a team leaderboard.
+message TeamLeaderboard {
+  // Leaderboard ID.
+  string id = 1;
+  // The name of the leaderboard. May be an i18n code.
+  string name = 2;
+  // A description of the leaderboard. May be an i18n code.
+  string description = 3;
+  // The category to group the leaderboard together with others.
+  string category = 4;
+  // The leaderboard score ordering.
+  bool ascending = 5;
+  // Score submission operator.
+  string operator = 6;
+  // Time when the leaderboard last reset if it has a reset schedule.
+  int64 prev_reset_time_sec = 7;
+  // The next scheduled reset time for the leaderboard if it has a reset schedule.
+  int64 next_reset_time_sec = 8;
+  // The UNIX timestamp for the current server time.
+  int64 current_time_sec = 9;
+  // Additional metadata properties.
+  map<string, string> additional_properties = 10;
+  // List of regional leaderboards, if any.
+  repeated string regions = 11;
+  // Whether the leaderboard is authoritative or not.
+  bool authoritative = 12;
+  // The team's current score record, if any.
+  LeaderboardScore score = 13;
+  // Contributions from team members towards the score.
+  repeated TeamLeaderboardContribution contributions = 14;
+}
+
 // A list of team leaderboards.
 message TeamLeaderboardList {
   // Zero or more team leaderboards.
@@ -3537,56 +3587,6 @@ message TeamLeaderboardScoresListAroundTeamRequest {
   int64 expiry = 5;
   // Optional region to list scores from. If empty does not filter on region.
   string region = 6;
-}
-
-// A member's score contribution towards a team leaderboard record.
-message TeamLeaderboardContribution {
-  // User ID of the contributing team member.
-  string user_id = 1;
-  // Contributed score.
-  int64 score = 2;
-  // Contributed subscore.
-  int64 subscore = 3;
-  // Number of score submissions by this member.
-  int64 num_scores = 4;
-  // Time when the contribution was first created.
-  int64 create_time_sec = 5;
-  // Time when the contribution was last updated.
-  int64 update_time_sec = 6;
-  // Metadata.
-  string metadata = 7;
-}
-
-// Details about a team leaderboard.
-message TeamLeaderboard {
-  // Leaderboard ID.
-  string id = 1;
-  // The name of the leaderboard. May be an i18n code.
-  string name = 2;
-  // A description of the leaderboard. May be an i18n code.
-  string description = 3;
-  // The category to group the leaderboard together with others.
-  string category = 4;
-  // The leaderboard score ordering.
-  bool ascending = 5;
-  // Score submission operator.
-  string operator = 6;
-  // Time when the leaderboard last reset if it has a reset schedule.
-  int64 prev_reset_time_sec = 7;
-  // The next scheduled reset time for the leaderboard if it has a reset schedule.
-  int64 next_reset_time_sec = 8;
-  // The UNIX timestamp for the current server time.
-  int64 current_time_sec = 9;
-  // Additional metadata properties.
-  map<string, string> additional_properties = 10;
-  // List of regional leaderboards, if any.
-  repeated string regions = 11;
-  // Whether the leaderboard is authoritative or not.
-  bool authoritative = 12;
-  // The team's current score record, if any.
-  LeaderboardScore score = 13;
-  // Contributions from team members towards the score.
-  repeated TeamLeaderboardContribution contributions = 14;
 }
 
 message TeamEventLeaderboardDebugFillRequest {
