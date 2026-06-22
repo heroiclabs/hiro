@@ -61,7 +61,7 @@
               "type": "integer",
               "minimum": 0
             },
-            "leeway_sec": {
+            "grace_window_sec": {
               "type": "integer",
               "minimum": 0
             },
