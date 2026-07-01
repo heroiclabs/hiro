@@ -26,6 +26,9 @@
       "patternProperties": {
         ".+": {
           "properties": {
+            "auto_claim": {
+              "type": "boolean"
+            },
             "name": {
               "type": "string",
               "pattern": ".*"

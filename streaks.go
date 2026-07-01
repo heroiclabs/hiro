@@ -28,6 +28,7 @@ type StreaksConfig struct {
 }
 
 type StreaksConfigStreak struct {
+	AutoClaim            bool                         `json:"auto_claim,omitempty"`
 	Name                 string                       `json:"name,omitempty"`
 	Description          string                       `json:"description,omitempty"`
 	Count                int64                        `json:"count,omitempty"`
