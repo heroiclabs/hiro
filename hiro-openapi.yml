@@ -5954,6 +5954,11 @@ components:
         claim_count:
           type: integer
           format: int64
+        max_count_reached:
+          type: integer
+          format: int64
+        auto_claim:
+          type: boolean
     StreaksList:
       type: object
       properties:

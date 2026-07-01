@@ -3021,6 +3021,8 @@ message Streak {
   int64 claim_count = 23;
   // Longest streak count that has been reached.
   int64 max_count_reached = 24;
+  // Whether the streak reward will automatically be claimed.
+  bool auto_claim = 25;
 }
 
 // A list of all streaks for a given user.
