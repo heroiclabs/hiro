@@ -6807,6 +6807,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StreakReward'
+        max_count_reached:
+          type: integer
+          format: int64
     SyncStreaks:
       type: object
       properties:

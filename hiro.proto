@@ -3780,6 +3780,8 @@ message SyncStreakUpdate {
   int64 claim_time_sec = 6;
   // Record of rewards that have been claimed.
   repeated StreakReward claimed_rewards = 7;
+  // Longest streak count that has been reached.
+  int64 max_count_reached = 8;
 }
 
 // Input for an offline state sync of streaks updates.
