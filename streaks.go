@@ -52,6 +52,27 @@ type StreaksConfigStreakReward struct {
 	Repeatable bool                 `json:"repeatable,omitempty"`
 }
 
+// StreakChange reports a streak's state before (nil if it did not exist) and after a change.
+type StreakChange struct {
+	ID  string
+	Old *StreakSnapshot
+	New *StreakSnapshot
+}
+
+// OnStreakChange is invoked after streaks are persisted, with the streaks changed by the operation.
+type OnStreakChange func(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, changes []*StreakChange)
+
+// StreakSnapshot is a point-in-time copy of a streak's stored state.
+type StreakSnapshot struct {
+	Count             int64           `json:"count,omitempty"`
+	CountCurrentReset int64           `json:"count_current_reset,omitempty"`
+	ClaimCount        int64           `json:"claim_count,omitempty"`
+	CreateTimeSec     int64           `json:"create_time_sec,omitempty"`
+	UpdateTimeSec     int64           `json:"update_time_sec,omitempty"`
+	ClaimTimeSec      int64           `json:"claim_time_sec,omitempty"`
+	ClaimedRewards    []*StreakReward `json:"claimed_rewards,omitempty"`
+}
+
 type StreaksSystem interface {
 	System
 
@@ -67,6 +88,18 @@ type StreaksSystem interface {
 	// Reset progress on selected streaks for the given user.
 	Reset(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, streakIDs []string) (streaks map[string]*Streak, err error)
 
+	// Set overwrites streak counts; grantRewards=false marks rewards up to the count claimed, true keeps them claimable.
+	Set(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, counts map[string]int64, grantRewards bool) (streaks map[string]*Streak, err error)
+
+	// SetState overwrites streaks with the given snapshots, stashing the prior state for revert.
+	SetState(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, snapshots map[string]*StreakSnapshot) (streaks map[string]*Streak, err error)
+
+	// Revert restores each streak's last stashed snapshot, swapping it with the current state.
+	Revert(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, streakIDs []string) (streaks map[string]*Streak, err error)
+
 	// SetOnClaimReward sets a custom reward function which will run after a streak's reward is rolled.
 	SetOnClaimReward(fn OnReward[*StreaksConfigStreak])
+
+	// SetOnStreakChange sets a custom function which will run after streaks are persisted, with the streaks changed by the operation.
+	SetOnStreakChange(fn OnStreakChange)
 }
