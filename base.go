@@ -71,6 +71,7 @@ type BaseSystemConfig struct {
 	RateAppTemplate string `json:"rate_app_template"` // HTML email template
 }
 
+type BeforeAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in any, provider AuthProvider) error
 type AfterAuthenticateFn func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, session *api.Session, provider AuthProvider) error
 
 type CollectionResolverFn func(ctx context.Context, systemType SystemType, collection string) (string, error)
@@ -89,6 +90,7 @@ type Hiro interface {
 
 	AddPublisher(publisher Publisher)
 
+	SetBeforeAuthenticate(fn BeforeAuthenticateFn) error
 	SetAfterAuthenticate(fn AfterAuthenticateFn) error
 
 	// SetCollectionResolver sets a function that may change the storage collection target for Hiro systems. Not typically used.
