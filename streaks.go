@@ -38,6 +38,7 @@ type StreaksConfigStreak struct {
 	MaxIdleCountDecay    int64                        `json:"max_idle_count_decay,omitempty"`
 	ResetCronexpr        string                       `json:"reset_cronexpr,omitempty"`
 	TimeOffsetSec        int64                        `json:"time_offset_sec,omitempty"`
+	GraceWindowSec       int64                        `json:"grace_window_sec,omitempty"`
 	Rewards              []*StreaksConfigStreakReward `json:"rewards,omitempty"`
 	StartTimeSec         int64                        `json:"start_time_sec,omitempty"`
 	EndTimeSec           int64                        `json:"end_time_sec,omitempty"`

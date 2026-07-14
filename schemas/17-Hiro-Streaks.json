@@ -64,6 +64,10 @@
               "type": "integer",
               "minimum": 0
             },
+            "grace_window_sec": {
+              "type": "integer",
+              "minimum": 0
+            },
             "rewards": {
               "type": "array",
               "items": {
