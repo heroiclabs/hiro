@@ -66,6 +66,7 @@ type OnStreakChange func(ctx context.Context, logger runtime.Logger, nk runtime.
 type StreakSnapshot struct {
 	Count             int64           `json:"count,omitempty"`
 	CountCurrentReset int64           `json:"count_current_reset,omitempty"`
+	MaxCountReached   int64           `json:"max_count_reached,omitempty"`
 	ClaimCount        int64           `json:"claim_count,omitempty"`
 	CreateTimeSec     int64           `json:"create_time_sec,omitempty"`
 	UpdateTimeSec     int64           `json:"update_time_sec,omitempty"`
