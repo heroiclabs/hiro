@@ -240,17 +240,17 @@ type TeamsSystem interface {
 	// ListLeaderboard returns available team leaderboards.
 	ListLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID string, categories []string) (leaderboards []*TeamLeaderboard, err error)
 
-	// GetLeaderboard returns a specified team leaderboard with the team's score and member contributions.
+	// GetLeaderboard returns a specified team leaderboard.
 	GetLeaderboard(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, leaderboardID string) (leaderboard *TeamLeaderboard, err error)
 
 	// ListLeaderboardScores returns a list of team scores for a specified team leaderboard.
-	ListLeaderboardScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, leaderboardID, region string, ownerIds []string, limit int, cursor string, expiry int64) (scoreList *LeaderboardScoreList, err error)
+	ListLeaderboardScores(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, leaderboardID, region string, ownerIds []string, limit int, cursor string, expiry int64) (scoreList *TeamLeaderboardScoreList, err error)
 
 	// ListLeaderboardScoresAroundTeam returns a list of team scores for a specified team leaderboard around the caller's team.
-	ListLeaderboardScoresAroundTeam(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, leaderboardID, region string, limit int, cursor string, expiry int64) (scoreList *LeaderboardScoreList, err error)
+	ListLeaderboardScoresAroundTeam(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, teamID, leaderboardID, region string, limit int, cursor string, expiry int64) (scoreList *TeamLeaderboardScoreList, err error)
 
 	// UpdateLeaderboard submits a team member's score contribution to the team's record in the specified team leaderboard.
-	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, leaderboardID string, score, subscore int64, metadata map[string]interface{}, overrideOperator *int) (leaderboard *TeamLeaderboard, err error)
+	UpdateLeaderboard(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, teamID, leaderboardID string, score, subscore int64, metadata map[string]interface{}, overrideOperator *int) (leaderboard *TeamLeaderboardScoreList, err error)
 
 	// SetOnBeforeUpdateLeaderboardScore sets a custom function which will run before a team leaderboard score is updated.
 	SetOnBeforeUpdateLeaderboardScore(fn OnTeamLeaderboardUpdate)
