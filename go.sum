@@ -1,8 +1,6 @@
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
 github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
-github.com/heroiclabs/nakama-common v1.45.0 h1:cjmQH7hf+vdgDZtB8+3d0NsNoANwbluG29hKe1epFWI=
-github.com/heroiclabs/nakama-common v1.45.0/go.mod h1:Kn0vqduhT5U1JkKVp1bu8tn3LYFX8im5jTDrIlwcnEU=
-github.com/heroiclabs/nakama-common v1.46.0 h1:IGYpD4ujn5JJzF8Q2OB7YbC/FwHq9xLm8jXTda+KmbY=
-github.com/heroiclabs/nakama-common v1.46.0/go.mod h1:Y3TTtGwr4XshggYpZyHJxMXBVYbAmaaX7TpEoUkZF1I=
+github.com/heroiclabs/nakama-common v1.47.0 h1:WjdVZ4MGmX0j/sCaLgQAUgJr7v0uA9PX5mKCDcX6CSU=
+github.com/heroiclabs/nakama-common v1.47.0/go.mod h1:GC6A2meBYNwrsDuQ7pSO2TiznSIK5+ogR5VBVZCmBSs=
 google.golang.org/protobuf v1.36.11 h1:fV6ZwhNocDyBLK0dj+fg8ektcVegBBuEolpbTQyBNVE=
 google.golang.org/protobuf v1.36.11/go.mod h1:HTf+CrKn2C3g5S8VImy6tdcUvCska2kB7j23XfzDpco=
