@@ -48,7 +48,6 @@
               "type": "integer"
             },
             "time_offset_sec": {
-              "minimum": 0,
               "type": "integer"
             },
             "max_count": {
@@ -108,7 +107,6 @@
                       "type": "integer"
                     },
                     "time_offset_sec": {
-                      "minimum": 0,
                       "type": "integer"
                     },
                     "max_count": {
