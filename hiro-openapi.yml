@@ -3560,6 +3560,11 @@ components:
         grant_time_sec:
           type: integer
           format: int64
+        to_mailbox_expiry_sec:
+          type: integer
+          format: int64
+        message:
+          type: string
         items:
           type: object
           additionalProperties:
@@ -3589,6 +3594,8 @@ components:
           format: int64
         member_reward:
           $ref: '#/components/schemas/TeamMemberReward'
+        message:
+          type: string
         items:
           type: object
           additionalProperties:
@@ -3798,6 +3805,11 @@ components:
         max_repeat_rolls:
           type: integer
           format: int64
+        to_mailbox_expiry_sec:
+          type: integer
+          format: int64
+        message:
+          type: string
     AvailableTeamRewards:
       type: object
       properties:
@@ -3821,6 +3833,8 @@ components:
           format: int64
         member_reward:
           $ref: '#/components/schemas/AvailableTeamMemberRewards'
+        message:
+          type: string
     AvailableRewards:
       type: object
       properties:

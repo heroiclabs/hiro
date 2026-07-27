@@ -110,6 +110,7 @@ type EconomyConfigTeamReward struct {
 	TotalWeight        int64                              `json:"total_weight,omitempty"`
 	ToMailboxExpirySec int64                              `json:"to_mailbox_expiry_sec,omitempty"`
 	MemberReward       *EconomyConfigTeamMemberReward     `json:"member_reward,omitempty"`
+	Message            string                             `json:"message,omitempty"`
 }
 
 type EconomyConfigTeamRewardContents struct {
@@ -127,6 +128,7 @@ type EconomyConfigTeamMemberReward struct {
 	MaxRepeatRolls     int64                          `json:"max_repeat_rolls,omitempty"`
 	TotalWeight        int64                          `json:"total_weight,omitempty"`
 	ToMailboxExpirySec int64                          `json:"to_mailbox_expiry_sec,omitempty"`
+	Message            string                         `json:"message,omitempty"`
 }
 
 type EconomyConfigRewardCurrency struct {
