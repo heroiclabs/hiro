@@ -1953,7 +1953,7 @@ paths:
   /rpc/RPC_ID_TEAMS_LEADERBOARD_GET?unwrap:
     post:
       summary: TEAMS_LEADERBOARD_GET
-      description: "Get a specified team leaderboard with the team's score and member contributions."
+      description: "Get a specified team leaderboard."
       operationId: TEAMS_LEADERBOARD_GET
       requestBody:
         required: true
@@ -1991,7 +1991,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TeamLeaderboard'
+                $ref: '#/components/schemas/TeamLeaderboardScoreList'
         'default':
           description: An error response
           content:
@@ -2015,7 +2015,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LeaderboardScoreList'
+                $ref: '#/components/schemas/TeamLeaderboardScoreList'
         'default':
           description: An error response
           content:
@@ -2039,7 +2039,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LeaderboardScoreList'
+                $ref: '#/components/schemas/TeamLeaderboardScoreList'
         'default':
           description: An error response
           content:
@@ -6620,22 +6620,46 @@ components:
         current_time_sec:
           type: integer
           format: int64
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
         regions:
           type: array
           items:
             type: string
         authoritative:
           type: boolean
-        score:
-          $ref: '#/components/schemas/LeaderboardScore'
-        contributions:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamLeaderboardContribution'
         additional_properties:
           type: object
           additionalProperties:
             type: string
+    TeamLeaderboardScoreList:
+      type: object
+      properties:
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        owner_scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        next_cursor:
+          type: string
+        prev_cursor:
+          type: string
+        rank_count:
+          type: integer
+          format: int64
+        leaderboard:
+          $ref: '#/components/schemas/TeamLeaderboard'
+        contributions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamLeaderboardContribution'
     TeamLeaderboardList:
       type: object
       properties:
