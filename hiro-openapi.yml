@@ -1960,7 +1960,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TeamLeaderboardGet'
+              $ref: '#/components/schemas/TeamLeaderboardGetRequest'
       responses:
         '200':
           description: A successful response
@@ -1984,7 +1984,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TeamLeaderboardUpdate'
+              $ref: '#/components/schemas/TeamLeaderboardUpdateRequest'
       responses:
         '200':
           description: A successful response
@@ -6667,14 +6667,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TeamLeaderboard'
-    TeamLeaderboardGet:
+    TeamLeaderboardGetRequest:
       type: object
       properties:
         team_id:
           type: string
         id:
           type: string
-    TeamLeaderboardUpdate:
+    TeamLeaderboardUpdateRequest:
       type: object
       properties:
         team_id:

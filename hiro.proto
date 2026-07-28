@@ -216,9 +216,9 @@ enum RpcId {
   // List available team leaderboards.
   RPC_ID_TEAMS_LEADERBOARD_LIST = 132 [(input) = "TeamLeaderboardListRequest", (output) = "TeamLeaderboardList"];
   // Get a specified team leaderboard.
-  RPC_ID_TEAMS_LEADERBOARD_GET = 133 [(input) = "TeamLeaderboardGet", (output) = "TeamLeaderboard"];
+  RPC_ID_TEAMS_LEADERBOARD_GET = 133 [(input) = "TeamLeaderboardGetRequest", (output) = "TeamLeaderboard"];
   // Update a team leaderboard score with a member contribution.
-  RPC_ID_TEAMS_LEADERBOARD_UPDATE = 134 [(input) = "TeamLeaderboardUpdate", (output) = "TeamLeaderboardScoreList"];
+  RPC_ID_TEAMS_LEADERBOARD_UPDATE = 134 [(input) = "TeamLeaderboardUpdateRequest", (output) = "TeamLeaderboardScoreList"];
   // List team scores on a specified team leaderboard.
   RPC_ID_TEAMS_LEADERBOARD_SCORES_LIST = 135 [(input) = "TeamLeaderboardScoresListRequest", (output) = "TeamLeaderboardScoreList"];
   // List team scores on a specified team leaderboard around the caller's team.
@@ -3551,7 +3551,7 @@ message TeamLeaderboardList {
 }
 
 // Get a specified team leaderboard.
-message TeamLeaderboardGet {
+message TeamLeaderboardGetRequest {
   // Team identifier.
   string team_id = 1;
   // Leaderboard ID to get.
@@ -3559,7 +3559,7 @@ message TeamLeaderboardGet {
 }
 
 // Update a team leaderboard score.
-message TeamLeaderboardUpdate {
+message TeamLeaderboardUpdateRequest {
   // Team identifier.
   string team_id = 1;
   // Leaderboard ID.
