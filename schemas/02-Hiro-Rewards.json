@@ -55,6 +55,9 @@
         "to_mailbox_expiry_sec": {
           "type": "integer"
         },
+        "message": {
+          "type": "string"
+        },
         "member_reward": {
           "properties": {
             "guaranteed": {
@@ -80,6 +83,9 @@
             },
             "to_mailbox_expiry_sec": {
               "type": "integer"
+            },
+            "message": {
+              "type": "string"
             }
           },
           "type": "object"
