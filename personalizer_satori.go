@@ -446,16 +446,16 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 				logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori flag list, user not found")
 				return nil, nil
 			}
-			logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori flag list")
-			return nil, err
+			logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori flag list")
+			return nil, nil
 		}
 
 		if len(flagList.Flags) >= 1 {
 			config = system.GetConfig()
 			decoder := json.NewDecoder(strings.NewReader(flagList.Flags[0].Value))
 			if err := decoder.Decode(config); err != nil {
-				logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
-				return nil, err
+				logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error merging Satori flag value")
+				return nil, nil
 			}
 			found = true
 		}
@@ -468,8 +468,8 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 					logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori live events list, user not found")
 					return nil, nil
 				}
-				logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori live events list")
-				return nil, err
+				logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori live events list")
+				return nil, nil
 			}
 			if len(liveEventsList.LiveEvents) > 0 {
 				if config == nil {
@@ -498,8 +498,8 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 					logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori flag list, user not found")
 					return nil, nil
 				}
-				logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori flag list")
-				return nil, err
+				logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori flag list")
+				return nil, nil
 			}
 
 			var liveEventsList *runtime.LiveEventList
@@ -510,8 +510,8 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 						logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori live events list, user not found")
 						return nil, nil
 					}
-					logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori live events list")
-					return nil, err
+					logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori live events list")
+					return nil, nil
 				}
 			}
 
@@ -540,8 +540,8 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 					logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori live events list, user not found")
 					return nil, nil
 				}
-				logger.WithField("userID", userID).WithField("error", err.Error()).Error("error requesting Satori live events list")
-				return nil, err
+				logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error requesting Satori live events list")
+				return nil, nil
 			}
 			cacheEntry.liveEvents.Store(liveEventsList)
 		}
@@ -556,8 +556,8 @@ func (p *SatoriPersonalizer) GetValue(ctx context.Context, logger runtime.Logger
 			config = system.GetConfig()
 			decoder := json.NewDecoder(strings.NewReader(flHandle.Value()))
 			if err := decoder.Decode(config); err != nil {
-				logger.WithField("userID", userID).WithField("error", err.Error()).Error("error merging Satori flag value")
-				return nil, err
+				logger.WithField("userID", userID).WithField("error", err.Error()).Warn("error merging Satori flag value")
+				return nil, nil
 			}
 			found = true
 		}

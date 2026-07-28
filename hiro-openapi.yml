@@ -1926,6 +1926,126 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_TEAMS_LEADERBOARD_LIST?unwrap:
+    post:
+      summary: TEAMS_LEADERBOARD_LIST
+      description: "List available team leaderboards."
+      operationId: TEAMS_LEADERBOARD_LIST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamLeaderboardListRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamLeaderboardList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_TEAMS_LEADERBOARD_GET?unwrap:
+    post:
+      summary: TEAMS_LEADERBOARD_GET
+      description: "Get a specified team leaderboard."
+      operationId: TEAMS_LEADERBOARD_GET
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamLeaderboardGetRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamLeaderboard'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_TEAMS_LEADERBOARD_UPDATE?unwrap:
+    post:
+      summary: TEAMS_LEADERBOARD_UPDATE
+      description: "Update a team leaderboard score with a member contribution."
+      operationId: TEAMS_LEADERBOARD_UPDATE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamLeaderboardUpdateRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamLeaderboardScoreList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_TEAMS_LEADERBOARD_SCORES_LIST?unwrap:
+    post:
+      summary: TEAMS_LEADERBOARD_SCORES_LIST
+      description: "List team scores on a specified team leaderboard."
+      operationId: TEAMS_LEADERBOARD_SCORES_LIST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamLeaderboardScoresListRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamLeaderboardScoreList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_TEAMS_LEADERBOARD_SCORES_LIST_AROUND_TEAM?unwrap:
+    post:
+      summary: TEAMS_LEADERBOARD_SCORES_LIST_AROUND_TEAM
+      description: "List team scores on a specified team leaderboard around the caller's team."
+      operationId: TEAMS_LEADERBOARD_SCORES_LIST_AROUND_TEAM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamLeaderboardScoresListAroundTeamRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamLeaderboardScoreList'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_EVENT_LEADERBOARD_LIST?unwrap:
     post:
       summary: EVENT_LEADERBOARD_LIST
@@ -3181,7 +3301,7 @@ components:
             type: string
         authoritative:
           type: boolean
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -3267,42 +3387,42 @@ components:
           additionalProperties:
             type: integer
             format: int64
-        itemsMin:
+        items_min:
           type: object
           additionalProperties:
             type: integer
             format: int64
-        itemsMax:
+        items_max:
           type: object
           additionalProperties:
             type: integer
             format: int64
-        statsMin:
+        stats_min:
           type: object
           additionalProperties:
             type: integer
             format: int64
-        statsMax:
+        stats_max:
           type: object
           additionalProperties:
             type: integer
             format: int64
-        energyMin:
+        energy_min:
           type: object
           additionalProperties:
             type: integer
             format: int64
-        energyMax:
+        energy_max:
           type: object
           additionalProperties:
             type: integer
             format: int64
-        currencyMin:
+        currency_min:
           type: object
           additionalProperties:
             type: integer
             format: int64
-        currencyMax:
+        currency_max:
           type: object
           additionalProperties:
             type: integer
@@ -3342,7 +3462,7 @@ components:
           additionalProperties:
             type: integer
             format: int64
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -3493,7 +3613,7 @@ components:
           format: int64
         instance_id:
           type: string
-        stringProperties:
+        string_properties:
           type: object
           additionalProperties:
             type: string
@@ -4161,7 +4281,7 @@ components:
           type: boolean
         owner_id:
           type: string
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -4231,7 +4351,7 @@ components:
           type: boolean
         operator:
           type: string
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -4461,7 +4581,7 @@ components:
           type: boolean
         can_roll_with_claim:
           type: boolean
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -4559,7 +4679,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Reward'
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -4646,7 +4766,7 @@ components:
           $ref: '#/components/schemas/AvailableRewards'
         unavailable:
           type: boolean
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -4659,7 +4779,7 @@ components:
           $ref: '#/components/schemas/Reward'
         available_rewards:
           $ref: '#/components/schemas/AvailableRewards'
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -4718,7 +4838,7 @@ components:
           type: string
         keep_zero:
           type: boolean
-        stringProperties:
+        string_properties:
           type: object
           additionalProperties:
             type: string
@@ -4730,7 +4850,7 @@ components:
     InventoryUpdateItemProperties:
       type: object
       properties:
-        stringProperties:
+        string_properties:
           type: object
           additionalProperties:
             type: string
@@ -4799,7 +4919,7 @@ components:
           additionalProperties:
             type: integer
             format: int64
-        itemCounts:
+        item_counts:
           type: object
           additionalProperties:
             type: integer
@@ -5310,7 +5430,7 @@ components:
         current_time_sec:
           type: integer
           format: int64
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -5361,7 +5481,7 @@ components:
         complete_time_sec:
           type: integer
           format: int64
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -5641,7 +5761,7 @@ components:
         advance_time_sec:
           type: integer
           format: int64
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -5768,7 +5888,7 @@ components:
           format: int64
         is_active:
           type: boolean
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -5833,7 +5953,7 @@ components:
           format: int64
         is_active:
           type: boolean
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -6080,7 +6200,7 @@ components:
           $ref: '#/components/schemas/AvailableRewards'
         unavailable:
           type: boolean
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -6448,7 +6568,7 @@ components:
           type: boolean
         can_roll_with_claim:
           type: boolean
-        additionalProperties:
+        additional_properties:
           type: object
           additionalProperties:
             type: string
@@ -6459,6 +6579,168 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TeamEventLeaderboard'
+    TeamLeaderboardListRequest:
+      type: object
+      properties:
+        team_id:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+    TeamLeaderboardContribution:
+      type: object
+      properties:
+        user_id:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+    TeamLeaderboard:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        ascending:
+          type: boolean
+        operator:
+          type: string
+        prev_reset_time_sec:
+          type: integer
+          format: int64
+        next_reset_time_sec:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        regions:
+          type: array
+          items:
+            type: string
+        authoritative:
+          type: boolean
+        additional_properties:
+          type: object
+          additionalProperties:
+            type: string
+    TeamLeaderboardScoreList:
+      type: object
+      properties:
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        owner_scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        next_cursor:
+          type: string
+        prev_cursor:
+          type: string
+        rank_count:
+          type: integer
+          format: int64
+        leaderboard:
+          $ref: '#/components/schemas/TeamLeaderboard'
+        contributions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamLeaderboardContribution'
+    TeamLeaderboardList:
+      type: object
+      properties:
+        leaderboards:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamLeaderboard'
+    TeamLeaderboardGetRequest:
+      type: object
+      properties:
+        team_id:
+          type: string
+        id:
+          type: string
+    TeamLeaderboardUpdateRequest:
+      type: object
+      properties:
+        team_id:
+          type: string
+        id:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+    TeamLeaderboardScoresListRequest:
+      type: object
+      properties:
+        team_id:
+          type: string
+        id:
+          type: string
+        owner_ids:
+          type: array
+          items:
+            type: string
+        limit:
+          type: integer
+          format: int32
+        cursor:
+          type: string
+        expiry:
+          type: integer
+          format: int64
+        region:
+          type: string
+    TeamLeaderboardScoresListAroundTeamRequest:
+      type: object
+      properties:
+        team_id:
+          type: string
+        id:
+          type: string
+        limit:
+          type: integer
+          format: int32
+        cursor:
+          type: string
+        expiry:
+          type: integer
+          format: int64
+        region:
+          type: string
     TeamEventLeaderboardDebugFillRequest:
       type: object
       properties:
@@ -6663,7 +6945,7 @@ components:
         delta:
           type: integer
           format: int64
-        stringProperties:
+        string_properties:
           type: object
           additionalProperties:
             type: string
@@ -6975,6 +7257,11 @@ components:
         - RPC_ID_LEADERBOARD_UPDATE
         - RPC_ID_LEADERBOARD_SCORES_LIST
         - RPC_ID_LEADERBOARD_SCORES_LIST_AROUND_OWNER
+        - RPC_ID_TEAMS_LEADERBOARD_LIST
+        - RPC_ID_TEAMS_LEADERBOARD_GET
+        - RPC_ID_TEAMS_LEADERBOARD_UPDATE
+        - RPC_ID_TEAMS_LEADERBOARD_SCORES_LIST
+        - RPC_ID_TEAMS_LEADERBOARD_SCORES_LIST_AROUND_TEAM
         - RPC_ID_EVENT_LEADERBOARD_LIST
         - RPC_ID_EVENT_LEADERBOARD_GET
         - RPC_ID_EVENT_LEADERBOARD_UPDATE
