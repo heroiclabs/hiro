@@ -35,6 +35,9 @@
     "event_leaderboards": {
       "$ref": "#/$defs/TeamEventLeaderboardsConfig"
     },
+    "leaderboards": {
+      "$ref": "#/$defs/TeamLeaderboardsConfig"
+    },
     "reward_mailbox": {
       "$ref": "#/$defs/TeamRewardMailboxConfig"
     },
@@ -533,6 +536,100 @@
         },
         "nochange_reroll_count_freeze": {
           "type": "boolean"
+        }
+      }
+    },
+    "TeamLeaderboardsConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "leaderboards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LeaderboardsConfigLeaderboard"
+          }
+        }
+      }
+    },
+    "LeaderboardsConfigLeaderboard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "ascending",
+        "operator",
+        "authoritative"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": ".{1,}"
+        },
+        "name": {
+          "type": "string",
+          "pattern": ".+"
+        },
+        "description": {
+          "type": "string",
+          "pattern": ".*"
+        },
+        "category": {
+          "type": "string",
+          "pattern": ".+"
+        },
+        "sort_order": {
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc",
+            "ascending",
+            "descending"
+          ]
+        },
+        "ascending": {
+          "type": "boolean"
+        },
+        "operator": {
+          "type": "string",
+          "enum": [
+            "best",
+            "set",
+            "incr",
+            "decr",
+            "increment",
+            "decrement"
+          ]
+        },
+        "start_time_sec": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_time_sec": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duration": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reset_schedule": {
+          "type": "string"
+        },
+        "authoritative": {
+          "type": "boolean"
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": ".{1,}"
+          }
+        },
+        "additional_properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       }
     },
