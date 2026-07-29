@@ -5,6 +5,26 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [1.35.0] - 2026-07-29
+### Added
+- Streaks have new options "grace_window_sec" and "auto_claim" for configuration.
+- Streaks tracks "MaxCountReached" and has a new "OnStreakChange" lifecycle function.
+- Team Leaderboards added to the Team gameplay system, similar to (solo) Leaderboards.
+
+### Changed
+- Update all JSON schemas to include latest game system fields and definitions.
+- Update to Nakama common v1.44.0 release.
+- Update Satori Personalizer to gracefully handle some error codes.
+- Team and Team Member Reward types have the "message" field.
+- Standardize how identifiers and sample content is set up in the project template.
+
+### Fixed
+- (Unreal) Fix broken logs with no format specifier.
+- (Unreal) Improve compatibility with Unreal Engine 5.8 by enforcing C++ 20 and use "Emplace".
+- (Unity) Fix race condition between Singleton '_instance' access and initialization.
+- (Unity) Fix cold start with Stats and Economy while Offline.
+- Return instance IDs in rewards which grant Item Sets.
+
 ## [1.34.0] - 2026-06-16
 ### Added
 - New Economy "ReapplyInitializeUser" function applies unseen initial currencies and items to an existing user.
