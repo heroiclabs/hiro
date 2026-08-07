@@ -243,9 +243,18 @@ func (p *SatoriPersonalizer) Authenticate(ctx context.Context, logger runtime.Lo
 	if !p.IsPublishAuthenticateRequest() && !p.IsPublishAuthenticateRequestWithSession() {
 		return
 	}
-	if _, err := nk.GetSatori().Authenticate(ctx, userID, nil, nil, !p.IsPublishAuthenticateRequestWithSession()); err != nil && !errors.Is(err, runtime.ErrSatoriConfigurationInvalid) {
+	if _, err := nk.GetSatori().Authenticate(ctx, userID, nil, nil, !p.IsPublishAuthenticateRequestWithSession(), satoriClientIPAddress(ctx)...); err != nil && !errors.Is(err, runtime.ErrSatoriConfigurationInvalid) {
 		logger.WithField("error", err.Error()).Error("failed to authenticate with Satori")
 	}
+}
+
+// Extracts the client's IP address from the request context, if available, so it can be passed through to Satori on
+// server-to-server calls. Without this, Satori would use the Nakama server's own address for geo-IP lookups rather than the player's.
+func satoriClientIPAddress(ctx context.Context) []string {
+	if ip, ok := ctx.Value(runtime.RUNTIME_CTX_CLIENT_IP).(string); ok && ip != "" {
+		return []string{ip}
+	}
+	return nil
 }
 
 func (p *SatoriPersonalizer) Send(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, events []*PublisherEvent) {
@@ -348,7 +357,7 @@ func (p *SatoriPersonalizer) Send(ctx context.Context, logger runtime.Logger, nk
 	if len(satoriEvents) == 0 {
 		return
 	}
-	if err := nk.GetSatori().EventsPublish(ctx, userID, satoriEvents); err != nil {
+	if err := nk.GetSatori().EventsPublish(ctx, userID, satoriEvents, satoriClientIPAddress(ctx)...); err != nil {
 		logger.WithField("error", err.Error()).Error("failed to publish Satori events")
 	}
 }
