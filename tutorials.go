@@ -47,6 +47,9 @@ type TutorialsSystem interface {
 	// Abandon marks the tutorial as abandoned by the user.
 	Abandon(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (tutorial *Tutorial, err error)
 
+	// Skip marks the tutorial as skipped by the user.
+	Skip(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, tutorialID string, userID string) (tutorial *Tutorial, err error)
+
 	// Update modifies a tutorial by its ID to step through it for the user by ID.
 	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, tutorialID string, step int) (tutorial map[string]*Tutorial, err error)
 
