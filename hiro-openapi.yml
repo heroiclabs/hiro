@@ -714,6 +714,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /rpc/RPC_ID_TUTORIALS_SKIP?unwrap:
+    post:
+      summary: TUTORIALS_SKIP
+      description: "Skip a tutorial."
+      operationId: TUTORIALS_SKIP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TutorialSkipRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tutorial'
+        'default':
+          description: An error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /rpc/RPC_ID_TEAMS_CREATE?unwrap:
     post:
       summary: TEAMS_CREATE
@@ -5503,6 +5527,11 @@ components:
       properties:
         id:
           type: string
+    TutorialSkipRequest:
+      type: object
+      properties:
+        id:
+          type: string
     TutorialUpdateRequest:
       type: object
       properties:
@@ -7205,6 +7234,7 @@ components:
         - RPC_ID_TUTORIALS_ABANDON
         - RPC_ID_TUTORIALS_UPDATE
         - RPC_ID_TUTORIALS_RESET
+        - RPC_ID_TUTORIALS_SKIP
         - RPC_ID_TEAMS_CREATE
         - RPC_ID_TEAMS_UPDATE
         - RPC_ID_TEAMS_LIST
@@ -7371,5 +7401,6 @@ components:
         - TUTORIAL_STATE_IN_PROGRESS
         - TUTORIAL_STATE_COMPLETED
         - TUTORIAL_STATE_ABANDONED
+        - TUTORIAL_STATE_SKIPPED
 security:
   - bearerAuthNakama: []

@@ -97,6 +97,8 @@ enum RpcId {
   RPC_ID_TUTORIALS_UPDATE = 25 [(input) = "TutorialUpdateRequest", (output) = "TutorialList"];
   // Reset the state of all given tutorial IDs.
   RPC_ID_TUTORIALS_RESET = 79 [(input) = "TutorialResetRequest", (output) = "TutorialList"];
+  // Skip a tutorial.
+  RPC_ID_TUTORIALS_SKIP = 137 [(input) = "TutorialSkipRequest", (output) = "Tutorial"];
 
   // Create a team which other players can join.
   RPC_ID_TEAMS_CREATE = 26 [(input) = "TeamCreateRequest", (output) = "Team"];
@@ -2484,6 +2486,8 @@ enum TutorialState {
   TUTORIAL_STATE_COMPLETED = 4;
   // The Tutorial has been abandoned.
   TUTORIAL_STATE_ABANDONED = 5;
+  // The Tutorial has been skipped.
+  TUTORIAL_STATE_SKIPPED = 6;
 }
 
 // An individual set of tutorial steps.
@@ -2525,6 +2529,12 @@ message TutorialDeclineRequest {
 // A request to abandon a tutorial.
 message TutorialAbandonRequest {
   // The tutorial to abandon.
+  string id = 1;
+}
+
+// A request to skip a tutorial.
+message TutorialSkipRequest {
+  // The tutorial to skip.
   string id = 1;
 }
 

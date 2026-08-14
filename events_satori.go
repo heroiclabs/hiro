@@ -711,6 +711,23 @@ func NewTutorialCompletedEvent(system System, tutorialID string, tutorialConfig 
 	}
 }
 
+// A tutorial was skipped.
+func NewTutorialSkippedEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, step int32, ts int64) *PublisherEvent {
+	return &PublisherEvent{
+		Name: "tutorialSkipped",
+		Id:   newUUIDv4(),
+		Metadata: map[string]string{
+			"tutorialId": tutorialID,
+		},
+		Timestamp: ts,
+		Value:     strconv.FormatInt(int64(step), 10),
+
+		System:   system,
+		SourceId: tutorialID,
+		Source:   tutorialConfig,
+	}
+}
+
 // One or more tutorials were reset.
 func NewTutorialResetEvent(system System, tutorialID string, tutorialConfig *TutorialsConfigTutorial, ts int64) *PublisherEvent {
 	return &PublisherEvent{
