@@ -2400,6 +2400,8 @@ message EnergyModifier {
   int64 start_time_sec = 3;
   // The UNIX timestamp when the modifier ends.
   int64 end_time_sec = 4;
+  // The configured value this modifier overrides.
+  int64 base_value = 5;
 }
 
 // Information about a single energy type.
@@ -3977,14 +3979,15 @@ message SyncEnergyState {
   int64 count = 1;
   // Time when the energy started refilling.
   int64 refill_start_time_sec = 2;
+  // Current Energy modifiers.
+  repeated EnergyModifier modifiers = 3;
 }
 
 // Input for an offline state sync operation for the energy system.
 message SyncEnergy {
   // Energies and associated full sync data.
   map<string, SyncEnergyState> energies = 1;
-  // Energy modifiers to add.
-  repeated EnergyModifier modifiers = 2;
+  reserved 2; // Was: repeated EnergyModifier modifiers, unattributable to an energy.
 }
 
 // Single event leaderboard update.
