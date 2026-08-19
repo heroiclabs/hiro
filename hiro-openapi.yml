@@ -1163,7 +1163,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AchievementsUpdateAck'
+                $ref: '#/components/schemas/TeamAchievementsUpdateAck'
         'default':
           description: An error response
           content:
@@ -1187,7 +1187,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AchievementList'
+                $ref: '#/components/schemas/TeamAchievementList'
         'default':
           description: An error response
           content:
@@ -1211,7 +1211,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AchievementsUpdateAck'
+                $ref: '#/components/schemas/TeamAchievementsUpdateAck'
         'default':
           description: An error response
           content:
@@ -6355,6 +6355,155 @@ components:
           additionalProperties:
             type: integer
             format: int64
+    TeamAchievementContributor:
+      type: object
+      properties:
+        user_id:
+          type: string
+        username:
+          type: string
+        avatar_url:
+          type: string
+        display_name:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+    TeamSubAchievement:
+      type: object
+      properties:
+        category:
+          type: string
+        claim_time_sec:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        description:
+          type: string
+        expire_time_sec:
+          type: integer
+          format: int64
+        id:
+          type: string
+        max_count:
+          type: integer
+          format: int64
+        name:
+          type: string
+        precondition_ids:
+          type: array
+          items:
+            type: string
+        reset_time_sec:
+          type: integer
+          format: int64
+        reward:
+          $ref: '#/components/schemas/Reward'
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        auto_claim:
+          type: boolean
+        auto_reset:
+          type: boolean
+        update_time_sec:
+          type: integer
+          format: int64
+        is_active:
+          type: boolean
+        contributors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamAchievementContributor'
+        additional_properties:
+          type: object
+          additionalProperties:
+            type: string
+    TeamAchievement:
+      type: object
+      properties:
+        category:
+          type: string
+        claim_time_sec:
+          type: integer
+          format: int64
+        total_claim_time_sec:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        description:
+          type: string
+        expire_time_sec:
+          type: integer
+          format: int64
+        id:
+          type: string
+        max_count:
+          type: integer
+          format: int64
+        name:
+          type: string
+        precondition_ids:
+          type: array
+          items:
+            type: string
+        reset_time_sec:
+          type: integer
+          format: int64
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        available_total_reward:
+          $ref: '#/components/schemas/AvailableRewards'
+        total_reward:
+          $ref: '#/components/schemas/Reward'
+        auto_claim:
+          type: boolean
+        auto_claim_total:
+          type: boolean
+        auto_reset:
+          type: boolean
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        is_active:
+          type: boolean
+        contributors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamAchievementContributor'
+        additional_properties:
+          type: object
+          additionalProperties:
+            type: string
+    TeamAchievementsUpdateAck:
+      type: object
+      properties:
+    TeamAchievementList:
+      type: object
+      properties:
     TeamEventLeaderboardList:
       type: object
       properties:
