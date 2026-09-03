@@ -45,6 +45,11 @@ const (
 	EventSourceInitializeUser            = "initializeUser"
 	EventSourceReapplyInitializeUser     = "reapplyInitializeUser"
 	EventSourceChallengeClaimed          = "challengeClaimed"
+	EventSourceStreakUpdated             = "streakUpdated"
+	EventSourceStreakClaimed             = "streakClaimed"
+	EventSourceStreakSet                 = "streakSet"
+	EventSourceStreakReverted            = "streakReverted"
+	EventSourceStreakReset               = "streakReset"
 )
 
 func newUUIDv4() string {
@@ -1206,6 +1211,104 @@ func NewChallengeLeftEvent(system System, challengeId string, challengeConfig an
 		System:   system,
 		SourceId: challengeId,
 		Source:   challengeConfig,
+	}
+}
+
+// Streak was updated
+func NewStreakUpdatedEvent(system System, streakId string, config *StreaksConfigStreak, count int64, countCurrentReset int64, maxCountReached int64, claimCount int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
+		Name: "streakUpdated",
+		Id:   newUUIDv4(),
+		Metadata: map[string]string{
+			"streakId":          streakId,
+			"count":             strconv.FormatInt(count, 10),
+			"countCurrentReset": strconv.FormatInt(countCurrentReset, 10),
+			"maxCount":          strconv.FormatInt(config.MaxCount, 10),
+			"maxCountReached":   strconv.FormatInt(maxCountReached, 10),
+			"claimCount":        strconv.FormatInt(claimCount, 10),
+		},
+		Value:     strconv.FormatInt(count, 10),
+		Timestamp: ts,
+		System:    system,
+		SourceId:  streakId,
+		Source:    config,
+	}
+}
+
+// Streak was claimed
+func NewStreakClaimedEvent(system System, streakId string, config *StreaksConfigStreak, count int64, claimCount int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
+		Name: "streakClaimed",
+		Id:   newUUIDv4(),
+		Metadata: map[string]string{
+			"streakId":   streakId,
+			"count":      strconv.FormatInt(count, 10),
+			"maxCount":   strconv.FormatInt(config.MaxCount, 10),
+			"claimCount": strconv.FormatInt(claimCount, 10),
+		},
+		Value:     streakId,
+		Timestamp: ts,
+		System:    system,
+		SourceId:  streakId,
+		Source:    config,
+	}
+}
+
+// Streak was set
+func NewStreakSetEvent(system System, streakId string, config *StreaksConfigStreak, count int64, countCurrentReset int64, maxCountReached int64, claimCount int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
+		Name: "streakSet",
+		Id:   newUUIDv4(),
+		Metadata: map[string]string{
+			"streakId":          streakId,
+			"count":             strconv.FormatInt(count, 10),
+			"countCurrentReset": strconv.FormatInt(countCurrentReset, 10),
+			"maxCount":          strconv.FormatInt(config.MaxCount, 10),
+			"maxCountReached":   strconv.FormatInt(maxCountReached, 10),
+			"claimCount":        strconv.FormatInt(claimCount, 10),
+		},
+		Value:     strconv.FormatInt(count, 10),
+		Timestamp: ts,
+		System:    system,
+		SourceId:  streakId,
+		Source:    config,
+	}
+}
+
+// Streak was reverted
+func NewStreakRevertedEvent(system System, streakId string, config *StreaksConfigStreak, count int64, countCurrentReset int64, maxCountReached int64, claimCount int64, ts int64) *PublisherEvent {
+	return &PublisherEvent{
+		Name: "streakReverted",
+		Id:   newUUIDv4(),
+		Metadata: map[string]string{
+			"streakId":          streakId,
+			"count":             strconv.FormatInt(count, 10),
+			"countCurrentReset": strconv.FormatInt(countCurrentReset, 10),
+			"maxCount":          strconv.FormatInt(config.MaxCount, 10),
+			"maxCountReached":   strconv.FormatInt(maxCountReached, 10),
+			"claimCount":        strconv.FormatInt(claimCount, 10),
+		},
+		Value:     strconv.FormatInt(count, 10),
+		Timestamp: ts,
+		System:    system,
+		SourceId:  streakId,
+		Source:    config,
+	}
+}
+
+// Streak was reset
+func NewStreakResetEvent(system System, streakId string, streak *Streak, ts int64) *PublisherEvent {
+	return &PublisherEvent{
+		Name: "streakReset",
+		Id:   newUUIDv4(),
+		Metadata: map[string]string{
+			"streakId": streakId,
+		},
+		Value:     streakId,
+		Timestamp: ts,
+		System:    system,
+		SourceId:  streakId,
+		Source:    streak,
 	}
 }
 
