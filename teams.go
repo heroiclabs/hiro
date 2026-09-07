@@ -103,6 +103,7 @@ type TeamGiftsConfig struct {
 }
 
 type TeamGiftsConfigGift struct {
+	AutoClaim            bool                         `json:"auto_claim,omitempty"`
 	Name                 string                       `json:"name,omitempty"`
 	Description          string                       `json:"description,omitempty"`
 	Category             string                       `json:"category,omitempty"`
