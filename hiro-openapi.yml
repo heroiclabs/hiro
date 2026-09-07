@@ -7035,6 +7035,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TeamGiftReward'
+        auto_claim:
+          type: boolean
     TeamGiftList:
       type: object
       properties:
