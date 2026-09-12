@@ -3979,7 +3979,7 @@ message SyncEnergyState {
   int64 count = 1;
   // Time when the energy started refilling.
   int64 refill_start_time_sec = 2;
-  // Current Energy modifiers.
+  // The energy's full set of modifiers, replacing whatever the server holds.
   repeated EnergyModifier modifiers = 3;
 }
 
