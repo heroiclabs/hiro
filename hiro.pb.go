@@ -22959,7 +22959,7 @@ type SyncEnergyState struct {
 	Count int64 `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
 	// Time when the energy started refilling.
 	RefillStartTimeSec int64 `protobuf:"varint,2,opt,name=refill_start_time_sec,json=refillStartTimeSec,proto3" json:"refill_start_time_sec,omitempty"`
-	// The energy's full set of modifiers, replacing whatever the server holds.
+	// The energy's modifiers, merged per operator into whatever the server holds.
 	Modifiers []*EnergyModifier `protobuf:"bytes,3,rep,name=modifiers,proto3" json:"modifiers,omitempty"`
 }
 
