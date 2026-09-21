@@ -3873,6 +3873,8 @@ message TeamGift {
   bool can_claim = 18;
   // Rewards available for the caller to claim.
   repeated TeamGiftReward available_rewards = 19;
+  // Whether the gift reward will be given automatically upon completion.
+  bool auto_claim = 20;
 }
 
 // A list of gifts available for a team.
