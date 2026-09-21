@@ -5,6 +5,10 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [Unreleased]
+### Changed
+- The "Init" function takes a database handle, which is passed through to the gameplay systems. Callers must pass the "db" given to "InitModule".
+
 ## [1.35.0] - 2026-07-29
 ### Added
 - Streaks have new options "grace_window_sec" and "auto_claim" for configuration.
