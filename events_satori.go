@@ -158,9 +158,10 @@ func NewTeamItemGrantedEvent(system System, sourceID string, sourceConfig any, t
 		Name: "teamItemsGranted",
 		Id:   newUUIDv4(),
 		Metadata: map[string]string{
-			"teamId": teamID,
-			"itemId": itemID,
-			"source": source,
+			"teamId":   teamID,
+			"itemId":   itemID,
+			"source":   source,
+			"sourceId": sourceID,
 		},
 		Value:     strconv.FormatInt(amount, 10),
 		Timestamp: ts,
