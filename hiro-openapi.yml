@@ -5395,6 +5395,9 @@ components:
         end_time_sec:
           type: integer
           format: int64
+        base_value:
+          type: integer
+          format: int64
     Energy:
       type: object
       properties:
@@ -7143,13 +7146,13 @@ components:
         refill_start_time_sec:
           type: integer
           format: int64
-    SyncEnergy:
-      type: object
-      properties:
         modifiers:
           type: array
           items:
             $ref: '#/components/schemas/EnergyModifier'
+    SyncEnergy:
+      type: object
+      properties:
     SyncEventLeaderboardUpdate:
       type: object
       properties:
