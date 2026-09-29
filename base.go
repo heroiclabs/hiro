@@ -159,7 +159,7 @@ const (
 )
 
 // Init initializes a Hiro type with the configurations provided.
-func Init(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, initializer runtime.Initializer, binPath string, licenseKey string, configs ...SystemConfig) (Hiro, error) {
+func Init(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer, binPath string, licenseKey string, configs ...SystemConfig) (Hiro, error) {
 	// Open the plugin.
 	binFile, err := nk.ReadFile(binPath)
 	if err != nil {
@@ -180,7 +180,7 @@ func Init(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, i
 	}
 
 	// Ensure the function has the correct types.
-	fn, ok := f.(func(context.Context, runtime.Logger, runtime.NakamaModule, runtime.Initializer, *protojson.MarshalOptions, *protojson.UnmarshalOptions, string, ...SystemConfig) (Hiro, error))
+	fn, ok := f.(func(context.Context, runtime.Logger, *sql.DB, runtime.NakamaModule, runtime.Initializer, *protojson.MarshalOptions, *protojson.UnmarshalOptions, string, ...SystemConfig) (Hiro, error))
 	if !ok {
 		return nil, errors.New("error reading hiro-gdk.Init function in Go module")
 	}
@@ -192,7 +192,7 @@ func Init(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, i
 	}
 	unmarshaler := &protojson.UnmarshalOptions{DiscardUnknown: false}
 
-	return fn(ctx, logger, nk, initializer, marshaler, unmarshaler, licenseKey, configs...)
+	return fn(ctx, logger, db, nk, initializer, marshaler, unmarshaler, licenseKey, configs...)
 }
 
 // The SystemConfig describes the configuration that each gameplay system must use to configure itself.
