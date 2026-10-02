@@ -5,9 +5,29 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.36.0] - 2026-10-02
+### Added
+- A "SetBeforeAuthenticate" hook is added to the systems container type.
+- Team Gifts can now be configured with "auto_claim" for rewards.
+- Team Achievements track individual player contributions to make it simple to create group effort activities like "Raid Boss" and similar.
+- (Unity) Add Offline support for Energy Modifiers in Economy Rewards.
+- (Unity) Allow automatic online syncs triggered by "ConnectivityChanged" to be disabled for manual control.
+
 ### Changed
-- The "Init" function takes a database handle, which is passed through to the gameplay systems. Callers must pass the "db" given to "InitModule".
+- The "Init" function now takes a database handle which can be passed from the "InitModule" entrypoint function.
+- A "sourceId" is added to "Publisher" analytics events which contain reward grant metadata.
+- Streaks gameplay system emits analytics events to a "Publisher" type.
+- The Hiro Event Leaderboards schema validates cohort sizes up to a maximum of 250.
+- (Unity) Update to '3.22.1' Nakama/Satori .NET client release.
+- Use a JSONB array type to merge updates in the Stats system.
+- Use a larger random-generation space for player usernames.
+
+### Fixed
+- (Unity) Energy modifiers and attributes are synced to the Energy while Offline.
+- The protocol did not use "EventLeaderboardDebugFillRequest" as its input with the Event Leaderboards function.
+- (Unity) Fix various small bugs with Inventory Consume Item logic while Offline.
+- (Unity) Do not switch to Offline if connectivity is lost while granting an Economy "PurchaseItem" that uses an IAP receipt.
+- Fix start/end time window calculations within Streaks when "time_offset_sec" is used.
 
 ## [1.35.0] - 2026-07-29
 ### Added
