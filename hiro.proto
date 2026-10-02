@@ -235,7 +235,7 @@ enum RpcId {
   // Roll a new cohort for the specified event leaderboard.
   RPC_ID_EVENT_LEADERBOARD_ROLL = 45 [(input) = "EventLeaderboardRoll", (output) = "EventLeaderboard"];
   // DEBUG. Fill an event leaderboard with random user IDs.
-  RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL = 60 [(input) = "", (output) = "EventLeaderboard"];
+  RPC_ID_EVENT_LEADERBOARD_DEBUG_FILL = 60 [(input) = "EventLeaderboardDebugFillRequest", (output) = "EventLeaderboard"];
   // DEBUG. Assign random scores within a given range to users within the caller's cohort, except for the caller themselves.
   RPC_ID_EVENT_LEADERBOARD_DEBUG_RANDOM_SCORES = 61 [(input) = "EventLeaderboardDebugRandomScoresRequest", (output) = "EventLeaderboard"];
   // DEBUG. Unenroll from an event leaderboard cohort.
