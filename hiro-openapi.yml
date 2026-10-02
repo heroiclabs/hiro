@@ -2171,6 +2171,12 @@ paths:
       summary: EVENT_LEADERBOARD_DEBUG_FILL
       description: "DEBUG. Fill an event leaderboard with random user IDs."
       operationId: EVENT_LEADERBOARD_DEBUG_FILL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventLeaderboardDebugFillRequest'
       responses:
         '200':
           description: A successful response
