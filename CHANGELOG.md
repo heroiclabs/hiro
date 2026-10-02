@@ -24,7 +24,7 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 ### Fixed
 - (Unity) Energy modifiers and attributes are synced to the Energy while Offline.
-- The protocol did not use "EventLeaderboardDebugFillRequest" as it's input with the Event Leaderboards function.
+- The protocol did not use "EventLeaderboardDebugFillRequest" as its input with the Event Leaderboards function.
 - (Unity) Fix various small bugs with Inventory Consume Item logic while Offline.
 - (Unity) Do not switch to Offline if connectivity is lost while granting an Economy "PurchaseItem" that uses an IAP receipt.
 - Fix start/end time window calculations within Streaks when "time_offset_sec" is used.
