@@ -7146,7 +7146,7 @@ components:
           $ref: '#/components/schemas/Reward'
         total_reward:
           $ref: '#/components/schemas/Reward'
-        reset:
+        was_reset:
           type: boolean
     SyncAchievements:
       type: object

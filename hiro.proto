@@ -3972,7 +3972,7 @@ message SyncAchievementsUpdate {
   // Total reward granted by the offline total claim.
   Reward total_reward = 7;
   // Whether the achievement was auto-reset offline.
-  bool reset = 8;
+  bool was_reset = 8;
 }
 
 // Input for an offline state sync operation for the achievements system.
