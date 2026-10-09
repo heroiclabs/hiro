@@ -81,10 +81,10 @@ type StreaksSystem interface {
 	List(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string) (streaks map[string]*Streak, err error)
 
 	// Update one or more streaks with the indicated counts for the given user.
-	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, streakIDs map[string]int64) (streaks map[string]*Streak, err error)
+	Update(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, streakIDs map[string]int64) (streaks map[string]*Streak, rewards map[string]*RewardList, err error)
 
 	// Claim rewards for one or more streaks for the given user.
-	Claim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, streakIDs []string) (streaks map[string]*Streak, err error)
+	Claim(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, streakIDs []string) (streaks map[string]*Streak, rewards map[string]*RewardList, err error)
 
 	// Reset progress on selected streaks for the given user.
 	Reset(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, streakIDs []string) (streaks map[string]*Streak, err error)
