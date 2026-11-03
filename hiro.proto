@@ -3049,10 +3049,14 @@ message Streak {
   bool auto_claim = 25;
 }
 
+// TODO: split into dedicated update/claim response messages on the next breaking change.
+
 // A list of all streaks for a given user.
 message StreaksList {
   // All available streaks for the caller.
   map<string, Streak> streaks = 1;
+  // Rewards granted by this call, by streak ID.
+  map<string, RewardList> rewards = 2;
 }
 
 // Request to update one or more streaks with new progress.
