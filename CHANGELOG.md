@@ -5,6 +5,14 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
+## [Unreleased]
+### Added
+- Streaks update and claim responses include the rewards granted by the call, by streak ID.
+
+### Changed
+- The Streaks "Update" and "Claim" functions also return the rewards granted, by streak ID.
+- (Unity) The Streaks "UpdateAsync" and "ClaimAsync" functions return the rewards granted, by streak ID.
+
 ## [1.36.0] - 2026-10-02
 ### Added
 - A "SetBeforeAuthenticate" hook is added to the systems container type.
