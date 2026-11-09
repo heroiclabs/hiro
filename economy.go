@@ -41,6 +41,7 @@ var (
 	ErrItemsNotConsumable      = runtime.NewError("items not consumable", 3)                 // INVALID_ARGUMENT
 	ErrItemsInsufficient       = runtime.NewError("insufficient items", 9)                   // FAILED_PRECONDITION
 	ErrCurrencyInsufficient    = runtime.NewError("insufficient currency", 9)                // FAILED_PRECONDITION
+	ErrEconomyNoCustomProvider = runtime.NewError("custom provider not specified", 3)        // INVALID_ARGUMENT
 )
 
 // EconomyConfig is the data definition for the EconomySystem type.
@@ -265,13 +266,13 @@ type EconomySystem interface {
 	UnmarshalWallet(account *api.Account) (wallet map[string]int64, err error)
 
 	// PurchaseIntent will create a purchase intent for a particular store item for a user ID.
-	PurchaseIntent(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, sku string, amount float64, currency string) (err error)
+	PurchaseIntent(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, sku string, amount float64, currency string, customProvider string) (err error)
 
 	// PurchaseItem will validate a purchase and give the user ID the appropriate rewards.
-	PurchaseItem(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, receipt string) (updatedWallet map[string]int64, updatedInventory *Inventory, reward *Reward, isSandboxPurchase bool, err error)
+	PurchaseItem(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userID, itemID string, store EconomyStoreType, receipt string, customProvider string) (updatedWallet map[string]int64, updatedInventory *Inventory, reward *Reward, isSandboxPurchase bool, err error)
 
 	// PurchaseRestore will process a restore attempt for the given user, based on a set of restore receipts.
-	PurchaseRestore(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, store EconomyStoreType, receipts []string) (err error)
+	PurchaseRestore(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID string, store EconomyStoreType, receipts []string, customProvider string) (err error)
 
 	// PlacementStatus will get the status of a specified placement.
 	PlacementStatus(ctx context.Context, logger runtime.Logger, nk runtime.NakamaModule, userID, rewardID, placementID string, retryCount int) (resp *EconomyPlacementStatus, err error)
