@@ -84,7 +84,6 @@
               "type": "integer"
             },
             "tier_delta_per_phase": {
-              "minimum": 0,
               "type": "integer"
             },
             "roll_cooldown_sec": {
@@ -194,7 +193,6 @@
                       "type": "integer"
                     },
                     "tier_delta_per_phase": {
-                      "minimum": 0,
                       "type": "integer"
                     }
                   },
