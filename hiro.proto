@@ -761,6 +761,8 @@ enum EconomyStoreType {
   ECONOMY_STORE_TYPE_FBINSTANT = 3;
   // Discord Store.
   ECONOMY_STORE_TYPE_DISCORD = 4;
+  // Custom Store.
+  ECONOMY_STORE_TYPE_CUSTOM = 5;
 }
 
 // Inventory item granted.
@@ -2302,6 +2304,8 @@ message EconomyPurchaseIntentRequest {
   double amount = 4;
   // Purchase real currency code, if known.
   string currency = 5;
+  // Custom Provider if EconomyStoreType is Custom
+  string custom_provider = 6;
 }
 
 // Request to purchase a particular store item.
@@ -2312,6 +2316,8 @@ message EconomyPurchaseRequest {
   EconomyStoreType store_type = 2;
   // The IAP receipt purchased.
   string receipt = 3;
+  // Custom Provider if EconomyStoreType is Custom
+  string custom_provider = 4;
 }
 
 // Request to restore a set of purchases.
@@ -2320,6 +2326,8 @@ message EconomyPurchaseRestoreRequest {
   EconomyStoreType store_type = 1;
   // The IAP receipts to restore.
   repeated string receipts = 2;
+  // Custom Provider if EconomyStoreType is Custom
+  string custom_provider = 3;
 }
 
 // Request to retrieve status af a specific placement instance by reward ID.

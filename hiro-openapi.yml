@@ -5296,6 +5296,8 @@ components:
           format: double
         currency:
           type: string
+        custom_provider:
+          type: string
     EconomyPurchaseRequest:
       type: object
       properties:
@@ -5304,6 +5306,8 @@ components:
         store_type:
           $ref: '#/components/schemas/EconomyStoreType'
         receipt:
+          type: string
+        custom_provider:
           type: string
     EconomyPurchaseRestoreRequest:
       type: object
@@ -5314,6 +5318,8 @@ components:
           type: array
           items:
             type: string
+        custom_provider:
+          type: string
     EconomyPlacementStatusRequest:
       type: object
       properties:
@@ -7514,6 +7520,7 @@ components:
         - ECONOMY_STORE_TYPE_GOOGLE_PLAY
         - ECONOMY_STORE_TYPE_FBINSTANT
         - ECONOMY_STORE_TYPE_DISCORD
+        - ECONOMY_STORE_TYPE_CUSTOM
     IncentiveType:
       type: string
       enum:
