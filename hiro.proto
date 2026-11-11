@@ -1285,6 +1285,8 @@ message ChallengeLeaveRequest {
 message ChallengeClaimRequest {
   // Challenge id.
   string challenge_id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to search for open challenges to join.
