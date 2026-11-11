@@ -20,6 +20,9 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+// Context key for a map[string]string of params added to the metadata of every published event.
+const AnalyticsContextKey = "hiro_analytics_context"
+
 type PublisherEvent struct {
 	Name      string            `json:"name,omitempty"`
 	Id        string            `json:"id,omitempty"`
