@@ -7148,6 +7148,12 @@ components:
         total_claim_time_sec:
           type: integer
           format: int64
+        reward:
+          $ref: '#/components/schemas/Reward'
+        total_reward:
+          $ref: '#/components/schemas/Reward'
+        was_reset:
+          type: boolean
     SyncAchievements:
       type: object
       properties:
