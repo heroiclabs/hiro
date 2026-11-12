@@ -3497,6 +3497,10 @@ components:
       properties:
         id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     ProgressionUpdateRequest:
       type: object
       properties:
@@ -3507,12 +3511,20 @@ components:
           additionalProperties:
             type: integer
             format: int64
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     ProgressionResetRequest:
       type: object
       properties:
         ids:
           type: array
           items:
+            type: string
+        analytics_context:
+          type: object
+          additionalProperties:
             type: string
     StatUpdate:
       type: object
@@ -3535,6 +3547,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StatUpdate'
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     Stat:
       type: object
       properties:
@@ -4079,11 +4095,19 @@ components:
       properties:
         id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     IncentiveSenderDeleteRequest:
       type: object
       properties:
         code:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     IncentiveSenderClaimRequest:
       type: object
       properties:
@@ -4092,6 +4116,10 @@ components:
         recipient_ids:
           type: array
           items:
+            type: string
+        analytics_context:
+          type: object
+          additionalProperties:
             type: string
     IncentiveRecipientGetRequest:
       type: object
@@ -4103,6 +4131,10 @@ components:
       properties:
         code:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     ChallengeCreateRequest:
       type: object
       properties:
@@ -4136,21 +4168,37 @@ components:
           type: object
           additionalProperties:
             type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     ChallengeJoinRequest:
       type: object
       properties:
         challenge_id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     ChallengeLeaveRequest:
       type: object
       properties:
         challenge_id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     ChallengeClaimRequest:
       type: object
       properties:
         challenge_id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     ChallengeSearchRequest:
       type: object
       properties:
@@ -4170,6 +4218,10 @@ components:
           type: array
           items:
             type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     ChallengeSubmitScoreRequest:
       type: object
       properties:
@@ -4185,6 +4237,10 @@ components:
           type: string
         conditional_metadata_update:
           type: boolean
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     ChallengeRewardTier:
       type: object
       properties:
@@ -4393,11 +4449,19 @@ components:
           type: string
         conditional_metadata_update:
           type: boolean
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EventLeaderboardClaim:
       type: object
       properties:
         id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EventLeaderboardRoll:
       type: object
       properties:
@@ -4407,6 +4471,10 @@ components:
           type: string
         claim_reward:
           type: boolean
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EventLeaderboardScore:
       type: object
       properties:
@@ -4718,6 +4786,10 @@ components:
           type: array
           items:
             type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EconomyDonationClaimRewards:
       type: object
       properties:
@@ -4730,6 +4802,10 @@ components:
           type: string
         donation_id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EconomyDonationGetRequest:
       type: object
       properties:
@@ -4742,6 +4818,10 @@ components:
       properties:
         donation_id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EconomyDonationsByUserList:
       type: object
       properties:
@@ -4868,9 +4948,17 @@ components:
           additionalProperties:
             type: integer
             format: int64
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     InventoryUpdateItemsRequest:
       type: object
       properties:
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     Inventory:
       type: object
       properties:
@@ -4889,6 +4977,10 @@ components:
           additionalProperties:
             type: integer
             format: int64
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     InventoryConsumeRewards:
       type: object
       properties:
@@ -5204,21 +5296,37 @@ components:
           type: string
         bid:
           $ref: '#/components/schemas/AuctionBidAmount'
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     AuctionClaimBidRequest:
       type: object
       properties:
         id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     AuctionClaimCreatedRequest:
       type: object
       properties:
         id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     AuctionCancelRequest:
       type: object
       properties:
         id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     AuctionCreateRequest:
       type: object
       properties:
@@ -5236,6 +5344,10 @@ components:
         allowed_user_ids:
           type: array
           items:
+            type: string
+        analytics_context:
+          type: object
+          additionalProperties:
             type: string
     AuctionListBidsRequest:
       type: object
@@ -5282,6 +5394,10 @@ components:
           additionalProperties:
             type: integer
             format: int64
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EconomyPurchaseIntentRequest:
       type: object
       properties:
@@ -5298,6 +5414,10 @@ components:
           type: string
         custom_provider:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EconomyPurchaseRequest:
       type: object
       properties:
@@ -5309,6 +5429,10 @@ components:
           type: string
         custom_provider:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EconomyPurchaseRestoreRequest:
       type: object
       properties:
@@ -5330,12 +5454,20 @@ components:
         count:
           type: integer
           format: int32
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EconomyPlacementStartRequest:
       type: object
       properties:
         placement_id:
           type: string
         metadata:
+          type: object
+          additionalProperties:
+            type: string
+        analytics_context:
           type: object
           additionalProperties:
             type: string
@@ -5455,6 +5587,10 @@ components:
     EnergySpendRequest:
       type: object
       properties:
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     EnergySpendReward:
       type: object
       properties:
@@ -5477,6 +5613,10 @@ components:
     EnergySpendWithRefillStartTimeRequest:
       type: object
       properties:
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     Tutorial:
       type: object
       properties:
@@ -5508,16 +5648,28 @@ components:
       properties:
         id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TutorialDeclineRequest:
       type: object
       properties:
         id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TutorialAbandonRequest:
       type: object
       properties:
         id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TutorialUpdateRequest:
       type: object
       properties:
@@ -5526,12 +5678,20 @@ components:
         step:
           type: integer
           format: int32
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TutorialResetRequest:
       type: object
       properties:
         ids:
           type: array
           items:
+            type: string
+        analytics_context:
+          type: object
+          additionalProperties:
             type: string
     RateAppRequest:
       type: object
@@ -5602,6 +5762,10 @@ components:
           type: string
         setup_metadata:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TeamUpdateRequest:
       type: object
       properties:
@@ -5836,6 +6000,10 @@ components:
       properties:
         instance_id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     UnlockablesQueueAddRequest:
       type: object
       properties:
@@ -5984,6 +6152,10 @@ components:
             type: string
         claim_total_reward:
           type: boolean
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     AchievementsGetRequest:
       type: object
       properties:
@@ -6005,6 +6177,10 @@ components:
           additionalProperties:
             type: integer
             format: int64
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     StreakAvailableReward:
       type: object
       properties:
@@ -6119,6 +6295,10 @@ components:
           additionalProperties:
             type: integer
             format: int64
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     StreaksClaimRequest:
       type: object
       properties:
@@ -6126,12 +6306,20 @@ components:
           type: array
           items:
             type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     StreaksResetRequest:
       type: object
       properties:
         ids:
           type: array
           items:
+            type: string
+        analytics_context:
+          type: object
+          additionalProperties:
             type: string
     RewardMailboxEntry:
       type: object
@@ -6298,6 +6486,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StatUpdate'
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TeamInventoryListRequest:
       type: object
       properties:
@@ -6322,6 +6514,10 @@ components:
           additionalProperties:
             type: integer
             format: int64
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TeamInventoryGrantRequest:
       type: object
       properties:
@@ -6332,11 +6528,19 @@ components:
           additionalProperties:
             type: integer
             format: int64
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TeamInventoryUpdateItemsRequest:
       type: object
       properties:
         id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TeamAchievementsClaimRequest:
       type: object
       properties:
@@ -6348,6 +6552,10 @@ components:
             type: string
         claim_total_reward:
           type: boolean
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TeamAchievementsGetRequest:
       type: object
       properties:
@@ -6370,6 +6578,10 @@ components:
           additionalProperties:
             type: integer
             format: int64
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TeamAchievementContributor:
       type: object
       properties:
@@ -6554,6 +6766,10 @@ components:
           type: string
         conditional_metadata_update:
           type: boolean
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TeamEventLeaderboardClaim:
       type: object
       properties:
@@ -6561,6 +6777,10 @@ components:
           type: string
         event_leaderboard_id:
           type: string
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TeamEventLeaderboardRoll:
       type: object
       properties:
@@ -6572,6 +6792,10 @@ components:
           type: string
         claim_reward:
           type: boolean
+        analytics_context:
+          type: object
+          additionalProperties:
+            type: string
     TeamEventLeaderboardScore:
       type: object
       properties:

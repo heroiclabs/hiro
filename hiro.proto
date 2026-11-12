@@ -629,6 +629,8 @@ message ProgressionGetRequest {
 message ProgressionPurchaseRequest {
   // ID of the progression to permanently unlock.
   string id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to update a progression, if supported by that specific progression.
@@ -637,12 +639,16 @@ message ProgressionUpdateRequest {
   string id = 1;
   // One or more counts to add to the progression.
   map<string, int64> counts = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // Request to reset progression progress.
 message ProgressionResetRequest {
   // The progression IDs to reset.
   repeated string ids = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Indicate how a stats update should be handled.
@@ -675,6 +681,8 @@ message StatUpdateRequest {
   repeated StatUpdate public = 1;
   // Private stat updates.
   repeated StatUpdate private = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // A single stat with associated information.
@@ -1192,12 +1200,16 @@ message IncentiveInfo {
 message IncentiveSenderCreateRequest {
   // The incentive configuration ID.
   string id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request by a user to delete an incentive they had set up.
 message IncentiveSenderDeleteRequest {
   // The unique incentive code.
   string code = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request by a user to claim rewards from an incentive they had set up.
@@ -1206,6 +1218,8 @@ message IncentiveSenderClaimRequest {
   string code = 1;
   // The recipient ID(s) to claim for, or empty for all.
   repeated string recipient_ids = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // Request by a potential incentive claimant to view incentive information.
@@ -1218,6 +1232,8 @@ message IncentiveRecipientGetRequest {
 message IncentiveRecipientClaimRequest {
   // The unique incentive code.
   string code = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to create a new challenge based on a template.
@@ -1245,24 +1261,32 @@ message ChallengeCreateRequest {
   string category = 10;
   // Additional metadata properties.
   map<string, string> metadata = 11;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 12;
 }
 
 // Request to join an ongoing challenge.
 message ChallengeJoinRequest {
   // Challenge id.
   string challenge_id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to leave a challenge.
 message ChallengeLeaveRequest {
   // Challenge id.
   string challenge_id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to claim a reward from a challenge, if available. It also culls the challenge once all rewards are claimed.
 message ChallengeClaimRequest {
   // Challenge id.
   string challenge_id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to search for open challenges to join.
@@ -1281,6 +1305,8 @@ message ChallengeInviteRequest {
   string challenge_id = 1;
   // Invitees.
   repeated string invitees = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // Request to submit a score to an active challenge.
@@ -1295,6 +1321,8 @@ message ChallengeSubmitScoreRequest {
   string metadata = 4;
   // Update metadata only if score or subscore change.
   bool conditional_metadata_update = 5;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 6;
 }
 
 // The reward tiers for the challenge.
@@ -1492,12 +1520,16 @@ message EventLeaderboardUpdate {
   string metadata = 4;
   // Update metadata only if score or subscore change.
   bool conditional_metadata_update = 5;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 6;
 }
 
 // Claim the available reward for an event leaderboard by ID.
 message EventLeaderboardClaim {
   // Event leaderboard ID to claim.
   string id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Roll a new cohort for the specified event leaderboard.
@@ -1508,6 +1540,8 @@ message EventLeaderboardRoll {
   string metadata = 2;
   // Claim reward while rolling into a cohort.
   bool claim_reward = 3;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 4;
 }
 
 // A single participant entry to an event leaderboard.
@@ -1771,6 +1805,8 @@ message EconomyDonationClaimRequest {
   repeated string donation_ids = 1;
   // A mapped set of donations to donors to claim.
   map<string, EconomyDonationClaimRequestDetails> donations = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // Response to claiming one or more donations.
@@ -1787,6 +1823,8 @@ message EconomyDonationGiveRequest {
   string user_id = 1;
   // The donation ID to give into.
   string donation_id = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // Request to get donations for one or more users.
@@ -1799,6 +1837,8 @@ message EconomyDonationGetRequest {
 message EconomyDonationRequest {
   // The donation ID to request, defined on the server.
   string donation_id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // A map of active donations keyed by user ID.
@@ -1917,12 +1957,16 @@ message InventoryGrantRequest {
   map<string, int64> items = 1;
   // The properties to set on each granted item, keyed by item ID.
   map<string, InventoryUpdateItemProperties> properties = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // Represents a request to update properties of instanced items.
 message InventoryUpdateItemsRequest {
   // The item updates to action, keyed by item instance ID.
   map<string, InventoryUpdateItemProperties> item_updates = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // The inventory in the economy or owned by user.
@@ -1939,6 +1983,8 @@ message InventoryConsumeRequest {
   bool overconsume = 2;
   // Instance ID amounts to consume, if any.
   map<string, int64> instances = 3;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 4;
 }
 
 // Updated inventory and rewards granted from consumption.
@@ -2220,24 +2266,32 @@ message AuctionBidRequest {
   string version = 2;
   // Bid amounts to place, must at least match the minimum next bid.
   AuctionBidAmount bid = 3;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 4;
 }
 
 // Request to claim a successful auction by either the winning bidder.
 message AuctionClaimBidRequest {
   // Unique auction identifier to claim.
   string id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to claim a successful auction by either the creator.
 message AuctionClaimCreatedRequest {
   // Unique auction identifier to claim.
   string id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to cancel an active auction.
 message AuctionCancelRequest {
   // Unique auction identifier to cancel.
   string id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to create a new auction.
@@ -2252,6 +2306,8 @@ message AuctionCreateRequest {
   int64 start_time_sec = 4;
   // User IDs of directed users that are allowed to see and bid on this auction, if any.
   repeated string allowed_user_ids = 5;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 6;
 }
 
 // Request to retrieve a list of auctions the user has bid on.
@@ -2290,6 +2346,8 @@ message EconomyGrantRequest {
   repeated RewardModifier reward_modifiers = 2;
   // Any items to grant.
   map<string, int64> items = 3;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 4;
 }
 
 // Request to create a store item purchase intent.
@@ -2306,6 +2364,8 @@ message EconomyPurchaseIntentRequest {
   string currency = 5;
   // Custom Provider if EconomyStoreType is Custom
   string custom_provider = 6;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 7;
 }
 
 // Request to purchase a particular store item.
@@ -2318,6 +2378,8 @@ message EconomyPurchaseRequest {
   string receipt = 3;
   // Custom Provider if EconomyStoreType is Custom
   string custom_provider = 4;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 5;
 }
 
 // Request to restore a set of purchases.
@@ -2338,6 +2400,8 @@ message EconomyPlacementStatusRequest {
   string placement_id = 2;
   // The check attempt counter, optional.
   int32 count = 3;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 4;
 }
 
 // Request to start a placement reward.
@@ -2346,6 +2410,8 @@ message EconomyPlacementStartRequest {
   string placement_id = 1;
   // Optional metadata to associate with the placement.
   map<string, string> metadata = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // The current status of a placement reward.
@@ -2450,6 +2516,8 @@ message EnergyList {
 message EnergySpendRequest {
   // Energy amounts to spend.
   map<string, int32> amounts = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to spend one or more energy amounts.
@@ -2478,6 +2546,8 @@ message EnergySpendWithTime {
 message EnergySpendWithRefillStartTimeRequest {
   // Energy spends with custom refill start times, keyed on the energy identifier.
   map<string, EnergySpendWithTime> spends = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // The states of a Tutorial.
@@ -2524,18 +2594,24 @@ message TutorialList {
 message TutorialAcceptRequest {
   // The tutorial to accept.
   string id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // A request to decline a tutorial.
 message TutorialDeclineRequest {
   // The tutorial to decline.
   string id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // A request to abandon a tutorial.
 message TutorialAbandonRequest {
   // The tutorial to abandon.
   string id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // A request to update a tutorial.
@@ -2544,12 +2620,16 @@ message TutorialUpdateRequest {
   string id = 1;
   // The latest step that should be marked completed. All previous steps will also be marked as completed.
   int32 step = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // A request to reset the state of one or more tutorials.
 message TutorialResetRequest {
   // The tutorials to reset.
   repeated string ids = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // The input message when the user rates the app.
@@ -2614,6 +2694,8 @@ message TeamCreateRequest {
   string lang_tag = 5;
   // The starting metadata passed in as part of creating the team.
   string setup_metadata = 6;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 7;
 }
 
 // Request to update a team.
@@ -2826,6 +2908,8 @@ message UnlockablesReward {
 message UnlockablesRequest {
   // The unlockable instance ID.
   string instance_id = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to add a set of unlockables to the unlock queue.
@@ -2954,6 +3038,8 @@ message AchievementsClaimRequest {
   repeated string ids = 1;
   // Whether or not to claim the total reward as well, if available.
   bool claim_total_reward = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // Get all achievements for the user alongside all on the server.
@@ -2975,6 +3061,8 @@ message AchievementsUpdateRequest {
   int64 amount = 2;
   // Achievements with different amounts.
   map<string, int64> achievements = 3;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 4;
 }
 
 // Represents an available reward based on the progress of a streak.
@@ -3071,18 +3159,24 @@ message StreaksList {
 message StreaksUpdateRequest {
   // Update one or more streaks by identifier.
   map<string, int64> updates = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to claim rewards for one or more streaks.
 message StreaksClaimRequest {
   // List of streak identifiers to claim.
   repeated string ids = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // Request to fully reset the progress of one or more streaks.
 message StreaksResetRequest {
   // List of streak identifiers to reset.
   repeated string ids = 1;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 2;
 }
 
 // A reward mailbox entry and associated reward information.
@@ -3233,6 +3327,8 @@ message TeamStatUpdateRequest {
   repeated StatUpdate public = 2;
   // Private stat updates.
   repeated StatUpdate private = 3;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 4;
 }
 
 // Request inventory items in the team inventory.
@@ -3253,6 +3349,8 @@ message TeamInventoryConsumeRequest {
   bool overconsume = 3;
   // Instance ID amounts to consume, if any.
   map<string, int64> instances = 4;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 5;
 }
 
 // Represents a request to grant items to a team.
@@ -3263,6 +3361,8 @@ message TeamInventoryGrantRequest {
   map<string, int64> items = 2;
   // The properties to set on each granted item, keyed by item ID.
   map<string, InventoryUpdateItemProperties> properties = 3;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 4;
 }
 
 // Represents a request to update properties of instanced items belonging to a team.
@@ -3271,6 +3371,8 @@ message TeamInventoryUpdateItemsRequest {
   string id = 1;
   // The item updates to action, keyed by item instance ID.
   map<string, InventoryUpdateItemProperties> item_updates = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // Claim rewards with one or more team achievement on the server.
@@ -3281,6 +3383,8 @@ message TeamAchievementsClaimRequest {
   repeated string achievement_ids = 2;
   // Whether or not to claim the total reward as well, if available.
   bool claim_total_reward = 3;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 4;
 }
 
 // Get achievements for a particular team.
@@ -3299,6 +3403,8 @@ message TeamAchievementsUpdateRequest {
   int64 amount = 3;
   // Achievements with different amounts.
   map<string, int64> achievements = 4;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 5;
 }
 
 // An individual contributor to a team achievement.
@@ -3465,6 +3571,8 @@ message TeamEventLeaderboardUpdate {
   string metadata = 5;
   // Update metadata only if score or subscore change.
   bool conditional_metadata_update = 6;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 7;
 }
 
 // Claim the available reward for a team event leaderboard by ID.
@@ -3473,6 +3581,8 @@ message TeamEventLeaderboardClaim {
   string id = 1;
   // Event leaderboard ID to claim.
   string event_leaderboard_id = 2;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 3;
 }
 
 // Roll a new cohort for the specified team event leaderboard.
@@ -3485,6 +3595,8 @@ message TeamEventLeaderboardRoll {
   string metadata = 3;
   // Claim reward while rolling into a cohort.
   bool claim_reward = 4;
+  // Key-value pairs added to the metadata of every analytics event published by this request.
+  map<string, string> analytics_context = 5;
 }
 
 // A single participant entry to a team event leaderboard.
