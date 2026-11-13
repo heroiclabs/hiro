@@ -5,13 +5,23 @@ The format is based on [keep a changelog](http://keepachangelog.com) and this pr
 
 :warning: This server code is versioned separately to the download of the [Hiro game framework](https://heroiclabs.com/hiro/). :warning:
 
-## [Unreleased]
+## [1.37.0] - 2026-11-13
 ### Added
+- Economy store purchases can be validated with a custom IAP provider registered on Nakama server.
+- Client requests can pass an optional analytics context which is merged into the metadata of "Publisher" events.
 - Streaks update and claim responses include the rewards granted by the call, by streak ID.
 
 ### Changed
 - The Streaks "Update" and "Claim" functions also return the rewards granted, by streak ID.
 - (Unity) The Streaks "UpdateAsync" and "ClaimAsync" functions return the rewards granted, by streak ID.
+- Add store type as an input to Economy purchases for custom IAP providers.
+- Authentication before/after hooks use the new Nakama authenticate endpoint.
+- Update "OnlineSubsystem" to be compatible with Nakama Unreal v3 release.
+
+### Fixed
+- Allow negative "tier_delta_per_phase" in Event Leaderboards.
+- (Unity) Fix log formatting in Satori client.
+- Preserve streak calculations when UTC offset changes.
 
 ## [1.36.0] - 2026-10-02
 ### Added
