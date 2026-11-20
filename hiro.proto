@@ -339,7 +339,7 @@ enum RpcSocketId {
   RPC_SOCKET_ID_UNSPECIFIED = 0;
 
   // Follow auctions a user has an interest in, bid or own. Must be called via a connected socket.
-  RPC_SOCKET_ID_AUCTIONS_FOLLOW = 1 [(input) = "AuctionFollowRequest", (output) = "AuctionList"];
+  RPC_SOCKET_ID_AUCTIONS_FOLLOW = 1 [(input) = "AuctionsFollowRequest", (output) = "AuctionList"];
   // Bid on an auction and follow it for further updates.
   RPC_SOCKET_ID_AUCTIONS_BID = 2 [(input) = "AuctionBidRequest", (output) = "Auction"];
 }
